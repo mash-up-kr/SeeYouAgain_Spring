@@ -1,1 +1,5 @@
-
+spring:
+  application:
+    name: shorts-web
+  messages:
+    encoding: UTF-8
