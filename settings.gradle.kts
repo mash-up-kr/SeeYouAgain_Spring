@@ -1,0 +1,3 @@
+rootProject.name = "shorts"
+include("shorts-api")
+include("shorts-domain")
