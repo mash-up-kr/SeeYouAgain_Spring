@@ -1,0 +1,21 @@
+=== 테스트
+
+하나의 예시
+
+==== [Request]
+
+==== [Request Path Parameters]
+
+===== [Response Field]
+
+include::{snippets}/Gyunny/response-fields.adoc[]
+
+==== [HTTP Example]
+
+===== [Response HTTP Example]
+
+include::{snippets}/Gyunny/http-response.adoc[]
+
+===== [Curl Request HTTP Example]
+
+include::{snippets}/Gyunny/curl-request.adoc[]
