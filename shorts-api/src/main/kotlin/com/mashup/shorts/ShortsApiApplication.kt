@@ -7,6 +7,5 @@ import org.springframework.boot.runApplication
 class ShortsApiApplication
 
 fun main(args: Array<String>) {
-	System.setProperty("spring.config.location", "classpath:/domain-config/,classpath:/")
 	runApplication<ShortsApiApplication>(*args)
 }
