@@ -1,0 +1,12 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:shorts
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
