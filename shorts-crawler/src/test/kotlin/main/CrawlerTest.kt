@@ -52,7 +52,11 @@ class CrawlerTest {
             val start = link.indexOf("/") // "/" 가 처음 등장하는 인덱스
             val end = link.indexOf("\" ") // "" " 가 처음 등장하는 인덱스
             allHeadLineNewsLinks.add(symbolicLinkBaseUrl + link.substring(start, end))
+
+            println(symbolicLinkBaseUrl + link.substring(start, end))
         }
+
+        println("allHeadLineNewsLinks.size = ${allHeadLineNewsLinks.size}")
 
         val eachHeadLineLinks = ArrayList<String>()
         val eachHeadLineTitles = ArrayList<String>()
@@ -71,6 +75,7 @@ class CrawlerTest {
         }
 
         for (eachHeadLineLink in eachHeadLineLinks) {
+            println("link = " + eachHeadLineLink)
             val eachHeadLineDoc = Jsoup.connect(eachHeadLineLink).get()
             val title = eachHeadLineDoc.getElementsByClass("media_end_head_headline")
             val content = eachHeadLineDoc.getElementsByClass("go_trans _article_content")
