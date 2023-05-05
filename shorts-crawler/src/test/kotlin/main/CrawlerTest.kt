@@ -4,7 +4,6 @@ import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import java.net.SocketTimeoutException
 
 /* 정치 헤드라인
 
@@ -33,6 +32,15 @@ class CrawlerTest {
     private val url = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100"
 
     private val symbolicLinkBaseUrl = "https://news.naver.com"
+
+    private val detailDocClassName = "nclicks(cls_pol.clsart1)"
+
+    private val titleClassName = "media_end_head_headline"
+    private val contentClassName = "go_trans _article_content"
+    private val imageClassName = "_LAZY_LOADING"
+    private val pressClassName = "media_end_linked_more_point"
+    private val writtenDateTimeClassName = "media_end_head_info_datestamp_time _ARTICLE_DATE_TIME"
+
     private val allDetailHeadLineNewsTitleIndex = 0
     private val allDetailHeadLineNewsContentIndex = 1
     private val allDetailHeadLineNewsThumbnailIndex = 2
@@ -47,25 +55,21 @@ class CrawlerTest {
         val newsObjects = ArrayList<NewsInformation>()
         val allHeadLineNews = extractAllHeadLineLinks(doc)
 
-        var extractAllDetailHeadLineNews: List<List<String>>
-
-        try {
-            extractAllDetailHeadLineNews = extractAllDetailHeadLineNews(allHeadLineNews)
-        } catch (exception: SocketTimeoutException) {
-            extractAllDetailHeadLineNews = extractAllDetailHeadLineNews(allHeadLineNews)
-        }
+        val extractAllDetailHeadLineNews = extractAllDetailHeadLineNews(allHeadLineNews)
 
         for (i: Int in 0..extractAllDetailHeadLineNews.size) {
-            newsObjects.add(
-                NewsInformation(
-                    extractAllDetailHeadLineNews.get(allDetailHeadLineNewsTitleIndex).get(i),
-                    extractAllDetailHeadLineNews.get(allDetailHeadLineNewsContentIndex).get(i),
-                    extractAllDetailHeadLineNews.get(allDetailHeadLineNewsThumbnailIndex).get(i),
-                    extractAllDetailHeadLineNews.get(allDetailHeadLineNewsLinkIndex).get(i),
-                    extractAllDetailHeadLineNews.get(allDetailHeadLineNewsPressIndex).get(i),
-                    extractAllDetailHeadLineNews.get(allDetailHeadLineNewsWrittenDateIndex).get(i),
-                )
+            val newsInformation = NewsInformation(
+                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsTitleIndex).get(i),
+                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsContentIndex).get(i),
+                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsThumbnailIndex).get(i),
+                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsLinkIndex).get(i),
+                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsPressIndex).get(i),
+                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsWrittenDateIndex).get(i),
             )
+            newsObjects.add(newsInformation)
+            println("newsObjects.get(i).title = ${newsObjects.get(i).title}")
+            println("newsObjects.get(i).link = ${newsObjects.get(i).link}")
+            println("newsObjects.get(i).thumbnail = ${newsObjects.get(i).thumbnail}")
         }
     }
 
@@ -92,8 +96,8 @@ class CrawlerTest {
             .distinct()
     }
 
-    // 특정 헤드라인에 해당하는 모든 뉴스를 순회하며 그 링크를 반환한다.
-    // 가끔씩 빈 문자열이 들어가는 경우도 있어서 반환할 때 filter를 사용했다.
+    // 특정 헤드라인에 해당하는 모든 뉴스를 순회하며
+    // 제목, 내용, 썸네일, 링크, 언론사, 작성날짜를 순서대로 담은 리스트를 반환한다.
     private fun extractAllDetailHeadLineNews(allHeadLineNews: List<String>): List<List<String>> {
         val result = ArrayList<ArrayList<String>>()
         val detailHeadLineNewsTitles = ArrayList<String>()
@@ -105,23 +109,22 @@ class CrawlerTest {
 
         for (link in allHeadLineNews) {
             val moreDoc = Jsoup.connect(link).get()
-            val crawledHtmls = moreDoc.getElementsByClass("nclicks(cls_pol.clsart1)")
+            val crawledHtmls = moreDoc.getElementsByClass(detailDocClassName)
                 .toString()
                 .split("</a>")
             for (crawledHtml in crawledHtmls) {
                 val detailLink = Jsoup.parse(crawledHtml)
                     .select("a[href]")
                     .attr("href")
-                if (!detailLink.equals("")) {
-                    val detailDoc = Jsoup.connect(detailLink).get()
-                    val title = detailDoc.getElementsByClass("media_end_head_headline").text()
-                    val content = detailDoc.getElementsByClass("go_trans _article_content").text()
-                    val image = detailDoc.getElementsByClass("go_trans _article_content")
-                    val press = detailDoc.getElementsByClass("media_end_linked_more_point").text()
-                    val writtenDateTime =
-                        detailDoc.getElementsByClass("media_end_head_info_datestamp_time _ARTICLE_DATE_TIME")
-                            .text()
 
+                if (detailLink.isNotEmpty() && detailLink.isNotBlank()) {
+                    val detailDoc = Jsoup.connect(detailLink).get()
+                    val title = detailDoc.getElementsByClass(titleClassName).text()
+                    val content = detailDoc.getElementsByClass(contentClassName).text()
+                    val image = detailDoc.getElementsByClass(imageClassName)
+                    val press = detailDoc.getElementsByClass(pressClassName).text()
+                    val writtenDateTime =
+                        detailDoc.getElementsByClass(writtenDateTimeClassName).text()
                     detailHeadLineNewsTitles.add(title)
                     detailHeadLineContents.add(content)
                     detailHeadLineThumbnails.add(image.text())
@@ -131,7 +134,6 @@ class CrawlerTest {
                 }
             }
         }
-
         result.add(detailHeadLineNewsTitles)
         result.add(detailHeadLineContents)
         result.add(detailHeadLineThumbnails)
