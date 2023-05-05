@@ -54,22 +54,18 @@ class CrawlerTest {
         val doc = setup()
         val newsObjects = ArrayList<NewsInformation>()
         val allHeadLineNews = extractAllHeadLineLinks(doc)
-
         val extractAllDetailHeadLineNews = extractAllDetailHeadLineNews(allHeadLineNews)
 
         for (i: Int in 0..extractAllDetailHeadLineNews.size) {
             val newsInformation = NewsInformation(
-                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsTitleIndex).get(i),
-                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsContentIndex).get(i),
-                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsThumbnailIndex).get(i),
-                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsLinkIndex).get(i),
-                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsPressIndex).get(i),
-                extractAllDetailHeadLineNews.get(allDetailHeadLineNewsWrittenDateIndex).get(i),
+                extractAllDetailHeadLineNews[allDetailHeadLineNewsTitleIndex][i],
+                extractAllDetailHeadLineNews[allDetailHeadLineNewsContentIndex][i],
+                extractAllDetailHeadLineNews[allDetailHeadLineNewsThumbnailIndex][i],
+                extractAllDetailHeadLineNews[allDetailHeadLineNewsLinkIndex][i],
+                extractAllDetailHeadLineNews[allDetailHeadLineNewsPressIndex][i],
+                extractAllDetailHeadLineNews[allDetailHeadLineNewsWrittenDateIndex][i],
             )
             newsObjects.add(newsInformation)
-            println("newsObjects.get(i).title = ${newsObjects.get(i).title}")
-            println("newsObjects.get(i).link = ${newsObjects.get(i).link}")
-            println("newsObjects.get(i).thumbnail = ${newsObjects.get(i).thumbnail}")
         }
     }
 
@@ -112,34 +108,42 @@ class CrawlerTest {
             val crawledHtmls = moreDoc.getElementsByClass(detailDocClassName)
                 .toString()
                 .split("</a>")
+
+            var i = 0
             for (crawledHtml in crawledHtmls) {
                 val detailLink = Jsoup.parse(crawledHtml)
                     .select("a[href]")
                     .attr("href")
 
-                if (detailLink.isNotEmpty() && detailLink.isNotBlank()) {
-                    val detailDoc = Jsoup.connect(detailLink).get()
+                if (!detailHeadLineNewsLinks.contains(detailLink) && detailLink.isNotEmpty()) {
+                    detailHeadLineNewsLinks.add(detailLink)
+                    val detailDoc = Jsoup.connect(detailHeadLineNewsLinks[i]).get()
                     val title = detailDoc.getElementsByClass(titleClassName).text()
                     val content = detailDoc.getElementsByClass(contentClassName).text()
-                    val image = detailDoc.getElementsByClass(imageClassName)
+                    val image = detailDoc.getElementsByClass(imageClassName).text()
                     val press = detailDoc.getElementsByClass(pressClassName).text()
                     val writtenDateTime =
                         detailDoc.getElementsByClass(writtenDateTimeClassName).text()
                     detailHeadLineNewsTitles.add(title)
                     detailHeadLineContents.add(content)
-                    detailHeadLineThumbnails.add(image.text())
-                    detailHeadLineNewsLinks.add(detailLink)
+                    detailHeadLineThumbnails.add(image)
                     detailHeadLineNewsPresses.add(press)
                     detailHeadLineNewsWrittenDateTime.add(writtenDateTime)
+
+                    println("title = ${title}")
+                    println("image = ${image}")
+                    println("press = ${press}")
+                    println("writtenDateTime = ${writtenDateTime}")
+                    i++
                 }
             }
+            result.add(detailHeadLineNewsTitles)
+            result.add(detailHeadLineContents)
+            result.add(detailHeadLineThumbnails)
+            result.add(detailHeadLineNewsLinks)
+            result.add(detailHeadLineNewsPresses)
+            result.add(detailHeadLineNewsWrittenDateTime)
         }
-        result.add(detailHeadLineNewsTitles)
-        result.add(detailHeadLineContents)
-        result.add(detailHeadLineThumbnails)
-        result.add(detailHeadLineNewsLinks)
-        result.add(detailHeadLineNewsPresses)
-        result.add(detailHeadLineNewsWrittenDateTime)
         return result
     }
 }
