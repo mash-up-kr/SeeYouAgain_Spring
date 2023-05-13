@@ -2,3 +2,14 @@ spring:
   config:
     activate:
       on-profile: prod
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: none
+  datasource:
+    hikari:
+      jdbc-url: ENC(DSh/FwfYf8tod70N/yaB6hpYEBo//JydonNXf/hT/h7A6Gkh3lxVIn2YWSYtLIm+oMWKPzLb/33sgtMGZDBlEBaHGk2jrPnRrTB/nLhpzk07T+43KPCG8sKrnkEB4CI0725OjtaUj0y6dPztbeJhWleOLCq5/bU4Gk/OfqpOSSDZKGmobKhJvKIh8VBkO6c5dJZW64aPNZa4pz5EgLfp/yNwjDbMZTdLcpaOOCX4q7s5JONwbo8IYTcDZI1zh2qs1PKFQz3xCN5WFsUqtSwuBohjdsZQecJ4kHRYE7iCiXc=)
+      username: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
+      password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
+      driver-class-name: com.mysql.cj.jdbc.Driver

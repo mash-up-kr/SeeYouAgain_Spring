@@ -45,6 +45,9 @@ subprojects {
 
 		implementation("org.jetbrains.kotlin:kotlin-reflect")
 		testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+        // SpringMockk
+        testImplementation("com.ninja-squad:springmockk:3.1.1")
 	}
 
 	tasks.withType<KotlinCompile> {

@@ -1,12 +1,20 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:gyunny
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
   config:
     activate:
       on-profile: local
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+  datasource:
+    hikari:
+      jdbc-url: ENC(eJkPgAUnETKenOh/iG7wkn0e+B4QUVaC1DoaP5k2d5GS2f/4AueSkFPad7C45MFo1Hrdglr6VRNl5HoCK9pJlkIHMnQZbEGOAs0UQY6/FGyjtO5iIOcsdwgXXnuijlJGAopR2P5bJLiZu6BONZahBX+iFllRurRbNphzl5CrucypQpxqqN5wisttYzPmWpkTfbwYwGjnLpUOM+eahgtvYrv9ome9YH8wnUIKQClLDaDdALmx/t+RAhA5SpKgpno+1c7N4VODxoYtZGqL5yyZk6sSVFy02KvLtcldDGw/ELg=)
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
+      password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
