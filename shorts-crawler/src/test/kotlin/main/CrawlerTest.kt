@@ -19,11 +19,9 @@ class="cluster_thumb" (썸네일)
 
 class="cluster_text"
 
-    class="cluster_text_headline nclicks(cls_pol.clsart)" (제목)
-
+class="cluster_text_headline nclicks(cls_pol.clsart)" (제목)
 
 class="cluster_foot_more nclicks(cls_pol.clstitle)"
-
 
  */
 
@@ -32,6 +30,7 @@ class CrawlerTest {
     private val url = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100"
 
     private val symbolicLinkBaseUrl = "https://news.naver.com"
+    private val moreHeadLineLinksElement = "sh_head_more nclicks(cls_pol.clstitle)"
 
     private val detailDocClassName = "nclicks(cls_pol.clsart1)"
 
@@ -48,30 +47,33 @@ class CrawlerTest {
     private val allDetailHeadLineNewsPressIndex = 4
     private val allDetailHeadLineNewsWrittenDateIndex = 5
 
-    @DisplayName("https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100 크롤링 테스트")
+    @DisplayName("정치 카테고리 크롤링 테스트")
     @Test
     fun crawlingTest() {
         val doc = setup()
         val newsObjects = ArrayList<NewsInformation>()
         val allHeadLineNews = extractAllHeadLineLinks(doc)
-        val extractAllDetailHeadLineNews = extractAllDetailHeadLineNews(allHeadLineNews)
+        val extractedAllDetailHeadLineNews = extractAllDetailHeadLineNews(allHeadLineNews)
 
-        for (i: Int in 0..extractAllDetailHeadLineNews.size) {
+        val numberOfNews = extractedAllDetailHeadLineNews[0].size
+
+        for (i: Int in 0 until numberOfNews) {
             val newsInformation = NewsInformation(
-                extractAllDetailHeadLineNews[allDetailHeadLineNewsTitleIndex][i],
-                extractAllDetailHeadLineNews[allDetailHeadLineNewsContentIndex][i],
-                extractAllDetailHeadLineNews[allDetailHeadLineNewsThumbnailIndex][i],
-                extractAllDetailHeadLineNews[allDetailHeadLineNewsLinkIndex][i],
-                extractAllDetailHeadLineNews[allDetailHeadLineNewsPressIndex][i],
-                extractAllDetailHeadLineNews[allDetailHeadLineNewsWrittenDateIndex][i],
+                extractedAllDetailHeadLineNews[allDetailHeadLineNewsTitleIndex][i],
+                extractedAllDetailHeadLineNews[allDetailHeadLineNewsContentIndex][i],
+                extractedAllDetailHeadLineNews[allDetailHeadLineNewsThumbnailIndex][i],
+                extractedAllDetailHeadLineNews[allDetailHeadLineNewsLinkIndex][i],
+                extractedAllDetailHeadLineNews[allDetailHeadLineNewsPressIndex][i],
+                extractedAllDetailHeadLineNews[allDetailHeadLineNewsWrittenDateIndex][i],
             )
             newsObjects.add(newsInformation)
         }
+        println("newsObjects.size = ${newsObjects.size}")
     }
 
     private fun setup(): Elements {
         return Jsoup.connect(url).get()
-            .getElementsByClass("cluster_foot_more nclicks(cls_pol.clstitle)")
+            .getElementsByClass(moreHeadLineLinksElement)
             .tagName("a")
     }
 
@@ -109,40 +111,33 @@ class CrawlerTest {
                 .toString()
                 .split("</a>")
 
-            var i = 0
+            var numberOfNews = 0
             for (crawledHtml in crawledHtmls) {
                 val detailLink = Jsoup.parse(crawledHtml)
                     .select("a[href]")
                     .attr("href")
-
                 if (!detailHeadLineNewsLinks.contains(detailLink) && detailLink.isNotEmpty()) {
                     detailHeadLineNewsLinks.add(detailLink)
-                    val detailDoc = Jsoup.connect(detailHeadLineNewsLinks[i]).get()
+                    val detailDoc = Jsoup.connect(detailHeadLineNewsLinks[numberOfNews]).get()
                     val title = detailDoc.getElementsByClass(titleClassName).text()
                     val content = detailDoc.getElementsByClass(contentClassName).text()
                     val image = detailDoc.getElementsByClass(imageClassName).text()
                     val press = detailDoc.getElementsByClass(pressClassName).text()
-                    val writtenDateTime =
-                        detailDoc.getElementsByClass(writtenDateTimeClassName).text()
+                    val writtenDateTime = detailDoc.getElementsByClass(writtenDateTimeClassName).text()
                     detailHeadLineNewsTitles.add(title)
                     detailHeadLineContents.add(content)
                     detailHeadLineThumbnails.add(image)
                     detailHeadLineNewsPresses.add(press)
                     detailHeadLineNewsWrittenDateTime.add(writtenDateTime)
-
-                    println("title = ${title}")
-                    println("image = ${image}")
-                    println("press = ${press}")
-                    println("writtenDateTime = ${writtenDateTime}")
-                    i++
+                    numberOfNews++
                 }
+                result.add(detailHeadLineNewsTitles)
+                result.add(detailHeadLineContents)
+                result.add(detailHeadLineThumbnails)
+                result.add(detailHeadLineNewsLinks)
+                result.add(detailHeadLineNewsPresses)
+                result.add(detailHeadLineNewsWrittenDateTime)
             }
-            result.add(detailHeadLineNewsTitles)
-            result.add(detailHeadLineContents)
-            result.add(detailHeadLineThumbnails)
-            result.add(detailHeadLineNewsLinks)
-            result.add(detailHeadLineNewsPresses)
-            result.add(detailHeadLineNewsWrittenDateTime)
         }
         return result
     }
