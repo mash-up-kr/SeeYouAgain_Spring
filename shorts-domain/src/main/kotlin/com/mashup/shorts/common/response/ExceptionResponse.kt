@@ -15,11 +15,11 @@ data class ErrorResponse(
     val message: String,
 ) {
     companion object {
-        fun of (nadaErrorCode: ShortsErrorCode, errorMessage: String? = null): ErrorResponse {
+        fun of (shortsErrorCode: ShortsErrorCode, errorMessage: String? = null): ErrorResponse {
             return ErrorResponse(
-                status = nadaErrorCode.httpStatus.value(),
-                code = nadaErrorCode.errorCode,
-                message = errorMessage ?: nadaErrorCode.errorMessage,
+                status = shortsErrorCode.httpStatus.value(),
+                code = shortsErrorCode.errorCode,
+                message = errorMessage ?: shortsErrorCode.errorMessage,
             )
         }
     }
