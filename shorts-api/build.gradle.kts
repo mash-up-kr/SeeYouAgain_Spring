@@ -30,3 +30,7 @@ dependencies {
     asciidoctorExtensions("org.springframework.restdocs:spring-restdocs-asciidoctor")
     testImplementation("com.ninja-squad:springmockk:3.1.1")
 }
+
+application {
+    mainClass.set("com.mashup.shorts.ShortsApiApplicationKt")
+}

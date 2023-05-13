@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-internal abstract class IntegrationTest : CoreTestBase() {
+internal abstract class IntegrationTest : DomainTestBase() {
 
     @Autowired
     lateinit var databaseCleanup: DatabaseCleanup

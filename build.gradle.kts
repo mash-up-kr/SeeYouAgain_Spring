@@ -4,6 +4,7 @@ plugins {
 	id("org.springframework.boot") version "3.0.5"
 	id("io.spring.dependency-management") version "1.1.0"
 	id("org.asciidoctor.jvm.convert") version "3.3.2"
+	id("application")
 	kotlin("jvm") version "1.7.22"
 	kotlin("plugin.spring") version "1.7.22"
 	kotlin("plugin.jpa") version "1.7.22"
@@ -11,6 +12,10 @@ plugins {
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_17
+
+application {
+	mainClass.set("com.mashup.shorts.ShortsApiApplicationKt")
+}
 
 allprojects {
 	group = "com.mashup"
@@ -31,6 +36,7 @@ subprojects {
 	apply(plugin = "io.spring.dependency-management")
 	apply(plugin = "org.asciidoctor.jvm.convert")
 	apply(plugin = "kotlin-kapt")
+	apply(plugin = "application")
 
 	dependencies {
 		implementation("org.springframework.boot:spring-boot-starter-web")
