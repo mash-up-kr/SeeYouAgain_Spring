@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class ShortsCrawlerApplication
+class ShortsCrawlerApiApplication
 
 fun main(args: Array<String>) {
-	runApplication<ShortsCrawlerApplication>(*args)
+	runApplication<ShortsCrawlerApiApplication>(*args)
 }
