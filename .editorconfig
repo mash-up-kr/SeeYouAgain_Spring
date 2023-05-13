@@ -1,0 +1,23 @@
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+tab_width = 4
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 120
+
+[{*.kt,*.kts}]
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_name_count_to_use_star_import = 2147483647
+ij_kotlin_name_count_to_use_star_import_for_members = 2147483647
+ij_kotlin_imports_layout = $*, |, java.**, |, javax.**, |, kotlin.**, |, org.**, |, com.**, |, *
+
+[*.md]
+trim_trailing_whitespace = false
+
+[{*.yml, *.yaml}]
+indent_size = 2
