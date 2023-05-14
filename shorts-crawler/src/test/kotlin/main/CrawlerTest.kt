@@ -1,12 +1,12 @@
 package main
 
-import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
+import java.lang.Thread.sleep
+import java.time.LocalDateTime
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import java.lang.Thread.sleep
-import java.time.LocalDateTime
+import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 
 private const val politicsUrl = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100"
 private const val economyUrl = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101"
@@ -355,15 +355,17 @@ class CrawlerTest {
                     val detailDoc = Jsoup.connect(detailLink).get()
                     val title = detailDoc.getElementsByClass(titleClassName).text()
                     val content = detailDoc.getElementsByClass(contentClassName).text()
-                    val image = detailDoc.getElementsByClass(imageClassName).text()
-                    val press = detailDoc.getElementsByClass(pressClassName).text()
-                    val writtenDateTime = detailDoc.getElementsByClass(writtenDateTimeClassName).text()
-                    detailHeadLineNewsTitles.add(title)
-                    detailHeadLineContents.add(content)
-                    detailHeadLineThumbnails.add(image)
-                    detailHeadLineNewsPresses.add(press)
-                    detailHeadLineNewsWrittenDateTime.add(writtenDateTime)
-                    numberOfNews++
+                    val image = detailDoc.getElementById("img1")
+                    if (image != null) {
+                        val press = detailDoc.getElementsByClass(pressClassName).text()
+                        val writtenDateTime = detailDoc.getElementsByClass(writtenDateTimeClassName).text()
+                        detailHeadLineNewsTitles.add(title)
+                        detailHeadLineContents.add(content)
+                        detailHeadLineThumbnails.add(image.toString())
+                        detailHeadLineNewsPresses.add(press)
+                        detailHeadLineNewsWrittenDateTime.add(writtenDateTime)
+                        numberOfNews++
+                    }
                 }
                 result.add(detailHeadLineNewsTitles)
                 result.add(detailHeadLineContents)
@@ -383,7 +385,7 @@ class NewsInformation(
     var thumbnail: String,
     var link: String,
     var press: String,
-    var writtenDateTime: String
+    var writtenDateTime: String,
 ) {
 
 }
