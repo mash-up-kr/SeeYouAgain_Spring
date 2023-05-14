@@ -3,6 +3,9 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
 
+    // jasypt
+    api("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
+
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
 }
