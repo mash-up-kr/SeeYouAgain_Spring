@@ -1,11 +1,7 @@
-package main
-
-import java.lang.Thread.sleep
 import java.time.LocalDateTime
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
+import org.springframework.stereotype.Component
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 
 private const val politicsUrl = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100"
@@ -63,155 +59,9 @@ private const val linkIndex = 3
 private const val pressIndex = 4
 private const val writtenDateIndex = 5
 
-class CrawlerTest {
+@Component
+class Crawler {
 
-    @Test
-    @DisplayName("카테고리 : 정치")
-    fun test0() {
-        val poli = ArrayList<NewsInformation>()
-        val doc = setup(urls[0], 0)
-        val allHeadLineNewsLinks = extractAllHeadLineNewsLinks(doc)
-        val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 0)
-        val numberOfNews = extractedAllNews[0].size
-
-        for (i: Int in 0 until numberOfNews) {
-            poli.add(
-                NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
-                )
-            )
-        }
-        println("poliNews = ${poli.size}")
-    }
-
-    @Test
-    @DisplayName("카테고리 : 경제")
-    fun test1() {
-        val eco = ArrayList<NewsInformation>()
-        val doc = setup(urls[1], 1)
-        val allHeadLineNewsLinks = extractAllHeadLineNewsLinks(doc)
-        val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 1)
-        val numberOfNews = extractedAllNews[0].size
-
-        for (i: Int in 0 until numberOfNews) {
-            eco.add(
-                NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
-                )
-            )
-        }
-        println("ecoNews = ${eco.size}")
-    }
-
-    @Test
-    @DisplayName("카테고리 : 사회")
-    fun test2() {
-        val social = ArrayList<NewsInformation>()
-        val doc = setup(urls[2], 2)
-        val allHeadLineNewsLinks = extractAllHeadLineNewsLinks(doc)
-        val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 2)
-        val numberOfNews = extractedAllNews[0].size
-
-        for (i: Int in 0 until numberOfNews) {
-            social.add(
-                NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
-                )
-            )
-        }
-        println("socialNews = ${social.size}")
-    }
-
-    @Test
-    @DisplayName("카테고리 : 생활/문화")
-    fun test3() {
-        val lifeCul = ArrayList<NewsInformation>()
-        val doc = setup(urls[3], 3)
-        val allHeadLineNewsLinks = extractAllHeadLineNewsLinks(doc)
-        val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 3)
-        val numberOfNews = extractedAllNews[0].size
-
-        for (i: Int in 0 until numberOfNews) {
-            lifeCul.add(
-                NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
-                )
-            )
-        }
-        println("lifeCulNews = ${lifeCul.size}")
-    }
-
-    @Test
-    @DisplayName("카테고리 : 세계")
-    fun test4() {
-        val worldNews = ArrayList<NewsInformation>()
-        val doc = setup(urls[4], 4)
-        val allHeadLineNewsLinks = extractAllHeadLineNewsLinks(doc)
-        val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 4)
-        val numberOfNews = extractedAllNews[0].size
-
-        for (i: Int in 0 until numberOfNews) {
-            worldNews.add(
-                NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
-                )
-            )
-        }
-        println("worldNews = ${worldNews.size}")
-    }
-
-    @Test
-    @DisplayName("카테고리 : IT/과학")
-    fun test5() {
-        val it = ArrayList<NewsInformation>()
-        val doc = setup(urls[5], 5)
-        val allHeadLineNewsLinks = extractAllHeadLineNewsLinks(doc)
-        val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 5)
-        val numberOfNews = extractedAllNews[0].size
-
-        for (i: Int in 0 until numberOfNews) {
-            it.add(
-                NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
-                )
-            )
-        }
-        println("itNews = ${it.size}")
-    }
-
-
-    @Test
-    @DisplayName("모든 카테고리 한 번에 크롤링 해오기")
     fun executeCrawling() {
         val politicsNews = ArrayList<NewsInformation>()
         val societyNews = ArrayList<NewsInformation>()
@@ -296,7 +146,7 @@ class CrawlerTest {
                     )
                 }
             }
-            sleep(10000)
+            Thread.sleep(10000)
         }
         log.info("Number Of politicsNews = ${politicsNews.size}")
         log.info("Number Of economyNews = ${economyNews.size}")
