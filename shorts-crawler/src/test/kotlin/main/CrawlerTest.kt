@@ -74,15 +74,20 @@ class CrawlerTest {
         val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 0)
         val numberOfNews = extractedAllNews[0].size
 
-        for (i: Int in 0 until numberOfNews) {
+        for (index: Int in 0 until numberOfNews) {
             poli.add(
                 NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
+                    extractedAllNews[titleIndex][index] as? String ?: "",
+                    extractedAllNews[contentIndex][index] as? String ?: "",
+                    extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                    extractedAllNews[linkIndex][index] as? String ?: "",
+                    extractedAllNews[pressIndex][index] as? String ?: "",
+                    extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                    if (extractedAllNews[6][index] as? Boolean == true) {
+                        HeadLine.HEAD_LINE
+                    } else {
+                        HeadLine.NORMAL
+                    }
                 )
             )
         }
@@ -98,15 +103,20 @@ class CrawlerTest {
         val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 1)
         val numberOfNews = extractedAllNews[0].size
 
-        for (i: Int in 0 until numberOfNews) {
+        for (index: Int in 0 until numberOfNews) {
             eco.add(
                 NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
+                    extractedAllNews[titleIndex][index] as? String ?: "",
+                    extractedAllNews[contentIndex][index] as? String ?: "",
+                    extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                    extractedAllNews[linkIndex][index] as? String ?: "",
+                    extractedAllNews[pressIndex][index] as? String ?: "",
+                    extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                    if (extractedAllNews[6][index] as? Boolean == true) {
+                        HeadLine.HEAD_LINE
+                    } else {
+                        HeadLine.NORMAL
+                    }
                 )
             )
         }
@@ -122,15 +132,20 @@ class CrawlerTest {
         val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 2)
         val numberOfNews = extractedAllNews[0].size
 
-        for (i: Int in 0 until numberOfNews) {
+        for (index: Int in 0 until numberOfNews) {
             social.add(
                 NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
+                    extractedAllNews[titleIndex][index] as? String ?: "",
+                    extractedAllNews[contentIndex][index] as? String ?: "",
+                    extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                    extractedAllNews[linkIndex][index] as? String ?: "",
+                    extractedAllNews[pressIndex][index] as? String ?: "",
+                    extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                    if (extractedAllNews[6][index] as? Boolean == true) {
+                        HeadLine.HEAD_LINE
+                    } else {
+                        HeadLine.NORMAL
+                    }
                 )
             )
         }
@@ -146,15 +161,20 @@ class CrawlerTest {
         val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 3)
         val numberOfNews = extractedAllNews[0].size
 
-        for (i: Int in 0 until numberOfNews) {
+        for (index: Int in 0 until numberOfNews) {
             lifeCul.add(
                 NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
+                    extractedAllNews[titleIndex][index] as? String ?: "",
+                    extractedAllNews[contentIndex][index] as? String ?: "",
+                    extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                    extractedAllNews[linkIndex][index] as? String ?: "",
+                    extractedAllNews[pressIndex][index] as? String ?: "",
+                    extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                    if (extractedAllNews[6][index] as? Boolean == true) {
+                        HeadLine.HEAD_LINE
+                    } else {
+                        HeadLine.NORMAL
+                    }
                 )
             )
         }
@@ -170,15 +190,20 @@ class CrawlerTest {
         val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 4)
         val numberOfNews = extractedAllNews[0].size
 
-        for (i: Int in 0 until numberOfNews) {
+        for (index: Int in 0 until numberOfNews) {
             worldNews.add(
                 NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
+                    extractedAllNews[titleIndex][index] as? String ?: "",
+                    extractedAllNews[contentIndex][index] as? String ?: "",
+                    extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                    extractedAllNews[linkIndex][index] as? String ?: "",
+                    extractedAllNews[pressIndex][index] as? String ?: "",
+                    extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                    if (extractedAllNews[6][index] as? Boolean == true) {
+                        HeadLine.HEAD_LINE
+                    } else {
+                        HeadLine.NORMAL
+                    }
                 )
             )
         }
@@ -188,25 +213,30 @@ class CrawlerTest {
     @Test
     @DisplayName("카테고리 : IT/과학")
     fun test5() {
-        val it = ArrayList<NewsInformation>()
+        val itScience = ArrayList<NewsInformation>()
         val doc = setup(urls[5], 5)
         val allHeadLineNewsLinks = extractAllHeadLineNewsLinks(doc)
         val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, 5)
         val numberOfNews = extractedAllNews[0].size
 
-        for (i: Int in 0 until numberOfNews) {
-            it.add(
+        for (index: Int in 0 until numberOfNews) {
+            itScience.add(
                 NewsInformation(
-                    extractedAllNews[titleIndex][i],
-                    extractedAllNews[contentIndex][i],
-                    extractedAllNews[thumbnailIndex][i],
-                    extractedAllNews[linkIndex][i],
-                    extractedAllNews[pressIndex][i],
-                    extractedAllNews[writtenDateIndex][i]
+                    extractedAllNews[titleIndex][index] as? String ?: "",
+                    extractedAllNews[contentIndex][index] as? String ?: "",
+                    extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                    extractedAllNews[linkIndex][index] as? String ?: "",
+                    extractedAllNews[pressIndex][index] as? String ?: "",
+                    extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                    if (extractedAllNews[6][index] as? Boolean == true) {
+                        HeadLine.HEAD_LINE
+                    } else {
+                        HeadLine.NORMAL
+                    }
                 )
             )
         }
-        println("itNews = ${it.size}")
+        println("itNews = ${itScience.size}")
     }
 
 
@@ -231,71 +261,102 @@ class CrawlerTest {
                 when (i) {
                     0 -> politicsNews.add(
                         NewsInformation(
-                            extractedAllNews[titleIndex][index],
-                            extractedAllNews[contentIndex][index],
-                            extractedAllNews[thumbnailIndex][index],
-                            extractedAllNews[linkIndex][index],
-                            extractedAllNews[pressIndex][index],
-                            extractedAllNews[writtenDateIndex][index]
+                            extractedAllNews[titleIndex][index] as? String ?: "",
+                            extractedAllNews[contentIndex][index] as? String ?: "",
+                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                            extractedAllNews[linkIndex][index] as? String ?: "",
+                            extractedAllNews[pressIndex][index] as? String ?: "",
+                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                            if (extractedAllNews[6][index] as? Boolean == true) {
+                                HeadLine.HEAD_LINE
+                            } else {
+                                HeadLine.NORMAL
+                            }
                         )
                     )
 
                     1 -> economyNews.add(
                         NewsInformation(
-                            extractedAllNews[titleIndex][index],
-                            extractedAllNews[contentIndex][index],
-                            extractedAllNews[thumbnailIndex][index],
-                            extractedAllNews[linkIndex][index],
-                            extractedAllNews[pressIndex][index],
-                            extractedAllNews[writtenDateIndex][index]
+                            extractedAllNews[titleIndex][index] as? String ?: "",
+                            extractedAllNews[contentIndex][index] as? String ?: "",
+                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                            extractedAllNews[linkIndex][index] as? String ?: "",
+                            extractedAllNews[pressIndex][index] as? String ?: "",
+                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                            if (extractedAllNews[6][index] as? Boolean == true) {
+                                HeadLine.HEAD_LINE
+                            } else {
+                                HeadLine.NORMAL
+                            }
                         )
                     )
 
                     2 -> societyNews.add(
                         NewsInformation(
-                            extractedAllNews[titleIndex][index],
-                            extractedAllNews[contentIndex][index],
-                            extractedAllNews[thumbnailIndex][index],
-                            extractedAllNews[linkIndex][index],
-                            extractedAllNews[pressIndex][index],
-                            extractedAllNews[writtenDateIndex][index]
+                            extractedAllNews[titleIndex][index] as? String ?: "",
+                            extractedAllNews[contentIndex][index] as? String ?: "",
+                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                            extractedAllNews[linkIndex][index] as? String ?: "",
+                            extractedAllNews[pressIndex][index] as? String ?: "",
+                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                            if (extractedAllNews[6][index] as? Boolean == true) {
+                                HeadLine.HEAD_LINE
+                            } else {
+                                HeadLine.NORMAL
+                            }
                         )
                     )
 
                     3 -> lifeCultureNews.add(
                         NewsInformation(
-                            extractedAllNews[titleIndex][index],
-                            extractedAllNews[contentIndex][index],
-                            extractedAllNews[thumbnailIndex][index],
-                            extractedAllNews[linkIndex][index],
-                            extractedAllNews[pressIndex][index],
-                            extractedAllNews[writtenDateIndex][index]
+                            extractedAllNews[titleIndex][index] as? String ?: "",
+                            extractedAllNews[contentIndex][index] as? String ?: "",
+                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                            extractedAllNews[linkIndex][index] as? String ?: "",
+                            extractedAllNews[pressIndex][index] as? String ?: "",
+                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                            if (extractedAllNews[6][index] as? Boolean == true) {
+                                HeadLine.HEAD_LINE
+                            } else {
+                                HeadLine.NORMAL
+                            }
                         )
                     )
 
                     4 -> worldNews.add(
                         NewsInformation(
-                            extractedAllNews[titleIndex][index],
-                            extractedAllNews[contentIndex][index],
-                            extractedAllNews[thumbnailIndex][index],
-                            extractedAllNews[linkIndex][index],
-                            extractedAllNews[pressIndex][index],
-                            extractedAllNews[writtenDateIndex][index]
+                            extractedAllNews[titleIndex][index] as? String ?: "",
+                            extractedAllNews[contentIndex][index] as? String ?: "",
+                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                            extractedAllNews[linkIndex][index] as? String ?: "",
+                            extractedAllNews[pressIndex][index] as? String ?: "",
+                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                            if (extractedAllNews[6][index] as? Boolean == true) {
+                                HeadLine.HEAD_LINE
+                            } else {
+                                HeadLine.NORMAL
+                            }
                         )
                     )
 
                     5 -> iTScienceNews.add(
                         NewsInformation(
-                            extractedAllNews[titleIndex][index],
-                            extractedAllNews[contentIndex][index],
-                            extractedAllNews[thumbnailIndex][index],
-                            extractedAllNews[linkIndex][index],
-                            extractedAllNews[pressIndex][index],
-                            extractedAllNews[writtenDateIndex][index]
+                            extractedAllNews[titleIndex][index] as? String ?: "",
+                            extractedAllNews[contentIndex][index] as? String ?: "",
+                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
+                            extractedAllNews[linkIndex][index] as? String ?: "",
+                            extractedAllNews[pressIndex][index] as? String ?: "",
+                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
+                            if (extractedAllNews[6][index] as? Boolean == true) {
+                                HeadLine.HEAD_LINE
+                            } else {
+                                HeadLine.NORMAL
+                            }
                         )
                     )
                 }
             }
+            log.info("Wating 10 seconds ....")
             sleep(10000)
         }
         log.info("Number Of politicsNews = ${politicsNews.size}")
@@ -306,13 +367,28 @@ class CrawlerTest {
         log.info("Number Of iTScienceNews = ${iTScienceNews.size}")
     }
 
+    /**
+    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100
+    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101
+    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=102
+    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=103
+    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=104
+    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=105
+    setup()메서드는 위 링크들에서
+    "N개의 기사 더보기"를 누르면 이동할 링크들을 뽑아온다.
+    각 헤드라인
+     */
     private fun setup(url: String, i: Int): Elements {
         return Jsoup.connect(url).get()
             .getElementsByClass(moreHeadLineLinksElements[i])
             .tagName("a")
     }
 
-    // 특정 헤드라인에 해당하는 모든 뉴스를 리스트로 반환한다.
+    /**
+    https://news.naver.com/main/clusterArticles.naver?id=c_202305150820_00000001&mode=LSD&mid=shm&sid1=100&oid=421&aid=0006805653
+    setup()메서드에서 뽑은 "N개의 기사 더보기"가 가진 링크를 하나씩 탐색하는 동작을 수행한다.
+    즉, 각각의 헤드라인에 대한 N개의 기사를 볼 수 있는 링크를 뽑아낸다.
+     */
     private fun extractAllHeadLineNewsLinks(allHeadLineMoreLinksDoc: Elements): List<String> {
         val allDetailHeadLineNewsLinks = ArrayList<String>()
 
@@ -330,41 +406,61 @@ class CrawlerTest {
     }
 
     // 특정 헤드라인에 해당하는 모든 뉴스를 순회하며
-// 제목, 내용, 썸네일, 링크, 언론사, 작성날짜를 순서대로 담은 리스트를 반환한다.
-    private fun extractAllDetailNewsInHeadLine(allHeadLineNewsLinks: List<String>, i: Int): List<List<String>> {
-        val result = ArrayList<ArrayList<String>>()
-        val detailHeadLineNewsTitles = ArrayList<String>()
-        val detailHeadLineContents = ArrayList<String>()
-        val detailHeadLineThumbnails = ArrayList<String>()
-        val detailHeadLineNewsLinks = ArrayList<String>()
-        val detailHeadLineNewsPresses = ArrayList<String>()
-        val detailHeadLineNewsWrittenDateTime = ArrayList<String>()
+    // 제목, 내용, 썸네일, 링크, 언론사, 작성날짜를 순서대로 담은 리스트를 반환한다.
+    private fun extractAllDetailNewsInHeadLine(
+        allHeadLineNewsLinks: List<String>,
+        categorySeparator: Int,
+    ): List<List<Any>> {
+        val result = mutableListOf<MutableList<Any>>()
+        val detailHeadLineNewsTitles = mutableListOf<Any>()
+        val detailHeadLineContents = mutableListOf<Any>()
+        val detailHeadLineThumbnails = mutableListOf<Any>()
+        val detailHeadLineNewsLinks = mutableListOf<Any>()
+        val detailHeadLineNewsPresses = mutableListOf<Any>()
+        val detailHeadLineNewsWrittenDateTime = mutableListOf<Any>()
+        val detailHeadLineNewsIsHeadLine = mutableListOf<Any>()
+//        val headLines = mutableListOf<Any>()
+//
+//        for (headLineNewsLink in allHeadLineNewsLinks) {
+//            val headLineDoc = Jsoup.connect(headLineNewsLink).get()
+//            println(headLineDoc.getElementsByClass("cluster_banner_sub_topic").text())
+//            headLines.add(headLineDoc.getElementsByClass("cluster_banner_sub_topic").text())
+//        }
+
 
         for (link in allHeadLineNewsLinks) {
+            var headLineFlag = true
             val moreDoc = Jsoup.connect(link).get()
-            val crawledHtmlLinks = moreDoc.getElementsByClass(detailDocClassNames[i])
+            val crawledHtmlLinks = moreDoc.getElementsByClass(detailDocClassNames[categorySeparator])
                 .toString()
                 .split("</a>")
+
             var numberOfNews = 0
             for (htmlLink in crawledHtmlLinks) {
                 val detailLink = Jsoup.parse(htmlLink)
                     .select("a[href]")
                     .attr("href")
+
                 if (!detailHeadLineNewsLinks.contains(detailLink) && detailLink.isNotEmpty()) {
                     detailHeadLineNewsLinks.add(detailLink)
                     val detailDoc = Jsoup.connect(detailLink).get()
+                    val image = detailDoc.getElementById("img1") ?: ""
                     val title = detailDoc.getElementsByClass(titleClassName).text()
                     val content = detailDoc.getElementsByClass(contentClassName).text()
-                    val image = detailDoc.getElementById("img1")
-                    if (image != null) {
-                        val press = detailDoc.getElementsByClass(pressClassName).text()
-                        val writtenDateTime = detailDoc.getElementsByClass(writtenDateTimeClassName).text()
-                        detailHeadLineNewsTitles.add(title)
-                        detailHeadLineContents.add(content)
-                        detailHeadLineThumbnails.add(image.toString())
-                        detailHeadLineNewsPresses.add(press)
-                        detailHeadLineNewsWrittenDateTime.add(writtenDateTime)
-                        numberOfNews++
+                    val press = detailDoc.getElementsByClass(pressClassName).text()
+                    val writtenDateTime = detailDoc.getElementsByClass(writtenDateTimeClassName).text()
+                    detailHeadLineNewsTitles.add(title)
+                    detailHeadLineContents.add(content)
+                    detailHeadLineThumbnails.add(image.toString())
+                    detailHeadLineNewsPresses.add(press)
+                    detailHeadLineNewsWrittenDateTime.add(writtenDateTime)
+                    numberOfNews++
+
+                    if (headLineFlag) {
+                        detailHeadLineNewsIsHeadLine.add(true)
+                        headLineFlag = false
+                    } else {
+                        detailHeadLineNewsIsHeadLine.add(false)
                     }
                 }
                 result.add(detailHeadLineNewsTitles)
@@ -373,19 +469,26 @@ class CrawlerTest {
                 result.add(detailHeadLineNewsLinks)
                 result.add(detailHeadLineNewsPresses)
                 result.add(detailHeadLineNewsWrittenDateTime)
+                result.add(detailHeadLineNewsIsHeadLine)
             }
         }
         return result
     }
 }
 
-class NewsInformation(
+data class NewsInformation(
     var title: String,
     var content: String,
     var thumbnail: String,
     var link: String,
     var press: String,
     var writtenDateTime: String,
-) {
+    var isHeadLine: HeadLine,
+)
 
+enum class HeadLine {
+    HEAD_LINE, NORMAL
 }
+
+// 헤드라인 A가있다고했을때 그 헤드라인 포함해서 만약에 80개의 기사가있다.
+// 그러면 키워드 추출할때 80개다보내면안되니까 대표하나를 어떻게 뽑을지
