@@ -419,14 +419,6 @@ class CrawlerTest {
         val detailHeadLineNewsPresses = mutableListOf<Any>()
         val detailHeadLineNewsWrittenDateTime = mutableListOf<Any>()
         val detailHeadLineNewsIsHeadLine = mutableListOf<Any>()
-//        val headLines = mutableListOf<Any>()
-//
-//        for (headLineNewsLink in allHeadLineNewsLinks) {
-//            val headLineDoc = Jsoup.connect(headLineNewsLink).get()
-//            println(headLineDoc.getElementsByClass("cluster_banner_sub_topic").text())
-//            headLines.add(headLineDoc.getElementsByClass("cluster_banner_sub_topic").text())
-//        }
-
 
         for (link in allHeadLineNewsLinks) {
             var headLineFlag = true
@@ -489,6 +481,3 @@ data class NewsInformation(
 enum class HeadLine {
     HEAD_LINE, NORMAL
 }
-
-// 헤드라인 A가있다고했을때 그 헤드라인 포함해서 만약에 80개의 기사가있다.
-// 그러면 키워드 추출할때 80개다보내면안되니까 대표하나를 어떻게 뽑을지
