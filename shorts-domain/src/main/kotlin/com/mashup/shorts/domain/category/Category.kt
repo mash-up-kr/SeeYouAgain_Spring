@@ -16,5 +16,5 @@ import jakarta.persistence.Table
 @Entity
 class Category(
     @Column(name = "name")
-    val name: String
-): BaseEntity()
+    val name: String,
+) : BaseEntity()
