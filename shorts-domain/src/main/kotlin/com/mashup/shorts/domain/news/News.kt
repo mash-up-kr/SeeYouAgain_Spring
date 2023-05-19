@@ -1,6 +1,7 @@
 package com.mashup.shorts.domain.news
 
 import com.mashup.shorts.domain.BaseEntity
+import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.news.card.NewsCard
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -31,13 +32,20 @@ class News(
     @Column(name = "news_link", nullable = false)
     val newsLink: String,
 
-    @Column(name = "reporter", nullable = false)
-    val reporter: String,
-
     @Column(name = "press", nullable = false)
     val press: String, // 언론사
 
+    @Column(name = "written_date_time", nullable = false)
+    val writtenDateTime: String,
+
+    @Column(name = "isHeadLine", nullable = false)
+    val isHeadLine: String,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    val category: Category,
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "news_card_id", nullable = false)
-    val newsCard: NewsCard
-): BaseEntity()
+    val newsCard: NewsCard?,
+) : BaseEntity()

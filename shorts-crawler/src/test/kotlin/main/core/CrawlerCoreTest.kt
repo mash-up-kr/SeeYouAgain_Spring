@@ -1,12 +1,21 @@
 package main
 
-import java.lang.Thread.sleep
 import java.time.LocalDateTime
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.TestConstructor
+import org.springframework.test.context.TestPropertySource
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
+import com.mashup.shorts.domain.category.Category
+import com.mashup.shorts.domain.news.News
+import com.mashup.shorts.domain.news.NewsRepository
 
 private const val politicsUrl = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100"
 private const val economyUrl = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101"
@@ -62,8 +71,14 @@ private const val thumbnailIndex = 2
 private const val linkIndex = 3
 private const val pressIndex = 4
 private const val writtenDateIndex = 5
+private const val isHeadLineIndex = 6
 
-class CrawlerTest {
+@DataJpaTest
+@ActiveProfiles("test")
+internal class CrawlerCoreTest {
+
+    // @Autowired
+    // lateinit var newsRepository: NewsRepository
 
     @Test
     @DisplayName("카테고리 : 정치")
@@ -243,12 +258,12 @@ class CrawlerTest {
     @Test
     @DisplayName("모든 카테고리 한 번에 크롤링 해오기")
     fun executeCrawling() {
-        val politicsNews = ArrayList<NewsInformation>()
-        val societyNews = ArrayList<NewsInformation>()
-        val economyNews = ArrayList<NewsInformation>()
-        val lifeCultureNews = ArrayList<NewsInformation>()
-        val worldNews = ArrayList<NewsInformation>()
-        val iTScienceNews = ArrayList<NewsInformation>()
+        val politicsNews = mutableListOf<NewsInformation>()
+        val societyNews = mutableListOf<NewsInformation>()
+        val economyNews = mutableListOf<NewsInformation>()
+        val lifeCultureNews = mutableListOf<NewsInformation>()
+        val worldNews = mutableListOf<NewsInformation>()
+        val iTScienceNews = mutableListOf<NewsInformation>()
 
         for (i: Int in urls.indices) {
             log.info(LocalDateTime.now().toString() + urls[i] + " - crawling start")
@@ -259,105 +274,16 @@ class CrawlerTest {
 
             for (index: Int in 0 until numberOfNews) {
                 when (i) {
-                    0 -> politicsNews.add(
-                        NewsInformation(
-                            extractedAllNews[titleIndex][index] as? String ?: "",
-                            extractedAllNews[contentIndex][index] as? String ?: "",
-                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
-                            extractedAllNews[linkIndex][index] as? String ?: "",
-                            extractedAllNews[pressIndex][index] as? String ?: "",
-                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
-                            if (extractedAllNews[6][index] as? Boolean == true) {
-                                HeadLine.HEAD_LINE
-                            } else {
-                                HeadLine.NORMAL
-                            }
-                        )
-                    )
-
-                    1 -> economyNews.add(
-                        NewsInformation(
-                            extractedAllNews[titleIndex][index] as? String ?: "",
-                            extractedAllNews[contentIndex][index] as? String ?: "",
-                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
-                            extractedAllNews[linkIndex][index] as? String ?: "",
-                            extractedAllNews[pressIndex][index] as? String ?: "",
-                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
-                            if (extractedAllNews[6][index] as? Boolean == true) {
-                                HeadLine.HEAD_LINE
-                            } else {
-                                HeadLine.NORMAL
-                            }
-                        )
-                    )
-
-                    2 -> societyNews.add(
-                        NewsInformation(
-                            extractedAllNews[titleIndex][index] as? String ?: "",
-                            extractedAllNews[contentIndex][index] as? String ?: "",
-                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
-                            extractedAllNews[linkIndex][index] as? String ?: "",
-                            extractedAllNews[pressIndex][index] as? String ?: "",
-                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
-                            if (extractedAllNews[6][index] as? Boolean == true) {
-                                HeadLine.HEAD_LINE
-                            } else {
-                                HeadLine.NORMAL
-                            }
-                        )
-                    )
-
-                    3 -> lifeCultureNews.add(
-                        NewsInformation(
-                            extractedAllNews[titleIndex][index] as? String ?: "",
-                            extractedAllNews[contentIndex][index] as? String ?: "",
-                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
-                            extractedAllNews[linkIndex][index] as? String ?: "",
-                            extractedAllNews[pressIndex][index] as? String ?: "",
-                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
-                            if (extractedAllNews[6][index] as? Boolean == true) {
-                                HeadLine.HEAD_LINE
-                            } else {
-                                HeadLine.NORMAL
-                            }
-                        )
-                    )
-
-                    4 -> worldNews.add(
-                        NewsInformation(
-                            extractedAllNews[titleIndex][index] as? String ?: "",
-                            extractedAllNews[contentIndex][index] as? String ?: "",
-                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
-                            extractedAllNews[linkIndex][index] as? String ?: "",
-                            extractedAllNews[pressIndex][index] as? String ?: "",
-                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
-                            if (extractedAllNews[6][index] as? Boolean == true) {
-                                HeadLine.HEAD_LINE
-                            } else {
-                                HeadLine.NORMAL
-                            }
-                        )
-                    )
-
-                    5 -> iTScienceNews.add(
-                        NewsInformation(
-                            extractedAllNews[titleIndex][index] as? String ?: "",
-                            extractedAllNews[contentIndex][index] as? String ?: "",
-                            extractedAllNews[thumbnailIndex][index] as? String ?: "",
-                            extractedAllNews[linkIndex][index] as? String ?: "",
-                            extractedAllNews[pressIndex][index] as? String ?: "",
-                            extractedAllNews[writtenDateIndex][index] as? String ?: "",
-                            if (extractedAllNews[6][index] as? Boolean == true) {
-                                HeadLine.HEAD_LINE
-                            } else {
-                                HeadLine.NORMAL
-                            }
-                        )
-                    )
+                    0 -> politicsNews.add(NewsInformation(extractedAllNews, index))
+                    1 -> economyNews.add(NewsInformation(extractedAllNews, index))
+                    2 -> societyNews.add(NewsInformation(extractedAllNews, index))
+                    3 -> lifeCultureNews.add(NewsInformation(extractedAllNews, index))
+                    4 -> worldNews.add(NewsInformation(extractedAllNews, index))
+                    5 -> iTScienceNews.add(NewsInformation(extractedAllNews, index))
                 }
             }
-            log.info("Wating 10 seconds ....")
-            sleep(10000)
+            log.info("Take a break for 10 seconds to prevent request load")
+            Thread.sleep(10000)
         }
         log.info("Number Of politicsNews = ${politicsNews.size}")
         log.info("Number Of economyNews = ${economyNews.size}")
@@ -365,6 +291,143 @@ class CrawlerTest {
         log.info("Number Of lifeCultureNews = ${lifeCultureNews.size}")
         log.info("Number Of worldNews = ${worldNews.size}")
         log.info("Number Of iTScienceNews = ${iTScienceNews.size}")
+    }
+
+
+    @Test
+    @DisplayName("크롤링 된 뉴스들 저장 테스트")
+    private fun saveTest() {
+        val politicsNews = mutableListOf<NewsInformation>()
+        val societyNews = mutableListOf<NewsInformation>()
+        val economyNews = mutableListOf<NewsInformation>()
+        val lifeCultureNews = mutableListOf<NewsInformation>()
+        val worldNews = mutableListOf<NewsInformation>()
+        val iTScienceNews = mutableListOf<NewsInformation>()
+
+        for (i: Int in urls.indices) {
+            log.info(LocalDateTime.now().toString() + urls[i] + " - crawling start")
+            val doc = setup(urls[i], i)
+            val allHeadLineNewsLinks = extractAllHeadLineNewsLinks(doc)
+            val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, i)
+            val numberOfNews = extractedAllNews[0].size
+
+            for (index: Int in 0 until numberOfNews) {
+                when (i) {
+                    0 -> politicsNews.add(NewsInformation(extractedAllNews, index))
+                    1 -> economyNews.add(NewsInformation(extractedAllNews, index))
+                    2 -> societyNews.add(NewsInformation(extractedAllNews, index))
+                    3 -> lifeCultureNews.add(NewsInformation(extractedAllNews, index))
+                    4 -> worldNews.add(NewsInformation(extractedAllNews, index))
+                    5 -> iTScienceNews.add(NewsInformation(extractedAllNews, index))
+                }
+            }
+            log.info("Take a break for 10 seconds to prevent request load")
+            Thread.sleep(10000)
+        }
+
+        val allNews = mutableListOf<News>()
+
+        for (news in politicsNews) {
+            allNews.add(
+                News(
+                    news.title,
+                    news.content,
+                    news.thumbnail,
+                    news.link,
+                    news.press,
+                    news.writtenDateTime,
+                    news.isHeadLine.name,
+                    Category("정치"),
+                    null
+                )
+            )
+        }
+
+        for (news in economyNews) {
+            allNews.add(
+                News(
+                    news.title,
+                    news.content,
+                    news.thumbnail,
+                    news.link,
+                    news.press,
+                    news.writtenDateTime,
+                    news.isHeadLine.name,
+                    Category("경제"),
+                    null
+                )
+            )
+        }
+
+        for (news in societyNews) {
+            allNews.add(
+                News(
+                    news.title,
+                    news.content,
+                    news.thumbnail,
+                    news.link,
+                    news.press,
+                    news.writtenDateTime,
+                    news.isHeadLine.name,
+                    Category("사회"),
+                    null
+                )
+            )
+        }
+
+        for (news in lifeCultureNews) {
+            allNews.add(
+                News(
+                    news.title,
+                    news.content,
+                    news.thumbnail,
+                    news.link,
+                    news.press,
+                    news.writtenDateTime,
+                    news.isHeadLine.name,
+                    Category("생활/문화"),
+                    null
+                )
+            )
+        }
+
+        for (news in worldNews) {
+            allNews.add(
+                News(
+                    news.title,
+                    news.content,
+                    news.thumbnail,
+                    news.link,
+                    news.press,
+                    news.writtenDateTime,
+                    news.isHeadLine.name,
+                    Category("세계"),
+                    null
+                )
+            )
+        }
+
+        for (news in iTScienceNews) {
+            allNews.add(
+                News(
+                    news.title,
+                    news.content,
+                    news.thumbnail,
+                    news.link,
+                    news.press,
+                    news.writtenDateTime,
+                    news.isHeadLine.name,
+                    Category("IT/과학"),
+                    null
+                )
+            )
+        }
+
+//        for (allNew in allNews) {
+//            newsRepository.save(allNew)
+//        }
+
+        // assertThat()
     }
 
     /**
@@ -466,6 +529,7 @@ class CrawlerTest {
         }
         return result
     }
+
 }
 
 data class NewsInformation(
@@ -476,7 +540,17 @@ data class NewsInformation(
     var press: String,
     var writtenDateTime: String,
     var isHeadLine: HeadLine,
-)
+) {
+    constructor(extractedNews: List<List<Any>>, index: Int) : this(
+        extractedNews[titleIndex][index] as? String ?: "",
+        extractedNews[contentIndex][index] as? String ?: "",
+        extractedNews[thumbnailIndex][index] as? String ?: "",
+        extractedNews[linkIndex][index] as? String ?: "",
+        extractedNews[pressIndex][index] as? String ?: "",
+        extractedNews[writtenDateIndex][index] as? String ?: "",
+        if (extractedNews[isHeadLineIndex][index] as? Boolean == true) HeadLine.HEAD_LINE else HeadLine.NORMAL
+    )
+}
 
 enum class HeadLine {
     HEAD_LINE, NORMAL
