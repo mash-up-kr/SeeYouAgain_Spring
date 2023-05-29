@@ -1,12 +1,7 @@
 package com.mashup.shorts.domain.news
 
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
-/**
- * NewsRepository
- *
- * @author JungGyun.Choi
- * @version 1.0.0
- * @since 2023. 05. 13.
- */
+@Repository
 interface NewsRepository : JpaRepository<News, Long>
