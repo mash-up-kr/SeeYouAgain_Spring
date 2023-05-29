@@ -53,7 +53,7 @@ class CrawlerCore(
                 News(
                     it.title, it.content, it.thumbnail, it.link,
                     it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("정치"), null
+                    Category("정치")
                 )
             )
         }
@@ -63,7 +63,7 @@ class CrawlerCore(
                 News(
                     it.title, it.content, it.thumbnail, it.link,
                     it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("경제"), null
+                    Category("경제")
                 )
             )
         }
@@ -73,7 +73,7 @@ class CrawlerCore(
                 News(
                     it.title, it.content, it.thumbnail, it.link,
                     it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("사회"), null
+                    Category("사회")
                 )
             )
         }
@@ -83,7 +83,7 @@ class CrawlerCore(
                 News(
                     it.title, it.content, it.thumbnail, it.link,
                     it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("생활/문화"), null
+                    Category("생활/문화")
                 )
             )
         }
@@ -93,7 +93,7 @@ class CrawlerCore(
                 News(
                     it.title, it.content, it.thumbnail, it.link,
                     it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("세계"), null
+                    Category("세계")
                 )
             )
         }
@@ -103,7 +103,7 @@ class CrawlerCore(
                 News(
                     it.title, it.content, it.thumbnail, it.link,
                     it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("IT/과학"), null
+                    Category("IT/과학")
                 )
             )
         }

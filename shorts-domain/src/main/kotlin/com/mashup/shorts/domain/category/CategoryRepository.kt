@@ -1,12 +1,7 @@
 package com.mashup.shorts.domain.category
 
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
-/**
- * CategoryRepository
- *
- * @author JungGyun.Choi
- * @version 1.0.0
- * @since 2023. 05. 13.
- */
+@Repository
 interface CategoryRepository : JpaRepository<Category, Long>
