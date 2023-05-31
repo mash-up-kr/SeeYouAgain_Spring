@@ -1,0 +1,5 @@
+ncp:
+  endpoint: https://naveropenapi.apigw.ntruss.com/text-summary/v1/summarize
+  clientId: ld8eld1l8w
+  clientSecret: Uoq1gok30f8xwJtYLrrlOLifPv56uXbpelfrQjRV
+  contentType: application/json

@@ -1,0 +1,23 @@
+spring:
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 1
+    url: jdbc:mysql://localhost:3306/shorts
+    user: root
+    password: 112233
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shorts?Unicode=true&characterEncoding=utf8
+    username: root
+    password: 112233
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_batch_size: 999
+        show_sql: true
+        format_sql: true
+        use-new-id-generator-mappings: false
