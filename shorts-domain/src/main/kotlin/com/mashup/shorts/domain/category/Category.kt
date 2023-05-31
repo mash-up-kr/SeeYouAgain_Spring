@@ -8,6 +8,6 @@ import jakarta.persistence.Table
 @Table(name = "category")
 @Entity
 class Category(
-    @Column(name = "name", nullable = false, length = 10)
+    @Column(name = "name", nullable = false, length = 10, unique = true)
     val name: String,
 ) : BaseEntity()

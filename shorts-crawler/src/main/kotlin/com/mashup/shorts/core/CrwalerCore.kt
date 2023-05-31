@@ -6,135 +6,211 @@ import org.jsoup.select.Elements
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
-import com.mashup.shorts.domain.category.Category
+import com.mashup.shorts.domain.category.CategoryRepository
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.news.NewsRepository
+import com.mashup.shorts.domain.newscard.NewsCard
+import com.mashup.shorts.domain.newscard.NewsCardRepository
 
 
 @Component
 class CrawlerCore(
     private val newsRepository: NewsRepository,
+    private val newsCardRepository: NewsCardRepository,
+    private val categoryRepository: CategoryRepository,
 ) {
 
-    @Transactional
+    @Transactional(noRollbackFor = [Exception::class])
     fun executeCrawling() {
-        val politicsNews = mutableListOf<NewsInformation>()
-        val economyNews = mutableListOf<NewsInformation>()
-        val societyNews = mutableListOf<NewsInformation>()
-        val lifeCultureNews = mutableListOf<NewsInformation>()
-        val worldNews = mutableListOf<NewsInformation>()
-        val iTScienceNews = mutableListOf<NewsInformation>()
-
-        val allNews = mutableListOf<News>()
+        var newsBundle: MutableList<News>
+        var newsCards = mutableListOf<NewsCard>()
 
         for (i: Int in urls.indices) {
-            log.info(LocalDateTime.now().toString() + urls[i] + " - crawling start")
+            log.info(LocalDateTime.now().toString() + " - " + urls[i] + " - crawling start")
             val doc = setup(urls[i], i)
             val allHeadLineNewsLinks = extractAllHeadLineNewsLinks(doc)
             val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, i)
-            val numberOfNews = extractedAllNews[0].size
 
-            for (index: Int in 0 until numberOfNews) {
+            for (index: Int in 0 until extractedAllNews[7].size) {
+                newsBundle = mutableListOf()
+                val relatedNewsCount = extractedAllNews[7][index].toString().toInt()
+                for (columnIndex in 0 until relatedNewsCount) {
+                    when (i) {
+                        0 -> {
+                            newsBundle.add(
+                                News(
+                                    extractedAllNews[titleIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[contentIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[thumbnailIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[linkIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[pressIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[writtenDateIndex][columnIndex] as? String ?: "",
+                                    if (extractedAllNews[isHeadLineIndex][columnIndex] as? Boolean == true) "HEADLINE" else "NORMAL",
+                                    categoryRepository.findByName("정치")
+                                )
+                            )
+                        }
+
+                        1 -> {
+                            newsBundle.add(
+                                News(
+                                    extractedAllNews[titleIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[contentIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[thumbnailIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[linkIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[pressIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[writtenDateIndex][columnIndex] as? String ?: "",
+                                    if (extractedAllNews[isHeadLineIndex][columnIndex] as? Boolean == true) "HEADLINE" else "NORMAL",
+                                    categoryRepository.findByName("경제")
+                                )
+                            )
+                        }
+
+                        2 -> {
+                            newsBundle.add(
+                                News(
+                                    extractedAllNews[titleIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[contentIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[thumbnailIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[linkIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[pressIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[writtenDateIndex][columnIndex] as? String ?: "",
+                                    if (extractedAllNews[isHeadLineIndex][columnIndex] as? Boolean == true) "HEADLINE" else "NORMAL",
+                                    categoryRepository.findByName("사회")
+                                )
+                            )
+                        }
+
+                        3 -> {
+                            newsBundle.add(
+                                News(
+                                    extractedAllNews[titleIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[contentIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[thumbnailIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[linkIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[pressIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[writtenDateIndex][columnIndex] as? String ?: "",
+                                    if (extractedAllNews[isHeadLineIndex][columnIndex] as? Boolean == true) "HEADLINE" else "NORMAL",
+                                    categoryRepository.findByName("생활/문화")
+                                )
+                            )
+                        }
+
+                        4 -> {
+                            newsBundle.add(
+                                News(
+                                    extractedAllNews[titleIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[contentIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[thumbnailIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[linkIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[pressIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[writtenDateIndex][columnIndex] as? String ?: "",
+                                    if (extractedAllNews[isHeadLineIndex][columnIndex] as? Boolean == true) "HEADLINE" else "NORMAL",
+                                    categoryRepository.findByName("세계")
+                                )
+                            )
+                        }
+
+                        5 -> {
+                            newsBundle.add(
+                                News(
+                                    extractedAllNews[titleIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[contentIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[thumbnailIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[linkIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[pressIndex][columnIndex] as? String ?: "",
+                                    extractedAllNews[writtenDateIndex][columnIndex] as? String ?: "",
+                                    if (extractedAllNews[isHeadLineIndex][columnIndex] as? Boolean == true) "HEADLINE" else "NORMAL",
+                                    categoryRepository.findByName("IT/과학")
+                                )
+                            )
+                        }
+                    }
+                }
+                for (news in newsBundle) {
+                    newsRepository.save(news)
+                }
                 when (i) {
-                    0 -> politicsNews.add(NewsInformation(extractedAllNews, index))
-                    1 -> economyNews.add(NewsInformation(extractedAllNews, index))
-                    2 -> societyNews.add(NewsInformation(extractedAllNews, index))
-                    3 -> lifeCultureNews.add(NewsInformation(extractedAllNews, index))
-                    4 -> worldNews.add(NewsInformation(extractedAllNews, index))
-                    5 -> iTScienceNews.add(NewsInformation(extractedAllNews, index))
+                    0 -> {
+                        newsCards.add(
+                            NewsCard(
+                                categoryRepository.findByName("정치"),
+                                newsBundle.map { it.id }.toString(),
+                                ""
+                            )
+                        )
+                    }
+
+                    1 -> {
+                        newsCards.add(
+                            NewsCard(
+                                categoryRepository.findByName("경제"),
+                                newsBundle.map { it.id }.toString(),
+                                ""
+                            )
+                        )
+                    }
+
+                    2 -> {
+                        newsCards.add(
+                            NewsCard(
+                                categoryRepository.findByName("사회"),
+                                newsBundle.map { it.id }.toString(),
+                                ""
+                            )
+                        )
+                    }
+
+                    3 -> {
+                        newsCards.add(
+                            NewsCard(
+                                categoryRepository.findByName("생활/문화"),
+                                newsBundle.map { it.id }.toString(),
+                                ""
+                            )
+                        )
+                    }
+
+                    4 -> {
+                        newsCards.add(
+                            NewsCard(
+                                categoryRepository.findByName("세계"),
+                                newsBundle.map { it.id }.toString(),
+                                ""
+                            )
+                        )
+                    }
+
+                    5 -> {
+                        newsCards.add(
+                            NewsCard(
+                                categoryRepository.findByName("IT/과학"),
+                                newsBundle.map { it.id }.toString(),
+                                ""
+                            )
+                        )
+                    }
                 }
             }
-            log.info("Take a break for 10 seconds to prevent request load")
-            Thread.sleep(10000)
-        }
 
-        politicsNews.asSequence().forEach {
-            allNews.add(
-                News(
-                    it.title, it.content, it.thumbnail, it.link,
-                    it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("정치")
-                )
-            )
-        }
+            for (newsCard in newsCards) {
+                newsCardRepository.save(newsCard)
+            }
 
-        economyNews.asSequence().forEach {
-            allNews.add(
-                News(
-                    it.title, it.content, it.thumbnail, it.link,
-                    it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("경제")
-                )
-            )
-        }
+            log.info("Take a break for 3 seconds to prevent request load")
+            Thread.sleep(3000)
 
-        societyNews.asSequence().forEach {
-            allNews.add(
-                News(
-                    it.title, it.content, it.thumbnail, it.link,
-                    it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("사회")
-                )
-            )
+            newsCards = mutableListOf()
         }
-
-        lifeCultureNews.asSequence().forEach {
-            allNews.add(
-                News(
-                    it.title, it.content, it.thumbnail, it.link,
-                    it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("생활/문화")
-                )
-            )
-        }
-
-        worldNews.asSequence().forEach {
-            allNews.add(
-                News(
-                    it.title, it.content, it.thumbnail, it.link,
-                    it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("세계")
-                )
-            )
-        }
-
-        lifeCultureNews.asSequence().forEach {
-            allNews.add(
-                News(
-                    it.title, it.content, it.thumbnail, it.link,
-                    it.press, it.writtenDateTime, it.isHeadLine.name,
-                    Category("IT/과학")
-                )
-            )
-        }
-
-        for (allNew in allNews) {
-            newsRepository.save(allNew)
-        }
+        log.info(LocalDateTime.now().toString() + " - " + "crawling done")
     }
 
-    /**
-    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100
-    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101
-    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=102
-    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=103
-    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=104
-    https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=105
-    setup()메서드는 위 링크들에서
-    "N개의 기사 더보기"를 누르면 이동할 링크들을 뽑아온다.
-    각 헤드라인
-     */
     private fun setup(url: String, i: Int): Elements {
         return Jsoup.connect(url).get()
             .getElementsByClass(moreHeadLineLinksElements[i])
             .tagName("a")
     }
 
-    /**
-    https://news.naver.com/main/clusterArticles.naver?id=c_202305150820_00000001&mode=LSD&mid=shm&sid1=100&oid=421&aid=0006805653
-    setup()메서드에서 뽑은 "N개의 기사 더보기"가 가진 링크를 하나씩 탐색하는 동작을 수행한다.
-    즉, 각각의 헤드라인에 대한 N개의 기사를 볼 수 있는 링크를 뽑아낸다.
-     */
     private fun extractAllHeadLineNewsLinks(allHeadLineMoreLinksDoc: Elements): List<String> {
         val allDetailHeadLineNewsLinks = ArrayList<String>()
 
@@ -151,8 +227,6 @@ class CrawlerCore(
             .distinct()
     }
 
-    // 특정 헤드라인에 해당하는 모든 뉴스를 순회하며
-    // 제목, 내용, 썸네일, 링크, 언론사, 작성날짜를 순서대로 담은 리스트를 반환한다.
     private fun extractAllDetailNewsInHeadLine(
         allHeadLineNewsLinks: List<String>,
         categorySeparator: Int,
@@ -165,13 +239,20 @@ class CrawlerCore(
         val detailHeadLineNewsPresses = mutableListOf<Any>()
         val detailHeadLineNewsWrittenDateTime = mutableListOf<Any>()
         val detailHeadLineNewsIsHeadLine = mutableListOf<Any>()
+        val detailHeadLineNewsRelatedCount = mutableListOf<Any>()
 
         for (link in allHeadLineNewsLinks) {
             var headLineFlag = true
             val moreDoc = Jsoup.connect(link).get()
-            val crawledHtmlLinks = moreDoc.getElementsByClass(detailDocClassNames[categorySeparator])
+            val crawledHtmlLinks = moreDoc
+                .getElementsByClass(detailDocClassNames[categorySeparator])
                 .toString()
                 .split("</a>")
+
+            val relatedNewsCount = moreDoc
+                .getElementsByClass(relatedCountClassName)
+                .text()
+                .toInt()
 
             var numberOfNews = 0
             for (htmlLink in crawledHtmlLinks) {
@@ -182,11 +263,16 @@ class CrawlerCore(
                 if (!detailHeadLineNewsLinks.contains(detailLink) && detailLink.isNotEmpty()) {
                     detailHeadLineNewsLinks.add(detailLink)
                     val detailDoc = Jsoup.connect(detailLink).get()
-                    val image = detailDoc.getElementById(imageIdName) ?: ""
-                    val title = detailDoc.getElementsByClass(titleClassName).text()
-                    val content = detailDoc.getElementsByClass(contentClassName).text()
-                    val press = detailDoc.getElementsByClass(pressClassName).text()
-                    val writtenDateTime = detailDoc.getElementsByClass(writtenDateTimeClassName).text()
+                    val image = detailDoc
+                        .getElementById(imageIdName) ?: ""
+                    val title = detailDoc
+                        .getElementsByClass(titleClassName).text()
+                    val content = detailDoc
+                        .getElementsByClass(contentClassName).addClass("#text").text()
+                    val press = detailDoc
+                        .getElementsByClass(pressClassName).text()
+                    val writtenDateTime = detailDoc
+                        .getElementsByClass(writtenDateTimeClassName).text()
                     detailHeadLineNewsTitles.add(title)
                     detailHeadLineContents.add(content)
                     detailHeadLineThumbnails.add(image.toString())
@@ -201,14 +287,16 @@ class CrawlerCore(
                         detailHeadLineNewsIsHeadLine.add(false)
                     }
                 }
-                result.add(detailHeadLineNewsTitles)
-                result.add(detailHeadLineContents)
-                result.add(detailHeadLineThumbnails)
-                result.add(detailHeadLineNewsLinks)
-                result.add(detailHeadLineNewsPresses)
-                result.add(detailHeadLineNewsWrittenDateTime)
-                result.add(detailHeadLineNewsIsHeadLine)
             }
+            detailHeadLineNewsRelatedCount.add(relatedNewsCount)
+            result.add(detailHeadLineNewsTitles)
+            result.add(detailHeadLineContents)
+            result.add(detailHeadLineThumbnails)
+            result.add(detailHeadLineNewsLinks)
+            result.add(detailHeadLineNewsPresses)
+            result.add(detailHeadLineNewsWrittenDateTime)
+            result.add(detailHeadLineNewsIsHeadLine)
+            result.add(detailHeadLineNewsRelatedCount)
         }
         return result
     }
@@ -261,6 +349,14 @@ class CrawlerCore(
         private const val imageIdName = "img1"
         private const val pressClassName = "media_end_linked_more_point"
         private const val writtenDateTimeClassName = "media_end_head_info_datestamp_time _ARTICLE_DATE_TIME"
+        private const val relatedCountClassName = "cluster_banner_count_icon_num"
 
+        private const val titleIndex = 0
+        private const val contentIndex = 1
+        private const val thumbnailIndex = 2
+        private const val linkIndex = 3
+        private const val pressIndex = 4
+        private const val writtenDateIndex = 5
+        private const val isHeadLineIndex = 6
     }
 }

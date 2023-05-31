@@ -2,6 +2,7 @@ package com.mashup.shorts.domain.newscard
 
 import com.mashup.shorts.domain.BaseEntity
 import com.mashup.shorts.domain.category.Category
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.JoinColumn
@@ -14,7 +15,11 @@ import jakarta.persistence.Table
 class NewsCard(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    val category: Category,
-    val multipleNews: String,
-    val keywords: String,
+    val category: Category?,
+
+    @Column(name = "multiple_news", length = 10000)
+    val multipleNews: String?,
+
+    @Column(name = "keywords")
+    val keywords: String?,
 ) : BaseEntity()

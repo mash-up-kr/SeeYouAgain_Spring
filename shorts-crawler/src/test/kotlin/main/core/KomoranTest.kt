@@ -4,6 +4,7 @@ import java.io.StringReader
 import org.apache.lucene.analysis.Analyzer
 import org.apache.lucene.analysis.standard.StandardAnalyzer
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL
 import kr.co.shineware.nlp.komoran.core.Komoran
@@ -11,6 +12,7 @@ import kr.co.shineware.nlp.komoran.core.Komoran
 class KomoranTest {
 
     @Test
+    @DisplayName("Komoran 테스트1 - 명사만 추출")
     fun main() {
         val komoran = Komoran(DEFAULT_MODEL.LIGHT)
         val document = "野 \"日, '들러리 시찰' 후 수산물 수입 요구…짜고치는 고스톱\""
@@ -24,13 +26,10 @@ class KomoranTest {
     }
 
     @Test
+    @DisplayName("Komoran 테스트1 - 등장 횟수에 따른 내림차순 출력")
     fun main2() {
         val sentence = "野 \"日, '들러리 시찰' 후 수산물 수입 요구…짜고치는 고스톱\""
-
-        // Lucene의 StandardAnalyzer를 사용하여 단어의 등장 횟수 계산
         val analyzer: Analyzer = StandardAnalyzer()
-
-        // 문장을 단어로 분석하여 단어의 등장 횟수 계산
         val wordCountMap = HashMap<String, Int>()
 
         StringReader(sentence).use { reader ->
@@ -43,7 +42,6 @@ class KomoranTest {
                 val count = wordCountMap.getOrDefault(word, 0)
                 wordCountMap[word] = count + 1
             }
-
             tokenStream.end()
         }
 
