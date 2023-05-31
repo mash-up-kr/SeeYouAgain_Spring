@@ -1,7 +1,7 @@
 create table shorts.category
 (
     id          bigint auto_increment primary key,
-    name        varchar(10) not null,
+    name        varchar(10) not null unique key,
     created_at  datetime(6) not null,
     modified_at datetime(6) null
 ) ENGINE = InnoDB
@@ -23,10 +23,8 @@ create table shorts.member_category
     created_at  datetime(6) not null,
     modified_at datetime(6) null,
 
-    foreign key (category_id) references shorts
-        .category (id),
-    foreign key (member_id) references shorts
-        .member (id)
+    foreign key (category_id) references shorts.category (id),
+    foreign key (member_id) references shorts.member (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
@@ -44,8 +42,7 @@ create table shorts.news
     created_at          datetime(6)    not null,
     modified_at         datetime(6)    null,
 
-    foreign key (category_id) references shorts
-        .category (id)
+    foreign key (category_id) references shorts.category (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
@@ -57,8 +54,7 @@ create table shorts.news_card
     category_id   bigint        not null,
     created_at    datetime(6)   not null,
     modified_at   datetime(6)   null,
-    foreign key (category_id) references shorts
-        .category (id)
+    foreign key (category_id) references shorts.category (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
@@ -69,10 +65,8 @@ create table shorts.member_news
     news_id     bigint      null,
     created_at  datetime(6) not null,
     modified_at datetime(6) null,
-    foreign key (news_id) references shorts
-        .news (id),
-    foreign key (member_id) references shorts
-        .member (id)
+    foreign key (news_id) references shorts.news (id),
+    foreign key (member_id) references shorts.member (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
