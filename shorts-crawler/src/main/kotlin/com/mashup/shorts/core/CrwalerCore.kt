@@ -25,229 +25,87 @@ class CrawlerCore(
 
     @Transactional
     fun executeCrawling() {
-        var newsBundle = mutableListOf<News>()
-        var newsCards = mutableListOf<NewsCard>()
-
         // 특정 카테고리 순회
-        //urls.indices
-        for (categoryIndex: Int in 5..5) {
+        for (categoryIndex: Int in urls.indices) {
             log.info(LocalDateTime.now().toString() + " - " + urls[categoryIndex] + " - crawling start")
             val doc = setup(urls[categoryIndex], categoryIndex)
             val allHeadLineNewsLinks = extractAllHeadLineNewsLinks(doc)
             val extractedAllNews = extractAllDetailNewsInHeadLine(allHeadLineNewsLinks, categoryIndex)
+            val numberOfHeadLine = extractedAllNews[RELATED_COUNT_INDEX].size
+            val newsCards = mutableListOf<NewsCard>()
+
+            val category = when (categoryIndex) {
+                0 -> categoryRepository.findByName(POLITICS)
+                1 -> categoryRepository.findByName(ECONOMIC)
+                2 -> categoryRepository.findByName(SOCIETY)
+                3 -> categoryRepository.findByName(LIFE_CULTURE)
+                4 -> categoryRepository.findByName(WORLD)
+                5 -> categoryRepository.findByName(IT_SCIENCE)
+                else -> null
+            }
+
+            var relatedNewsCount = 0
 
             // 특정 카테고리의 헤드라인 갯수 만큼 순회
-            for (index: Int in 0 until extractedAllNews[RELATED_COUNT_INDEX].size) {
-                val relatedNewsCount = extractedAllNews[RELATED_COUNT_INDEX][index].toString().toInt()
+            for (num: Int in 0 until numberOfHeadLine) {
+                val newsBundle = mutableListOf<News>()
+                val numberOfRelatedNews = extractedAllNews[RELATED_COUNT_INDEX][num].toString().toInt()
 
-                // 특정 헤드라인의 N개의 관련된 기사 순회
-                for (iterator in 0 until relatedNewsCount) {
-                    when (categoryIndex) {
-                        0 -> {
-                            newsBundle.add(
-                                News(
-                                    extractedAllNews,
-                                    TITLE_INDEX,
-                                    CONTENT_INDEX,
-                                    IMAGE_LINK_INDEX,
-                                    LINK_INDEX,
-                                    PRESS_INDEX,
-                                    WRITTEN_DATETIME_INDEX,
-                                    IS_HEADLINE_INDEX,
-                                    iterator,
-                                    categoryRepository.findByName(POLITICS)
-                                )
-                            )
-                        }
+                // 헤드라인을 기점으로 모든 카테고리 내의 기사들을 순회
+                for (index in relatedNewsCount until relatedNewsCount + numberOfRelatedNews) {
+                    if (index >= extractedAllNews[TITLE_INDEX].size) {
+                        break
+                    }
+                    val title = extractedAllNews[TITLE_INDEX][index].toString()
+                    val content = extractedAllNews[CONTENT_INDEX][index].toString()
+                    val imageLink = extractedAllNews[IMAGE_LINK_INDEX][index].toString()
+                    val link = extractedAllNews[LINK_INDEX][index].toString()
+                    val press = extractedAllNews[PRESS_INDEX][index].toString()
+                    val writtenDateTime = extractedAllNews[WRITTEN_DATETIME_INDEX][index].toString()
+                    val isHeadLine =
+                        if (extractedAllNews[IS_HEADLINE_INDEX][index] as? Boolean == true) HEADLINE else NORMAL
 
-                        1 -> {
-                            newsBundle.add(
-                                News(
-                                    extractedAllNews,
-                                    TITLE_INDEX,
-                                    CONTENT_INDEX,
-                                    IMAGE_LINK_INDEX,
-                                    LINK_INDEX,
-                                    PRESS_INDEX,
-                                    WRITTEN_DATETIME_INDEX,
-                                    IS_HEADLINE_INDEX,
-                                    iterator,
-                                    categoryRepository.findByName(ECONOMIC)
-                                )
-                            )
-                        }
-
-                        2 -> {
-                            newsBundle.add(
-                                News(
-                                    extractedAllNews,
-                                    TITLE_INDEX,
-                                    CONTENT_INDEX,
-                                    IMAGE_LINK_INDEX,
-                                    LINK_INDEX,
-                                    PRESS_INDEX,
-                                    WRITTEN_DATETIME_INDEX,
-                                    IS_HEADLINE_INDEX,
-                                    iterator,
-                                    categoryRepository.findByName(SOCIETY)
-                                )
-                            )
-                        }
-
-                        3 -> {
-                            newsBundle.add(
-                                News(
-                                    extractedAllNews,
-                                    TITLE_INDEX,
-                                    CONTENT_INDEX,
-                                    IMAGE_LINK_INDEX,
-                                    LINK_INDEX,
-                                    PRESS_INDEX,
-                                    WRITTEN_DATETIME_INDEX,
-                                    IS_HEADLINE_INDEX,
-                                    iterator,
-                                    categoryRepository.findByName(LIFE_CULTURE)
-                                )
-                            )
-                        }
-
-                        4 -> {
-                            newsBundle.add(
-                                News(
-                                    extractedAllNews,
-                                    TITLE_INDEX,
-                                    CONTENT_INDEX,
-                                    IMAGE_LINK_INDEX,
-                                    LINK_INDEX,
-                                    PRESS_INDEX,
-                                    WRITTEN_DATETIME_INDEX,
-                                    IS_HEADLINE_INDEX,
-                                    iterator,
-                                    categoryRepository.findByName(WORLD)
-                                )
-                            )
-                        }
-
-                        5 -> {
-                            newsBundle.add(
-                                News(
-                                    extractedAllNews,
-                                    TITLE_INDEX,
-                                    CONTENT_INDEX,
-                                    IMAGE_LINK_INDEX,
-                                    LINK_INDEX,
-                                    PRESS_INDEX,
-                                    WRITTEN_DATETIME_INDEX,
-                                    IS_HEADLINE_INDEX,
-                                    iterator,
-                                    categoryRepository.findByName(IT_SCIENCE)
-                                )
-                            )
-                        }
+                    if (category != null) {
+                        newsBundle.add(
+                            News(title, content, imageLink, link, press, writtenDateTime, isHeadLine, category)
+                        )
                     }
                 }
 
-                val uniqueTitles = linkedSetOf<String>()
-                val filteredNews = mutableListOf<News>()
+                relatedNewsCount += numberOfRelatedNews
 
                 for (news in newsBundle) {
-                    if (uniqueTitles.add(news.title)) {
-                        filteredNews.add(news)
-                    }
+                    newsRepository.save(news)
                 }
 
-                for (news in filteredNews) newsRepository.save(news)
-
-                println("newsRepository.findAll().size = ${newsRepository.findAll().size}")
-
-                when (categoryIndex) {
-                    0 -> {
-                        newsCards.add(
-                            NewsCard(
-                                categoryRepository.findByName(POLITICS),
-                                newsBundle.map { it.id }.toString()
-                                    .replace("[", "")
-                                    .replace("]", ""),
-                                ""
-                            )
-                        )
-                    }
-
-                    1 -> {
-                        newsCards.add(
-                            NewsCard(
-                                categoryRepository.findByName(ECONOMIC),
-                                newsBundle.map { it.id }.toString()
-                                    .replace("[", "")
-                                    .replace("]", ""),
-                                ""
-                            )
-                        )
-                    }
-
-                    2 -> {
-                        newsCards.add(
-                            NewsCard(
-                                categoryRepository.findByName(SOCIETY),
-                                newsBundle.map { it.id }.toString()
-                                    .replace("[", "")
-                                    .replace("]", ""),
-                                ""
-                            )
-                        )
-                    }
-
-                    3 -> {
-                        newsCards.add(
-                            NewsCard(
-                                categoryRepository.findByName(LIFE_CULTURE),
-                                newsBundle.map { it.id }.toString()
-                                    .replace("[", "")
-                                    .replace("]", ""),
-                                ""
-                            )
-                        )
-                    }
-
-                    4 -> {
-                        newsCards.add(
-                            NewsCard(
-                                categoryRepository.findByName(WORLD),
-                                newsBundle.map { it.id }.toString()
-                                    .replace("[", "")
-                                    .replace("]", ""),
-                                ""
-                            )
-                        )
-                    }
-
-                    5 -> {
-                        newsCards.add(
-                            NewsCard(
-                                categoryRepository.findByName(IT_SCIENCE),
-                                newsBundle.map { it.id }.toString()
-                                    .replace("[", "")
-                                    .replace("]", ""),
-                                ""
-                            )
-                        )
-                    }
-                }
+                newsCards.add(
+                    NewsCard(
+                        category, newsBundle.map { it.id }.toString()
+                            .replace("[", "")
+                            .replace("]", ""),
+                        ""
+                    )
+                )
             }
+
             for (newsCard in newsCards) {
-                val newsId = newsCard.multipleNews?.get(0)?.code?.toLong()
-                val headLineNewsContent = newsId?.let { newsRepository.findById(it).get().content }
-                newsCard.insertKeyword(headLineNewsContent?.let { extractKeyword(it) })
+                println("newsCard.multipleNews = ${newsCard.multipleNews}")
+                val newsId =
+                    newsCard.multipleNews.toString().substring(0, newsCard.multipleNews.toString().indexOf(","))
+                        .toLong()
+                val headLineNewsContent =
+                    newsId.let { newsId.let { newsRepository.findById(it).get().content } }
+                newsCard.insertKeyword(extractKeyword(headLineNewsContent))
                 newsCardRepository.save(newsCard)
             }
-            newsBundle = mutableListOf()
-            newsCards = mutableListOf()
+
             log.info("Take a break for 3 seconds to prevent request overload")
             Thread.sleep(3000)
-            log.info(LocalDateTime.now().toString() + " - " + "crawling done")
-        }
-    }
 
+        }
+
+        log.info(LocalDateTime.now().toString() + " - " + "crawling done")
+    }
 
     private fun extractKeyword(content: String): String {
         val keywordCount = 5
@@ -335,7 +193,7 @@ class CrawlerCore(
                     detailHeadLineNewsLinks.add(detailLink)
                     val detailDoc = Jsoup.connect(detailLink).get()
                     val imageLink = detailDoc
-                        .getElementById(IMAGE_ID_NAME) ?: ""
+                        .getElementById(IMAGE_ID_NAME).toString()
                     val title = detailDoc
                         .getElementsByClass(TITLE_CLASS_NAME).text()
                     val content = detailDoc
@@ -446,5 +304,8 @@ class CrawlerCore(
         private const val LIFE_CULTURE = "생활/문화"
         private const val WORLD = "세계"
         private const val IT_SCIENCE = "IT/과학"
+
+        private const val HEADLINE = "HEADLINE"
+        private const val NORMAL = "NORMAL"
     }
 }
