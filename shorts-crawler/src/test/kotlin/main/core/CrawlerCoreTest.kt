@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.ShortsCrawlerApplication
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.domain.category.CategoryRepository
@@ -20,7 +21,7 @@ import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 
 @SpringBootTest(classes = [ShortsCrawlerApplication::class])
-// @Transactional
+@Transactional
 class CrawlerCoreTest @Autowired constructor(
     private val categoryRepository: CategoryRepository,
     private val newsRepository: NewsRepository,
@@ -95,7 +96,6 @@ class CrawlerCoreTest @Autowired constructor(
             }
 
             for (newsCard in newsCards) {
-                println("newsCard.multipleNews = ${newsCard.multipleNews}")
                 val newsId =
                     newsCard.multipleNews.toString().substring(0, newsCard.multipleNews.toString().indexOf(","))
                         .toLong()
