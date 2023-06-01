@@ -21,5 +21,10 @@ class NewsCard(
     val multipleNews: String?,
 
     @Column(name = "keywords")
-    val keywords: String?,
-) : BaseEntity()
+    var keywords: String?,
+) : BaseEntity() {
+
+    fun insertKeyword(keywords: String?) {
+        this.keywords = keywords
+    }
+}
