@@ -6,7 +6,7 @@ import org.apache.lucene.analysis.ko.KoreanAnalyzer
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.domain.category.CategoryRepository
@@ -16,14 +16,14 @@ import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 
 
-@Component
+@Service
+@Transactional
 class CrawlerCore(
     private val newsRepository: NewsRepository,
     private val newsCardRepository: NewsCardRepository,
     private val categoryRepository: CategoryRepository,
 ) {
 
-    @Transactional
     fun executeCrawling() {
         // 특정 카테고리 순회
         for (categoryIndex: Int in urls.indices) {
