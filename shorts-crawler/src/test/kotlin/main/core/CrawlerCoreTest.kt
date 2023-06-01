@@ -1,7 +1,10 @@
 package main
 
 
+import java.io.StringReader
 import java.time.LocalDateTime
+import org.apache.lucene.analysis.ko.KoreanAnalyzer
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import org.junit.jupiter.api.DisplayName
@@ -454,6 +457,48 @@ class CrawlerCoreTest @Autowired constructor(
 
             newsCards = mutableListOf()
         }
+    }
+
+    @Test
+    fun executeNLP() {
+        val text = "[앵커] 북한이 군사정찰위성으로 추정되는 발사체를 발사하자 대통령실도 조태용 안보실장 주재로 NSC 상임위원회를 개최하고 대응에 나섰습니다. 대통령실 취재 기자 연결해 상황 알아보겠습니다. 방준혁 기자. [기자] 네, 대통령실도 즉각 대응에 나섰습니다. 북한의 발사체 발사 직후 안보상황 점검회의를 연 데 이어 조금 전 오전 9시부터 조태용 국가안보실장 주재로 국가안전보장회의, NSC 상임위원회를 진행하고 있습니다. NSC 상임위에는 박진 외교부 장관, 권영세 통일부 장관, 이종섭 국방부 장관, 김규현 국가정보원장 등이 참석한 것으로 알려졌습니다. 윤 대통령은 NSC에 직접 참석하지는 않을 것으로 보이는데요. 대통령실은 윤 대통령이 오늘 오전 6시 29분 첫 보고를 받았고, 이후로도 실시간으로 보고를 받고 있다고 전했습니다. NSC 상임위원들은 북한이 발사한 발사체의 기종과 비행거리 등 정확한 재원과 성공 여부 등을 보고 받고, 우리 군의 대비태세를 점검할 것으로 보이는데요. 대통령실은 NSC는 추가 상황 발생 가능성도 점검하고 있다고 전했습니다. 대통령실은 NSC가 끝나면 북한의 이번 발사체 발사에 대한 공식 입장을 밝힐 것으로 보입니다. 앞서 지난 월요일 북한이 위성 발사를 예고했을 때도 긴급 NSC 상임위가 개최됐는데요. 북한이 발사를 강행한다면 응분의 대가와 고통을 감수해야 할 거라고 경고한 바 있습니다. 지금까지 용산 대통령실에서 전해드렸습니다. (bang@yna.co.kr) #북한_발사체 #NSC #군사정찰위성 연합뉴스TV 기사문의 및 제보 : 카톡/라인 jebo23"
+        val keywordCount = 5
+
+        // 한국어 형태소 분석기 설정
+        val analyzer = KoreanAnalyzer()
+
+        // 불용어 설정
+        val stopWords = setOf("은", "는", "이", "가", "을", "를", "과", "와", "에서", "으로", "에게", "으로부터", "에", "의")
+
+        // 단어 빈도수 계산을 위한 맵
+        val wordFrequencies = mutableMapOf<String, Int>()
+
+        // 텍스트에서 토큰 추출
+        val reader = StringReader(text)
+        val tokenStream = analyzer.tokenStream("text", reader)
+        val charTermAttribute: CharTermAttribute = tokenStream.addAttribute(CharTermAttribute::class.java)
+
+        tokenStream.reset()
+        while (tokenStream.incrementToken()) {
+            val term = charTermAttribute.toString()
+
+            // 불용어 및 한 글자 단어 제외
+            if (term !in stopWords && term.length > 1) {
+                wordFrequencies[term] = wordFrequencies.getOrDefault(term, 0) + 1
+            }
+        }
+        tokenStream.end()
+        tokenStream.close()
+
+        // 단어 빈도수를 기준으로 내림차순 정렬
+        val sortedKeywords = wordFrequencies.entries.sortedByDescending { it.value }
+
+        // 상위 키워드 출력
+        val topKeywords = sortedKeywords.take(keywordCount).map { it.key }
+
+        println("Keywords:")
+        topKeywords.forEach { println(it) }
+
     }
 
     private fun setup(url: String, i: Int): Elements {
