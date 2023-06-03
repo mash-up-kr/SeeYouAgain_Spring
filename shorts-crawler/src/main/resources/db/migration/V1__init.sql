@@ -1,4 +1,4 @@
-create table shorts.category
+CREATE TABLE IF NOT EXISTS shorts.category
 (
     id          bigint auto_increment primary key,
     name        varchar(15) not null unique key,
@@ -7,7 +7,7 @@ create table shorts.category
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-create table shorts.member
+CREATE TABLE IF NOT EXISTS shorts.member
 (
     id          bigint primary key,
     unique_id   varchar(100) not null,
@@ -17,7 +17,7 @@ create table shorts.member
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-create table shorts.member_category
+CREATE TABLE IF NOT EXISTS shorts.member_category
 (
     id          bigint auto_increment primary key,
     category_id bigint      null,
@@ -30,7 +30,7 @@ create table shorts.member_category
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-create table shorts.news
+CREATE TABLE IF NOT EXISTS shorts.news
 (
     id                  bigint auto_increment primary key,
     title               varchar(200)   not null,
@@ -48,7 +48,7 @@ create table shorts.news
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-create table shorts.news_card
+CREATE TABLE IF NOT EXISTS shorts.news_card
 (
     id            bigint auto_increment primary key,
     multiple_news varchar(5000) null,
@@ -60,7 +60,7 @@ create table shorts.news_card
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-create table shorts.member_news
+CREATE TABLE IF NOT EXISTS shorts.member_news
 (
     id          bigint auto_increment primary key,
     member_id   bigint      null,

@@ -64,6 +64,8 @@ class CrawlerCoreTest @Autowired constructor(
                     val title = extractedAllNews[TITLE_INDEX][index].toString()
                     val content = extractedAllNews[CONTENT_INDEX][index].toString()
                     val imageLink = extractedAllNews[IMAGE_LINK_INDEX][index].toString()
+                        .substringAfter("data-src=\"")
+                        .substringBefore("\"")
                     val link = extractedAllNews[LINK_INDEX][index].toString()
                     val press = extractedAllNews[PRESS_INDEX][index].toString()
                     val writtenDateTime = extractedAllNews[WRITTEN_DATETIME_INDEX][index].toString()
@@ -94,13 +96,21 @@ class CrawlerCoreTest @Autowired constructor(
             }
 
             for (newsCard in newsCards) {
-                val newsId =
-                    newsCard.multipleNews.toString().substring(0, newsCard.multipleNews.toString().indexOf(","))
+                if (newsCard.multipleNews.toString().length >= 2) {
+                    val newsId = newsCard.multipleNews.toString()
+                        .substring(0, newsCard.multipleNews.toString().indexOf(","))
                         .toLong()
-                val headLineNewsContent =
-                    newsId.let { newsId.let { newsRepository.findById(it).get().content } }
-                newsCard.insertKeyword(extractKeyword(headLineNewsContent))
-                newsCardRepository.save(newsCard)
+                    val headLineNewsContent =
+                        newsId.let { newsId.let { newsRepository.findById(it).get().content } }
+                    newsCard.insertKeyword(extractKeyword(headLineNewsContent))
+                    newsCardRepository.save(newsCard)
+                } else {
+                    val newsId = newsCard.multipleNews.toString().first().code.toLong()
+                    val headLineNewsContent =
+                        newsId.let { newsId.let { newsRepository.findById(it).get().content } }
+                    newsCard.insertKeyword(extractKeyword(headLineNewsContent))
+                    newsCardRepository.save(newsCard)
+                }
             }
 
             log.info("Take a break for 3 seconds to prevent request overload")
