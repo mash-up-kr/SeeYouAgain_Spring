@@ -2,19 +2,25 @@ spring:
   config:
     activate:
       on-profile: local
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 1
+    url: jdbc:mysql://localhost:3306/shorts
+    user: root
+    password: 112233
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shorts?Unicode=true&characterEncoding=utf8
+    username: root
+    password: 112233
   jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
+        default_batch_size: 999
         show_sql: true
         format_sql: true
-        use_sql_comments: true
-  datasource:
-    hikari:
-      jdbc-url: ENC(eJkPgAUnETKenOh/iG7wkn0e+B4QUVaC1DoaP5k2d5GS2f/4AueSkFPad7C45MFo1Hrdglr6VRNl5HoCK9pJlkIHMnQZbEGOAs0UQY6/FGyjtO5iIOcsdwgXXnuijlJGAopR2P5bJLiZu6BONZahBX+iFllRurRbNphzl5CrucypQpxqqN5wisttYzPmWpkTfbwYwGjnLpUOM+eahgtvYrv9ome9YH8wnUIKQClLDaDdALmx/t+RAhA5SpKgpno+1c7N4VODxoYtZGqL5yyZk6sSVFy02KvLtcldDGw/ELg=)
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      username: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
-      password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
+        use-new-id-generator-mappings: false
