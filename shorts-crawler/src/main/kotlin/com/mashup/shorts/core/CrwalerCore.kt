@@ -91,7 +91,7 @@ class CrawlerCore(
             }
 
             for (newsCard in newsCards) {
-                if (newsCard.multipleNews.toString().length >= 2) {
+                if (newsCard.multipleNews?.split(",")?.isNotEmpty() == true) {
                     val newsId = newsCard.multipleNews.toString()
                         .substring(0, newsCard.multipleNews.toString().indexOf(","))
                         .toLong()
