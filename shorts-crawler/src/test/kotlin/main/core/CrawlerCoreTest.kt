@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.ShortsCrawlerApplication
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.domain.category.CategoryRepository
@@ -21,7 +20,7 @@ import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 
 @SpringBootTest(classes = [ShortsCrawlerApplication::class])
-@Transactional
+//@Transactional
 class CrawlerCoreTest @Autowired constructor(
     private val categoryRepository: CategoryRepository,
     private val newsRepository: NewsRepository,
@@ -32,7 +31,6 @@ class CrawlerCoreTest @Autowired constructor(
     @DisplayName("모든 카테고리 한 번에 크롤링 해오기")
     fun executeCrawling() {
         // 특정 카테고리 순회
-        //
         for (categoryIndex: Int in urls.indices) {
             log.info(LocalDateTime.now().toString() + " - " + urls[categoryIndex] + " - crawling start")
             val doc = setup(urls[categoryIndex], categoryIndex)
@@ -104,9 +102,12 @@ class CrawlerCoreTest @Autowired constructor(
                 newsCard.insertKeyword(extractKeyword(headLineNewsContent))
                 newsCardRepository.save(newsCard)
             }
+
             log.info("Take a break for 3 seconds to prevent request overload")
             Thread.sleep(3000)
+
         }
+
         log.info(LocalDateTime.now().toString() + " - " + "crawling done")
     }
 

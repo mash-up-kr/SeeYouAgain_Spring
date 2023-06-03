@@ -89,7 +89,6 @@ class CrawlerCore(
             }
 
             for (newsCard in newsCards) {
-                println("newsCard.multipleNews = ${newsCard.multipleNews}")
                 val newsId =
                     newsCard.multipleNews.toString().substring(0, newsCard.multipleNews.toString().indexOf(","))
                         .toLong()

@@ -1,7 +1,7 @@
 create table shorts.category
 (
     id          bigint auto_increment primary key,
-    name        varchar(10) not null unique key,
+    name        varchar(15) not null unique key,
     created_at  datetime(6) not null,
     modified_at datetime(6) null
 ) ENGINE = InnoDB
@@ -9,7 +9,9 @@ create table shorts.category
 
 create table shorts.member
 (
-    id          bigint auto_increment primary key,
+    id          bigint primary key,
+    unique_id   varchar(100) not null,
+    nickname    varchar(20) not null,
     created_at  datetime(6) not null,
     modified_at datetime(6) null
 ) ENGINE = InnoDB
@@ -31,7 +33,7 @@ create table shorts.member_category
 create table shorts.news
 (
     id                  bigint auto_increment primary key,
-    title               varchar(500)   not null,
+    title               varchar(100)   not null,
     content             varchar(10000) not null,
     news_link           varchar(255)   not null,
     press               varchar(20)    not null,
