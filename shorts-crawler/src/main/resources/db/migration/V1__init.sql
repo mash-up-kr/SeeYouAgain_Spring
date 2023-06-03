@@ -73,19 +73,19 @@ CREATE TABLE IF NOT EXISTS shorts.member_news
   DEFAULT CHARSET = utf8mb4;
 
 insert into shorts.category(name, created_at, modified_at)
-values ("정치", now(), now());
+values ("POLITICS", now(), now());
 
 insert into shorts.category(name, created_at, modified_at)
-values ("경제", now(), now());
+values ("ECONOMIC", now(), now());
 
 insert into shorts.category(name, created_at, modified_at)
-values ("사회", now(), now());
+values ("SOCIETY", now(), now());
 
 insert into shorts.category(name, created_at, modified_at)
-values ("생활/문화", now(), now());
+values ("CULTURE", now(), now());
 
 insert into shorts.category(name, created_at, modified_at)
-values ("세계", now(), now());
+values ("WORLD", now(), now());
 
 insert into shorts.category(name, created_at, modified_at)
-values ("IT/과학", now(), now());
+values ("SCIENCE", now(), now());

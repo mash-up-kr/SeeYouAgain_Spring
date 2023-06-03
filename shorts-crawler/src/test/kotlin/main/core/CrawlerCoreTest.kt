@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import com.mashup.shorts.ShortsCrawlerApplication
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
+import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.category.CategoryRepository
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.news.NewsRepository
@@ -40,12 +41,12 @@ class CrawlerCoreTest @Autowired constructor(
             val newsCards = mutableListOf<NewsCard>()
 
             val category = when (categoryIndex) {
-                0 -> categoryRepository.findByName(POLITICS)
-                1 -> categoryRepository.findByName(ECONOMIC)
-                2 -> categoryRepository.findByName(SOCIETY)
-                3 -> categoryRepository.findByName(LIFE_CULTURE)
-                4 -> categoryRepository.findByName(WORLD)
-                5 -> categoryRepository.findByName(IT_SCIENCE)
+                0 -> categoryRepository.findByName(CategoryName.POLITICS)
+                1 -> categoryRepository.findByName(CategoryName.ECONOMIC)
+                2 -> categoryRepository.findByName(CategoryName.SOCIETY)
+                3 -> categoryRepository.findByName(CategoryName.CULTURE)
+                4 -> categoryRepository.findByName(CategoryName.WORLD)
+                5 -> categoryRepository.findByName(CategoryName.SCIENCE)
                 else -> null
             }
 
@@ -96,7 +97,7 @@ class CrawlerCoreTest @Autowired constructor(
             }
 
             for (newsCard in newsCards) {
-                if (newsCard.multipleNews.toString().length >= 2) {
+                if (newsCard.multipleNews?.split(",")?.isNotEmpty() == true) {
                     val newsId = newsCard.multipleNews.toString()
                         .substring(0, newsCard.multipleNews.toString().indexOf(","))
                         .toLong()
@@ -311,13 +312,6 @@ class CrawlerCoreTest @Autowired constructor(
         private const val WRITTEN_DATETIME_INDEX = 5
         private const val IS_HEADLINE_INDEX = 6
         private const val RELATED_COUNT_INDEX = 7
-
-        private const val POLITICS = "정치"
-        private const val ECONOMIC = "경제"
-        private const val SOCIETY = "사회"
-        private const val LIFE_CULTURE = "생활/문화"
-        private const val WORLD = "세계"
-        private const val IT_SCIENCE = "IT/과학"
 
         private const val HEADLINE = "HEADLINE"
         private const val NORMAL = "NORMAL"
