@@ -33,9 +33,9 @@ create table shorts.member_category
 create table shorts.news
 (
     id                  bigint auto_increment primary key,
-    title               varchar(100)   not null,
+    title               varchar(200)   not null,
     content             varchar(10000) not null,
-    news_link           varchar(255)   not null,
+    news_link           varchar(500)   not null,
     press               varchar(20)    not null,
     thumbnail_image_url varchar(255)   not null,
     type                varchar(10)    not null,

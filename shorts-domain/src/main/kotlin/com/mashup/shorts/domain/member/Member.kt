@@ -9,6 +9,9 @@ import jakarta.persistence.Table
 @Table(name = "member")
 @Entity
 class Member(
-    @Column(name = "unique_id")
+    @Column(name = "unique_id", nullable = false, length = 100)
     val uniqueId: String,
+
+    @Column(name = "nickname", nullable = false, length = 20)
+    val nickname: String,
 ) : BaseEntity()
