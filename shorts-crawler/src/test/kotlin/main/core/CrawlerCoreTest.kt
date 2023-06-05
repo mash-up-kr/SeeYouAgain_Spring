@@ -150,7 +150,7 @@ class CrawlerCoreTest @Autowired constructor(
                 .toString()
                 .split("</a>")
 
-            val crawledLinks = mutableListOf<String>()
+            val crawledTitles = mutableListOf<String>()
 
             // 특정 헤드라인에 속한 모든 기사를 순회한다.
             loopInHeadLine@ for (htmlLink in crawledHtmlLinks) {
@@ -159,16 +159,17 @@ class CrawlerCoreTest @Autowired constructor(
                     .attr("href")
 
                 if (detailLink.isNotEmpty()) {
-                    crawledLinks.add(detailLink)
                     Thread.sleep(100)
                     val detailDoc = Jsoup.connect(detailLink)
                         .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0")
                         .get()
                     val title = detailDoc.getElementsByClass(TITLE_CLASS_NAME).text()
 
-                    if (crawledLinks.contains(title)) {
+                    if (crawledTitles.contains(title)) {
                         continue@loopInHeadLine
                     }
+
+                    crawledTitles.add(title)
 
                     val content = detailDoc
                         .getElementsByClass(CONTENT_CLASS_NAME).addClass("#text")
