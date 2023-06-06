@@ -6,6 +6,7 @@ import org.apache.lucene.analysis.ko.KoreanAnalyzer
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
@@ -25,12 +26,10 @@ class CrawlerCore(
     private val categoryRepository: CategoryRepository,
 ) {
 
+    @Scheduled(cron = "0 * * * * *")
     fun executeCrawling() {
-        // 특정 카테고리 순회
         for (categoryIndex: Int in urls.indices) {
-//        for (categoryIndex: Int in 5..5) {
 
-            // 카테고리 갱신
             val category = when (categoryIndex) {
                 0 -> categoryRepository.findByName(CategoryName.POLITICS)
                 1 -> categoryRepository.findByName(CategoryName.ECONOMIC)
@@ -42,36 +41,56 @@ class CrawlerCore(
             }
 
             log.info(LocalDateTime.now().toString() + " - " + urls[categoryIndex] + " - crawling start")
+
             val doc = setup(urls[categoryIndex], categoryIndex)
             val allNewsLinks = extractAllHeadLineNewsLinks(doc)
-            val newsCardBundle = extractNewsCardBundle(allNewsLinks, categoryIndex, category!!)
+            val persistenceNewsBundle = newsRepository.findAllByCategory(
+                categoryRepository.findByName(category!!.name)
+            )
 
-            for (newsCard in newsCardBundle) {
-                for (news in newsCard) {
-                    newsRepository.save(news)
-                }
-            }
+            val newsCardBundle = extractNewsCardBundle(
+                allNewsLinks,
+                categoryIndex,
+                category,
+            )
 
             val createdNewsCardIds = mutableListOf<Long>()
 
             for (newsCard in newsCardBundle) {
+                val persistenceTargetNewsList = mutableListOf<News>()
+                for (news in newsCard) {
+                    if (news.title !in persistenceNewsBundle.map { it.title }) {
+                        persistenceTargetNewsList.add(news)
+                        newsRepository.save(news)
+                    } else {
+                        val findByTitle = newsRepository.findByTitle(news.title)
+                        findByTitle.increaseCrawledCount()
+                        newsRepository.save(findByTitle)
+                        persistenceTargetNewsList.add(findByTitle)
+                    }
+                }
+
                 val persistenceNewsCard = NewsCard(
-                    category, filterSquareBracket(newsCard.map { it.id }.toString()),
+                    category,
+                    filterSquareBracket(persistenceTargetNewsList.map { it.id }.toString()),
                     ""
                 )
-                createdNewsCardIds.add(newsCardRepository.save(persistenceNewsCard).id)
+
+                createdNewsCardIds.add(
+                    newsCardRepository.save(persistenceNewsCard).id
+                )
             }
 
             for (createdNewsCardId in createdNewsCardIds) {
                 val newsCard = newsCardRepository.findById(createdNewsCardId).get()
-                val newsIdInNewsCard = newsCard.multipleNews!!.split(", ").first().toLong()
-                val headLineNewsContent = newsRepository.findById(newsIdInNewsCard).get().content
-                newsCard.insertKeyword(extractKeyword(headLineNewsContent))
+                val newsIdInNewsCard = newsCard.multipleNews?.split(", ")?.first()?.toLong()
+                val headLineNewsContent = newsIdInNewsCard?.let { newsRepository.findById(it).get().content }
+                newsCard.insertKeyword(headLineNewsContent?.let { extractKeyword(it) })
                 newsCardRepository.save(newsCard)
             }
 
-            log.info("Take a break for 3 seconds to prevent request overload")
-            Thread.sleep(3000)
+            log.info("Take a break for 1 seconds to prevent request overload")
+            Thread.sleep(1000)
         }
 
         log.info(LocalDateTime.now().toString() + " - " + "crawling done")
@@ -136,7 +155,6 @@ class CrawlerCore(
         val cardNewsBundle = mutableListOf<MutableList<News>>()
         var cardNews = mutableListOf<News>()
 
-        // 헤드라인 갯수 만큼 반복
         for (link in allHeadLineNewsLinks) {
             var headLineFlag = true
             val moreDoc = Jsoup.connect(link).get()
@@ -147,17 +165,15 @@ class CrawlerCore(
 
             val crawledTitles = mutableListOf<String>()
 
-            // 특정 헤드라인에 속한 모든 기사를 순회한다.
-            loopInHeadLine@ for (htmlLink in crawledHtmlLinks) {
+            loopInHeadLine@
+            for (htmlLink in crawledHtmlLinks) {
                 val detailLink = Jsoup.parse(htmlLink)
                     .select("a[href]")
                     .attr("href")
 
                 if (detailLink.isNotEmpty()) {
                     Thread.sleep(100)
-                    val detailDoc = Jsoup.connect(detailLink)
-                        .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0")
-                        .get()
+                    val detailDoc = Jsoup.connect(detailLink).get()
                     val title = detailDoc.getElementsByClass(TITLE_CLASS_NAME).text()
 
                     if (crawledTitles.contains(title)) {
@@ -175,18 +191,12 @@ class CrawlerCore(
 
                     cardNews.add(
                         News(
-                            title,
-                            content,
-                            imageLink,
-                            detailLink,
-                            press,
-                            writtenDateTime,
-                            if (headLineFlag) {
-                                HEADLINE
-                            } else {
-                                NORMAL
-                            },
-                            category
+                            title, content,
+                            filterImageLinkForm(imageLink),
+                            detailLink, press, writtenDateTime,
+                            convertHeadLine(headLineFlag),
+                            1,
+                            category,
                         )
                     )
                     headLineFlag = false
@@ -202,6 +212,20 @@ class CrawlerCore(
         return target
             .replace("[", "")
             .replace("]", "")
+    }
+
+    private fun filterImageLinkForm(rawImageLink: String): String {
+        return rawImageLink
+            .substringAfter("data-src=\"")
+            .substringBefore("\"")
+    }
+
+    private fun convertHeadLine(headLineFlag: Boolean): String {
+        return if (headLineFlag) {
+            HEADLINE
+        } else {
+            NORMAL
+        }
     }
 
     companion object {
