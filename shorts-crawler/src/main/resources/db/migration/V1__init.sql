@@ -11,9 +11,9 @@ CREATE TABLE IF NOT EXISTS shorts.member
 (
     id          bigint primary key,
     unique_id   varchar(100) not null,
-    nickname    varchar(20) not null,
-    created_at  datetime(6) not null,
-    modified_at datetime(6) null
+    nickname    varchar(20)  not null,
+    created_at  datetime(6)  not null,
+    modified_at datetime(6)  null
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS shorts.news
     thumbnail_image_url varchar(255)   not null,
     type                varchar(10)    not null,
     written_date_time   varchar(30)    not null,
+    crawled_count       int            not null,
     category_id         bigint         not null,
     created_at          datetime(6)    not null,
     modified_at         datetime(6)    null,

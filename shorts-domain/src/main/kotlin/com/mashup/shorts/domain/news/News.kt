@@ -33,8 +33,15 @@ class News(
     @Column(name = "type", nullable = false)
     val type: String,
 
+    @Column(name = "crawled_count", nullable = false)
+    var crawledCount: Int,
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     val category: Category,
 ) : BaseEntity() {
+
+    fun increaseCrawledCount() {
+        this.crawledCount += 1
+    }
 }
