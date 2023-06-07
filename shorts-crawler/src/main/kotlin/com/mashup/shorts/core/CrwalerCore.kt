@@ -98,7 +98,7 @@ class CrawlerCore(
     }
 
     private fun extractKeyword(content: String): String {
-        val keywordCount = 5
+        val keywordCount = 4
         val analyzer = KoreanAnalyzer()
         val stopWords = setOf(
             "은", "는", "이", "가", "을", "를", "과", "와", "에서", "으로", "에게", "으로부터", "에", "의"

@@ -70,10 +70,10 @@ class CrawlerCoreTest @Autowired constructor(
                         persistenceTargetNewsList.add(news)
                         newsRepository.save(news)
                     } else {
-                        val findByTitle = newsRepository.findByTitle(news.title)
-                        findByTitle.increaseCrawledCount()
-                        newsRepository.save(findByTitle)
-                        persistenceTargetNewsList.add(findByTitle)
+                        val persistenceNews = newsRepository.findByTitle(news.title)
+                        persistenceNews.increaseCrawledCount()
+                        newsRepository.save(persistenceNews)
+                        persistenceTargetNewsList.add(persistenceNews)
                     }
                 }
 
@@ -92,7 +92,7 @@ class CrawlerCoreTest @Autowired constructor(
                 val newsCard = newsCardRepository.findById(createdNewsCardId).get()
                 val newsIdInNewsCard = newsCard.multipleNews?.split(", ")?.first()?.toLong()
                 val headLineNewsContent = newsIdInNewsCard?.let { newsRepository.findById(it).get().content }
-                newsCard.insertKeyword(headLineNewsContent?.let { extractKeyword(it) })
+                newsCard.insertKeyword(headLineNewsContent?.let { extractKeyword(it) } ?: "")
                 newsCardRepository.save(newsCard)
             }
 
@@ -105,7 +105,7 @@ class CrawlerCoreTest @Autowired constructor(
     }
 
     private fun extractKeyword(content: String): String {
-        val keywordCount = 5
+        val keywordCount = 4
         val analyzer = KoreanAnalyzer()
         val stopWords = setOf(
             "은", "는", "이", "가", "을", "를", "과", "와", "에서", "으로", "에게", "으로부터", "에", "의"
@@ -113,7 +113,7 @@ class CrawlerCoreTest @Autowired constructor(
         val wordFrequencies = mutableMapOf<String, Int>()
         val reader = StringReader(content)
         val tokenStream = analyzer.tokenStream("text", reader)
-        val charTermAttribute: CharTermAttribute = tokenStream.addAttribute(CharTermAttribute::class.java)
+        val charTermAttribute = tokenStream.addAttribute(CharTermAttribute::class.java)
 
         tokenStream.reset()
         while (tokenStream.incrementToken()) {
@@ -128,9 +128,7 @@ class CrawlerCoreTest @Autowired constructor(
         val sortedKeywords = wordFrequencies.entries.sortedByDescending { it.value }
         val topKeywords = sortedKeywords.take(keywordCount).map { it.key }
 
-        return topKeywords.joinToString(", ")
-            .replace("[", "")
-            .replace("]", "")
+        return filterSquareBracket(topKeywords.joinToString(", "))
     }
 
     private fun setup(url: String, categoryIndex: Int): Elements {
