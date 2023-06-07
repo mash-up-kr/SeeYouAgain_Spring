@@ -12,6 +12,7 @@ import jakarta.persistence.Table
 @Table(name = "news")
 @Entity
 class News(
+
     @Column(name = "title", nullable = false, length = 200)
     val title: String,
 
