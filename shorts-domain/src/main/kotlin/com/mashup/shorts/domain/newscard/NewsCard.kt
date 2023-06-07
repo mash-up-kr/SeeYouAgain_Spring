@@ -14,16 +14,11 @@ import jakarta.persistence.Table
 class NewsCard(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    val category: Category?,
+    val category: Category,
 
     @Column(name = "multiple_news", length = 5000)
-    val multipleNews: String?,
+    val multipleNews: String,
 
     @Column(name = "keywords")
-    var keywords: String?,
-) : BaseEntity() {
-
-    fun insertKeyword(keywords: String?) {
-        this.keywords = keywords
-    }
-}
+    var keywords: String? = null,
+) : BaseEntity()

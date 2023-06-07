@@ -9,6 +9,6 @@ interface NewsRepository : JpaRepository<News, Long> {
 
     fun findAllByCategory(category: Category): List<News>
 
-    fun findByTitle(title: String): News
+    fun findByTitle(title: String): News?
 
 }

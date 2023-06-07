@@ -11,7 +11,12 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import com.mashup.shorts.ShortsCrawlerApplication
+import com.mashup.shorts.common.exception.ShortsBaseException
+import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
+import com.mashup.shorts.core.NewsDOMClassNameConst
+import com.mashup.shorts.core.NewsLinkElementConst
+import com.mashup.shorts.core.NewsUrlConst
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.category.CategoryRepository
@@ -30,78 +35,66 @@ class CrawlerCoreTest @Autowired constructor(
     @Test
     @DisplayName("모든 카테고리 한 번에 크롤링 해오기")
     fun executeCrawling() {
-        // 특정 카테고리 순회
-//        for (categoryIndex: Int in 5..5) {
-        for (categoryIndex: Int in urls.indices) {
 
-            // 카테고리 갱신
-            val category = when (categoryIndex) {
-                0 -> categoryRepository.findByName(CategoryName.POLITICS)
-                1 -> categoryRepository.findByName(CategoryName.ECONOMIC)
-                2 -> categoryRepository.findByName(CategoryName.SOCIETY)
-                3 -> categoryRepository.findByName(CategoryName.CULTURE)
-                4 -> categoryRepository.findByName(CategoryName.WORLD)
-                5 -> categoryRepository.findByName(CategoryName.SCIENCE)
-                else -> null
+        for (categoryPair in NewsUrlConst.categoryToUrl) {
+            val category = when (categoryPair.key) {
+                CategoryName.POLITICS -> categoryRepository.findByName(CategoryName.POLITICS)
+                CategoryName.ECONOMIC -> categoryRepository.findByName(CategoryName.ECONOMIC)
+                CategoryName.SOCIETY -> categoryRepository.findByName(CategoryName.SOCIETY)
+                CategoryName.CULTURE -> categoryRepository.findByName(CategoryName.CULTURE)
+                CategoryName.WORLD -> categoryRepository.findByName(CategoryName.WORLD)
+                CategoryName.SCIENCE -> categoryRepository.findByName(CategoryName.SCIENCE)
+                else -> throw ShortsBaseException.from(
+                    shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
+                    resultErrorMessage = "${LocalDateTime.now()} - 크롤링 시도 중 ${categoryPair.key} 를 찾을 수 없습니다."
+                )
             }
 
-            log.info(LocalDateTime.now().toString() + " - " + urls[categoryIndex] + " - crawling start")
-
-            val doc = setup(urls[categoryIndex], categoryIndex)
-            val allNewsLinks = extractAllHeadLineNewsLinks(doc)
-            val persistenceNewsBundle = newsRepository.findAllByCategory(
-                categoryRepository.findByName(category!!.name)
+            val headLineLinks = getMoreHeadLineLinks(
+                url = categoryPair.value,
+                categoryName = categoryPair.key
             )
-
+            val allNewsLinks = extractAllHeadLineNewsLinks(headLineLinks)
+            val persistenceNewsBundle = newsRepository.findAllByCategory(category)
             val newsCardBundle = extractNewsCardBundle(
                 allNewsLinks,
-                categoryIndex,
+                categoryPair.key,
                 category,
             )
 
-            val createdNewsCardIds = mutableListOf<Long>()
-
-            // 추출한 여러 개의 뉴스카드를 순회
             for (newsCard in newsCardBundle) {
                 val persistenceTargetNewsList = mutableListOf<News>()
-                // 뉴스 카드 내의 뉴스 순회
+
                 for (news in newsCard) {
                     if (news.title !in persistenceNewsBundle.map { it.title }) {
                         persistenceTargetNewsList.add(news)
                         newsRepository.save(news)
                     } else {
-                        val persistenceNews = newsRepository.findByTitle(news.title)
-                        persistenceNews.increaseCrawledCount()
-                        newsRepository.save(persistenceNews)
-                        persistenceTargetNewsList.add(persistenceNews)
+                        val alreadyNews = newsRepository.findByTitle(news.title) ?: throw ShortsBaseException.from(
+                            shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
+                            resultErrorMessage = "뉴스를 저장하는 중 ${news.title} 에 해당하는 뉴스를 찾을 수 없습니다."
+                        )
+                        alreadyNews.increaseCrawledCount()
+                        newsRepository.save(alreadyNews)
+                        persistenceTargetNewsList.add(alreadyNews)
                     }
                 }
+
+                // 뉴스 내용 가져올 인덱스를 0으로 고정할지 랜덤값을 넣을지 고려해봐야함.
+                val extractKeyword = extractKeyword(persistenceTargetNewsList[0].content)
 
                 val persistenceNewsCard = NewsCard(
                     category,
                     filterSquareBracket(persistenceTargetNewsList.map { it.id }.toString()),
-                    ""
+                    extractKeyword
                 )
-
-                createdNewsCardIds.add(
-                    newsCardRepository.save(persistenceNewsCard).id
-                )
+                newsCardRepository.save(persistenceNewsCard)
             }
-
-            for (createdNewsCardId in createdNewsCardIds) {
-                val newsCard = newsCardRepository.findById(createdNewsCardId).get()
-                val newsIdInNewsCard = newsCard.multipleNews?.split(", ")?.first()?.toLong()
-                val headLineNewsContent = newsIdInNewsCard?.let { newsRepository.findById(it).get().content }
-                newsCard.insertKeyword(headLineNewsContent?.let { extractKeyword(it) } ?: "")
-                newsCardRepository.save(newsCard)
-            }
-
             log.info("Take a break for 1 seconds to prevent request overload")
             Thread.sleep(1000)
         }
 
         log.info(LocalDateTime.now().toString() + " - " + "crawling done")
-
     }
 
     private fun extractKeyword(content: String): String {
@@ -113,7 +106,7 @@ class CrawlerCoreTest @Autowired constructor(
         val wordFrequencies = mutableMapOf<String, Int>()
         val reader = StringReader(content)
         val tokenStream = analyzer.tokenStream("text", reader)
-        val charTermAttribute = tokenStream.addAttribute(CharTermAttribute::class.java)
+        val charTermAttribute: CharTermAttribute = tokenStream.addAttribute(CharTermAttribute::class.java)
 
         tokenStream.reset()
         while (tokenStream.incrementToken()) {
@@ -128,23 +121,25 @@ class CrawlerCoreTest @Autowired constructor(
         val sortedKeywords = wordFrequencies.entries.sortedByDescending { it.value }
         val topKeywords = sortedKeywords.take(keywordCount).map { it.key }
 
-        return filterSquareBracket(topKeywords.joinToString(", "))
+        return topKeywords.joinToString(", ")
+            .replace("[", "")
+            .replace("]", "")
     }
 
-    private fun setup(url: String, categoryIndex: Int): Elements {
+    private fun getMoreHeadLineLinks(url: String, categoryName: CategoryName): Elements {
         return Jsoup.connect(url).get()
-            .getElementsByClass(moreHeadLineLinksElements[categoryIndex])
+            .getElementsByClass(NewsLinkElementConst.moreHeadLineLinksElements[categoryName]!!)
             .tagName("a")
     }
 
-    private fun extractAllHeadLineNewsLinks(allHeadLineMoreLinksDoc: Elements): List<String> {
+    private fun extractAllHeadLineNewsLinks(allHeadLineMoreLinksDocs: Elements): List<String> {
         val allDetailHeadLineNewsLinks = ArrayList<String>()
 
-        for (element in allHeadLineMoreLinksDoc) {
+        for (element in allHeadLineMoreLinksDocs) {
             val link = element.toString()
             val start = link.indexOf("/")
             val end = link.indexOf("\" ")
-            allDetailHeadLineNewsLinks.add(SYMBOLIC_LINK_BASE_URL + link.substring(start, end))
+            allDetailHeadLineNewsLinks.add(NewsUrlConst.SYMBOLIC_LINK_BASE_URL + link.substring(start, end))
         }
 
         return allDetailHeadLineNewsLinks
@@ -154,60 +149,65 @@ class CrawlerCoreTest @Autowired constructor(
 
     private fun extractNewsCardBundle(
         allHeadLineNewsLinks: List<String>,
-        categorySeparator: Int,
+        categoryName: CategoryName,
         category: Category,
     ): List<MutableList<News>> {
         val cardNewsBundle = mutableListOf<MutableList<News>>()
         var cardNews = mutableListOf<News>()
 
-        // 헤드라인 갯수 만큼 반복
         for (link in allHeadLineNewsLinks) {
             var headLineFlag = true
             val moreDoc = Jsoup.connect(link).get()
+
             val crawledHtmlLinks = moreDoc
-                .getElementsByClass(detailDocClassNames[categorySeparator])
+                .getElementsByClass(NewsDOMClassNameConst.detailDocClassNames[categoryName]!!)
                 .toString()
                 .split("</a>")
 
             val crawledTitles = mutableListOf<String>()
 
-            // 특정 헤드라인에 속한 모든 기사를 순회한다.
             loopInHeadLine@
             for (htmlLink in crawledHtmlLinks) {
                 val detailLink = Jsoup.parse(htmlLink)
                     .select("a[href]")
                     .attr("href")
 
-                if (detailLink.isNotEmpty()) {
-                    Thread.sleep(100)
-                    val detailDoc = Jsoup.connect(detailLink).get()
-                    val title = detailDoc.getElementsByClass(TITLE_CLASS_NAME).text()
-
-                    if (crawledTitles.contains(title)) {
-                        continue@loopInHeadLine
-                    }
-
-                    crawledTitles.add(title)
-
-                    val content = detailDoc
-                        .getElementsByClass(CONTENT_CLASS_NAME).addClass("#text")
-                        .text()
-                    val imageLink = detailDoc.getElementById(IMAGE_ID_NAME).toString()
-                    val press = detailDoc.getElementsByClass(PRESS_CLASS_NAME).text()
-                    val writtenDateTime = detailDoc.getElementsByClass(WRITTEN_DATETIME_CLASS_NAME).text()
-
-                    cardNews.add(
-                        News(
-                            title, content,
-                            filterImageLinkForm(imageLink),
-                            detailLink, press, writtenDateTime,
-                            convertHeadLine(headLineFlag),
-                            1,
-                            category,
-                        )
-                    )
-                    headLineFlag = false
+                if (detailLink.isEmpty()) {
+                    continue
                 }
+
+                Thread.sleep(100)
+                val detailDoc = Jsoup.connect(detailLink).get()
+                val title = detailDoc.getElementsByClass(NewsDOMClassNameConst.TITLE_CLASS_NAME).text()
+
+                if (crawledTitles.contains(title)) {
+                    continue@loopInHeadLine
+                }
+
+                crawledTitles.add(title)
+
+                val content = detailDoc
+                    .getElementsByClass(NewsDOMClassNameConst.CONTENT_CLASS_NAME).addClass("#text")
+                    .text()
+                val imageLink = detailDoc.getElementById(NewsDOMClassNameConst.IMAGE_ID_NAME).toString()
+                val press = detailDoc.getElementsByClass(NewsDOMClassNameConst.PRESS_CLASS_NAME).text()
+                val writtenDateTime =
+                    detailDoc.getElementsByClass(NewsDOMClassNameConst.WRITTEN_DATETIME_CLASS_NAME).text()
+
+                cardNews.add(
+                    News(
+                        title = title,
+                        content = content,
+                        thumbnailImageUrl = filterImageLinkForm(imageLink),
+                        newsLink = detailLink,
+                        press = press,
+                        writtenDateTime = writtenDateTime,
+                        type = convertHeadLine(headLineFlag),
+                        crawledCount = 1,
+                        category = category,
+                    )
+                )
+                headLineFlag = false
             }
             cardNewsBundle.add(cardNews)
             cardNews = mutableListOf()
@@ -229,69 +229,9 @@ class CrawlerCoreTest @Autowired constructor(
 
     private fun convertHeadLine(headLineFlag: Boolean): String {
         return if (headLineFlag) {
-            HEADLINE
+            NewsDOMClassNameConst.HEADLINE
         } else {
-            NORMAL
+            NewsDOMClassNameConst.NORMAL
         }
-    }
-
-    companion object {
-        private const val POLITICS_URL = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100"
-        private const val ECONOMY_URL = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101"
-        private const val SOCIETY_URL = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=102"
-        private const val LIFE_CULTURE_URL = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=103"
-        private const val WORLD_URL = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=104"
-        private const val IT_SCIENCE_URL = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=105"
-        private val urls = listOf(
-            POLITICS_URL,
-            ECONOMY_URL,
-            SOCIETY_URL,
-            LIFE_CULTURE_URL,
-            WORLD_URL,
-            IT_SCIENCE_URL
-        )
-
-        private const val SYMBOLIC_LINK_BASE_URL = "https://news.naver.com"
-
-        private const val POLITICS_MORE_HEADLINE_LINKS_ELEMENT = "sh_head_more nclicks(cls_pol.clstitle)"
-        private const val ECONOMIC_MORE_HEADLINE_LINKS_ELEMENT = "sh_head_more nclicks(cls_eco.clstitle)"
-        private const val SOCIETY_MORE_HEADLINE_LINKS_ELEMENT = "sh_head_more nclicks(cls_nav.clstitle)"
-        private const val LIFE_CULTURE_MORE_HEADLINE_LINKS_ELEMENT = "sh_head_more nclicks(cls_lif.clstitle)"
-        private const val WORLD_MORE_HEADLINE_LINKS_ELEMENT = "sh_head_more nclicks(cls_wor.clstitle)"
-        private const val IT_SCIENCE_MORE_HEADLINE_LINKS_ELEMENT = "sh_head_more nclicks(cls_sci.clstitle)"
-
-        private val moreHeadLineLinksElements = listOf(
-            POLITICS_MORE_HEADLINE_LINKS_ELEMENT,
-            ECONOMIC_MORE_HEADLINE_LINKS_ELEMENT,
-            SOCIETY_MORE_HEADLINE_LINKS_ELEMENT,
-            LIFE_CULTURE_MORE_HEADLINE_LINKS_ELEMENT,
-            WORLD_MORE_HEADLINE_LINKS_ELEMENT,
-            IT_SCIENCE_MORE_HEADLINE_LINKS_ELEMENT
-        )
-
-        private const val DETAIL_POLITICS_DOC_CLASS_NAME = "nclicks(cls_pol.clsart1)"
-        private const val DETAIL_ECONOMIC_DOC_CLASS_NAME = "nclicks(cls_eco.clsart1)"
-        private const val DETAIL_SOCIETY_DOC_CLASS_NAME = "nclicks(cls_nav.clsart1)"
-        private const val DETAIL_LIFE_CULTURE_DOC_CLASS_NAME = "nclicks(cls_lif.clsart1)"
-        private const val DETAIL_WORLD_DOC_CLASS_NAME = "nclicks(cls_wor.clsart1)"
-        private const val DETAIL_IT_SCIENCE_DOC_CLASS_NAME = "nclicks(cls_sci.clsart1)"
-
-        private val detailDocClassNames = listOf(
-            DETAIL_POLITICS_DOC_CLASS_NAME,
-            DETAIL_ECONOMIC_DOC_CLASS_NAME,
-            DETAIL_SOCIETY_DOC_CLASS_NAME,
-            DETAIL_LIFE_CULTURE_DOC_CLASS_NAME,
-            DETAIL_WORLD_DOC_CLASS_NAME,
-            DETAIL_IT_SCIENCE_DOC_CLASS_NAME
-        )
-
-        private const val TITLE_CLASS_NAME = "media_end_head_headline"
-        private const val CONTENT_CLASS_NAME = "go_trans _article_content"
-        private const val IMAGE_ID_NAME = "img1"
-        private const val PRESS_CLASS_NAME = "media_end_linked_more_point"
-        private const val WRITTEN_DATETIME_CLASS_NAME = "media_end_head_info_datestamp_time _ARTICLE_DATE_TIME"
-
-        private const val HEADLINE = "HEADLINE"
-        private const val NORMAL = "NORMAL"
     }
 }
