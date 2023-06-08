@@ -21,5 +21,5 @@ interface NewsNewsCardNativeQueryRepository : JpaRepository<News, Long> {
         @Param("cursorId") cursorId: Long,
         @Param("persistenceNewsCardMultipleNews") persistenceNewsCardMultipleNews: List<Long>,
         @Param("size") size: Int,
-    ): List<News>
+    ): MutableList<News>
 }

@@ -24,20 +24,14 @@ class NewsCardService(
             ?: throw ShortsBaseException.from(
                 shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
                 resultErrorMessage =
-                "Method = loadDetailNewsInNewsCard, $newsCardId 에 해당 뉴스 카드는 존재하지 않습니다."
+                "${newsCardId}에 해당 뉴스 카드는 존재하지 않습니다."
             )
 
-        val newsIdBundle = newsCard.multipleNews?.split(", ")?.map { it.toLong() }
-
-        val resultNewsBundle = mutableListOf<News>()
-        if (newsIdBundle != null) {
-            newsNewsCardNativeQueryRepository.loadNewsBundleByCursorIdAndPersistenceNewsCardMultipleNews(
-                cursorId,
-                newsIdBundle,
-                size
-            )
-        }
-
-        return resultNewsBundle
+        val newsIdBundle = newsCard.multipleNews.split(", ").map { it.toLong() }
+        return newsNewsCardNativeQueryRepository.loadNewsBundleByCursorIdAndPersistenceNewsCardMultipleNews(
+            cursorId,
+            newsIdBundle,
+            size
+        )
     }
 }
