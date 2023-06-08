@@ -6,14 +6,12 @@ import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.domain.news.News
-import com.mashup.shorts.domain.news.NewsRepository
 import com.mashup.shorts.domain.newsnewscard.NewsNewsCardNativeQueryRepository
 
 @Service
 @Transactional(readOnly = true)
 class NewsCardService(
     private val newsCardRepository: NewsCardRepository,
-    private val newsRepository: NewsRepository,
     private val newsNewsCardNativeQueryRepository: NewsNewsCardNativeQueryRepository,
 ) {
 
