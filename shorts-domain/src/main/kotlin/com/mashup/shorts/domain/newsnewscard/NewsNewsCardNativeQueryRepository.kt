@@ -12,7 +12,7 @@ interface NewsNewsCardNativeQueryRepository : JpaRepository<News, Long> {
     @Query(
         "SELECT * " +
             "FROM news " +
-            "WHERE news.id >= :cursorId and news.id in :persistenceNewsCardMultipleNews " +
+            "WHERE news.id > :cursorId and news.id in :persistenceNewsCardMultipleNews " +
             "ORDER BY news.id asc " +
             "LIMIT :size",
         nativeQuery = true
