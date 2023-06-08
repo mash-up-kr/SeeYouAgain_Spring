@@ -141,7 +141,7 @@ class CrawlerCore(
     }
 
     private fun extractAllHeadLineNewsLinks(allHeadLineMoreLinksDocs: Elements): List<String> {
-        val allDetailHeadLineNewsLinks = ArrayList<String>()
+        val allDetailHeadLineNewsLinks = mutableListOf<String>()
 
         for (element in allHeadLineMoreLinksDocs) {
             val link = element.toString()
