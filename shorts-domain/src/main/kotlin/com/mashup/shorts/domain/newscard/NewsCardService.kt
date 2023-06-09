@@ -23,8 +23,7 @@ class NewsCardService(
         val newsCard = newsCardRepository.findByIdOrNull(newsCardId)
             ?: throw ShortsBaseException.from(
                 shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
-                resultErrorMessage =
-                "${newsCardId}에 해당 뉴스 카드는 존재하지 않습니다."
+                resultErrorMessage = "${newsCardId}에 해당 뉴스 카드는 존재하지 않습니다."
             )
 
         val newsIdBundle = newsCard.multipleNews.split(", ").map { it.toLong() }
