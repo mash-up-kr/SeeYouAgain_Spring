@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
-import com.mashup.shorts.domain.newscard.dto.NewsCardResponseForm.LoadAllDetailNewsInNewsCard
+import com.mashup.shorts.domain.newscard.dto.LoadAllDetailNewsInNewsCard
+import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 
 @Validated
@@ -25,13 +25,12 @@ class NewsCardController(
     Param : 뉴스 카드 ID, 커서 ID, 사이즈
     Return : MutableList<LoadAllDetailNewsInNewsCard>
      */
-    @ResponseStatus(OK)
     @GetMapping("/{newsCardId}")
     fun loadDetailNewsInNewsCard(
-        @PathVariable @Min(1) newsCardId: Long,
-        @RequestParam @Min(0) cursorId: Long,
-        @RequestParam @Min(1) size: Int,
-    ): ApiResponse<MutableList<LoadAllDetailNewsInNewsCard>> {
+        @PathVariable newsCardId: Long,
+        @RequestParam @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
+        @RequestParam @Min(1) @Max(20) size: Int,
+    ): ApiResponse<List<LoadAllDetailNewsInNewsCard>> {
         return success(
             OK,
             LoadAllDetailNewsInNewsCard.persistenceToResponseForm(

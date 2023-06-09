@@ -15,7 +15,7 @@ data class ErrorResponse(
     val message: String,
 ) {
     companion object {
-        fun of (shortsErrorCode: ShortsErrorCode, errorMessage: String? = null): ErrorResponse {
+        fun of(shortsErrorCode: ShortsErrorCode, errorMessage: String? = null): ErrorResponse {
             return ErrorResponse(
                 status = shortsErrorCode.httpStatus.value(),
                 code = shortsErrorCode.errorCode,
