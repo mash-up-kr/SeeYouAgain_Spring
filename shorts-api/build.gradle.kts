@@ -27,7 +27,10 @@ tasks {
 }
 
 dependencies {
-    implementation(project(":shorts-domain"))
+    api(project(":shorts-domain"))
+
+    // Validation Annotation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     // Spring Rest Docs
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")

@@ -1,4 +1,4 @@
-package com.mashup.shorts
+package com.mashup.shorts.global
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -15,9 +15,21 @@ import com.mashup.shorts.common.exception.ShortsErrorCode.E400_BAD_REQUEST
 import com.mashup.shorts.common.exception.ShortsErrorCode.E500_INTERNAL_SERVER_ERROR
 import com.mashup.shorts.common.response.ErrorResponse
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
+import jakarta.validation.ConstraintViolationException
 
 @RestControllerAdvice
 class ShortsExceptionHandler {
+
+    @ExceptionHandler(ConstraintViolationException::class)
+    private fun handlerConstraintViolationException(
+        exception: ConstraintViolationException,
+    ): ErrorResponse {
+        log.warn(exception.message)
+        return ErrorResponse.of(
+            shortsErrorCode = E400_BAD_REQUEST,
+            errorMessage = "Please Check Your Request Parameter"
+        )
+    }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException::class)
     private fun handleMethodArgumentTypeMismatchException(
