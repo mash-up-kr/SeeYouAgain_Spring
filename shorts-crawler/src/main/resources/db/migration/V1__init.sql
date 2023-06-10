@@ -69,10 +69,10 @@ create table member_news_card
 (
     id          bigint auto_increment primary key,
     member_id   bigint      not null,
-    news_id     bigint      not null,
+    news_card_id     bigint      not null,
     created_at  datetime(6) not null,
     modified_at datetime(6) null,
-    foreign key (news_id) references news (id),
+    foreign key (news_card_id) references news_card (id),
     foreign key (member_id) references member (id)
 );
 

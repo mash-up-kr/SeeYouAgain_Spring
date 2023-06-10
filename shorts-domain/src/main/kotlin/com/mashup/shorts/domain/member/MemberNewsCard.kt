@@ -16,6 +16,6 @@ class MemberNewsCard(
     val member: Member,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "news_id")
+    @JoinColumn(name = "news_card_id")
     val newsCard: NewsCard,
 ) : BaseEntity()
