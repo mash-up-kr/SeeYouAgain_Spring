@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
-import com.mashup.shorts.domain.newscard.dto.LoadAllDetailNewsInNewsCard
+import com.mashup.shorts.domain.newscard.dto.NewsCardFormResponse
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 
@@ -30,10 +30,10 @@ class NewsCardController(
         @PathVariable newsCardId: Long,
         @RequestParam @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
         @RequestParam @Min(1) @Max(20) size: Int,
-    ): ApiResponse<List<LoadAllDetailNewsInNewsCard>> {
+    ): ApiResponse<List<NewsCardFormResponse>> {
         return success(
             OK,
-            LoadAllDetailNewsInNewsCard.persistenceToResponseForm(
+            NewsCardFormResponse.persistenceToResponseForm(
                 newsCardService.loadDetailNewsInNewsCard(newsCardId, cursorId, size)
             )
         )
