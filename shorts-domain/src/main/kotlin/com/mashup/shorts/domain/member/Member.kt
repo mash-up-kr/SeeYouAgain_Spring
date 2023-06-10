@@ -12,6 +12,6 @@ class Member(
     @Column(name = "unique_id", nullable = false, length = 100)
     val uniqueId: String,
 
-    @Column(name = "nickname", nullable = false, length = 20)
+    @Column(name = "nickname", nullable = false, length = 40)
     val nickname: String,
 ) : BaseEntity()

@@ -74,7 +74,7 @@ class ShortsExceptionHandler {
     @ExceptionHandler(ShortsBaseException::class)
     private fun handleBaseException(exception: ShortsBaseException): ErrorResponse {
         log.error(exception.resultErrorMessage, exception)
-        return ErrorResponse.of(exception.shortsErrorCode, exception.resultErrorMessage)
+        return ErrorResponse.of(exception.shortsErrorCode, exception.shortsErrorCode.errorMessage)
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

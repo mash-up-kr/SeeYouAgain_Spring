@@ -1,7 +1,9 @@
 package com.mashup.shorts.common.response
 
 import org.springframework.http.HttpStatus
+import com.fasterxml.jackson.annotation.JsonInclude
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class ApiResponse<T>(
     val status: Int,
 

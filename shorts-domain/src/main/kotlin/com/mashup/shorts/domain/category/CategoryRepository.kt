@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository
 interface CategoryRepository : JpaRepository<Category, Long> {
 
     fun findByName(name: CategoryName): Category
+
+    fun findByNameIn(names: List<CategoryName>): List<Category>
 }

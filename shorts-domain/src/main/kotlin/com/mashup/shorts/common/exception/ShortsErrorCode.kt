@@ -32,6 +32,7 @@ enum class ShortsErrorCode(
 
     // ------------------------------ 409 ------------------------------
     E409_CONFLICT(HttpStatus.CONFLICT, "000", "요청한 리소스가 중복된 경우 발생"),
+    E409_UUID_CONFLICT(HttpStatus.CONFLICT, "001", "멤버 고유 아이디가 중복되었을 경우 발생"),
 
     // ------------------------------ 500 ------------------------------
     E500_INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "000", "서버 내부에 문제 발생"),
