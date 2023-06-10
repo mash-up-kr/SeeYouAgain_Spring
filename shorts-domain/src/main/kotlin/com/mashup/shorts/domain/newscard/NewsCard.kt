@@ -16,7 +16,7 @@ class NewsCard(
     @JoinColumn(name = "category_id", nullable = false)
     val category: Category,
 
-    @Column(name = "multiple_news", nullable = false, length = 5000)
+    @Column(columnDefinition = "TEXT", name = "multiple_news", nullable = false, length = 5000)
     val multipleNews: String,
 
     @Column(name = "keywords", nullable = false, length = 100)
