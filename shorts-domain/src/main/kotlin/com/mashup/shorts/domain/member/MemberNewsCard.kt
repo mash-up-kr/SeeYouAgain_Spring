@@ -8,7 +8,7 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 
-@Table(name = "member_news")
+@Table(name = "member_news_card")
 @Entity
 class MemberNewsCard(
     @ManyToOne(fetch = FetchType.LAZY)
