@@ -2,7 +2,7 @@ package com.mashup.shorts.domain.newscard.dto
 
 import com.mashup.shorts.domain.news.News
 
-data class LoadAllDetailNewsInNewsCard(
+data class NewsCardFormResponse(
     var id: Long,
     var title: String,
     var thumbnailImageUrl: String,
@@ -14,9 +14,9 @@ data class LoadAllDetailNewsInNewsCard(
     companion object {
         fun persistenceToResponseForm(
             newsBundle: MutableList<News>,
-        ): List<LoadAllDetailNewsInNewsCard> {
+        ): List<NewsCardFormResponse> {
             return newsBundle.map {
-                LoadAllDetailNewsInNewsCard(
+                NewsCardFormResponse(
                     id = it.id,
                     title = it.title,
                     thumbnailImageUrl = it.thumbnailImageUrl,
