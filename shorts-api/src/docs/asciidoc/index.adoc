@@ -1,21 +1,14 @@
-=== 테스트
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
 
-하나의 예시
+[[Option]]
+== link:../index.html[> 이전으로]
 
-==== [Request]
-
-==== [Request Path Parameters]
-
-===== [Response Field]
-
-include::{snippets}/Gyunny/response-fields.adoc[]
-
-==== [HTTP Example]
-
-===== [Response HTTP Example]
-
-include::{snippets}/Gyunny/http-response.adoc[]
-
-===== [Curl Request HTTP Example]
-
-include::{snippets}/Gyunny/curl-request.adoc[]
+[[common]]
+include::./common/api-common-docs.adoc[]
