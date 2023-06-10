@@ -13,25 +13,25 @@ import jakarta.persistence.Table
 @Entity
 class News(
 
-    @Column(name = "title", nullable = false, length = 200)
+    @Column(columnDefinition = "TEXT", name = "title", nullable = false)
     val title: String,
 
-    @Column(name = "content", nullable = false, length = 10000)
+    @Column(columnDefinition = "TEXT", name = "content", nullable = false)
     val content: String,
 
-    @Column(name = "thumbnail_image_url", nullable = false, length = 255)
+    @Column(columnDefinition = "TEXT", name = "thumbnail_image_url", nullable = false, length = 255)
     val thumbnailImageUrl: String,
 
-    @Column(name = "news_link", nullable = false, length = 255)
+    @Column(columnDefinition = "TEXT", name = "news_link", nullable = false, length = 500)
     val newsLink: String,
 
     @Column(name = "press", nullable = false, length = 20)
     val press: String, // 언론사
 
-    @Column(name = "written_date_time", nullable = false)
+    @Column(name = "written_date_time", nullable = false, length = 30)
     val writtenDateTime: String,
 
-    @Column(name = "type", nullable = false)
+    @Column(name = "type", nullable = false, length = 10)
     val type: String,
 
     @Column(name = "crawled_count", nullable = false)
