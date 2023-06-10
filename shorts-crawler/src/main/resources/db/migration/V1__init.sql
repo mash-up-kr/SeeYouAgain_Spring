@@ -46,7 +46,7 @@ create table news
 create table news_card
 (
     id            bigint auto_increment primary key,
-    multiple_news varchar(5000) not null,
+    multiple_news text not null,
     keywords      varchar(100)  not null,
     category_id   bigint        not null,
     created_at    datetime(6)   not null,
