@@ -1,4 +1,4 @@
-package com.mashup.shorts.core
+package com.mashup.shorts.core.const
 
 import com.mashup.shorts.domain.category.CategoryName.CULTURE
 import com.mashup.shorts.domain.category.CategoryName.ECONOMIC

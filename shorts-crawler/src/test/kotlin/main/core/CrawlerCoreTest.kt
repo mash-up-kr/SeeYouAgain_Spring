@@ -14,9 +14,9 @@ import com.mashup.shorts.ShortsCrawlerApplication
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
-import com.mashup.shorts.core.NewsDOMClassNameConst
-import com.mashup.shorts.core.NewsLinkElementConst
-import com.mashup.shorts.core.NewsUrlConst
+import com.mashup.shorts.core.const.NewsDOMClassNameConst
+import com.mashup.shorts.core.const.NewsLinkElementConst
+import com.mashup.shorts.core.const.NewsUrlConst
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.category.CategoryRepository
