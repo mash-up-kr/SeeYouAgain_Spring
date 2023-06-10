@@ -1,0 +1,13 @@
+[cols="3%,10%,50%,70%"]
+|===
+| Http status | Code | Type message | Error description
+| 400 | 400000 | E400_BAD_REQUEST | 필수 파라미터 값이 없거나 잘못된 값으로 요청을 보낸 경우 발생
+| 401 | 401000 | E401_UNAUTHORIZED | 인증 토큰이 잘못되었거나 문제가 있을 때 발생
+| 403 | 403000 | E403_FORBIDDEN | 사용 권한이 없는 경우 발생
+| 404 | 404000 | E404_NOT_FOUND | 요청한 리소스가 존재하지 않는 경우 발생
+| 409 | 409000 | E409_CONFLICT | 요청한 리소스가 중복된 경우 발생
+| 409 | 409001 | E409_CONFLICT | 멤버 고유 아이디가 중복된 경우 발생
+| 413 | 413000 | E413_PAYLOAD_TOO_LARGE | Header 및 Payload 등의 크기가 임계치를 넘은 경우 발생
+| 500 | 500000 | E500_INTERNAL_SERVER_ERROR | 서버 내부에서 에러가 발생하는 경우 발생
+| 501 | 501000 | E501_NOT_IMPLEMENTED | 제공하지 않는 기능을 호출하는 경우 발생
+|===

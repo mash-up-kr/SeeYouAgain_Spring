@@ -1,0 +1,116 @@
+== 공통 사항
+
+=== Domain
+
+[cols="10%,30%,30%,20%"]
+|===
+| 환경 | domain:port | 설명 | 비고
+
+| 개발서버
+| `http://dev.shorts.com`
+| 개발계 API 서버
+|
+
+| 운영서버
+| `http://shorts.com`
+| 운영계 API 서버
+|===
+
+=== Header
+
+[cols="10%,15%,10%,50%,15%"]
+|===
+| Key | Value | Mandatory | 설명 | 비고
+
+| `Content-Type`
+| "application/json"
+| N
+| API 요청 content type (ex: application/json)
+|
+
+| `User-Agent`
+|
+| N
+| 클라이언트 User-Agent 값
+|
+
+
+| default true
+|===
+
+=== API Response
+
+==== Response structure
+
+[cols="10%,10%,10%,70%"]
+|===
+| Key | Type | Mandatory | Description
+
+| `status`
+| String
+| Y
+| API 수행 상태 (성공:"200 or 201", 실패:"400 ~ 500")
+
+| `result`
+| Object
+| N
+| API 응답값
+
+|===
+
+==== Response.error<Error>
+
+[cols="10%,10%,10%,70%"]
+|===
+| Key | Type | Mandatory | Description
+
+| `code`
+| String
+| Y
+| 오류코드
+
+| `typeMessage`
+| String
+| Y
+| 오류 코드 구분 메세지
+
+| `detailMessage`
+| String
+| N
+| 오류 상세 메세지
+|===
+
+==== API 호출 성공
+
+[source,json]
+----
+{
+    "status":200,
+    "result": {
+      "success": true
+    }
+}
+----
+
+- Shorts 요청이 성공하면 HTTP 200 OK 상태 코드와 요청된 데이터를 반환합니다.
+
+==== API 호출 실패
+
+[source,json]
+----
+{
+  "status": 400,
+  "error": {
+    "code": "400000",
+    "typeMessage": "E400_BAD_REQUEST",
+    "detailMessage": "필수 파라미터가 넘어오지 않았습니다"
+  }
+}
+----
+
+- Shorts 요청이 실패하면 HTTP 4xx 또는 5xx 상태 코드와 오류 정보가 포함된 응답을 반환합니다.
+- 에러 코드 별 세부 분기가 필요하신 경우 응답 값으로 넘어가는 "code"를 사용하면 됩니다.
+
+=== 오류 코드
+
+include::./error.adoc[]
