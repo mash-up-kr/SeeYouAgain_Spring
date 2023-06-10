@@ -4,18 +4,15 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.ArgumentMatchers.any
-import org.springframework.data.repository.findByIdOrNull
 import com.mashup.shorts.domain.newscard.NewsCardRepository
-import com.mashup.shorts.domain.newscard.NewsCardService
+import com.mashup.shorts.domain.newscard.NewsCardLoader
 import com.mashup.shorts.domain.newsnewscard.NewsNewsCardNativeQueryRepository
-import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 
 @ExtendWith(MockKExtension::class)
-class NewsCardServiceTest(
+class NewsCardLoaderTest(
 
     @MockK
     private val newsCardRepository: NewsCardRepository,
@@ -24,7 +21,7 @@ class NewsCardServiceTest(
     private val newsNewsCardNativeQueryRepository: NewsNewsCardNativeQueryRepository,
 
     @InjectMockKs
-    private val newsCardService: NewsCardService,
+    private val newsCardLoader: NewsCardLoader,
 ) {
 
 
@@ -37,7 +34,7 @@ class NewsCardServiceTest(
         val size = 10
 
         // execute
-        val loadedNewsBundle = newsCardService.loadDetailNewsInNewsCard(newsCardId, cursorId, size)
+        val loadedNewsBundle = newsCardLoader.loadDetailNewsInNewsCard(newsCardId, cursorId, size)
 
         // validate
         assertThat(loadedNewsBundle.size).isEqualTo(10)

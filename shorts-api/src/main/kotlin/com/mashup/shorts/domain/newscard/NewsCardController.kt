@@ -17,7 +17,7 @@ import jakarta.validation.constraints.Min
 @RestController
 @RequestMapping("/v1/news-card")
 class NewsCardController(
-    private val newsCardService: NewsCardService,
+    private val newsCardLoader: NewsCardLoader,
 ) {
 
     /**
@@ -34,7 +34,7 @@ class NewsCardController(
         return success(
             OK,
             NewsCardFormResponse.persistenceToResponseForm(
-                newsCardService.loadDetailNewsInNewsCard(newsCardId, cursorId, size)
+                newsCardLoader.loadDetailNewsInNewsCard(newsCardId, cursorId, size)
             )
         )
     }
