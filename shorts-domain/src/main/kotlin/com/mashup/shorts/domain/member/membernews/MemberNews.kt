@@ -1,4 +1,4 @@
-package com.mashup.shorts.domain.member.membernws
+package com.mashup.shorts.domain.member.membernews
 
 import com.mashup.shorts.domain.BaseEntity
 import com.mashup.shorts.domain.member.Member
