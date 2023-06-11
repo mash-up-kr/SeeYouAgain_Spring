@@ -28,9 +28,8 @@ class CrawlerCore(
     private val newsRepository: NewsRepository,
     private val newsCardRepository: NewsCardRepository,
     private val categoryRepository: CategoryRepository,
-    private val keywordExtractor: KeywordExtractor,
     private val crawlerBase: CrawlerBase,
-    private val crawlerContentFilter: CrawlerContentFilter,
+    private val keywordExtractor: KeywordExtractor,
 ) {
 
     @Scheduled(cron = "0 * * * * *")
@@ -82,7 +81,7 @@ class CrawlerCore(
                 val extractKeyword = keywordExtractor.extractKeyword(persistenceTargetNewsList[0].content)
                 val persistenceNewsCard = NewsCard(
                     category = category,
-                    multipleNews = crawlerContentFilter.filterSquareBracket(
+                    multipleNews = CrawlerContentFilter.filterSquareBracket(
                         persistenceTargetNewsList.map { it.id }.toString()
                     ),
                     keywords = extractKeyword

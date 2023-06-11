@@ -18,10 +18,7 @@ import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.news.News
 
 @Component
-class CrawlerBase(
-    private val crawlerContentFilter: CrawlerContentFilter,
-    private val crawlerContentConverter: CrawlerContentConverter,
-) {
+class CrawlerBase {
 
     internal fun getMoreHeadLineLinks(url: String, categoryName: CategoryName): Elements {
         return Jsoup.connect(url).get()
@@ -96,11 +93,11 @@ class CrawlerBase(
                     News(
                         title = title,
                         content = content,
-                        thumbnailImageUrl = crawlerContentFilter.filterImageLinkForm(imageLink),
+                        thumbnailImageUrl = CrawlerContentFilter.filterImageLinkForm(imageLink),
                         newsLink = detailLink,
                         press = press,
                         writtenDateTime = writtenDateTime,
-                        type = crawlerContentConverter.convertHeadLine(headLineFlag),
+                        type = CrawlerContentConverter.convertHeadLine(headLineFlag),
                         crawledCount = 1,
                         category = category,
                     )

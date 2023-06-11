@@ -3,7 +3,9 @@ package com.mashup.shorts.core.keyword
 import java.io.StringReader
 import org.apache.lucene.analysis.ko.KoreanAnalyzer
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute
+import org.springframework.stereotype.Component
 
+@Component
 class KeywordExtractor {
 
     companion object {
