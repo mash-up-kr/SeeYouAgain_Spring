@@ -1,5 +1,8 @@
 package com.mashup.shorts.common.exception
 
+import com.mashup.shorts.common.response.Error
+import com.mashup.shorts.common.response.ErrorResponse
+
 /**
  * ShortsBaseException
  *
@@ -15,6 +18,17 @@ class ShortsBaseException(
     shortsErrorCode.toString(),
     cause
 ) {
+
+    fun toErrorResponse(): ErrorResponse {
+        return ErrorResponse(
+            status = shortsErrorCode.httpStatus.value(),
+            error = Error(
+                code = shortsErrorCode.errorCode,
+                detailMessage = shortsErrorCode.errorMessage
+            )
+        )
+    }
+
     companion object {
         fun from(
             shortsErrorCode: ShortsErrorCode,
