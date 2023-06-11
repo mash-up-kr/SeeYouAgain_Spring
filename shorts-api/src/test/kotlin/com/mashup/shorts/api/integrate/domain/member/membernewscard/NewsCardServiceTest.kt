@@ -24,7 +24,7 @@ import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearReq
 @Transactional
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class NewsCardIntegrationTest(
+class MemberNewsCardIntegrationTest(
     @Autowired
     protected val mockMvc: MockMvc,
     @Autowired
@@ -41,7 +41,7 @@ class NewsCardIntegrationTest(
         val body = MemberNewsCardClearRequest(memberId, newsCardId)
 
         // execute
-        val result = mockMvc.perform(
+        val response = mockMvc.perform(
             MockMvcRequestBuilders.delete(url)
                 .content(objectMapper.writeValueAsString(body))
                 .contentType(APPLICATION_JSON)
@@ -49,7 +49,7 @@ class NewsCardIntegrationTest(
         ).andDo(MockMvcResultHandlers.print())
 
         // validate
-        result.andExpect { MockMvcResultMatchers.status().isOk() }
-        result.andExpect { MockMvcResultMatchers.content().string("") }
+        response.andExpect { MockMvcResultMatchers.status().isOk() }
+        response.andExpect { MockMvcResultMatchers.content().string("") }
     }
 }
