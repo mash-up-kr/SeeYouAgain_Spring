@@ -1,29 +1,30 @@
-tasks {
+tasks.asciidoctor {
     val snippetsDir by extra { file("build/generated-snippets") }
 
-    test {
-        outputs.dir(snippetsDir)
-    }
+    inputs.dir(snippetsDir)
+    //dependsOn(test)
+    dependsOn(tasks.test) // 변경
 
-    asciidoctor {
-        inputs.dir(snippetsDir)
-        dependsOn(test)
-    }
-
-    build {
-        dependsOn(asciidoctor)
-    }
-
-    asciidoctor {
-        inputs.dir(snippetsDir)
-        dependsOn(test)
-        doLast {
-            copy {
-                from("build/docs/asciidoc")
-                into("src/main/resources/static/docs")
-            }
+    doFirst { // 2
+        delete {
+            file("src/main/resources/static/docs")
         }
     }
+}
+
+tasks.register("copyHTML", Copy::class) { // 3
+    dependsOn(tasks.asciidoctor)
+    from(file("build/docs/asciidoc"))
+    into(file("src/main/resources/static/docs"))
+}
+
+tasks.build { // 4
+    dependsOn(tasks.getByName("copyHTML"))
+}
+
+tasks.bootJar { // 5
+    dependsOn(tasks.asciidoctor)
+    dependsOn(tasks.getByName("copyHTML"))
 }
 
 dependencies {
