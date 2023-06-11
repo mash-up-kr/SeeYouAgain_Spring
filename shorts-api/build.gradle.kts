@@ -10,10 +10,6 @@ tasks {
         dependsOn(test)
     }
 
-    build {
-        dependsOn(asciidoctor)
-    }
-
     asciidoctor {
         inputs.dir(snippetsDir)
         dependsOn(test)
@@ -23,6 +19,10 @@ tasks {
                 into("src/main/resources/static/docs")
             }
         }
+    }
+
+    build {
+        dependsOn(asciidoctor)
     }
 }
 
