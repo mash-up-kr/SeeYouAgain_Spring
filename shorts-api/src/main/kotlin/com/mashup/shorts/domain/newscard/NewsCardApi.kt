@@ -16,7 +16,7 @@ import jakarta.validation.constraints.Min
 @Validated
 @RestController
 @RequestMapping("/v1/news-card")
-class NewsCardController(
+class NewsCardApi(
     private val newsCardRetrieve: NewsCardRetrieve,
 ) {
 

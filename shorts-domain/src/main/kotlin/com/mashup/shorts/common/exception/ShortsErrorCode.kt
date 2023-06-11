@@ -25,6 +25,8 @@ enum class ShortsErrorCode(
 
     // ------------------------------ 404 ------------------------------
     E404_NOT_FOUND(HttpStatus.NOT_FOUND, "000", "요청한 리소스가 존재하지 않는 경우 발생"),
+    E404_MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "001", "유저가 존재하지 않음"),
+    E404_NEWS_CARD_NOT_FOUND(HttpStatus.NOT_FOUND, "002", "뉴스 카드가 존재하지 않음"),
 
     // ------------------------------ 405 ------------------------------
     E405_METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "000", "HTTP Method가 잘못된 경우"),
