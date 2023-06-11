@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
-import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardRequest
+import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
 
 @RestController
 @RequestMapping("/v1/member-news-card")
@@ -16,7 +16,7 @@ class MemberNewsCardApi(
 
     @DeleteMapping
     fun clearMemberNewsCard(
-        @RequestBody memberNewsCardRequest: MemberNewsCardRequest,
+        @RequestBody memberNewsCardRequest: MemberNewsCardClearRequest,
     ): ApiResponse<Any> {
         memberNewsCardClear.clearMemberNewsCard(
             memberId = memberNewsCardRequest.memberId,
