@@ -9,7 +9,6 @@ import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.core.const.NewsUrlConst.categoryToUrl
 import com.mashup.shorts.core.keyword.KeywordExtractor
-import com.mashup.shorts.core.util.CrawlerContentFilter
 import com.mashup.shorts.domain.category.CategoryName.CULTURE
 import com.mashup.shorts.domain.category.CategoryName.ECONOMIC
 import com.mashup.shorts.domain.category.CategoryName.POLITICS
@@ -48,7 +47,7 @@ class CrawlerCore(
                 )
             }
 
-            val headLineLinks = crawlerBase.getMoreHeadLineLinks(
+            val headLineLinks = crawlerBase.extractMoreHeadLineLinks(
                 url = categoryPair.value,
                 categoryName = categoryPair.key
             )
@@ -81,7 +80,7 @@ class CrawlerCore(
                 val extractKeyword = keywordExtractor.extractKeyword(persistenceTargetNewsList[0].content)
                 val persistenceNewsCard = NewsCard(
                     category = category,
-                    multipleNews = CrawlerContentFilter.filterSquareBracket(
+                    multipleNews = filterSquareBracket(
                         persistenceTargetNewsList.map { it.id }.toString()
                     ),
                     keywords = extractKeyword
@@ -94,5 +93,9 @@ class CrawlerCore(
         log.info(LocalDateTime.now().toString() + " - " + "crawling done")
     }
 
-
+    private fun filterSquareBracket(target: String): String {
+        return target
+            .replace("[", "")
+            .replace("]", "")
+    }
 }
