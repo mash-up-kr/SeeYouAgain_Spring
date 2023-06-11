@@ -1,9 +1,6 @@
 package com.mashup.shorts.core.util
 
-import org.springframework.stereotype.Component
-
-@Component
-class CrawlerContentFilter {
+object CrawlerContentFilter {
 
     internal fun filterSquareBracket(target: String): String {
         return target
