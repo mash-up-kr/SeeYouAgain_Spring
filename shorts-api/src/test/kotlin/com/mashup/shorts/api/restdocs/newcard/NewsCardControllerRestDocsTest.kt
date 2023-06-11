@@ -68,7 +68,7 @@ class NewsCardControllerRestDocsTest : ApiDocsTestBase() {
                             .description("페이징 사이즈")
                     ),
                     PayloadDocumentation.responseFields(
-                        fieldWithPath("status").type(JsonFieldType.NUMBER).description("API 성공 여부"),
+                        fieldWithPath("status").type(JsonFieldType.NUMBER).description("API HTTP Status 값"),
                         fieldWithPath("result[].id").type(JsonFieldType.NUMBER).description("뉴스 id"),
                         fieldWithPath("result[].title").type(JsonFieldType.STRING).description("뉴스 제목"),
                         fieldWithPath("result[].thumbnailImageUrl").type(JsonFieldType.STRING).description("뉴스 이미지 링크"),

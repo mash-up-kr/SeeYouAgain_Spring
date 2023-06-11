@@ -1,6 +1,6 @@
 package com.mashup.shorts.domain.category
 
-import java.util.UUID
+import java.util.*
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -16,16 +16,16 @@ import com.mashup.shorts.domain.memberCategory.MemberCategoryCreate
  * @version 1.0.0
  * @since 2023. 06. 10.
  */
-@RequestMapping("/api/v1/member/category")
+@RequestMapping("/v1/member/category")
 @RestController
 class MemberCategoryCreateApi(
     private val memberCategoryCreate: MemberCategoryCreate
 ) {
 
     @PostMapping
-    fun createCategory(@RequestBody categoryCreateBulkRequest: CategoryCreateBulkRequest): ApiResponse<Void> {
+    fun createCategory(@RequestBody categoryCreateBulkRequest: CategoryCreateBulkRequest): ApiResponse<Map<String, String>> {
         val uniqueId = UUID.randomUUID().toString()
         memberCategoryCreate.createCategory(categoryCreateBulkRequest.categoryNames, uniqueId)
-        return ApiResponse.success(HttpStatus.CREATED)
+        return ApiResponse.success(HttpStatus.CREATED, mapOf("uniqueId" to uniqueId))
     }
 }
