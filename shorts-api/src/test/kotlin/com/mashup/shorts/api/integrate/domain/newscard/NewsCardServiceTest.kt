@@ -1,6 +1,5 @@
 package com.mashup.shorts.api.integrate.domain.newscard
 
-import javax.sql.DataSource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
@@ -17,8 +16,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.transaction.annotation.Transactional
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.shorts.api.ApiTestBase
-import jakarta.persistence.EntityManager
-import jakarta.persistence.EntityManagerFactory
 
 @SpringBootTest
 @Disabled
@@ -31,11 +28,6 @@ class NewsCardIntegrationTest(
     protected val mockMvc: MockMvc,
     @Autowired
     protected val objectMapper: ObjectMapper,
-    @Autowired
-    protected val entityManagerFactory: EntityManagerFactory,
-    @Autowired
-    protected val dataSource: DataSource,
-    protected val entityManager: EntityManager,
 ) : ApiTestBase() {
 
     @Test
