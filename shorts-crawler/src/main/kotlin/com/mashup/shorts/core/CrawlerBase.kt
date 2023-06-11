@@ -3,6 +3,7 @@ package com.mashup.shorts.core
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import org.springframework.stereotype.Component
+import com.mashup.shorts.core.const.NewsDOMClassNameConst
 import com.mashup.shorts.core.const.NewsDOMClassNameConst.CONTENT_CLASS_NAME
 import com.mashup.shorts.core.const.NewsDOMClassNameConst.IMAGE_ID_NAME
 import com.mashup.shorts.core.const.NewsDOMClassNameConst.PRESS_CLASS_NAME
@@ -11,8 +12,6 @@ import com.mashup.shorts.core.const.NewsDOMClassNameConst.WRITTEN_DATETIME_CLASS
 import com.mashup.shorts.core.const.NewsDOMClassNameConst.detailDocClassNames
 import com.mashup.shorts.core.const.NewsLinkElementConst.moreHeadLineLinksElements
 import com.mashup.shorts.core.const.NewsUrlConst.SYMBOLIC_LINK_BASE_URL
-import com.mashup.shorts.core.util.CrawlerContentConverter
-import com.mashup.shorts.core.util.CrawlerContentFilter
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.news.News
@@ -20,7 +19,7 @@ import com.mashup.shorts.domain.news.News
 @Component
 class CrawlerBase {
 
-    internal fun getMoreHeadLineLinks(url: String, categoryName: CategoryName): Elements {
+    internal fun extractMoreHeadLineLinks(url: String, categoryName: CategoryName): Elements {
         return Jsoup.connect(url).get()
             .getElementsByClass(moreHeadLineLinksElements[categoryName]!!)
             .tagName("a")
@@ -93,11 +92,11 @@ class CrawlerBase {
                     News(
                         title = title,
                         content = content,
-                        thumbnailImageUrl = CrawlerContentFilter.filterImageLinkForm(imageLink),
+                        thumbnailImageUrl = filterImageLinkForm(imageLink),
                         newsLink = detailLink,
                         press = press,
                         writtenDateTime = writtenDateTime,
-                        type = CrawlerContentConverter.convertHeadLine(headLineFlag),
+                        type = convertHeadLine(headLineFlag),
                         crawledCount = 1,
                         category = category,
                     )
@@ -108,5 +107,19 @@ class CrawlerBase {
             cardNews = mutableListOf()
         }
         return cardNewsBundle
+    }
+
+    private fun filterImageLinkForm(rawImageLink: String): String {
+        return rawImageLink
+            .substringAfter("data-src=\"")
+            .substringBefore("\"")
+    }
+
+    private fun convertHeadLine(headLineFlag: Boolean): String {
+        return if (headLineFlag) {
+            NewsDOMClassNameConst.HEADLINE
+        } else {
+            NewsDOMClassNameConst.NORMAL
+        }
     }
 }
