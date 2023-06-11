@@ -19,10 +19,10 @@ class News(
     @Column(columnDefinition = "TEXT", name = "content", nullable = false)
     val content: String,
 
-    @Column(columnDefinition = "TEXT", name = "thumbnail_image_url", nullable = false, length = 255)
+    @Column(columnDefinition = "TEXT", name = "thumbnail_image_url", nullable = false)
     val thumbnailImageUrl: String,
 
-    @Column(columnDefinition = "TEXT", name = "news_link", nullable = false, length = 500)
+    @Column(columnDefinition = "TEXT", name = "news_link", nullable = false)
     val newsLink: String,
 
     @Column(name = "press", nullable = false, length = 20)
