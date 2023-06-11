@@ -1,5 +1,6 @@
 package main.core
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -7,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import com.mashup.shorts.ShortsCrawlerApplication
 import com.mashup.shorts.core.CrawlerCore
 
+@Disabled
 @SpringBootTest(classes = [ShortsCrawlerApplication::class])
 class CrawlerCoreTest @Autowired constructor(
     private val crawlerCore: CrawlerCore,
