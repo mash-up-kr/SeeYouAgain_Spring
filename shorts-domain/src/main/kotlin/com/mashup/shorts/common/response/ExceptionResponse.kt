@@ -11,16 +11,22 @@ import com.mashup.shorts.common.exception.ShortsErrorCode
  */
 data class ErrorResponse(
     val status: Int,
-    val code: String,
-    val message: String,
+    val error: Error
 ) {
     companion object {
-        fun of(shortsErrorCode: ShortsErrorCode, errorMessage: String? = null): ErrorResponse {
+        fun of(shortsErrorCode: ShortsErrorCode, detailMessage: String ?= null): ErrorResponse {
             return ErrorResponse(
                 status = shortsErrorCode.httpStatus.value(),
-                code = shortsErrorCode.errorCode,
-                message = errorMessage ?: shortsErrorCode.errorMessage,
+                error = Error(
+                    code = shortsErrorCode.errorCode,
+                    detailMessage = detailMessage
+                )
             )
         }
     }
 }
+
+data class Error(
+    val code: String,
+    val detailMessage: String?
+)

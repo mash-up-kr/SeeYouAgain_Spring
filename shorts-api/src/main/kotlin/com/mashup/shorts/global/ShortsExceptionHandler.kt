@@ -1,6 +1,7 @@
 package com.mashup.shorts.global
 
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MissingServletRequestParameterException
@@ -27,7 +28,7 @@ class ShortsExceptionHandler {
         log.warn(exception.message)
         return ErrorResponse.of(
             shortsErrorCode = E400_BAD_REQUEST,
-            errorMessage = "Please Check Your Request Parameter"
+            detailMessage = "Please Check Your Request Parameter"
         )
     }
 
@@ -36,11 +37,7 @@ class ShortsExceptionHandler {
         exception: MethodArgumentTypeMismatchException,
     ): ErrorResponse {
         log.warn(exception.message)
-        val parameterName = exception.name
-        return ErrorResponse.of(
-            shortsErrorCode = E400_BAD_REQUEST,
-            errorMessage = "Parameter ($parameterName)'s type is not matched"
-        )
+        return ErrorResponse.of(shortsErrorCode = E400_BAD_REQUEST)
     }
 
     @ExceptionHandler(MissingServletRequestParameterException::class)
@@ -48,10 +45,9 @@ class ShortsExceptionHandler {
         exception: MissingServletRequestParameterException,
     ): ErrorResponse {
         log.warn(exception.message)
-        val parameterName = exception.parameterName
         return ErrorResponse.of(
             shortsErrorCode = E400_BAD_REQUEST,
-            errorMessage = "Parameter ($parameterName) is missing"
+            detailMessage = "Please Check Your Request Parameter"
         )
     }
 
@@ -72,9 +68,10 @@ class ShortsExceptionHandler {
     }
 
     @ExceptionHandler(ShortsBaseException::class)
-    private fun handleBaseException(exception: ShortsBaseException): ErrorResponse {
+    private fun handleBaseException(exception: ShortsBaseException): ResponseEntity<ErrorResponse> {
         log.error(exception.resultErrorMessage, exception)
-        return ErrorResponse.of(exception.shortsErrorCode, exception.resultErrorMessage)
+        return ResponseEntity.status(exception.shortsErrorCode.httpStatus)
+            .body(exception.toErrorResponse())
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
