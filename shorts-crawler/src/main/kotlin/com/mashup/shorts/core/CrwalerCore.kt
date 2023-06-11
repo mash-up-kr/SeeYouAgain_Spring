@@ -1,6 +1,7 @@
 package com.mashup.shorts.core
 
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -34,6 +35,9 @@ class CrawlerCore(
     @Scheduled(cron = "0 * * * * *")
     internal fun executeCrawling() {
         for (categoryPair in categoryToUrl) {
+            log.info {
+                "${LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))} - crawling start"
+            }
             val category = when (categoryPair.key) {
                 POLITICS -> categoryRepository.findByName(POLITICS)
                 ECONOMIC -> categoryRepository.findByName(ECONOMIC)
