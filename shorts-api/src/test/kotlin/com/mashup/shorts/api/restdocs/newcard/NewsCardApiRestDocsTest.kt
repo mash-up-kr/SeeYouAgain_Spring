@@ -14,13 +14,13 @@ import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.news.News
-import com.mashup.shorts.domain.newscard.NewsCardController
+import com.mashup.shorts.domain.newscard.NewsCardApi
 import com.mashup.shorts.domain.newscard.NewsCardRetrieve
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
-@WebMvcTest(NewsCardController::class) // Presentation 영역만 테스트 한다는 의미
-class NewsCardControllerRestDocsTest : ApiDocsTestBase() {
+@WebMvcTest(NewsCardApi::class) // Presentation 영역만 테스트 한다는 의미
+class NewsCardApiRestDocsTest : ApiDocsTestBase() {
 
     @MockkBean
     private lateinit var newsCardRetrieve: NewsCardRetrieve //왜 lateinit var로 하는지?

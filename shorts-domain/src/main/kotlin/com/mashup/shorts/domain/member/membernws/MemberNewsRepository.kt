@@ -1,7 +1,7 @@
-package com.mashup.shorts.domain.member
+package com.mashup.shorts.domain.member.membernws
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MemberNewsCardRepository : JpaRepository<MemberNewsCard, Long>
+interface MemberNewsRepository : JpaRepository<MemberNews, Long>
