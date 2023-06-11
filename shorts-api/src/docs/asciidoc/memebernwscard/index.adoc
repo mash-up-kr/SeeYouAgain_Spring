@@ -1,0 +1,13 @@
+=== 뉴스 다 읽었어요 API
+
+==== [Curl Request]
+
+include::{snippets}/뉴스 다 읽었어요 API/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::{snippets}/뉴스 다 읽었어요 API/http-request.adoc[]
+
+===== [Response HTTP Example]
+
+include::{snippets}/뉴스 다 읽었어요 API/http-response.adoc[]
