@@ -1,0 +1,25 @@
+=== 뉴스 카드 내 뉴스 조회
+
+==== [Curl Request]
+
+include::{snippets}/멤버 관심 카테고리 설정/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::{snippets}/멤버 관심 카테고리 설정/http-request.adoc[]
+
+==== [Request Filed]
+
+include::{snippets}/멤버 관심 카테고리 설정/request-fields.adoc[]
+
+===== [Response Field]
+
+include::{snippets}/멤버 관심 카테고리 설정/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::{snippets}/멤버 관심 카테고리 설정/http-response.adoc[]
+
+===== [Curl Request HTTP Example]
+
+include::{snippets}/멤버 관심 카테고리 설정/curl-request.adoc[]
