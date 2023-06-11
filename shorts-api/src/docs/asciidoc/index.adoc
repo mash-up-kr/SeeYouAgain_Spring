@@ -12,3 +12,9 @@ endif::[]
 
 [[common]]
 include::./common/api-common-docs.adoc[]
+
+[[newcard]]
+include::./newscard/index.adoc[]
+
+[[memberCategory]]
+include::./memberCategory/index.adoc/[]
