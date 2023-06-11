@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
+import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearResponse
 
 @RestController
 @RequestMapping("/v1/member-news-card")
@@ -18,12 +19,15 @@ class MemberNewsCardApi(
     @DeleteMapping
     fun clearMemberNewsCard(
         @RequestBody memberNewsCardRequest: MemberNewsCardClearRequest,
-    ): ApiResponse<Void> {
-        memberNewsCardClear.clearMemberNewsCard(
-            memberId = memberNewsCardRequest.memberId,
-            newsCardId = memberNewsCardRequest.newsCardId,
+    ): ApiResponse<MemberNewsCardClearResponse> {
+        return success(
+            OK,
+            MemberNewsCardClearResponse(
+                memberNewsCardClear.clearMemberNewsCard(
+                    memberId = memberNewsCardRequest.memberId,
+                    newsCardId = memberNewsCardRequest.newsCardId,
+                )
+            )
         )
-
-        return success(OK)
     }
 }

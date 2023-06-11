@@ -33,7 +33,7 @@ class MemberNewsCardIntegrationTest(
 
     @Test
     @DisplayName("[통합 테스트] : 뉴스 다 읽었어요 성공 - MemberNewsCard 테이블에서 제거")
-    fun 뉴스_다읽었어염() {
+    fun 뉴스_다읽었어요() {
         // ready
         val url = "/v1/member-news-card"
         val memberId = 1L
@@ -50,6 +50,6 @@ class MemberNewsCardIntegrationTest(
 
         // validate
         response.andExpect { MockMvcResultMatchers.status().isOk() }
-        response.andExpect { MockMvcResultMatchers.content().string("") }
+        response.andExpect { MockMvcResultMatchers.content().string("shortsCount") }
     }
 }
