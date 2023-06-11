@@ -73,6 +73,7 @@ class CrawlerBase(
                     continue
                 }
 
+                // 너무 빠른 요청으로 인해 크롤링 차단을 방지하고자 0.1초의 간격 부여
                 Thread.sleep(100)
                 val detailDoc = Jsoup.connect(detailLink).get()
                 val title = detailDoc.getElementsByClass(TITLE_CLASS_NAME).text()

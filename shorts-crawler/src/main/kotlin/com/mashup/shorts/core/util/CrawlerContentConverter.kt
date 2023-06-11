@@ -1,16 +1,15 @@
 package com.mashup.shorts.core.util
 
-import org.springframework.stereotype.Component
-import com.mashup.shorts.core.const.NewsDOMClassNameConst
+import com.mashup.shorts.core.const.NewsDOMClassNameConst.HEADLINE
+import com.mashup.shorts.core.const.NewsDOMClassNameConst.NORMAL
 
-@Component
-class CrawlerContentConverter {
+object CrawlerContentConverter {
 
     internal fun convertHeadLine(headLineFlag: Boolean): String {
         return if (headLineFlag) {
-            NewsDOMClassNameConst.HEADLINE
+            HEADLINE
         } else {
-            NewsDOMClassNameConst.NORMAL
+            NORMAL
         }
     }
 }
