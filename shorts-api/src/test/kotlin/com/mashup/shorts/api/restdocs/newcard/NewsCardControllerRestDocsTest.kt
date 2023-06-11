@@ -15,7 +15,7 @@ import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.newscard.NewsCardController
-import com.mashup.shorts.domain.newscard.NewsCardLoader
+import com.mashup.shorts.domain.newscard.NewsCardRetrieve
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
@@ -23,11 +23,11 @@ import io.mockk.every
 class NewsCardControllerRestDocsTest : ApiDocsTestBase() {
 
     @MockkBean
-    private lateinit var newsCardLoader: NewsCardLoader //왜 lateinit var로 하는지?
+    private lateinit var newsCardRetrieve: NewsCardRetrieve //왜 lateinit var로 하는지?
 
     @Test
     fun 뉴스카드_내_뉴스조회() {
-        every { newsCardLoader.loadDetailNewsInNewsCard(any(), any(), any()) } returns (
+        every { newsCardRetrieve.loadDetailNewsInNewsCard(any(), any(), any()) } returns (
             mutableListOf(
                 News(
                     title = "뉴스 제목",
