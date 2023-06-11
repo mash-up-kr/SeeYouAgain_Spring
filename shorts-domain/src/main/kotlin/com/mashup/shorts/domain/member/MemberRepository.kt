@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 interface MemberRepository : JpaRepository<Member, Long> {
 
     fun existsByUniqueId(uniqueId: String): Boolean
+    fun findByUniqueId(uniqueId: String): Member?
 }
