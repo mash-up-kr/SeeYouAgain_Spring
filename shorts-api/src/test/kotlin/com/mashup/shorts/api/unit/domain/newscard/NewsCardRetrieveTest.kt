@@ -5,14 +5,14 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import com.mashup.shorts.domain.newscard.NewsCardRepository
-import com.mashup.shorts.domain.newscard.NewsCardLoader
+import com.mashup.shorts.domain.newscard.NewsCardRetrieve
 import com.mashup.shorts.domain.newsnewscard.NewsNewsCardNativeQueryRepository
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 
 @ExtendWith(MockKExtension::class)
-class NewsCardLoaderTest(
+class NewsCardRetrieveTest(
 
     @MockK
     private val newsCardRepository: NewsCardRepository,
@@ -21,7 +21,7 @@ class NewsCardLoaderTest(
     private val newsNewsCardNativeQueryRepository: NewsNewsCardNativeQueryRepository,
 
     @InjectMockKs
-    private val newsCardLoader: NewsCardLoader,
+    private val newsCardRetrieve: NewsCardRetrieve,
 ) {
 
 
@@ -34,7 +34,7 @@ class NewsCardLoaderTest(
         val size = 10
 
         // execute
-        val loadedNewsBundle = newsCardLoader.loadDetailNewsInNewsCard(newsCardId, cursorId, size)
+        val loadedNewsBundle = newsCardRetrieve.loadDetailNewsInNewsCard(newsCardId, cursorId, size)
 
         // validate
         assertThat(loadedNewsBundle.size).isEqualTo(10)

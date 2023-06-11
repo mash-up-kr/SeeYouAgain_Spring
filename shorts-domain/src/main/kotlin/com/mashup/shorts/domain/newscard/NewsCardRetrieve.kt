@@ -10,7 +10,7 @@ import com.mashup.shorts.domain.newsnewscard.NewsNewsCardNativeQueryRepository
 
 @Service
 @Transactional(readOnly = true)
-class NewsCardLoader(
+class NewsCardRetrieve(
     private val newsCardRepository: NewsCardRepository,
     private val newsNewsCardNativeQueryRepository: NewsNewsCardNativeQueryRepository,
 ) {
