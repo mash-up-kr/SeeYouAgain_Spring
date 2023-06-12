@@ -1,5 +1,6 @@
 package com.mashup.shorts.api.integrate.domain.member.membernewscard
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -32,8 +33,8 @@ class MemberNewsCardIntegrationTest(
 ) : ApiTestBase() {
 
     @Test
-    @DisplayName("[통합 테스트] : 뉴스 다 읽었어요 성공 - MemberNewsCard 테이블에서 제거")
-    fun 뉴스_다읽었어요() {
+    @DisplayName("[통합 테스트] : 뉴스카드 다 읽었어요 성공")
+    fun 뉴스카드_다읽었어요() {
         // ready
         val url = "/v1/member-news-card"
         val memberId = 1L
@@ -51,5 +52,26 @@ class MemberNewsCardIntegrationTest(
         // validate
         response.andExpect { MockMvcResultMatchers.status().isOk() }
         response.andExpect { MockMvcResultMatchers.content().string("shortsCount") }
+    }
+
+    @Test
+    @DisplayName("[통합 테스트] : 뉴스카드 삭제 성공")
+    fun 뉴스카드_삭제() {
+        // ready
+        val url = "/v1/member-news-card/1"
+        val uniqueId = "uniqueId"
+        val headerName = "Authorization"
+
+        // execute
+        val response = mockMvc.perform(
+            MockMvcRequestBuilders.delete(url)
+                .header(headerName, uniqueId)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+        ).andDo(MockMvcResultHandlers.print())
+
+        // validate
+        response.andExpect { MockMvcResultMatchers.status().isOk() }
+        assertThat(response.andReturn().response.contentAsString.isEmpty()).isTrue
     }
 }
