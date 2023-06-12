@@ -48,10 +48,10 @@ class MemberNewsCardClear(
         return newMemberShortsCount.count
     }
 
-    fun deleteMemberNewsCard(memberId: Long, newsCardId: Long) {
-        val member = memberRepository.findByIdOrNull(memberId) ?: throw ShortsBaseException.from(
+    fun deleteMemberNewsCard(uniqueId: String, newsCardId: Long) {
+        val member = memberRepository.findByUniqueId(uniqueId) ?: throw ShortsBaseException.from(
             shortsErrorCode = E404_NOT_FOUND,
-            resultErrorMessage = "${memberId}에 해당하는 유저가 존재하지 않습니다."
+            resultErrorMessage = "${uniqueId}에 해당하는 유저가 존재하지 않습니다."
         )
 
         val newsCard = newsCardRepository.findByIdOrNull(newsCardId) ?: throw ShortsBaseException.from(
