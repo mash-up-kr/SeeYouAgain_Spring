@@ -4,11 +4,12 @@ import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
+import com.mashup.shorts.config.aop.Auth
+import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearResponse
 
@@ -18,12 +19,13 @@ class MemberNewsCardApi(
     private val memberNewsCardClear: MemberNewsCardClear,
 ) {
 
+    @Auth
     @DeleteMapping("/{newsCardId}")
     fun deleteMemberNewsCard(
-        @RequestHeader("Authorization") uniqueId: String,
         @PathVariable newsCardId: Long,
     ): ApiResponse<Void> {
-        memberNewsCardClear.deleteMemberNewsCard(uniqueId, newsCardId)
+        val memberUniqueId = AuthContext.getMemberId()
+        memberNewsCardClear.deleteMemberNewsCard(memberUniqueId, newsCardId)
         return success(OK)
     }
 
