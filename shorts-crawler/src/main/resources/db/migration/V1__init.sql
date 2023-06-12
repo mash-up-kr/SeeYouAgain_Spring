@@ -8,7 +8,7 @@ create table category
 
 create table member
 (
-    id          bigint       not null primary key,
+    id          bigint auto_increment primary key,
     unique_id   varchar(100) not null,
     nickname    varchar(20)  not null,
     created_at  datetime(6)  not null,
@@ -46,11 +46,11 @@ create table news
 create table news_card
 (
     id            bigint auto_increment primary key,
-    multiple_news text not null,
-    keywords      varchar(100)  not null,
-    category_id   bigint        not null,
-    created_at    datetime(6)   not null,
-    modified_at   datetime(6)   null,
+    multiple_news text         not null,
+    keywords      varchar(100) not null,
+    category_id   bigint       not null,
+    created_at    datetime(6)  not null,
+    modified_at   datetime(6)  null,
     foreign key (category_id) references category (id)
 );
 
@@ -67,11 +67,11 @@ create table member_news
 
 create table member_news_card
 (
-    id          bigint auto_increment primary key,
-    member_id   bigint      not null,
-    news_card_id     bigint      not null,
-    created_at  datetime(6) not null,
-    modified_at datetime(6) null,
+    id           bigint auto_increment primary key,
+    member_id    bigint      not null,
+    news_card_id bigint      not null,
+    created_at   datetime(6) not null,
+    modified_at  datetime(6) null,
     foreign key (news_card_id) references news_card (id),
     foreign key (member_id) references member (id)
 );
