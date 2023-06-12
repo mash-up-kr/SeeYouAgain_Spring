@@ -8,4 +8,5 @@ import com.mashup.shorts.domain.newscard.NewsCard
 @Repository
 interface MemberNewsCardRepository : JpaRepository<MemberNewsCard, Long> {
     fun deleteByMemberAndNewsCard(member: Member, newsCard: NewsCard)
+    fun deleteByMember(member: Member)
 }

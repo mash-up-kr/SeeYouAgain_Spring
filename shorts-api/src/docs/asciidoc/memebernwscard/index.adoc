@@ -1,13 +1,13 @@
-=== 뉴스 다 읽었어요 API
+=== 뉴스카드 다 읽었어요
 
 ==== [Curl Request]
 
-include::{snippets}/뉴스 다 읽었어요 API/curl-request.adoc[]
+include::{snippets}/뉴스카드 다 읽었어요/curl-request.adoc[]
 
 ==== [HTTP Request]
 
-include::{snippets}/뉴스 다 읽었어요 API/http-request.adoc[]
+include::{snippets}/뉴스카드 다 읽었어요/http-request.adoc[]
 
 ===== [Response HTTP Example]
 
-include::{snippets}/뉴스 다 읽었어요 API/http-response.adoc[]
+include::{snippets}/뉴스카드 다 읽었어요/http-response.adoc[]

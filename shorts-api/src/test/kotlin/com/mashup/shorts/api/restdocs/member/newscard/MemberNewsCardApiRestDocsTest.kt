@@ -1,11 +1,12 @@
 package com.mashup.shorts.api.restdocs.member.newscard
 
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.any
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
+import org.springframework.restdocs.payload.JsonFieldType
+import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
@@ -23,8 +24,8 @@ class MemberNewsCardApiRestDocsTest : ApiDocsTestBase() {
     private lateinit var memberNewsCardClear: MemberNewsCardClear
 
     @Test
-    fun 뉴스카드_다_읽었어염() {
-        every { memberNewsCardClear.clearMemberNewsCard(any(), any()) } returns (any())
+    fun 뉴스카드_다_읽었어요() {
+        every { memberNewsCardClear.clearMemberNewsCard(any(), any()) } returns (1234)
 
         // ready
         val url = "/v1/member-news-card"
@@ -44,12 +45,16 @@ class MemberNewsCardApiRestDocsTest : ApiDocsTestBase() {
         response.andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
                 document(
-                    "뉴스 다 읽었어요 API",
+                    "뉴스카드 다 읽었어요",
                     requestFields(
                         fieldWithPath("memberId").description("멤버 id"),
                         fieldWithPath("newsCardId").description("뉴스카드 id"),
+                    ),
+                    PayloadDocumentation.responseFields(
+                        fieldWithPath("status").type(JsonFieldType.NUMBER).description("API 성공 여부"),
+                        fieldWithPath("result.shortsCount").type(JsonFieldType.NUMBER).description("읽은 숏스 갯수"),
                     )
-                ),
+                )
             )
     }
 }
