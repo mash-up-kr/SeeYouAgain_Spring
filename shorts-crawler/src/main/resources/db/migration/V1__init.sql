@@ -8,7 +8,7 @@ create table category
 
 create table member
 (
-    id          bigint       not null primary key,
+    id          bigint auto_increment primary key,
     unique_id   varchar(100) not null,
     nickname    varchar(20)  not null,
     created_at  datetime(6)  not null,
@@ -17,7 +17,7 @@ create table member
 
 create table member_shorts_count
 (
-    id         bigint not null primary key,
+    id         bigint auto_increment primary key,
     member_id  bigint not null,
     count      int default 0,
     targetTime date   not null,
