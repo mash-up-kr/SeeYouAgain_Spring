@@ -1,6 +1,7 @@
 package com.mashup.shorts.domain.newscard.dto
 
 import com.mashup.shorts.domain.news.News
+import io.swagger.v3.oas.annotations.media.Schema
 
 data class NewsCardFormResponse(
     var id: Long,
