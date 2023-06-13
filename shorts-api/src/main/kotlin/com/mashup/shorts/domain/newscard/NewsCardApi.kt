@@ -14,7 +14,9 @@ import com.mashup.shorts.common.response.ApiResponse.Companion.success
 import com.mashup.shorts.config.aop.Auth
 import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.newscard.dto.DetailNewsCardResponse
+import com.mashup.shorts.domain.newscard.dto.DetailNewsCardResponse.Companion.persistenceToResponseForm
 import com.mashup.shorts.domain.newscard.dto.RetrieveAllNewsCardResponse
+import com.mashup.shorts.domain.newscard.dto.RetrieveAllNewsCardResponse.Companion.persistenceToResponseForm
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 
@@ -39,7 +41,7 @@ class NewsCardApi(
     ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
         return success(
             OK,
-            RetrieveAllNewsCardResponse.persistenceToResponseForm(
+            persistenceToResponseForm(
                 newsCardRetrieve.retrieveNewsCardByMember(
                     memberUniqueId = AuthContext.getMemberId(),
                     targetDateTime = targetDateTime,
@@ -64,8 +66,12 @@ class NewsCardApi(
     ): ApiResponse<List<DetailNewsCardResponse>> {
         return success(
             OK,
-            DetailNewsCardResponse.persistenceToResponseForm(
-                newsCardRetrieve.retrieveDetailNewsInNewsCard(newsCardId, cursorId, size)
+            persistenceToResponseForm(
+                newsCardRetrieve.retrieveDetailNewsInNewsCard(
+                    newsCardId = newsCardId,
+                    cursorId = cursorId,
+                    size = size
+                )
             )
         )
     }
