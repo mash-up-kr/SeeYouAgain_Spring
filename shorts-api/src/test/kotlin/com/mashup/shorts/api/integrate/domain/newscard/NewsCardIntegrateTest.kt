@@ -1,5 +1,6 @@
 package com.mashup.shorts.api.integrate.domain.newscard
 
+import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
@@ -128,5 +129,27 @@ class NewsCardIntegrationTest(
         val contentAsString = result.response.contentAsString
         assertThat(contentAsString).contains("404")
         // assertThat(contentAsString).contains("해당 뉴스 카드는 존재하지 않습니다.")
+    }
+
+    @Test
+    @DisplayName("[통합 테스트] : 카드뉴스_전체_조회")
+    fun 카드뉴스_전체_조회() {
+        // ready
+        val url = "/v1/news-card"
+        val cursorId = 0L
+        val size = 100
+
+        // execute
+        val result = mockMvc.perform(
+            MockMvcRequestBuilders.get(url)
+                .header("Authorization", "Bearer 1234")
+                .param("targetDateTime", LocalDateTime.now().minusDays(1).minusHours(0).toString())
+                .param("cursorId", cursorId.toString())
+                .param("size", size.toString())
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+        )
+            .andDo(MockMvcResultHandlers.print())
+            .andReturn()
     }
 }

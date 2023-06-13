@@ -7,7 +7,8 @@ import com.mashup.shorts.domain.newscard.NewsCard
 data class RetrieveAllNewsCardResponse(
     var id: Long,
     var keywords: String,
-    var createdAt: LocalDateTime,
+    var category: String,
+    var crawledDateTime: LocalDateTime,
 ) {
     companion object {
         fun persistenceToResponseForm(newsCards: List<NewsCard>): List<RetrieveAllNewsCardResponse> {
@@ -15,7 +16,8 @@ data class RetrieveAllNewsCardResponse(
                 RetrieveAllNewsCardResponse(
                     id = it.id,
                     keywords = it.keywords,
-                    createdAt = it.createdAt,
+                    category = it.category.name.name,
+                    crawledDateTime = it.createdAt,
                 )
             }
         }
