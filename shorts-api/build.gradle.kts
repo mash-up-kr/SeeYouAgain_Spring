@@ -39,6 +39,9 @@ dependencies {
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("org.springframework.restdocs:spring-restdocs-asciidoctor")
     testImplementation("com.ninja-squad:springmockk:3.1.1")
+
+    // Swagger
+    implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 }
 
 application {
