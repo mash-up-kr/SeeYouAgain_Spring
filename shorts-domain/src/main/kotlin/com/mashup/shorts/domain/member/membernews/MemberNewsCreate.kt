@@ -17,10 +17,10 @@ class MemberNewsCreate(
 ) {
 
     @Transactional
-    fun createMemberNews(uniqueId: String, newsId: Long) {
-        val member = memberRepository.findByUniqueId(uniqueId) ?: throw ShortsBaseException.from(
+    fun createMemberNews(memberUniqueId: String, newsId: Long) {
+        val member = memberRepository.findByUniqueId(memberUniqueId) ?: throw ShortsBaseException.from(
             shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
-            resultErrorMessage = "${uniqueId}에 해당하는 유저가 존재하지 않습니다."
+            resultErrorMessage = "${memberUniqueId}에 해당하는 유저가 존재하지 않습니다."
         )
         val news = newsRepository.findByIdOrNull(newsId) ?: throw ShortsBaseException.from(
             shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
