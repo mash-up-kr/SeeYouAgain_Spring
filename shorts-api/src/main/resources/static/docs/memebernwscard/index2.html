@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>Untitled</title>
+<title>오늘의 숏스 단일 삭제</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -440,81 +440,50 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 </div>
 <div id="content">
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 2.2556%;">
-<col style="width: 7.5187%;">
-<col style="width: 37.5939%;">
-<col style="width: 52.6318%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Http status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Code</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type message</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Error description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400000</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">E400_BAD_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">필수 파라미터 값이 없거나 잘못된 값으로 요청을 보낸 경우 발생</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">401</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">401000</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">E401_UNAUTHORIZED</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">인증 토큰이 잘못되었거나 문제가 있을 때 발생</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">403</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">403000</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">E403_FORBIDDEN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">사용 권한이 없는 경우 발생</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">404000</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">E404_NOT_FOUND</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">요청한 리소스가 존재하지 않는 경우 발생</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">409</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">409000</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">E409_CONFLICT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">요청한 리소스가 중복된 경우 발생</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">409</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">409001</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">E409_CONFLICT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">멤버 고유 아이디가 중복된 경우 발생</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">413</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">413000</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">E413_PAYLOAD_TOO_LARGE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Header 및 Payload 등의 크기가 임계치를 넘은 경우 발생</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">500</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">500000</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">E500_INTERNAL_SERVER_ERROR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">서버 내부에서 에러가 발생하는 경우 발생</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">501</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">501000</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">E501_NOT_IMPLEMENTED</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">제공하지 않는 기능을 호출하는 경우 발생</p></td>
-</tr>
-</tbody>
-</table>
+<div class="sect2">
+<h3 id="_오늘의_숏스_단일_삭제">오늘의 숏스 단일 삭제</h3>
+<div class="sect3">
+<h4 id="_curl_request">[Curl Request]</h4>
+<div class="paragraph">
+<p>Unresolved directive in index2.adoc - include::{snippets}/오늘의 숏스 단일 삭제/curl-request.adoc[]</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_request">[HTTP Request]</h4>
+<div class="paragraph">
+<p>Unresolved directive in index2.adoc - include::{snippets}/오늘의 숏스 단일 삭제/http-request.adoc[]</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_request_header">[Request Header]</h4>
+<div class="paragraph">
+<p>Unresolved directive in index2.adoc - include::{snippets}/오늘의 숏스 단일 삭제/request-headers.adoc[]</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_request_path_parameters">[Request Path Parameters]</h4>
+<div class="paragraph">
+<p>Unresolved directive in index2.adoc - include::{snippets}/오늘의 숏스 단일 삭제/path-parameters.adoc[]</p>
+</div>
+<div class="sect4">
+<h5 id="_response_field">[Response Field]</h5>
+<div class="paragraph">
+<p>Unresolved directive in index2.adoc - include::{snippets}/오늘의 숏스 단일 삭제/response-fields.adoc[]</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_http_example">[Response HTTP Example]</h5>
+<div class="paragraph">
+<p>Unresolved directive in index2.adoc - include::{snippets}/오늘의 숏스 단일 삭제/http-response.adoc[]</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-12 19:33:46 +0900
+Last updated 2023-06-13 21:49:07 +0900
 </div>
 </div>
 </body>
