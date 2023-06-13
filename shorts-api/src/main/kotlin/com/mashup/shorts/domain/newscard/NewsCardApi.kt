@@ -1,5 +1,7 @@
 package com.mashup.shorts.domain.newscard
 
+import java.time.LocalDateTime
+import kotlin.Long.Companion.MAX_VALUE
 import org.springframework.http.HttpStatus.OK
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
@@ -9,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
-import com.mashup.shorts.domain.newscard.dto.NewsCardFormResponse
-import io.swagger.v3.oas.annotations.Operation
+import com.mashup.shorts.config.aop.Auth
+import com.mashup.shorts.config.aop.AuthContext
+import com.mashup.shorts.domain.newscard.dto.DetailNewsCardResponse
+import com.mashup.shorts.domain.newscard.dto.RetrieveAllNewsCardResponse
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 
@@ -22,21 +26,46 @@ class NewsCardApi(
 ) {
 
     /**
+    모든 뉴스 카드를 조회한다
+    Param : 조회 대상 시각, 커서 ID, 사이즈
+    Return : MutableList<LoadAllDetailNewsInNewsCard>
+     */
+    @Auth
+    @GetMapping
+    fun retrieveNewsCard(
+        @RequestParam targetDateTime: LocalDateTime,
+        @RequestParam @Min(0) @Max(MAX_VALUE) cursorId: Long,
+        @RequestParam @Min(1) @Max(20) size: Int,
+    ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
+        return success(
+            OK,
+            RetrieveAllNewsCardResponse.persistenceToResponseForm(
+                newsCardRetrieve.retrieveNewsCardByMember(
+                    memberUniqueId = AuthContext.getMemberId(),
+                    targetDateTime = targetDateTime,
+                    cursorId = cursorId,
+                    size = size
+                )
+            )
+        )
+    }
+
+
+    /**
     뉴스 카드 내의 모든 뉴스를 조회한다.
     Param : 뉴스 카드 ID, 커서 ID, 사이즈
     Return : MutableList<LoadAllDetailNewsInNewsCard>
      */
-    @Operation(summary = "뉴스카드 내 모든 뉴스 조회", description = "조회할 뉴스카드 id를 바탕으로 조회")
     @GetMapping("/{newsCardId}")
-    fun loadDetailNewsInNewsCard(
+    fun retrieveDetailNewsInNewsCard(
         @PathVariable newsCardId: Long,
-        @RequestParam @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
+        @RequestParam @Min(0) @Max(MAX_VALUE) cursorId: Long,
         @RequestParam @Min(1) @Max(20) size: Int,
-    ): ApiResponse<List<NewsCardFormResponse>> {
+    ): ApiResponse<List<DetailNewsCardResponse>> {
         return success(
             OK,
-            NewsCardFormResponse.persistenceToResponseForm(
-                newsCardRetrieve.loadDetailNewsInNewsCard(newsCardId, cursorId, size)
+            DetailNewsCardResponse.persistenceToResponseForm(
+                newsCardRetrieve.retrieveDetailNewsInNewsCard(newsCardId, cursorId, size)
             )
         )
     }
