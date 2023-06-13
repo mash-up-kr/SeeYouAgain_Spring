@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
 import com.mashup.shorts.domain.newscard.dto.NewsCardFormResponse
+import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 
@@ -25,6 +26,7 @@ class NewsCardApi(
     Param : 뉴스 카드 ID, 커서 ID, 사이즈
     Return : MutableList<LoadAllDetailNewsInNewsCard>
      */
+    @Operation(summary = "뉴스카드 내 모든 뉴스 조회", description = "조회할 뉴스카드 id를 바탕으로 조회")
     @GetMapping("/{newsCardId}")
     fun loadDetailNewsInNewsCard(
         @PathVariable newsCardId: Long,

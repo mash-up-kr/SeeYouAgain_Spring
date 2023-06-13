@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.domain.member.membercategory.MemberCategoryCreate
+import io.swagger.v3.oas.annotations.Operation
 
 /**
  * MemberCategoryCreateApi
@@ -22,6 +23,7 @@ class MemberCategoryCreateApi(
     private val memberCategoryCreate: MemberCategoryCreate
 ) {
 
+    @Operation(summary = "유저 카테고리 저장", description = "카테고리 저장")
     @PostMapping
     fun createCategory(@RequestBody categoryCreateBulkRequest: CategoryCreateBulkRequest): ApiResponse<Map<String, String>> {
         val uniqueId = UUID.randomUUID().toString()
