@@ -137,7 +137,7 @@ class NewsCardIntegrationTest(
         // ready
         val url = "/v1/news-card"
         val cursorId = 0L
-        val size = 100
+        val size = 20
 
         // execute
         val result = mockMvc.perform(
