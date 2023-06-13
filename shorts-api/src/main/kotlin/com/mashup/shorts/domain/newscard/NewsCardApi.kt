@@ -37,7 +37,7 @@ class NewsCardApi(
     fun retrieveNewsCard(
         @RequestParam targetDateTime: LocalDateTime,
         @RequestParam @Min(0) @Max(MAX_VALUE) cursorId: Long,
-        @RequestParam @Min(1) @Max(20) size: Int,
+        @RequestParam @Min(1) @Max(500) size: Int,
     ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
         return success(
             OK,

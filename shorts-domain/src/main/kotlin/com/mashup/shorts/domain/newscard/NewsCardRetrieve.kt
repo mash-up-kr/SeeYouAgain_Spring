@@ -48,7 +48,7 @@ class NewsCardRetrieve(
             targetHour = targetDateTime.hour,
             cursorId = cursorId,
             size = size,
-            categories = memberCategories!!.map { it.id }
+            categories = memberCategories!!.map { it.category.id }
         )
     }
 
