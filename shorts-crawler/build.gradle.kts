@@ -17,5 +17,5 @@ dependencies {
 }
 
 application {
-    mainClass.set("com.mashup.shorts.ShortsApiApplicationKt")
+    mainClass.set("com.mashup.shorts.ShortsCrawlerApplicationKt")
 }
