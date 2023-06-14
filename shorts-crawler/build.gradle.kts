@@ -3,8 +3,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":shorts-domain"))
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    api(project(":shorts-domain"))
 
     // JSoup Dependency
     implementation("org.jsoup:jsoup:1.15.4")
@@ -13,13 +12,10 @@ dependencies {
     implementation("org.apache.lucene:lucene-core:8.4.1")
     implementation("org.apache.lucene:lucene-analyzers-nori:8.4.1")
 
-    // WebFlux Dependency For Web Client
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-
-    // Flyway Category Insert
+    // Flyway
     implementation("org.flywaydb:flyway-mysql")
 }
 
 application {
-    mainClass.set("com.mashup.shorts.ShortsCrawlerApplication")
+    mainClass.set("com.mashup.shorts.ShortsApiApplicationKt")
 }
