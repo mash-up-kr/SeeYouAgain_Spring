@@ -50,51 +50,66 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
                     category = Category(CategoryName.POLITICS),
                     multipleNews = "1, 2, 3, 4, 5",
                     keywords = "테스트 키워드",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
                 ),
                 NewsCard(
                     category = Category(CategoryName.POLITICS),
                     multipleNews = "1, 2, 3, 4, 5",
-                    keywords = "테스트 키워드"
+                    keywords = "테스트 키워드",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
                 ),
                 NewsCard(
                     category = Category(CategoryName.POLITICS),
                     multipleNews = "1, 2, 3, 4, 5",
-                    keywords = "테스트 키워드"
+                    keywords = "테스트 키워드",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
+                ), NewsCard(
+                    category = Category(CategoryName.POLITICS),
+                    multipleNews = "1, 2, 3, 4, 5",
+                    keywords = "테스트 키워드",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
+                ), NewsCard(
+                    category = Category(CategoryName.POLITICS),
+                    multipleNews = "1, 2, 3, 4, 5",
+                    keywords = "테스트 키워드",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
+                ), NewsCard(
+                    category = Category(CategoryName.POLITICS),
+                    multipleNews = "1, 2, 3, 4, 5",
+                    keywords = "테스트 키워드",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
+                ), NewsCard(
+                    category = Category(CategoryName.POLITICS),
+                    multipleNews = "1, 2, 3, 4, 5",
+                    keywords = "테스트 키워드",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
+                ), NewsCard(
+                    category = Category(CategoryName.POLITICS),
+                    multipleNews = "1, 2, 3, 4, 5",
+                    keywords = "테스트 키워드",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
                 ),
                 NewsCard(
                     category = Category(CategoryName.POLITICS),
                     multipleNews = "1, 2, 3, 4, 5",
-                    keywords = "테스트 키워드"
+                    keywords = "테스트 키워드",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
                 ),
                 NewsCard(
                     category = Category(CategoryName.POLITICS),
                     multipleNews = "1, 2, 3, 4, 5",
-                    keywords = "테스트 키워드"
-                ),
-                NewsCard(
-                    category = Category(CategoryName.POLITICS),
-                    multipleNews = "1, 2, 3, 4, 5",
-                    keywords = "테스트 키워드"
-                ),
-                NewsCard(
-                    category = Category(CategoryName.POLITICS),
-                    multipleNews = "1, 2, 3, 4, 5",
-                    keywords = "테스트 키워드"
-                ),
-                NewsCard(
-                    category = Category(CategoryName.POLITICS),
-                    multipleNews = "1, 2, 3, 4, 5",
-                    keywords = "테스트 키워드"
-                ),
-                NewsCard(
-                    category = Category(CategoryName.POLITICS),
-                    multipleNews = "1, 2, 3, 4, 5",
-                    keywords = "테스트 키워드"
-                ),
-                NewsCard(
-                    category = Category(CategoryName.POLITICS),
-                    multipleNews = "1, 2, 3, 4, 5",
-                    keywords = "테스트 키워드"
+                    keywords = "테스트 키워드",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
                 )
             ))
 

@@ -1,5 +1,6 @@
 package com.mashup.shorts.domain.newscard
 
+import java.time.LocalDateTime
 import com.mashup.shorts.domain.BaseEntity
 import com.mashup.shorts.domain.category.Category
 import jakarta.persistence.Column
@@ -14,11 +15,22 @@ import jakarta.persistence.Table
 class NewsCard(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    val category: Category,
+    var category: Category,
 
     @Column(columnDefinition = "TEXT", name = "multiple_news", nullable = false, length = 5000)
-    val multipleNews: String,
+    var multipleNews: String,
 
     @Column(name = "keywords", nullable = false, length = 100)
     var keywords: String,
-) : BaseEntity()
+) : BaseEntity() {
+    constructor(
+        category: Category,
+        multipleNews: String,
+        keywords: String,
+        createdAt: LocalDateTime,
+        modifiedAt: LocalDateTime,
+    ) : this(category, multipleNews, keywords) {
+        this.createdAt = createdAt
+        this.modifiedAt = modifiedAt
+    }
+}
