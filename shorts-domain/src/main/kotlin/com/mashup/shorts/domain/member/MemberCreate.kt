@@ -32,7 +32,7 @@ class MemberCreate(
 
         return memberRepository.save(Member(
             uniqueId = memberUUID,
-            nickname = UUID.randomUUID().toString() // TODO: 랜덤 닉네임 정책 정해지면 수정 필요
+            nickname = Member.generateNickname()
         ))
     }
 }
