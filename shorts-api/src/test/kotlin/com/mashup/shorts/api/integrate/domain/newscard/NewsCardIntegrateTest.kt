@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.transaction.annotation.Transactional
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.shorts.api.ApiTestBase
+import com.mashup.shorts.config.aop.AuthContext
 
 @SpringBootTest
 @Disabled
@@ -139,10 +140,13 @@ class NewsCardIntegrationTest(
         val cursorId = 0L
         val size = 20
 
+        val auth = "shorts-user"
+        AuthContext.USER_CONTEXT.set(auth)
+
         // execute
         val result = mockMvc.perform(
             MockMvcRequestBuilders.get(url)
-                .header("Authorization", "Bearer 1234")
+                .header("Authorization", "$auth")
                 .param("targetDateTime", LocalDateTime.now().minusDays(1).minusHours(0).toString())
                 .param("cursorId", cursorId.toString())
                 .param("size", size.toString())

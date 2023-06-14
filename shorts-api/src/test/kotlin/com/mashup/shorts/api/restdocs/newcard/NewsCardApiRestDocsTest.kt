@@ -2,7 +2,6 @@ package com.mashup.shorts.api.restdocs.newcard
 
 import java.time.LocalDateTime
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.any
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.restdocs.headers.HeaderDocumentation
@@ -17,7 +16,6 @@ import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
-import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardApi
@@ -25,26 +23,19 @@ import com.mashup.shorts.domain.newscard.NewsCardRetrieve
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
-@WebMvcTest(NewsCardApi::class) // Presentation 영역만 테스트 한다는 의미
+@WebMvcTest(NewsCardApi::class)
 class NewsCardApiRestDocsTest : ApiDocsTestBase() {
 
     @MockkBean
-    private lateinit var newsCardRetrieve: NewsCardRetrieve //왜 lateinit var로 하는지?
-
-    @MockkBean
-    private lateinit var authContext: AuthContext
+    private lateinit var newsCardRetrieve: NewsCardRetrieve
 
     @Test
     fun 뉴스카드_모두_조회() {
         // ready
-        val memberUniqueId = "1234"
+        val memberUniqueId = AuthContext.getMemberId()
         val targetDateTime = LocalDateTime.now().minusDays(1)
         val cursorId = 0L
         val size = 10
-
-        every { authContext.getMemberId() } returns (
-            Member("1234", "테스트 닉넴").toString()
-        )
 
         every {
             newsCardRetrieve.retrieveNewsCardByMember(
@@ -54,11 +45,11 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
                 size = size
             )
         } returns (
-            mutableListOf(
+            listOf(
                 NewsCard(
                     category = Category(CategoryName.POLITICS),
                     multipleNews = "1, 2, 3, 4, 5",
-                    keywords = "테스트 키워드"
+                    keywords = "테스트 키워드",
                 ),
                 NewsCard(
                     category = Category(CategoryName.POLITICS),
@@ -110,7 +101,7 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .get("/v1/news-card")
-                .header("Authorization", "Bearer 1234")
+                .header("Authorization", "Bearer $memberUniqueId")
                 .param("targetDateTime", targetDateTime.toString())
                 .param("cursorId", cursorId.toString())
                 .param("size", size.toString())
