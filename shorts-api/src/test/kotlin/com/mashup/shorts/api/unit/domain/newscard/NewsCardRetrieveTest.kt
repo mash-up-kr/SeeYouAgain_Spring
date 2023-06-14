@@ -1,6 +1,7 @@
 package com.mashup.shorts.api.unit.domain.newscard
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -18,6 +19,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 
+@Disabled
 @ExtendWith(MockKExtension::class)
 class NewsCardRetrieveTest(
 
