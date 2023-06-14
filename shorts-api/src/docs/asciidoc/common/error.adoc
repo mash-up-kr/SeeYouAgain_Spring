@@ -2,7 +2,7 @@
 |===
 | Http status | Code | Type message | Error description
 | 400 | 400000 | E400_BAD_REQUEST | 필수 파라미터 값이 없거나 잘못된 값으로 요청을 보낸 경우 발생
-| 401 | 401000 | E401_UNAUTHORIZED | 인증 토큰이 잘못되었거나 문제가 있을 때 발생
+| 401 | 401000 | E401_UNAUTHORIZED | Header에 Member Unique id 가 없거나 잘못되었을 때 발생
 | 403 | 403000 | E403_FORBIDDEN | 사용 권한이 없는 경우 발생
 | 404 | 404000 | E404_NOT_FOUND | 요청한 리소스가 존재하지 않는 경우 발생
 | 409 | 409000 | E409_CONFLICT | 요청한 리소스가 중복된 경우 발생

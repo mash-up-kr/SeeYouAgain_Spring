@@ -11,13 +11,17 @@ endif::[]
 == link:../index.html[> 이전으로]
 
 [[common]]
-include::./common/api-common-docs.adoc[]
+- link:./common/api-common-docs.html[How To Use]
 
 [[newcard]]
-include::./newscard/index.adoc[]
+
+- link:./newscard/index.html[New Card]
 
 [[memberNewsCard]]
-include::./memebernwscard/index.adoc/[]
+- link:./membernwcard/index.html[Member New Card]
 
 [[memberCategory]]
-include::./memberCategory/index.adoc/[]
+- link:./memberCategory/index.html[Member Category]
+
+[[memberNews]]
+- link:./memberNews/index.html[Member News]

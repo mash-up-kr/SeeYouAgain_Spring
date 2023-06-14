@@ -7,12 +7,12 @@
 | 환경 | domain:port | 설명 | 비고
 
 | 개발서버
-| `http://dev.shorts.com`
+| `http://3.38.65.72:8080`
 | 개발계 API 서버
 |
 
 | 운영서버
-| `http://shorts.com`
+| `미정`
 | 운영계 API 서버
 |===
 
@@ -22,6 +22,11 @@
 |===
 | Key | Value | Mandatory | 설명 | 비고
 
+| `Authorization`
+| Bearer {Member Unique Id}
+| Y
+| Member Unique Id
+|
 | `Content-Type`
 | "application/json"
 | N
@@ -47,14 +52,14 @@
 | Key | Type | Mandatory | Description
 
 | `status`
-| String
+| Int
 | Y
 | API 수행 상태 (성공:"200 or 201", 실패:"400 ~ 500")
 
 | `result`
 | Object
 | N
-| API 응답값
+| API 응답값 (result가 Null일 경우 result는 넘어오지 않습니다.)
 
 |===
 
@@ -67,7 +72,7 @@
 | `code`
 | String
 | Y
-| 오류코드
+| 오류 코드
 
 | `typeMessage`
 | String
@@ -85,14 +90,25 @@
 [source,json]
 ----
 {
-    "status":200,
+    "status": 200,
     "result": {
-      "success": true
+      "memberUniqueId": "merasdklqke12390"
     }
 }
 ----
 
+- result가 null이 아니라면 위와 같이 반환됩니다.
 - Shorts 요청이 성공하면 HTTP 200 OK 상태 코드와 요청된 데이터를 반환합니다.
+
+[source,json]
+----
+{
+    "status": 200
+}
+----
+
+- result가 null이라면 위와 같이 HTTP Status Code만 반환됩니다.
+
 
 ==== API 호출 실패
 
@@ -101,7 +117,7 @@
 {
   "status": 400,
   "error": {
-    "code": "400000",
+    "code": "00",
     "typeMessage": "E400_BAD_REQUEST",
     "detailMessage": "필수 파라미터가 넘어오지 않았습니다"
   }
@@ -109,6 +125,7 @@
 ----
 
 - Shorts 요청이 실패하면 HTTP 4xx 또는 5xx 상태 코드와 오류 정보가 포함된 응답을 반환합니다.
+- code는 00, 01, 02, 03 형태로 전달됩니다.
 - 에러 코드 별 세부 분기가 필요하신 경우 응답 값으로 넘어가는 "code"를 사용하면 됩니다.
 
 === 오류 코드
