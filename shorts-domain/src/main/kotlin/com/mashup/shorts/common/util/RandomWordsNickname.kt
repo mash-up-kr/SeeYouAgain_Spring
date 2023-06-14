@@ -2,7 +2,7 @@ package com.mashup.shorts.common.util
 
 object RandomWordsNickname {
 
-    internal val adjectives = mutableListOf(
+    internal val adjectives = listOf(
         "강직한", "고요한", "고운", "기특한", "깜찍한", "근면한", "귀여운", "관대한",
         "깔끔한", "꾸준한", "긍정적인", "겸손한", "검소한", "공손한", "기운찬",
         "놀라운", "느긋한", "낙천적인", "낭만적인", "다정한", "당당한", "든든한",
@@ -17,7 +17,7 @@ object RandomWordsNickname {
         "화사한", "화끈한", "합리적인", "헌신적인"
     )
 
-    internal val nouns = mutableListOf(
+    internal val nouns = listOf(
         "고양이", "강아지", "거북이", "토끼", "뱀", "사자", "호랑이", "표범", "치타", "하이에나",
         "기린", "코끼리", "코뿔소", "하마", "악어", "펭귄", "부엉이", "올빼미", "곰",
         "돼지", "소", "닭", "독수리", "타조", "고릴라", "오랑우탄", "침팬지", "원숭이",
