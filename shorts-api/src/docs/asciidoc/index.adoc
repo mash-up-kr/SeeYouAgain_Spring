@@ -1,23 +1,23 @@
-// ifndef::snippets[]
-// :snippets: build/generated-snippets
-// endif::[]
-// :doctype: book
-// :icons: font
-// :source-highlighter: highlightjs
-// :toc: left
-// :toclevels: 2
-//
-// [[Option]]
-// == link:../index.html[> 이전으로]
-//
-// [[common]]
-// include::./common/api-common-docs.adoc[]
-//
-// [[newcard]]
-// include::./newscard/index.adoc[]
-//
-// [[memberNewsCard]]
-// include::./memebernwscard/index.adoc/[]
-//
-// [[memberCategory]]
-// include::./memberCategory/index.adoc/[]
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+
+[[Option]]
+== link:../index.html[> 이전으로]
+
+[[common]]
+include::./common/api-common-docs.adoc[]
+
+[[newcard]]
+include::./newscard/index.adoc[]
+
+[[memberNewsCard]]
+include::./memebernwscard/index.adoc/[]
+
+[[memberCategory]]
+include::./memberCategory/index.adoc/[]
