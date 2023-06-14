@@ -32,7 +32,7 @@ class CrawlerCore(
     private val keywordExtractor: KeywordExtractor,
 ) {
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 55 * * * *")
     internal fun executeCrawling() {
         for (categoryPair in categoryToUrl) {
             log.info {
