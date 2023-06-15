@@ -34,7 +34,7 @@ class NewsCardRetrieve(
 
         val memberCategories = memberCategoryRepository.findByMember(member)
 
-        if (memberCategories?.size == 0) {
+        if (memberCategories.isEmpty()) {
             return newsCardRepository.findNewsCardsByTargetTimeAndAndMemberCategoryAndCursorId(
                 targetDate = targetDateTime.toLocalDate(),
                 targetHour = targetDateTime.hour,
@@ -48,7 +48,7 @@ class NewsCardRetrieve(
             targetHour = targetDateTime.hour,
             cursorId = cursorId,
             size = size,
-            categories = memberCategories!!.map { it.category.id }
+            categories = memberCategories.map { it.category.id }
         )
     }
 
