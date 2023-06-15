@@ -8,13 +8,11 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.data.repository.findByIdOrNull
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
-import com.mashup.shorts.domain.member.MemberRepository
-import com.mashup.shorts.domain.member.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.news.News
+import com.mashup.shorts.domain.news.newsnewscard.NewsNewsCardNativeQueryRepository
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 import com.mashup.shorts.domain.newscard.NewsCardRetrieve
-import com.mashup.shorts.domain.news.newsnewscard.NewsNewsCardNativeQueryRepository
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
@@ -22,12 +20,6 @@ import io.mockk.junit5.MockKExtension
 @Disabled
 @ExtendWith(MockKExtension::class)
 class NewsCardRetrieveTest(
-
-    @MockK
-    private val memberRepository: MemberRepository,
-
-    @MockK
-    private val memberCategoryRepository: MemberCategoryRepository,
 
     @MockK
     private val newsCardRepository: NewsCardRepository,
@@ -42,8 +34,6 @@ class NewsCardRetrieveTest(
     fun loadDetailNewsInNewsCard() {
         // ready
         val newsCardRetrieve = NewsCardRetrieve(
-            memberRepository,
-            memberCategoryRepository,
             newsCardRepository,
             newsNewsCardNativeQueryRepository
         )
