@@ -1,13 +1,13 @@
-=== 뉴스카드 다 읽었어요
+=== 뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)
 
 ==== [Curl Request]
 
-include::{snippets}/뉴스카드 다 읽었어요/curl-request.adoc[]
+include::{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/curl-request.adoc[]
 
 ==== [HTTP Request]
 
-include::{snippets}/뉴스카드 다 읽었어요/http-request.adoc[]
+include::{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/http-request.adoc[]
 
 ===== [Response HTTP Example]
 
-include::{snippets}/뉴스카드 다 읽었어요/http-response.adoc[]
+include::{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/http-response.adoc[]
