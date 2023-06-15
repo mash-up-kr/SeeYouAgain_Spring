@@ -1,10 +1,13 @@
 package com.mashup.shorts.domain.member.membernewscard
 
+import java.time.LocalDateTime
 import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
@@ -12,14 +15,38 @@ import com.mashup.shorts.config.aop.Auth
 import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearResponse
+import com.mashup.shorts.domain.newscard.NewsCardRetrieve
+import com.mashup.shorts.domain.newscard.dto.RetrieveAllNewsCardResponse
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.responses.ApiResponses
+import jakarta.validation.constraints.Max
+import jakarta.validation.constraints.Min
 
 @RestController
 @RequestMapping("/v1/member-news-card")
 class MemberNewsCardApi(
     private val memberNewsCardClear: MemberNewsCardClear,
+    private val memberNewsCardRetrieve: MemberNewsCardRetrieve,
 ) {
+
+    @Auth
+    @GetMapping
+    fun retrieveNewsCard(
+        @RequestParam targetDateTime: LocalDateTime,
+        @RequestParam @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
+        @RequestParam @Min(1) @Max(20) size: Int,
+    ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
+        return success(
+            OK,
+            RetrieveAllNewsCardResponse.persistenceToResponseForm(
+                memberNewsCardRetrieve.retrieveNewsCardByMember(
+                    memberUniqueId = AuthContext.getMemberId(),
+                    targetDateTime = targetDateTime,
+                    cursorId = cursorId,
+                    size = size
+                )
+            )
+        )
+    }
 
     @Operation(summary = "오늘의 숏스 단일 삭제", description = "유저와 삭제할 뉴스 카드의 id를 바탕으로 삭제")
     @Auth

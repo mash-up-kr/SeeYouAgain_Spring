@@ -14,7 +14,7 @@ import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 import com.mashup.shorts.domain.newscard.NewsCardRetrieve
-import com.mashup.shorts.domain.newsnewscard.NewsNewsCardNativeQueryRepository
+import com.mashup.shorts.domain.news.newsnewscard.NewsNewsCardNativeQueryRepository
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension

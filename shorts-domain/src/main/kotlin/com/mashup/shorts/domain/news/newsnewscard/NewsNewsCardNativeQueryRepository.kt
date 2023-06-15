@@ -1,4 +1,4 @@
-package com.mashup.shorts.domain.newsnewscard
+package com.mashup.shorts.domain.news.newsnewscard
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query

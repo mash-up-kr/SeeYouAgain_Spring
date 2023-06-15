@@ -28,32 +28,6 @@ class NewsCardApi(
 ) {
 
     /**
-    모든 뉴스 카드를 조회한다
-    Param : 조회 대상 시각, 커서 ID, 사이즈
-    Return : MutableList<LoadAllDetailNewsInNewsCard>
-     */
-    @Auth
-    @GetMapping
-    fun retrieveNewsCard(
-        @RequestParam targetDateTime: LocalDateTime,
-        @RequestParam @Min(0) @Max(MAX_VALUE) cursorId: Long,
-        @RequestParam @Min(1) @Max(20) size: Int,
-    ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
-        return success(
-            OK,
-            persistenceToResponseForm(
-                newsCardRetrieve.retrieveNewsCardByMember(
-                    memberUniqueId = AuthContext.getMemberId(),
-                    targetDateTime = targetDateTime,
-                    cursorId = cursorId,
-                    size = size
-                )
-            )
-        )
-    }
-
-
-    /**
     뉴스 카드 내의 모든 뉴스를 조회한다.
     Param : 뉴스 카드 ID, 커서 ID, 사이즈
     Return : MutableList<LoadAllDetailNewsInNewsCard>
