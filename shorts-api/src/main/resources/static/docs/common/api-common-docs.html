@@ -463,7 +463,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">개발서버</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="http://dev.shorts.com" class="bare">http://dev.shorts.com</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="http://3.38.65.72:8080" class="bare">http://3.38.65.72:8080</a></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">개발계 API 서버</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -490,6 +490,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bearer {Member Unique Id}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Member Unique Id</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Content-Type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"application/json"</p></td>
@@ -529,7 +536,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>status</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Int</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Y</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">API 수행 상태 (성공:"200 or 201", 실패:"400 ~ 500")</p></td>
 </tr>
@@ -537,7 +544,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Object</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">N</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">API 응답값</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API 응답값 (result가 Null일 경우 result는 넘어오지 않습니다.)</p></td>
 </tr>
 </tbody>
 </table>
@@ -564,7 +571,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Y</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">오류코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">오류 코드</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>typeMessage</code></p></td>
@@ -586,9 +593,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
-    "status":200,
+    "status": 200,
     "result": {
-      "success": true
+      "memberUniqueId": "merasdklqke12390"
     }
 }</code></pre>
 </div>
@@ -596,7 +603,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
+<p>result가 null이 아니라면 위와 같이 반환됩니다.</p>
+</li>
+<li>
 <p>Shorts 요청이 성공하면 HTTP 200 OK 상태 코드와 요청된 데이터를 반환합니다.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+    "status": 200
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>result가 null이라면 위와 같이 HTTP Status Code만 반환됩니다.</p>
 </li>
 </ul>
 </div>
@@ -608,7 +632,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlight"><code class="language-json" data-lang="json">{
   "status": 400,
   "error": {
-    "code": "400000",
+    "code": "00",
     "typeMessage": "E400_BAD_REQUEST",
     "detailMessage": "필수 파라미터가 넘어오지 않았습니다"
   }
@@ -619,6 +643,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul>
 <li>
 <p>Shorts 요청이 실패하면 HTTP 4xx 또는 5xx 상태 코드와 오류 정보가 포함된 응답을 반환합니다.</p>
+</li>
+<li>
+<p>code는 00, 01, 02, 03 형태로 전달됩니다.</p>
 </li>
 <li>
 <p>에러 코드 별 세부 분기가 필요하신 경우 응답 값으로 넘어가는 "code"를 사용하면 됩니다.</p>
@@ -639,7 +666,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-12 19:33:46 +0900
+Last updated 2023-06-15 19:19:26 +0900
 </div>
 </div>
 </body>
