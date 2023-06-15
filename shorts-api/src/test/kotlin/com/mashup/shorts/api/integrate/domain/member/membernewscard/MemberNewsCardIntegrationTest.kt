@@ -1,5 +1,6 @@
 package com.mashup.shorts.api.integrate.domain.member.membernewscard
 
+import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.transaction.annotation.Transactional
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.shorts.api.ApiTestBase
+import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
 
 @SpringBootTest
@@ -31,6 +33,31 @@ class MemberNewsCardIntegrationTest(
     @Autowired
     protected val objectMapper: ObjectMapper,
 ) : ApiTestBase() {
+
+    @Test
+    @DisplayName("[통합 테스트] : 카드뉴스_전체_조회")
+    fun 카드뉴스_전체_조회() {
+        // ready
+        val url = "/v1/member-news-card"
+        val cursorId = 0L
+        val size = 20
+
+        val auth = "shorts-user"
+        AuthContext.USER_CONTEXT.set(auth)
+
+        // execute
+        val result = mockMvc.perform(
+            MockMvcRequestBuilders.get(url)
+                .header("Authorization", "$auth")
+                .param("targetDateTime", LocalDateTime.now().minusDays(1).minusHours(0).toString())
+                .param("cursorId", cursorId.toString())
+                .param("size", size.toString())
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+        )
+            .andDo(MockMvcResultHandlers.print())
+            .andReturn()
+    }
 
     @Test
     @DisplayName("[통합 테스트] : 뉴스카드 다 읽었어요 성공")
