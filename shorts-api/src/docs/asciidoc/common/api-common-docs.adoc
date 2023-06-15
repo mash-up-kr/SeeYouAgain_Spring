@@ -25,18 +25,12 @@
 | `Authorization`
 | Bearer {Member Unique Id}
 | Y
-| Member Unique Id
+| 회원가입 후에 전달 받은 멤버 고유 아이디
 |
 | `Content-Type`
 | "application/json"
 | N
 | API 요청 content type (ex: application/json)
-|
-
-| `User-Agent`
-|
-| N
-| 클라이언트 User-Agent 값
 |
 
 
@@ -130,4 +124,4 @@
 
 === 오류 코드
 
-include::./error.adoc[]
+include::./src/docs/asciidoc/common/error.adoc[]
