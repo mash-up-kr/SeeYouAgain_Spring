@@ -1,3 +1,27 @@
+=== 숏스 모두 불러오기
+
+==== [Curl Request]
+
+include::{snippets}/숏스 모두 불러오기/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::{snippets}/숏스 모두 불러오기/http-request.adoc[]
+
+==== [Request Query Parameters]
+
+include::{snippets}/숏스 모두 불러오기/query-parameters.adoc[]
+
+===== [Response Field]
+
+include::{snippets}/숏스 모두 불러오기/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::{snippets}/숏스 모두 불러오기/http-response.adoc[]
+
+---
+
 === 뉴스 장기 저장 (오래 간직할 숏스)
 
 ==== [Curl Request]

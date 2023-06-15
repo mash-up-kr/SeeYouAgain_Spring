@@ -11,3 +11,31 @@ include::{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 �
 ===== [Response HTTP Example]
 
 include::{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/http-response.adoc[]
+
+---
+
+=== 오늘의 숏스 단일 삭제
+
+==== [Curl Request]
+
+include::{snippets}/오늘의 숏스 단일 삭제/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::{snippets}/오늘의 숏스 단일 삭제/http-request.adoc[]
+
+==== [Request Header]
+
+include::{snippets}/오늘의 숏스 단일 삭제/request-headers.adoc[]
+
+==== [Request Path Parameters]
+
+include::{snippets}/오늘의 숏스 단일 삭제/path-parameters.adoc[]
+
+===== [Response Field]
+
+include::{snippets}/오늘의 숏스 단일 삭제/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::{snippets}/오늘의 숏스 단일 삭제/http-response.adoc[]
