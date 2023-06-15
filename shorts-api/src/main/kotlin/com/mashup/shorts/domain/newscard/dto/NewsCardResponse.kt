@@ -1,28 +1,6 @@
 package com.mashup.shorts.domain.newscard.dto
 
-import java.time.LocalDateTime
 import com.mashup.shorts.domain.news.News
-import com.mashup.shorts.domain.newscard.NewsCard
-
-data class RetrieveAllNewsCardResponse(
-    var id: Long,
-    var keywords: String,
-    var category: String,
-    var crawledDateTime: LocalDateTime,
-) {
-    companion object {
-        fun persistenceToResponseForm(newsCards: List<NewsCard>): List<RetrieveAllNewsCardResponse> {
-            return newsCards.map {
-                RetrieveAllNewsCardResponse(
-                    id = it.id,
-                    keywords = it.keywords,
-                    category = it.category.name.name,
-                    crawledDateTime = it.createdAt,
-                )
-            }
-        }
-    }
-}
 
 data class DetailNewsCardResponse(
     var id: Long,
@@ -34,7 +12,7 @@ data class DetailNewsCardResponse(
     var type: String,
 ) {
     companion object {
-        fun persistenceToResponseForm(newsBundle: MutableList<News>): List<DetailNewsCardResponse> {
+        fun persistenceToResponseForm(newsBundle: List<News>): List<DetailNewsCardResponse> {
             return newsBundle.map {
                 DetailNewsCardResponse(
                     id = it.id,

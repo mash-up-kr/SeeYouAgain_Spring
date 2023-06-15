@@ -70,7 +70,7 @@ class CrawlerCore(
                         persistenceTargetNewsList.add(news)
                         newsRepository.save(news)
                     } else {
-                        val alreadyExistNews = newsRepository.findByTitle(news.title) ?: throw ShortsBaseException.from(
+                        val alreadyExistNews = newsRepository.customFindByTitle(news.title) ?: throw ShortsBaseException.from(
                             shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
                             resultErrorMessage = "뉴스를 저장하는 중 ${news.title} 에 해당하는 뉴스를 찾을 수 없습니다."
                         )

@@ -29,12 +29,14 @@ interface NewsCardRepository : JpaRepository<NewsCard, Long> {
             "WHERE id > :cursorId " +
             "AND created_at BETWEEN :targetDate AND (:targetDate + INTERVAL + :targetHour HOUR) " +
             "AND category_id in :categories " +
+            "AND multiple_news not in :filteredNewsIds " +
             "ORDER BY id ASC " +
             "LIMIT :size", nativeQuery = true
     )
     fun findNewsCardsByTargetTimeAndAndMemberCategoryAndCursorIdAndCategory(
         @Param("targetDate") targetDate: LocalDate,
         @Param("targetHour") targetHour: Int,
+        @Param("filteredNewsIds") filteredNewsIds: List<Long>,
         @Param("cursorId") cursorId: Long,
         @Param("size") size: Int,
         @Param("categories") categories: List<Long>,

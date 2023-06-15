@@ -1,6 +1,5 @@
 package com.mashup.shorts.domain.newscard
 
-import java.time.LocalDateTime
 import kotlin.Long.Companion.MAX_VALUE
 import org.springframework.http.HttpStatus.OK
 import org.springframework.validation.annotation.Validated
@@ -11,12 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
-import com.mashup.shorts.config.aop.Auth
-import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.newscard.dto.DetailNewsCardResponse
 import com.mashup.shorts.domain.newscard.dto.DetailNewsCardResponse.Companion.persistenceToResponseForm
-import com.mashup.shorts.domain.newscard.dto.RetrieveAllNewsCardResponse
-import com.mashup.shorts.domain.newscard.dto.RetrieveAllNewsCardResponse.Companion.persistenceToResponseForm
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 
@@ -36,7 +31,7 @@ class NewsCardApi(
     fun retrieveDetailNewsInNewsCard(
         @PathVariable newsCardId: Long,
         @RequestParam @Min(0) @Max(MAX_VALUE) cursorId: Long,
-        @RequestParam @Min(1) @Max(20) size: Int,
+        @RequestParam @Min(1) @Max(10) size: Int,
     ): ApiResponse<List<DetailNewsCardResponse>> {
         return success(
             OK,

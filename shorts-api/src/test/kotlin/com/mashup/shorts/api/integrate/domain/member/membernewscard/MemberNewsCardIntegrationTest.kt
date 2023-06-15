@@ -42,13 +42,13 @@ class MemberNewsCardIntegrationTest(
         val cursorId = 0L
         val size = 20
 
-        val auth = "shorts-user"
+        val auth = "Bearer shorts-user"
         AuthContext.USER_CONTEXT.set(auth)
 
         // execute
         val result = mockMvc.perform(
             MockMvcRequestBuilders.get(url)
-                .header("Authorization", "$auth")
+                .header("Authorization", auth)
                 .param("targetDateTime", LocalDateTime.now().minusDays(1).minusHours(0).toString())
                 .param("cursorId", cursorId.toString())
                 .param("size", size.toString())

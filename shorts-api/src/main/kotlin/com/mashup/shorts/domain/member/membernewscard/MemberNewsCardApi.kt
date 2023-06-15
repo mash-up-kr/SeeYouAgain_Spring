@@ -15,8 +15,7 @@ import com.mashup.shorts.config.aop.Auth
 import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearResponse
-import com.mashup.shorts.domain.newscard.NewsCardRetrieve
-import com.mashup.shorts.domain.newscard.dto.RetrieveAllNewsCardResponse
+import com.mashup.shorts.domain.member.membernewscard.dto.RetrieveAllNewsCardResponse
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
@@ -28,12 +27,13 @@ class MemberNewsCardApi(
     private val memberNewsCardRetrieve: MemberNewsCardRetrieve,
 ) {
 
+    @Operation(summary = "홈 조회", description = "Header에 유저를 바탕으로 해당하는 카테고리에 대한 뉴스카드를 불러온다.")
     @Auth
     @GetMapping
     fun retrieveNewsCard(
         @RequestParam targetDateTime: LocalDateTime,
         @RequestParam @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
-        @RequestParam @Min(1) @Max(20) size: Int,
+        @RequestParam @Min(1) @Max(10) size: Int,
     ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
         return success(
             OK,

@@ -1,13 +1,10 @@
 package com.mashup.shorts.domain.newscard
 
-import java.time.LocalDateTime
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
-import com.mashup.shorts.domain.member.MemberRepository
-import com.mashup.shorts.domain.member.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.news.newsnewscard.NewsNewsCardNativeQueryRepository
 
@@ -22,7 +19,7 @@ class NewsCardRetrieve(
         newsCardId: Long,
         cursorId: Long,
         size: Int,
-    ): MutableList<News> {
+    ): List<News> {
         val newsCard = newsCardRepository.findByIdOrNull(newsCardId)
             ?: throw ShortsBaseException.from(
                 shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
