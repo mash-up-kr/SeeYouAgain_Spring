@@ -1,7 +1,6 @@
 package com.mashup.shorts.domain.member.membernewscard.dto
 
 import java.time.LocalDateTime
-import com.mashup.shorts.domain.newscard.NewsCard
 
 data class RetrieveAllNewsCardResponse(
     var id: Long,
@@ -10,13 +9,15 @@ data class RetrieveAllNewsCardResponse(
     var crawledDateTime: LocalDateTime,
 ) {
     companion object {
-        fun persistenceToResponseForm(newsCards: List<NewsCard>): List<RetrieveAllNewsCardResponse> {
+        fun domainResponseFormToApiResponseForm(
+            newsCards: List<com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsCardResponse>,
+        ): List<RetrieveAllNewsCardResponse> {
             return newsCards.map {
                 RetrieveAllNewsCardResponse(
                     id = it.id,
                     keywords = it.keywords,
-                    category = it.category.name.name,
-                    crawledDateTime = it.createdAt,
+                    category = it.category,
+                    crawledDateTime = it.crawledDateTime,
                 )
             }
         }

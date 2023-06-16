@@ -37,7 +37,7 @@ class MemberNewsCardApi(
     ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
         return success(
             OK,
-            RetrieveAllNewsCardResponse.persistenceToResponseForm(
+            RetrieveAllNewsCardResponse.domainResponseFormToApiResponseForm(
                 memberNewsCardRetrieve.retrieveNewsCardByMember(
                     memberUniqueId = AuthContext.getMemberId(),
                     targetDateTime = targetDateTime,

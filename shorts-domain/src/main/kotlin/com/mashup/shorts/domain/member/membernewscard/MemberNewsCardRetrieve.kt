@@ -9,8 +9,8 @@ import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.member.MemberRepository
 import com.mashup.shorts.domain.member.membercategory.MemberCategoryRepository
+import com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsCardResponse
 import com.mashup.shorts.domain.news.NewsRepository
-import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 
 @Service
@@ -28,7 +28,7 @@ class MemberNewsCardRetrieve(
         targetDateTime: LocalDateTime,
         cursorId: Long,
         size: Int,
-    ): List<NewsCard> {
+    ): List<RetrieveAllNewsCardResponse> {
         val member = memberRepository.findByUniqueId(memberUniqueId) ?: throw ShortsBaseException.from(
             shortsErrorCode = E404_NOT_FOUND,
             resultErrorMessage = "${memberUniqueId}에 해당하는 사용자는 존재하지 않습니다."
@@ -37,23 +37,27 @@ class MemberNewsCardRetrieve(
         val memberCategories = memberCategoryRepository.findByMember(member)
 
         if (memberCategories.isEmpty()) {
-            return newsCardRepository.findNewsCardsByTargetTimeAndAndMemberCategoryAndCursorId(
-                targetDate = targetDateTime.toLocalDate(),
-                targetHour = targetDateTime.hour,
-                cursorId = cursorId,
-                size = size
+            return RetrieveAllNewsCardResponse.persistenceToResponseForm(
+                newsCardRepository.findNewsCardsByTargetTimeAndAndMemberCategoryAndCursorId(
+                    targetDate = targetDateTime.toLocalDate(),
+                    targetHour = targetDateTime.hour,
+                    cursorId = cursorId,
+                    size = size
+                )
             )
         }
 
         val filteredNewsIds = filterAlreadySavedNews(member)
 
-        return newsCardRepository.findNewsCardsByTargetTimeAndAndMemberCategoryAndCursorIdAndCategory(
-            targetDate = targetDateTime.toLocalDate(),
-            targetHour = targetDateTime.hour,
-            filteredNewsIds = filteredNewsIds,
-            cursorId = cursorId,
-            size = size,
-            categories = memberCategories.map { it.category.id }
+        return RetrieveAllNewsCardResponse.persistenceToResponseForm(
+            newsCardRepository.findNewsCardsByTargetTimeAndAndMemberCategoryAndCursorIdAndCategory(
+                targetDate = targetDateTime.toLocalDate(),
+                targetHour = targetDateTime.hour,
+                filteredNewsIds = filteredNewsIds,
+                cursorId = cursorId,
+                size = size,
+                categories = memberCategories.map { it.category.id }
+            )
         )
     }
 
