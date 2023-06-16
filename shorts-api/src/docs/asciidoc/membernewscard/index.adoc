@@ -7,6 +7,58 @@ endif::[]
 :toc: left
 :toclevels: 2
 
+=== 숏스 모두 불러오기
+
+==== [Curl Request]
+
+include::{snippets}/숏스 모두 불러오기/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::{snippets}/숏스 모두 불러오기/http-request.adoc[]
+
+==== [Request Query Parameters]
+
+include::{snippets}/숏스 모두 불러오기/query-parameters.adoc[]
+
+===== [Response Field]
+
+include::{snippets}/숏스 모두 불러오기/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::{snippets}/숏스 모두 불러오기/http-response.adoc[]
+
+---
+
+=== 뉴스 장기 저장 (오래 간직할 숏스)
+
+==== [Curl Request]
+
+include::{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::{snippets}/오래 간직할 뉴스 추가/http-request.adoc[]
+
+==== [Request Filed]
+
+include::{snippets}/오래 간직할 뉴스 추가/request-fields.adoc[]
+
+===== [Response Field]
+
+include::{snippets}/오래 간직할 뉴스 추가/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::{snippets}/오래 간직할 뉴스 추가/http-response.adoc[]
+
+===== [Curl Request HTTP Example]
+
+include::{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
+
+---
+
 === 뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)
 
 ==== [Curl Request]
