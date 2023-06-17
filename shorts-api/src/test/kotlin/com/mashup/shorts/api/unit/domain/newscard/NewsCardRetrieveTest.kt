@@ -41,6 +41,7 @@ class NewsCardRetrieveTest(
         val newsCardId = 1L
         val cursorId = 1L
         val size = 10
+        val pivot = "ASC"
         val multipleNewsId = mutableListOf(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L)
 
         // execute
@@ -51,9 +52,9 @@ class NewsCardRetrieveTest(
                 keywords = "키워드1"
             ))
         every {
-            newsNewsCardNativeQueryRepository.loadNewsBundleByCursorIdAndPersistenceNewsCardMultipleNews(
+            newsNewsCardNativeQueryRepository.loadNewsBundleByCursorAndNewsCardMultipleNewsASC(
                 cursorId = cursorId,
-                persistenceNewsCardMultipleNews = multipleNewsId,
+                newsCardMultipleNews = multipleNewsId,
                 size = size
             )
         } returns (
@@ -70,7 +71,12 @@ class NewsCardRetrieveTest(
                     category = Category(CategoryName.SCIENCE)
                 )
             ))
-        val loadedNewsBundle = newsCardRetrieve.retrieveDetailNewsInNewsCard(newsCardId, cursorId, size)
+        val loadedNewsBundle = newsCardRetrieve.retrieveDetailNewsInNewsCard(
+            newsCardId,
+            cursorId,
+            size,
+            pivot
+        )
 
         // validate
         assertThat(loadedNewsBundle.size).isEqualTo(1)

@@ -161,7 +161,10 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
 
     @Test
     fun 뉴스카드_내_뉴스조회() {
-        every { newsCardRetrieve.retrieveDetailNewsInNewsCard(any(), any(), any()) } returns (
+        val cursorId = 0L
+        val size = 10
+        val pivot = "ASC"
+        every { newsCardRetrieve.retrieveDetailNewsInNewsCard(any(), any(), any(), any()) } returns (
             mutableListOf(
                 News(
                     title = "뉴스 제목",
@@ -179,8 +182,9 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .get("/v1/news-card/{newsCardId}", 1L)
-                .param("cursorId", 0.toString())
-                .param("size", 10.toString())
+                .param("cursorId", cursorId.toString())
+                .param("size", size.toString())
+                .param("pivot", pivot)
                 .contentType(MediaType.APPLICATION_JSON)
         )
 
@@ -198,10 +202,13 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
                     RequestDocumentation.queryParameters(
                         RequestDocumentation
                             .parameterWithName("cursorId")
-                            .description("커서 아이디"),
+                            .description("<필수값> 커서 아이디(첫 페이지 조회 시 0을 넣어주시면 됩니다.)"),
                         RequestDocumentation
                             .parameterWithName("size")
-                            .description("페이징 사이즈")
+                            .description("<필수값> 페이징 사이즈(최대 10까지 허용합니다.)"),
+                        RequestDocumentation
+                            .parameterWithName("pivot")
+                            .description("<필수값> 정렬 기준 [ASC, DESC] 둘 중 하나만 허용합니다. ASC는 오래된 순, DESC는 최신 순 입니다."),
                     ),
                     PayloadDocumentation.responseFields(
                         fieldWithPath("status").type(JsonFieldType.NUMBER).description("API 성공 여부"),
