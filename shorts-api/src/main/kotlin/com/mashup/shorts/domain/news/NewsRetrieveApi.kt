@@ -16,7 +16,7 @@ class NewsRetrieveApi(
     @GetMapping("/{newsId}")
     fun retrieveNewsLinkForWebView(
         @PathVariable newsId: Long,
-    ): ApiResponse<String> {
+    ): ApiResponse<Map<String, String>> {
         return ApiResponse.success(
             OK,
             newsRetrieve.retrieveNewsLinkByNewsId(newsId)
