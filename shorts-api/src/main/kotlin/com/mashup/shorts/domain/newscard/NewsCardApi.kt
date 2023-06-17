@@ -1,6 +1,5 @@
 package com.mashup.shorts.domain.newscard
 
-import kotlin.Long.Companion.MAX_VALUE
 import org.springframework.http.HttpStatus.OK
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
@@ -25,9 +24,13 @@ class NewsCardApi(
     @GetMapping("/{newsCardId}")
     fun retrieveDetailNewsInNewsCard(
         @PathVariable newsCardId: Long,
-        @RequestParam @Min(0) @Max(MAX_VALUE) cursorId: Long,
-        @RequestParam @Min(1) @Max(10) size: Int,
-        @RequestParam pivot: String,
+        @RequestParam(
+            value = "cursorId",
+            defaultValue = "0",
+            required = false
+        ) @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
+        @RequestParam(value = "size", required = true) @Min(1) @Max(10) size: Int,
+        @RequestParam pivot: Pivots,
     ): ApiResponse<List<DetailNewsCardResponse>> {
         return success(
             OK,
