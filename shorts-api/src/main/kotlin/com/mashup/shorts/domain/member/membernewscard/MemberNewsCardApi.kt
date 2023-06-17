@@ -21,7 +21,6 @@ class MemberNewsCardApi(
     private val memberNewsCardClear: MemberNewsCardClear,
 ) {
 
-    @Operation(summary = "오늘의 숏스 단일 삭제", description = "유저와 삭제할 뉴스 카드의 id를 바탕으로 삭제")
     @Auth
     @DeleteMapping("/{newsCardId}")
     fun deleteMemberNewsCard(
@@ -32,7 +31,6 @@ class MemberNewsCardApi(
         return success(OK)
     }
 
-    @Operation(summary = "오늘의 숏스 다 읽었어요", description = "유저의 모든 뉴스카드를 삭제")
     @DeleteMapping
     fun clearMemberNewsCard(
         @RequestBody memberNewsCardRequest: MemberNewsCardClearRequest,
