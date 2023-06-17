@@ -1,13 +1,10 @@
 package com.mashup.shorts.domain.member.membernewscard
 
-import java.time.LocalDateTime
 import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
@@ -15,37 +12,14 @@ import com.mashup.shorts.config.aop.Auth
 import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearResponse
-import com.mashup.shorts.domain.member.membernewscard.dto.RetrieveAllNewsCardResponse
 import io.swagger.v3.oas.annotations.Operation
-import jakarta.validation.constraints.Max
-import jakarta.validation.constraints.Min
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 
 @RestController
 @RequestMapping("/v1/member-news-card")
 class MemberNewsCardApi(
     private val memberNewsCardClear: MemberNewsCardClear,
-    private val memberNewsCardRetrieve: MemberNewsCardRetrieve,
 ) {
-
-    @Auth
-    @GetMapping
-    fun retrieveNewsCard(
-        @RequestParam targetDateTime: LocalDateTime,
-        @RequestParam @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
-        @RequestParam @Min(1) @Max(10) size: Int,
-    ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
-        return success(
-            OK,
-            RetrieveAllNewsCardResponse.domainResponseFormToApiResponseForm(
-                memberNewsCardRetrieve.retrieveNewsCardByMember(
-                    memberUniqueId = AuthContext.getMemberId(),
-                    targetDateTime = targetDateTime,
-                    cursorId = cursorId,
-                    size = size
-                )
-            )
-        )
-    }
 
     @Auth
     @DeleteMapping("/{newsCardId}")
@@ -57,7 +31,6 @@ class MemberNewsCardApi(
         return success(OK)
     }
 
-    @Operation(summary = "오늘의 숏스 다 읽었어요", description = "유저의 모든 뉴스카드를 삭제")
     @DeleteMapping
     fun clearMemberNewsCard(
         @RequestBody memberNewsCardRequest: MemberNewsCardClearRequest,
