@@ -12,14 +12,28 @@ interface NewsNewsCardNativeQueryRepository : JpaRepository<News, Long> {
     @Query(
         "SELECT * " +
             "FROM news " +
-            "WHERE news.id > :cursorId and news.id in :persistenceNewsCardMultipleNews " +
+            "WHERE news.id > :cursorId and news.id in :newsCardMultipleNews " +
             "ORDER BY news.id ASC " +
             "LIMIT :size",
         nativeQuery = true
     )
-    fun loadNewsBundleByCursorIdAndPersistenceNewsCardMultipleNews(
+    fun loadNewsBundleByCursorAndNewsCardMultipleNewsASC(
         @Param("cursorId") cursorId: Long,
-        @Param("persistenceNewsCardMultipleNews") persistenceNewsCardMultipleNews: List<Long>,
-        @Param("size") size: Int,
-    ): MutableList<News>
+        @Param("newsCardMultipleNews") newsCardMultipleNews: List<Long>,
+        @Param("size") size: Int
+    ): List<News>
+
+    @Query(
+        "SELECT * " +
+            "FROM news " +
+            "WHERE news.id > :cursorId and news.id in :newsCardMultipleNews " +
+            "ORDER BY news.id DESC " +
+            "LIMIT :size",
+        nativeQuery = true
+    )
+    fun loadNewsBundleByCursorAndNewsCardMultipleNewsDESC(
+        @Param("cursorId") cursorId: Long,
+        @Param("newsCardMultipleNews") newsCardMultipleNews: List<Long>,
+        @Param("size") size: Int
+    ): List<News>
 }
