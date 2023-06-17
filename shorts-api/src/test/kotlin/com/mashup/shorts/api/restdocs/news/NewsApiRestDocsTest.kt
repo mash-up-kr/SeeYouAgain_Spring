@@ -27,7 +27,9 @@ class NewsApiRestDocsTest : ApiDocsTestBase() {
     fun 뉴스_자세히보기() {
         // ready
         val newsId = 10L
-        every { newsRetrieve.retrieveNewsLinkByNewsId(newsId) } returns ("https://shorts~")
+        every { newsRetrieve.retrieveNewsLinkByNewsId(newsId) } returns (
+            mapOf("newsLink" to "https://shorts~")
+        )
 
         // execute
         val response = mockMvc.perform(
@@ -49,7 +51,7 @@ class NewsApiRestDocsTest : ApiDocsTestBase() {
                         fieldWithPath("status")
                             .type(JsonFieldType.NUMBER)
                             .description("API 성공 여부"),
-                        fieldWithPath("result")
+                        fieldWithPath("result.newsLink")
                             .type(JsonFieldType.STRING)
                             .description("뉴스 링크")
                     )
