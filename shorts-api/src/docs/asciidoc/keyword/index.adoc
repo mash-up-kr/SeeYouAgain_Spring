@@ -1,0 +1,26 @@
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+
+=== 핫 키워드 조회
+
+==== [Curl Request]
+
+include::{snippets}/핫 키워드 조회/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::{snippets}/핫 키워드 조회/http-request.adoc[]
+
+===== [Response Field]
+
+include::{snippets}/핫 키워드 조회/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::{snippets}/핫 키워드 조회/http-response.adoc[]
