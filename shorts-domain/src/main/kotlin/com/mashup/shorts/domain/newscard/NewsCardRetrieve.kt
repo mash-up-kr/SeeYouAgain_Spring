@@ -1,15 +1,13 @@
 package com.mashup.shorts.domain.newscard
 
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.news.newsnewscard.NewsNewsCardNativeQueryRepository
-import com.mashup.shorts.domain.newscard.Pivots.ASC
-import com.mashup.shorts.domain.newscard.Pivots.DESC
-import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
@@ -22,9 +20,10 @@ class NewsCardRetrieve(
         newsCardId: Long,
         cursorId: Long,
         size: Int,
-        pivot: String,
+        pivot: Pivots,
     ): List<News> {
-        if (pivot != ASC.name && pivot != DESC.name) {
+
+        if (Pivots.valueOf(pivot.name) !in Pivots.values()) {
             throw ShortsBaseException.from(
                 shortsErrorCode = ShortsErrorCode.E400_BAD_REQUEST,
                 resultErrorMessage = "잘못된 정렬 기준인 ${pivot}를 요청했습니다."
@@ -37,7 +36,7 @@ class NewsCardRetrieve(
             )
         val newsIdBundle = newsCard.multipleNews.split(", ").map { it.toLong() }
 
-        if (pivot == ASC.name) {
+        if (pivot.name == Pivots.ASC.name) {
             return newsNewsCardNativeQueryRepository.loadNewsBundleByCursorAndNewsCardMultipleNewsASC(
                 cursorId,
                 newsIdBundle,
