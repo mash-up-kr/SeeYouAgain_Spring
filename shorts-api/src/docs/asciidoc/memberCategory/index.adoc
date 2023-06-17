@@ -29,6 +29,10 @@ include::{snippets}/멤버 관심 카테고리 설정/response-fields.adoc[]
 
 include::{snippets}/멤버 관심 카테고리 설정/http-response.adoc[]
 
+===== [Response Body]
+
+include::{snippets}/멤버 관심 카테고리 설정/response-body.adoc[]
+
 ===== [Curl Request HTTP Example]
 
 include::{snippets}/멤버 관심 카테고리 설정/curl-request.adoc[]

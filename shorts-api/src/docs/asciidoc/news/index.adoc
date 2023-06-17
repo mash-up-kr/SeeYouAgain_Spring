@@ -25,6 +25,10 @@ include::{snippets}/뉴스 상세 조회 (웹 뷰)/path-parameters.adoc[]
 
 include::{snippets}/뉴스 상세 조회 (웹 뷰)/response-fields.adoc[]
 
+===== [Response Body]
+
+include::{snippets}/뉴스 상세 조회 (웹 뷰)/response-body.adoc[]
+
 ===== [Response HTTP Example]
 
 include::{snippets}/뉴스 상세 조회 (웹 뷰)/http-response.adoc[]
