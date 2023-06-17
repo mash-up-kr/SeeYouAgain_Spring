@@ -13,6 +13,9 @@ import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
@@ -127,6 +130,8 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
             .andDo(
                 document(
                     "숏스 모두 불러오기",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
                     HeaderDocumentation.requestHeaders(
                         HeaderDocumentation
                             .headerWithName("Authorization")

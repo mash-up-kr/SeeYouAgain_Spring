@@ -10,6 +10,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.domain.keyword.HotKeywordsApi
 
 @WebMvcTest(HotKeywordsApi::class)
@@ -25,6 +26,8 @@ class HotKeywordsApiTest : ApiDocsTestBase() {
             .andDo(
                 MockMvcRestDocumentation.document(
                     "핫 키워드 조회",
+                    RestDocsUtils.getDocumentRequest(),
+                    RestDocsUtils.getDocumentResponse(),
                     PayloadDocumentation.responseFields(
                         PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER).description("API HTTP Status 값"),
                         PayloadDocumentation.fieldWithPath("result.createdAt").type(JsonFieldType.STRING).description("핫 키워드 생성 시간"),

@@ -29,6 +29,10 @@ include::{snippets}/뉴스 카드 내 뉴스 조회/path-parameters.adoc[]
 
 include::{snippets}/뉴스 카드 내 뉴스 조회/response-fields.adoc[]
 
+===== [Response Body]
+
+include::{snippets}/뉴스 카드 내 뉴스 조회/response-body.adoc[]
+
 ===== [Response HTTP Example]
 
 include::{snippets}/뉴스 카드 내 뉴스 조회/http-response.adoc[]

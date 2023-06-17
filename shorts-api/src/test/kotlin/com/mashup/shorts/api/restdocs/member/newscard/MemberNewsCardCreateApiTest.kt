@@ -11,6 +11,9 @@ import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardCreate
 import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardCreateApi
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardCreateRequest
@@ -39,6 +42,8 @@ class MemberNewsCardCreateApiTest : ApiDocsTestBase() {
             .andDo(
                 MockMvcRestDocumentation.document(
                     "오늘의 숏스 추가",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
                     HeaderDocumentation.requestHeaders(
                         HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
                     ),
@@ -46,8 +51,7 @@ class MemberNewsCardCreateApiTest : ApiDocsTestBase() {
                         PayloadDocumentation.fieldWithPath("newsCardId").type(JsonFieldType.NUMBER).description("뉴스카드 id")
                     ),
                     PayloadDocumentation.responseFields(
-                        PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER).description("API HTTP Status 값"),
-                        PayloadDocumentation.fieldWithPath("result").type(JsonFieldType.NULL).description("반환 결과 없음")
+                        PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER).description("API HTTP Status 값")
                     )
                 )
             )

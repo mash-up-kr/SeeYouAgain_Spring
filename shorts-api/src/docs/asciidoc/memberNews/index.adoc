@@ -53,6 +53,10 @@ include::{snippets}/오래 간직할 뉴스 추가/response-fields.adoc[]
 
 include::{snippets}/오래 간직할 뉴스 추가/http-response.adoc[]
 
+===== [Response Body]
+
+include::{snippets}/오래 간직할 뉴스 추가/response-body.adoc[]
+
 ===== [Curl Request HTTP Example]
 
 include::{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
