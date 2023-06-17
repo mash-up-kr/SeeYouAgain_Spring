@@ -26,7 +26,7 @@ class NewsCardApi(
     fun retrieveDetailNewsInNewsCard(
         @PathVariable newsCardId: Long,
         @RequestParam @Min(0) @Max(MAX_VALUE) cursorId: Long,
-        @RequestParam @Min(1) @Max(20) size: Int,
+        @RequestParam @Min(1) @Max(10) size: Int,
         @RequestParam pivot: String,
     ): ApiResponse<List<DetailNewsCardResponse>> {
         return success(
