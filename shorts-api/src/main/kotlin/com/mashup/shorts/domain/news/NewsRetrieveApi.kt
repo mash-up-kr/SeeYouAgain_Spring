@@ -13,7 +13,7 @@ class NewsRetrieveApi(
     private val newsRetrieve: NewsRetrieve,
 ) {
 
-    @GetMapping("{newsId}")
+    @GetMapping("/{newsId}")
     fun retrieveNewsLinkForWebView(
         @PathVariable newsId: Long,
     ): ApiResponse<String> {
