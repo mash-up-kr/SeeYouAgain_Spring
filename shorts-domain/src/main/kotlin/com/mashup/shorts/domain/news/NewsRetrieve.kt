@@ -11,12 +11,12 @@ import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
 class NewsRetrieve(
     private val newsRepository: NewsRepository,
 ) {
-    fun retrieveNewsLinkByNewsId(newsId: Long): String {
+    fun retrieveNewsLinkByNewsId(newsId: Long): Map<String, String> {
         val news = newsRepository.findByIdOrNull(newsId) ?: throw ShortsBaseException.from(
             shortsErrorCode = E404_NOT_FOUND,
             resultErrorMessage = "뉴스 링크를 가져오는 중 요청한 NewsId : ${newsId}를 찾을 수 없습니다."
         )
-        return news.newsLink
+        return mapOf("newsLink" to news.newsLink)
     }
 
 }
