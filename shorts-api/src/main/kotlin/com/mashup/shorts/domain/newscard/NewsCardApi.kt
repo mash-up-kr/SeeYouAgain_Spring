@@ -27,11 +27,6 @@ class NewsCardApi(
     private val newsCardRetrieve: NewsCardRetrieve,
 ) {
 
-    /**
-    모든 뉴스 카드를 조회한다
-    Param : 조회 대상 시각, 커서 ID, 사이즈
-    Return : MutableList<LoadAllDetailNewsInNewsCard>
-     */
     @Auth
     @GetMapping
     fun retrieveNewsCard(
@@ -52,17 +47,12 @@ class NewsCardApi(
         )
     }
 
-
-    /**
-    뉴스 카드 내의 모든 뉴스를 조회한다.
-    Param : 뉴스 카드 ID, 커서 ID, 사이즈
-    Return : MutableList<LoadAllDetailNewsInNewsCard>
-     */
     @GetMapping("/{newsCardId}")
     fun retrieveDetailNewsInNewsCard(
         @PathVariable newsCardId: Long,
         @RequestParam @Min(0) @Max(MAX_VALUE) cursorId: Long,
         @RequestParam @Min(1) @Max(20) size: Int,
+        @RequestParam pivot: String,
     ): ApiResponse<List<DetailNewsCardResponse>> {
         return success(
             OK,
@@ -70,7 +60,8 @@ class NewsCardApi(
                 newsCardRetrieve.retrieveDetailNewsInNewsCard(
                     newsCardId = newsCardId,
                     cursorId = cursorId,
-                    size = size
+                    size = size,
+                    pivot = pivot
                 )
             )
         )

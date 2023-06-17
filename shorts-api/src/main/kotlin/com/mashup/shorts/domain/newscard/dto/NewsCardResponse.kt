@@ -34,7 +34,7 @@ data class DetailNewsCardResponse(
     var type: String,
 ) {
     companion object {
-        fun persistenceToResponseForm(newsBundle: MutableList<News>): List<DetailNewsCardResponse> {
+        fun persistenceToResponseForm(newsBundle: List<News>): List<DetailNewsCardResponse> {
             return newsBundle.map {
                 DetailNewsCardResponse(
                     id = it.id,

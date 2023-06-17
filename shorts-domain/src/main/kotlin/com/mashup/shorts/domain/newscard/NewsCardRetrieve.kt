@@ -20,6 +20,11 @@ class NewsCardRetrieve(
     private val newsNewsCardNativeQueryRepository: NewsNewsCardNativeQueryRepository,
 ) {
 
+    companion object {
+        private const val ASC = "ASC"
+        private const val DESC = "DESC"
+    }
+
     fun retrieveNewsCardByMember(
         memberUniqueId: String,
         targetDateTime: LocalDateTime,
@@ -56,15 +61,30 @@ class NewsCardRetrieve(
         newsCardId: Long,
         cursorId: Long,
         size: Int,
-    ): MutableList<News> {
+        pivot: String,
+    ): List<News> {
+        if (pivot != ASC && pivot != DESC) {
+            throw ShortsBaseException.from(
+                shortsErrorCode = ShortsErrorCode.E400_BAD_REQUEST,
+                resultErrorMessage = "잘못된 정렬 기준인 ${pivot}를 요청했습니다."
+            )
+        }
         val newsCard = newsCardRepository.findByIdOrNull(newsCardId)
             ?: throw ShortsBaseException.from(
                 shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
                 resultErrorMessage = "${newsCardId}에 해당 뉴스 카드는 존재하지 않습니다."
             )
-
         val newsIdBundle = newsCard.multipleNews.split(", ").map { it.toLong() }
-        return newsNewsCardNativeQueryRepository.loadNewsBundleByCursorIdAndPersistenceNewsCardMultipleNews(
+
+        if (pivot == ASC) {
+            return newsNewsCardNativeQueryRepository.loadNewsBundleByCursorAndNewsCardMultipleNewsASC(
+                cursorId,
+                newsIdBundle,
+                size
+            )
+        }
+
+        return newsNewsCardNativeQueryRepository.loadNewsBundleByCursorAndNewsCardMultipleNewsDESC(
             cursorId,
             newsIdBundle,
             size
