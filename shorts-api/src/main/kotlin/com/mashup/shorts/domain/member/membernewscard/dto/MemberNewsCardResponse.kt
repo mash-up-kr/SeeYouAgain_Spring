@@ -1,6 +1,7 @@
 package com.mashup.shorts.domain.member.membernewscard.dto
 
 import java.time.LocalDateTime
+import com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsCardResponseMapper
 
 data class RetrieveAllNewsCardResponse(
     var id: Long,
@@ -10,7 +11,7 @@ data class RetrieveAllNewsCardResponse(
 ) {
     companion object {
         fun domainResponseFormToApiResponseForm(
-            newsCards: List<com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsCardResponse>,
+            newsCards: List<RetrieveAllNewsCardResponseMapper>,
         ): List<RetrieveAllNewsCardResponse> {
             return newsCards.map {
                 RetrieveAllNewsCardResponse(

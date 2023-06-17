@@ -20,7 +20,7 @@ class MemberNewsCardClear(
     private val memberShortsCountRepository: MemberShortsCountRepository,
 ) {
 
-    fun clearMemberNewsCard(memberId: Long, newsCardId: Long): Int {
+    fun clearMemberNewsCard(memberId: Long, newsCardId: Long): Map<String, Int> {
         val member = memberRepository.findByIdOrNull(memberId) ?: throw ShortsBaseException.from(
             shortsErrorCode = E404_NOT_FOUND,
             resultErrorMessage = "${memberId}에 해당하는 유저가 존재하지 않습니다."
@@ -36,7 +36,7 @@ class MemberNewsCardClear(
 
         memberShortsCount?.let {
             memberShortsCount.increaseCount()
-            return memberShortsCount.count
+            return mapOf("shortsCount" to memberShortsCount.count)
         }
 
         val newMemberShortsCount = MemberShortsCount(
@@ -45,7 +45,7 @@ class MemberNewsCardClear(
             targetTime = today
         )
         memberShortsCountRepository.save(newMemberShortsCount)
-        return newMemberShortsCount.count
+        return mapOf("shortsCount" to newMemberShortsCount.count)
     }
 
     fun deleteMemberNewsCard(uniqueId: String, newsCardId: Long) {

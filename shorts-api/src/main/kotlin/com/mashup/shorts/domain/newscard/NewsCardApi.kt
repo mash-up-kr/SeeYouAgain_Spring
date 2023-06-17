@@ -1,6 +1,5 @@
 package com.mashup.shorts.domain.newscard
 
-import java.time.LocalDateTime
 import kotlin.Long.Companion.MAX_VALUE
 import org.springframework.http.HttpStatus.OK
 import org.springframework.validation.annotation.Validated
@@ -11,12 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
-import com.mashup.shorts.config.aop.Auth
-import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.newscard.dto.DetailNewsCardResponse
 import com.mashup.shorts.domain.newscard.dto.DetailNewsCardResponse.Companion.persistenceToResponseForm
-import com.mashup.shorts.domain.newscard.dto.RetrieveAllNewsCardResponse
-import com.mashup.shorts.domain.newscard.dto.RetrieveAllNewsCardResponse.Companion.persistenceToResponseForm
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 
@@ -26,26 +21,6 @@ import jakarta.validation.constraints.Min
 class NewsCardApi(
     private val newsCardRetrieve: NewsCardRetrieve,
 ) {
-
-    @Auth
-    @GetMapping
-    fun retrieveNewsCard(
-        @RequestParam targetDateTime: LocalDateTime,
-        @RequestParam @Min(0) @Max(MAX_VALUE) cursorId: Long,
-        @RequestParam @Min(1) @Max(20) size: Int,
-    ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
-        return success(
-            OK,
-            persistenceToResponseForm(
-                newsCardRetrieve.retrieveNewsCardByMember(
-                    memberUniqueId = AuthContext.getMemberId(),
-                    targetDateTime = targetDateTime,
-                    cursorId = cursorId,
-                    size = size
-                )
-            )
-        )
-    }
 
     @GetMapping("/{newsCardId}")
     fun retrieveDetailNewsInNewsCard(

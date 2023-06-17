@@ -11,13 +11,10 @@ import com.mashup.shorts.common.response.ApiResponse.Companion.success
 import com.mashup.shorts.config.aop.Auth
 import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
-import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearResponse
-import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.responses.ApiResponses
 
 @RestController
 @RequestMapping("/v1/member-news-card")
-class MemberNewsCardApi(
+class MemberNewsCardDeleteApi(
     private val memberNewsCardClear: MemberNewsCardClear,
 ) {
 
@@ -34,14 +31,12 @@ class MemberNewsCardApi(
     @DeleteMapping
     fun clearMemberNewsCard(
         @RequestBody memberNewsCardRequest: MemberNewsCardClearRequest,
-    ): ApiResponse<MemberNewsCardClearResponse> {
+    ): ApiResponse<Map<String, Int>> {
         return success(
             OK,
-            MemberNewsCardClearResponse(
-                memberNewsCardClear.clearMemberNewsCard(
-                    memberId = memberNewsCardRequest.memberId,
-                    newsCardId = memberNewsCardRequest.newsCardId,
-                )
+            memberNewsCardClear.clearMemberNewsCard(
+                memberId = memberNewsCardRequest.memberId,
+                newsCardId = memberNewsCardRequest.newsCardId,
             )
         )
     }

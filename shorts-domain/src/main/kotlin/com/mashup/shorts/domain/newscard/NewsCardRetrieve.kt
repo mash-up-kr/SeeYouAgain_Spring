@@ -6,16 +6,22 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
+import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
+import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.member.MemberRepository
 import com.mashup.shorts.domain.member.membercategory.MemberCategoryRepository
+import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardRepository
 import com.mashup.shorts.domain.news.News
-import com.mashup.shorts.domain.newsnewscard.NewsNewsCardNativeQueryRepository
+import com.mashup.shorts.domain.news.NewsRepository
+import com.mashup.shorts.domain.news.newsnewscard.NewsNewsCardNativeQueryRepository
 
 @Service
 @Transactional(readOnly = true)
 class NewsCardRetrieve(
     private val memberRepository: MemberRepository,
     private val memberCategoryRepository: MemberCategoryRepository,
+    private val memberNewsCardRepository: MemberNewsCardRepository,
+    private val newsRepository: NewsRepository,
     private val newsCardRepository: NewsCardRepository,
     private val newsNewsCardNativeQueryRepository: NewsNewsCardNativeQueryRepository,
 ) {
@@ -33,7 +39,7 @@ class NewsCardRetrieve(
     ): List<NewsCard> {
         val member = memberRepository.findByUniqueId(memberUniqueId)
             ?: throw ShortsBaseException.from(
-                shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
+                shortsErrorCode = E404_NOT_FOUND,
                 resultErrorMessage = "${memberUniqueId}에 해당하는 사용자는 존재하지 않습니다."
             )
 
@@ -53,6 +59,7 @@ class NewsCardRetrieve(
             targetHour = targetDateTime.hour,
             cursorId = cursorId,
             size = size,
+            filteredNewsIds = filterAlreadySavedNews(member),
             categories = memberCategories.map { it.category.id }
         )
     }
@@ -71,7 +78,7 @@ class NewsCardRetrieve(
         }
         val newsCard = newsCardRepository.findByIdOrNull(newsCardId)
             ?: throw ShortsBaseException.from(
-                shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
+                shortsErrorCode = E404_NOT_FOUND,
                 resultErrorMessage = "${newsCardId}에 해당 뉴스 카드는 존재하지 않습니다."
             )
         val newsIdBundle = newsCard.multipleNews.split(", ").map { it.toLong() }
@@ -89,5 +96,22 @@ class NewsCardRetrieve(
             newsIdBundle,
             size
         )
+    }
+
+    private fun filterAlreadySavedNews(member: Member): List<Long> {
+        val memberNewsCards = memberNewsCardRepository.findAllByMember(member)
+        val result = mutableListOf<Long>()
+
+        for (memberNewsCard in memberNewsCards) {
+            val newsCard = memberNewsCard.newsCard
+            val newsIds = newsCard.multipleNews.split(", ").map { it.toLong() }
+            val newsBundleByNewsIds = newsRepository.findAllById(newsIds)
+            for (news in newsBundleByNewsIds) {
+                if (news.crawledCount > 1) {
+                    result.add(news.id)
+                }
+            }
+        }
+        return result
     }
 }

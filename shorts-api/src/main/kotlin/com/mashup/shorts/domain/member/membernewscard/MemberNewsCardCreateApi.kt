@@ -9,15 +9,13 @@ import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.config.aop.Auth
 import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardCreateRequest
-import io.swagger.v3.oas.annotations.Operation
 
 @RequestMapping("/v1/member/news-card")
 @RestController
 class MemberNewsCardCreateApi(
-    private val memberNewsCardCreate: MemberNewsCardCreate
+    private val memberNewsCardCreate: MemberNewsCardCreate,
 ) {
 
-    @Operation(summary = "오늘의 숏스(뉴스카드) 저장", description = "뉴스카드 저장")
     @Auth
     @PostMapping
     fun createMemberNewsCard(@RequestBody memberNewsCardCreateRequest: MemberNewsCardCreateRequest): ApiResponse<Void> {
