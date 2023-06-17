@@ -29,3 +29,6 @@ endif::[]
 [[memberCategory]]
 //include::./memberCategory/index.adoc[]
 - link:./memberCategory/index.html[memberCategory]
+
+[[keyword]]
+- link:./keyword/index.html[keyword]
