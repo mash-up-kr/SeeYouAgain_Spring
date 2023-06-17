@@ -12,6 +12,7 @@ import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.domain.news.NewsRetrieve
 import com.mashup.shorts.domain.news.NewsRetrieveApi
 import com.ninjasquad.springmockk.MockkBean
@@ -42,6 +43,8 @@ class NewsApiRestDocsTest : ApiDocsTestBase() {
             .andDo(
                 document(
                     "뉴스 상세 조회 (웹 뷰)",
+                    RestDocsUtils.getDocumentRequest(),
+                    RestDocsUtils.getDocumentResponse(),
                     pathParameters(
                         RequestDocumentation
                             .parameterWithName("newsId")

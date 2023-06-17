@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
@@ -11,6 +12,8 @@ import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.member.membercategory.MemberCategoryCreate
 import com.mashup.shorts.domain.memberCategory.CategoryCreateBulkRequest
@@ -48,8 +51,10 @@ class MemberCategoryCreateApiTest : ApiDocsTestBase() {
 
         response.andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
-                MockMvcRestDocumentation.document(
+                document(
                     "멤버 관심 카테고리 설정",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
                     requestFields(
                         fieldWithPath("categoryNames").type(JsonFieldType.ARRAY).description("사용자가 선택한 카테고리 리스트 (ex: [POLITICS, ECONOMIC, SOCIETY, CULTURE, WORLD, SCIENCE]")
                     ),

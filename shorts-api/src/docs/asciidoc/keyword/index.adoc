@@ -17,13 +17,13 @@ include::{snippets}/핫 키워드 조회/curl-request.adoc[]
 
 include::{snippets}/핫 키워드 조회/http-request.adoc[]
 
-==== [Response Body]
-
-include::{snippets}/핫 키워드 조회/response-body.adoc[]
-
 ===== [Response Field]
 
 include::{snippets}/핫 키워드 조회/response-fields.adoc[]
+
+==== [Response Body]
+
+include::{snippets}/핫 키워드 조회/response-body.adoc[]
 
 ===== [Response HTTP Example]
 
