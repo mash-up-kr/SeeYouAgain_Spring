@@ -188,6 +188,8 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
             .andDo(
                 document(
                     "뉴스 카드 내 뉴스 조회",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
                     RequestDocumentation.pathParameters(
                         RequestDocumentation
                             .parameterWithName("newsCardId")
