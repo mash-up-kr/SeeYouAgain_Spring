@@ -25,7 +25,7 @@ class MemberNewsCardRetrieveApi(
     fun retrieveNewsCardByMember(
         @RequestParam targetDateTime: LocalDateTime,
         @RequestParam @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
-        @RequestParam @Min(1) @Max(20) size: Int,
+        @RequestParam @Min(1) @Max(10) size: Int,
     ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
         return success(
             OK,
