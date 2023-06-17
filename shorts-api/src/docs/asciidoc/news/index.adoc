@@ -1,0 +1,30 @@
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+
+=== 뉴스 상세 조회 (웹 뷰)
+
+==== [Curl Request]
+
+include::{snippets}/뉴스 상세 조회 (웹 뷰)/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::{snippets}/뉴스 상세 조회 (웹 뷰)/http-request.adoc[]
+
+==== [Request Path Parameter]
+
+include::{snippets}/뉴스 상세 조회 (웹 뷰)/path-parameters.adoc[]
+
+===== [Response Field]
+
+include::{snippets}/뉴스 상세 조회 (웹 뷰)/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::{snippets}/뉴스 상세 조회 (웹 뷰)/http-response.adoc[]
