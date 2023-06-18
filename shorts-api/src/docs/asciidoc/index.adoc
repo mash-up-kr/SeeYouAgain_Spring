@@ -18,6 +18,9 @@ endif::[]
 //include::./newscard/index.adoc[]
 - link:./newscard/index.html[newscard]
 
+[[news]]
+- link:./news/index.html[news]
+
 [[membernewscard]]
 //include::./membernewscard/index.adoc[]
 - link:./membernewscard/index.html[membernewscard]
