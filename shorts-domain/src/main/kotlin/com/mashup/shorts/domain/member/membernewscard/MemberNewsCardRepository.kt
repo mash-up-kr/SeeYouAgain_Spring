@@ -11,4 +11,6 @@ interface MemberNewsCardRepository : JpaRepository<MemberNewsCard, Long> {
     fun findAllByMember(member: Member): List<MemberNewsCard>
     fun deleteByMemberAndNewsCard(member: Member, newsCard: NewsCard)
     fun deleteByMember(member: Member)
+
+    fun countAllByMember(member: Member): Int
 }

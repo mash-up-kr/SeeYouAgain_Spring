@@ -7,4 +7,6 @@ import com.mashup.shorts.domain.member.Member
 @Repository
 interface MemberCategoryRepository : JpaRepository<MemberCategory, Long> {
     fun findByMember(member: Member): List<MemberCategory>
+
+    fun deleteAllByMember(member: Member)
 }
