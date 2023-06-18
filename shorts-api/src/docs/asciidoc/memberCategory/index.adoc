@@ -7,7 +7,7 @@ endif::[]
 :toc: left
 :toclevels: 2
 
-=== 뉴스 카드 내 뉴스 조회
+=== 멤버 관심 카테고리 설정
 
 ==== [Curl Request]
 
@@ -36,3 +36,34 @@ include::{snippets}/멤버 관심 카테고리 설정/response-body.adoc[]
 ===== [Curl Request HTTP Example]
 
 include::{snippets}/멤버 관심 카테고리 설정/curl-request.adoc[]
+
+
+=== 멤버 관심 카테고리 수정
+
+==== [Curl Request]
+
+include::{snippets}/멤버 관심 카테고리 수정/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::{snippets}/멤버 관심 카테고리 수정/http-request.adoc[]
+
+==== [Request Filed]
+
+include::{snippets}/멤버 관심 카테고리 수정/request-fields.adoc[]
+
+===== [Response Field]
+
+include::{snippets}/멤버 관심 카테고리 수정/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::{snippets}/멤버 관심 카테고리 수정/http-response.adoc[]
+
+===== [Response Body]
+
+include::{snippets}/멤버 관심 카테고리 수정/response-body.adoc[]
+
+===== [Curl Request HTTP Example]
+
+include::{snippets}/멤버 관심 카테고리 수정/curl-request.adoc[]

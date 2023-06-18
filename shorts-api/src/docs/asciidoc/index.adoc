@@ -35,3 +35,6 @@ endif::[]
 
 [[keyword]]
 - link:./keyword/index.html[keyword]
+
+[[memberInfo]]
+- link:./memberInfo/index.html[memberInfo]

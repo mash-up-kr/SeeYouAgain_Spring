@@ -1,16 +1,18 @@
+server:
+  port: 8081
 spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
     baseline-version: 1
-    url: jdbc:mysql://localhost:3306/shorts
-    user: root
-    password: 112233
+    url: jdbc:mysql://shorts-db.cuwsqttvx0ps.ap-northeast-2.rds.amazonaws.com:3306/dev-shorts-master
+    user: admin
+    password: shorts**
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/shorts?Unicode=true&characterEncoding=utf8
-    username: root
-    password: 112233
+    url: jdbc:mysql://shorts-db.cuwsqttvx0ps.ap-northeast-2.rds.amazonaws.com:3306/dev-shorts-master?Unicode=true&characterEncoding=utf8
+    username: admin
+    password: shorts**
   jpa:
     open-in-view: false
     hibernate:

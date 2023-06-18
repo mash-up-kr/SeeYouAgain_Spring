@@ -8,5 +8,9 @@ import com.mashup.shorts.domain.news.News
 @Repository
 interface MemberNewsRepository : JpaRepository<MemberNews, Long> {
 
+    fun deleteAllByMemberAndNewsIn(member: Member, newsList: List<News>)
+
     fun existsByMemberAndNews(member: Member, news: News): Boolean
+
+    fun countAllMyMember(member: Member): Int
 }
