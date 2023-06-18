@@ -5,18 +5,29 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
+import com.mashup.shorts.domain.member.MemberRepository
+import com.mashup.shorts.domain.member.membernews.MemberNewsRepository
 
 @Service
 @Transactional(readOnly = true)
 class NewsRetrieve(
+    private val memberRepository: MemberRepository,
     private val newsRepository: NewsRepository,
+    private val memberNewsRepository: MemberNewsRepository
 ) {
-    fun retrieveNewsLinkByNewsId(newsId: Long): Map<String, String> {
+
+    fun retrieveNews(memberUniqueId: String, newsId: Long): NewsRetrieveInfo {
+        val member = memberRepository.findByUniqueId(memberUniqueId) ?: throw ShortsBaseException.from(
+            shortsErrorCode = E404_NOT_FOUND,
+            resultErrorMessage = "${memberUniqueId}에 해당하는 유저가 존재하지 않습니다."
+        )
         val news = newsRepository.findByIdOrNull(newsId) ?: throw ShortsBaseException.from(
             shortsErrorCode = E404_NOT_FOUND,
             resultErrorMessage = "뉴스 링크를 가져오는 중 요청한 NewsId : ${newsId}를 찾을 수 없습니다."
         )
-        return mapOf("newsLink" to news.newsLink)
+        if (memberNewsRepository.existsByMemberAndNews(member, news))
+            return NewsRetrieveInfo(newsLink = news.newsLink, isSaved = true)
+        return NewsRetrieveInfo(newsLink = news.newsLink, isSaved = false)
     }
 
 }
