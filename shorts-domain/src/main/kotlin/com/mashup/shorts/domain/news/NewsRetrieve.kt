@@ -25,8 +25,9 @@ class NewsRetrieve(
             shortsErrorCode = E404_NOT_FOUND,
             resultErrorMessage = "뉴스 링크를 가져오는 중 요청한 NewsId : ${newsId}를 찾을 수 없습니다."
         )
-        if (memberNewsRepository.existsByMemberAndNews(member, news))
+        if (memberNewsRepository.existsByMemberAndNews(member, news)) {
             return NewsRetrieveInfo(newsLink = news.newsLink, isSaved = true)
+        }
         return NewsRetrieveInfo(newsLink = news.newsLink, isSaved = false)
     }
 
