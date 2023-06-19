@@ -25,7 +25,6 @@ class MemberNewsCardRetrieveApi(
     fun retrieveNewsCardByMember(
         @RequestParam targetDateTime: LocalDateTime,
         @RequestParam(
-            value = "cursorId",
             defaultValue = "0",
             required = false
         ) @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
