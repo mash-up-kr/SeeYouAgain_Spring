@@ -9,6 +9,8 @@ endif::[]
 
 === 멤버 관심 카테고리 설정
 
+image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/82651c72-be9d-4ab8-9875-827af70f831d[alt=Flower,width=240,height=180]
+
 ==== [Curl Request]
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 설정/curl-request.adoc[]
@@ -40,6 +42,8 @@ include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 설정/
 
 === 멤버 관심 카테고리 수정
 
+image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/bf1be1fc-d40a-43fd-9327-845dc80f369b[alt=Flower,width=240,height=180]
+
 ==== [Curl Request]
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 수정/curl-request.adoc[]
@@ -67,3 +71,27 @@ include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 수정/
 ===== [Curl Request HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 수정/curl-request.adoc[]
+
+=== 숏스 모두 불러오기(메인화면)
+
+image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/850768df-a965-41c1-9a5b-d0d4a9103e8f[alt=Flower,width=240,height=180]
+
+==== [Curl Request]
+
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/http-request.adoc[]
+
+==== [Request Query Parameters]
+
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/query-parameters.adoc[]
+
+===== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/http-response.adoc[]

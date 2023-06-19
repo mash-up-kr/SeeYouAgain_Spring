@@ -13,26 +13,15 @@ gifticon-storm
 [[Option]]
 == link:../index.html[> 이전으로]
 
-[[common]]
+== Common
 include::./src/docs/asciidoc/common/api-common-docs.adoc[]
 
-[[newcard]]
-include::./src/docs/asciidoc/newscard/index.adoc[]
+== Home
+include::./src/docs/asciidoc/home/index.adoc[]
 
-[[news]]
-include::./src/docs/asciidoc/news/index.adoc[]
+== Hot
+include::./src/docs/asciidoc/hot/index.adoc[]
 
-[[membernewscard]]
-include::./src/docs/asciidoc/membernewscard/index.adoc[]
+== My
+include::./src/docs/asciidoc/my/index.adoc[]
 
-[[memberNews]]
-include::./src/docs/asciidoc/memberNews/index.adoc[]
-
-[[memberCategory]]
-include::./src/docs/asciidoc/memberCategory/index.adoc[]
-
-[[keyword]]
-include::./src/docs/asciidoc/keyword/index.adoc[]
-
-[[memberInfo]]
-include::./src/docs/asciidoc/memberInfo/index.adoc[]

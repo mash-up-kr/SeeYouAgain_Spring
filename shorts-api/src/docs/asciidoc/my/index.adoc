@@ -1,0 +1,160 @@
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+
+=== 내 정보 조회
+
+image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/9d8a8d71-4575-4bcf-a998-dff040e931f3[alt=Flower,width=240,height=180]
+
+===== [Curl Request]
+
+include::../../../../../shorts-api/{snippets}/내 정보 조회/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/내 정보 조회/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/내 정보 조회/request-headers.adoc[]
+
+===== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/내 정보 조회/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/내 정보 조회/http-response.adoc[]
+
+===== [Response Body]
+
+include::../../../../../shorts-api/{snippets}/내 정보 조회/response-body.adoc[]
+
+===== [Curl Request HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/내 정보 조회/curl-request.adoc[]
+
+---
+
+=== 오래 간직할 숏스
+
+image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/368fa0a2-93e2-454d-b3f6-e513ef264fd7[alt=Flower,width=240,height=180]
+
+저장 버튼을 누를 때 사용할 API
+
+==== [Curl Request]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/http-request.adoc[]
+
+==== [Request Filed]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/request-fields.adoc[]
+
+===== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/http-response.adoc[]
+
+===== [Curl Request HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
+
+---
+
+=== 숏스 다 읽었어요
+
+image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/bc47422a-74a0-43ae-af2d-d9dcde2f0d37[alt=Flower,width=240,height=180]
+
+==== [Curl Request]
+
+include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/http-request.adoc[]
+
+===== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/http-response.adoc[]
+
+---
+
+=== 오늘의 숏스 삭제
+
+image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/adbb6187-7d53-4d66-95f8-71c8053a1f62[alt=Flower,width=240,height=180]
+
+==== [Curl Request]
+
+include::../../../../../shorts-api/{snippets}/오늘의 숏스 단일 삭제/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/오늘의 숏스 단일 삭제/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/오늘의 숏스 단일 삭제/request-headers.adoc[]
+
+==== [Request Path Parameters]
+
+include::../../../../../shorts-api/{snippets}/오늘의 숏스 단일 삭제/path-parameters.adoc[]
+
+===== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/오늘의 숏스 단일 삭제/response-fields.adoc[]
+
+===== [Response Body]
+
+include::../../../../../shorts-api/{snippets}/오늘의 숏스 단일 삭제/response-body.adoc[]
+
+===== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/오늘의 숏스 단일 삭제/http-response.adoc[]
+
+---
+
+=== 뉴스 상세 조회 (웹 뷰)
+
+image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/368fa0a2-93e2-454d-b3f6-e513ef264fd7[alt=Flower,width=240,height=180]
+
+==== [Curl Request]
+
+include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/request-headers.adoc[]
+
+==== [Request Path Parameter]
+
+include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/path-parameters.adoc[]
+
+===== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/response-fields.adoc[]
+
+===== [Response Body]
+
+include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/response-body.adoc[]
+
+===== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/http-response.adoc[]
+
+---
