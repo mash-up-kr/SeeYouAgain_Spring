@@ -90,6 +90,8 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
             .andDo(
                 document(
                     "오늘의 숏스 단일 삭제",
+                    RestDocsUtils.getDocumentRequest(),
+                    RestDocsUtils.getDocumentResponse(),
                     requestHeaders(
                         HeaderDocumentation
                             .headerWithName("Authorization")
