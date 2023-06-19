@@ -38,14 +38,15 @@ class NewsCardIntegrationTest(
         // ready
         val url = "/v1/news-card/{newsCardId}"
         val newsCardId = 50L
-        val cursorId = 1L
+        val cursorWrittenDateTime = "2023.06.15. 오후 3:38"
+
         val size = 10
         val pivot = "ASC"
 
         // execute
         mockMvc.perform(
             MockMvcRequestBuilders.get(url, newsCardId)
-                .param("cursorId", cursorId.toString())
+                .param("cursorWrittenDateTime", cursorWrittenDateTime)
                 .param("size", size.toString())
                 .param("pivot", pivot)
                 .contentType(APPLICATION_JSON)
