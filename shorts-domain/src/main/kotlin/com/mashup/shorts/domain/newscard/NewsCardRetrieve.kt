@@ -22,13 +22,6 @@ class NewsCardRetrieve(
         size: Int,
         pivot: Pivots,
     ): List<News> {
-
-        if (Pivots.valueOf(pivot.name) !in Pivots.values()) {
-            throw ShortsBaseException.from(
-                shortsErrorCode = ShortsErrorCode.E400_BAD_REQUEST,
-                resultErrorMessage = "잘못된 정렬 기준인 ${pivot}를 요청했습니다."
-            )
-        }
         val newsCard = newsCardRepository.findByIdOrNull(newsCardId)
             ?: throw ShortsBaseException.from(
                 shortsErrorCode = E404_NOT_FOUND,
