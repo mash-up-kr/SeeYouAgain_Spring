@@ -13,7 +13,7 @@ interface NewsNewsCardNativeQueryRepository : JpaRepository<News, Long> {
         "SELECT * " +
             "FROM news " +
             "WHERE news.id > :cursorId and news.id in :newsCardMultipleNews " +
-            "ORDER BY news.id ASC " +
+            "ORDER BY written_date_time ASC, news.id ASC " +
             "LIMIT :size",
         nativeQuery = true
     )
@@ -27,7 +27,7 @@ interface NewsNewsCardNativeQueryRepository : JpaRepository<News, Long> {
         "SELECT * " +
             "FROM news " +
             "WHERE news.id > :cursorId and news.id in :newsCardMultipleNews " +
-            "ORDER BY news.id DESC " +
+            "ORDER BY written_date_time DESC, news.id DESC " +
             "LIMIT :size",
         nativeQuery = true
     )
