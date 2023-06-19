@@ -16,6 +16,7 @@ import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardClear
 import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardDeleteApi
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
@@ -53,6 +54,8 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
             .andDo(
                 document(
                     "뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)",
+                    RestDocsUtils.getDocumentRequest(),
+                    RestDocsUtils.getDocumentResponse(),
                     requestFields(
                         fieldWithPath("memberId").description("멤버 id"),
                         fieldWithPath("newsCardId").description("뉴스카드 id"),

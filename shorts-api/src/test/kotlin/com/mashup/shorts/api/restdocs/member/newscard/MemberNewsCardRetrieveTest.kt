@@ -13,6 +13,7 @@ import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.config.aop.AuthContext
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
@@ -72,6 +73,8 @@ class MemberNewsCardRetrieveTest : ApiDocsTestBase() {
             .andDo(
                 MockMvcRestDocumentation.document(
                     "숏스 모두 불러오기",
+                    RestDocsUtils.getDocumentRequest(),
+                    RestDocsUtils.getDocumentResponse(),
                     HeaderDocumentation.requestHeaders(
                         HeaderDocumentation
                             .headerWithName("Authorization")
