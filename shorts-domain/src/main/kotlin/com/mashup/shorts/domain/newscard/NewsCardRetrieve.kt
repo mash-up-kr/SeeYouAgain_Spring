@@ -4,21 +4,20 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
 import com.mashup.shorts.domain.news.News
-import com.mashup.shorts.domain.news.newsnewscard.NewsNewsCardNativeQueryRepository
+import com.mashup.shorts.domain.news.newsnewscard.NewsNewsCardQueryDSLRepository
 
 @Service
 @Transactional(readOnly = true)
 class NewsCardRetrieve(
     private val newsCardRepository: NewsCardRepository,
-    private val newsNewsCardNativeQueryRepository: NewsNewsCardNativeQueryRepository,
+    private val newsNewsCardQueryDSLRepository: NewsNewsCardQueryDSLRepository,
 ) {
 
     fun retrieveDetailNewsInNewsCard(
         newsCardId: Long,
-        cursorId: Long,
+        cursorWrittenDateTime: String,
         size: Int,
         pivot: Pivots,
     ): List<News> {
@@ -29,18 +28,11 @@ class NewsCardRetrieve(
             )
         val newsIdBundle = newsCard.multipleNews.split(", ").map { it.toLong() }
 
-        if (pivot.name == Pivots.ASC.name) {
-            return newsNewsCardNativeQueryRepository.loadNewsBundleByCursorAndNewsCardMultipleNewsASC(
-                cursorId,
-                newsIdBundle,
-                size
-            )
-        }
-
-        return newsNewsCardNativeQueryRepository.loadNewsBundleByCursorAndNewsCardMultipleNewsDESC(
-            cursorId,
+        return newsNewsCardQueryDSLRepository.loadNewsBundleByCursorAndNewsCardMultipleNews(
+            cursorWrittenDateTime,
             newsIdBundle,
-            size
+            size,
+            pivot
         )
     }
 }

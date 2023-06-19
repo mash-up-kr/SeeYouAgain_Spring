@@ -20,7 +20,7 @@ interface NewsNewsCardNativeQueryRepository : JpaRepository<News, Long> {
     fun loadNewsBundleByCursorAndNewsCardMultipleNewsASC(
         @Param("cursorId") cursorId: Long,
         @Param("newsCardMultipleNews") newsCardMultipleNews: List<Long>,
-        @Param("size") size: Int
+        @Param("size") size: Int,
     ): List<News>
 
     @Query(
@@ -34,6 +34,6 @@ interface NewsNewsCardNativeQueryRepository : JpaRepository<News, Long> {
     fun loadNewsBundleByCursorAndNewsCardMultipleNewsDESC(
         @Param("cursorId") cursorId: Long,
         @Param("newsCardMultipleNews") newsCardMultipleNews: List<Long>,
-        @Param("size") size: Int
+        @Param("size") size: Int,
     ): List<News>
 }

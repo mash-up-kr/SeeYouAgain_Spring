@@ -24,11 +24,7 @@ class NewsCardApi(
     @GetMapping("/{newsCardId}")
     fun retrieveDetailNewsInNewsCard(
         @PathVariable newsCardId: Long,
-        @RequestParam(
-            value = "cursorId",
-            defaultValue = "0",
-            required = false
-        ) @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
+        @RequestParam cursorWrittenDateTime: String,
         @RequestParam(value = "size", required = true) @Min(1) @Max(10) size: Int,
         @RequestParam pivot: Pivots,
     ): ApiResponse<List<DetailNewsCardResponse>> {
@@ -37,7 +33,7 @@ class NewsCardApi(
             persistenceToResponseForm(
                 newsCardRetrieve.retrieveDetailNewsInNewsCard(
                     newsCardId = newsCardId,
-                    cursorId = cursorId,
+                    cursorWrittenDateTime = cursorWrittenDateTime,
                     size = size,
                     pivot = pivot
                 )
