@@ -29,7 +29,7 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
 
     @Test
     fun 뉴스카드_내_뉴스조회() {
-        val cursorId = 0L
+        val cursorWrittenDateTime = "2023.06.15. 오후 3:38"
         val size = 10
         val pivot = "ASC"
         every { newsCardRetrieve.retrieveDetailNewsInNewsCard(any(), any(), any(), any()) } returns (
@@ -50,7 +50,7 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .get("/v1/news-card/{newsCardId}", 1L)
-                .param("cursorId", cursorId.toString())
+                .param("cursorWrittenDateTime", cursorWrittenDateTime)
                 .param("size", size.toString())
                 .param("pivot", pivot)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -65,12 +65,12 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
                     RequestDocumentation.pathParameters(
                         RequestDocumentation
                             .parameterWithName("newsCardId")
-                            .description("뉴스 카드 id"),
+                            .description("조회할 뉴스 카드의 Id"),
                     ),
                     RequestDocumentation.queryParameters(
                         RequestDocumentation
-                            .parameterWithName("cursorId")
-                            .description("커서 아이디(기본 값은 0으로 지정됩니다.)"),
+                            .parameterWithName("cursorWrittenDateTime")
+                            .description("커서 지정 값 ex) 2023.06.15. 오후 3:38 와 같이 입력해 주시고, 첫 페이지 요청 시 빈 문자열을 넣어주세요"),
                         RequestDocumentation
                             .parameterWithName("size")
                             .description("<필수값> 페이징 사이즈(최대 10까지 허용합니다.)"),
