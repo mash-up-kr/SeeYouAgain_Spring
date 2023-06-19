@@ -11,23 +11,23 @@ endif::[]
 
 ==== [Curl Request]
 
-include::{snippets}/숏스 모두 불러오기/curl-request.adoc[]
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/curl-request.adoc[]
 
 ==== [HTTP Request]
 
-include::{snippets}/숏스 모두 불러오기/http-request.adoc[]
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/http-request.adoc[]
 
 ==== [Request Query Parameters]
 
-include::{snippets}/숏스 모두 불러오기/query-parameters.adoc[]
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/query-parameters.adoc[]
 
 ===== [Response Field]
 
-include::{snippets}/숏스 모두 불러오기/response-fields.adoc[]
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/response-fields.adoc[]
 
 ===== [Response HTTP Example]
 
-include::{snippets}/숏스 모두 불러오기/http-response.adoc[]
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/http-response.adoc[]
 
 ---
 
@@ -35,31 +35,31 @@ include::{snippets}/숏스 모두 불러오기/http-response.adoc[]
 
 ==== [Curl Request]
 
-include::{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
 
 ==== [HTTP Request]
 
-include::{snippets}/오래 간직할 뉴스 추가/http-request.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/http-request.adoc[]
 
 ==== [Request Filed]
 
-include::{snippets}/오래 간직할 뉴스 추가/request-fields.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/request-fields.adoc[]
 
 ===== [Response Field]
 
-include::{snippets}/오래 간직할 뉴스 추가/response-fields.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/response-fields.adoc[]
 
 ===== [Response HTTP Example]
 
-include::{snippets}/오래 간직할 뉴스 추가/http-response.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/http-response.adoc[]
 
 ===== [Response Body]
 
-include::{snippets}/오래 간직할 뉴스 추가/response-body.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/response-body.adoc[]
 
 ===== [Curl Request HTTP Example]
 
-include::{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
 
 ---
 
@@ -67,32 +67,32 @@ include::{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
 
 ==== [Curl Request]
 
-include::{snippets}/오래 간직할 뉴스 삭제/curl-request.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/curl-request.adoc[]
 
 ==== [HTTP Request]
 
-include::{snippets}/오래 간직할 뉴스 삭제/http-request.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/http-request.adoc[]
 
 ==== [Request Header]
 
-include::{snippets}/오래 간직할 뉴스 삭제/request-headers.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/request-headers.adoc[]
 
 ==== [Request Field]
 
-include::{snippets}/오래 간직할 뉴스 삭제/request-fields.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/request-fields.adoc[]
 
 ===== [Response Field]
 
-include::{snippets}/오래 간직할 뉴스 삭제/response-fields.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/response-fields.adoc[]
 
 ===== [Response HTTP Example]
 
-include::{snippets}/오래 간직할 뉴스 삭제/http-response.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/http-response.adoc[]
 
 ===== [Response Body]
 
-include::{snippets}/오래 간직할 뉴스 삭제/response-body.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/response-body.adoc[]
 
 ===== [Curl Request HTTP Example]
 
-include::{snippets}/오래 간직할 뉴스 삭제/curl-request.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/curl-request.adoc[]

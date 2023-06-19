@@ -124,4 +124,4 @@
 
 === 오류 코드
 
-include::./src/docs/asciidoc/common/error.adoc[]
+include::./error.adoc[]

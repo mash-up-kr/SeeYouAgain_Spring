@@ -1,40 +1,38 @@
-ifndef::snippets[]
-:snippets: build/generated-snippets
-endif::[]
+= Shorts 서버 API
+gifticon-storm
+:toc: left
+:toclevels: 3
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
-:toc: left
-:toclevels: 2
+:sectlinks:
+:hardbreaks:
+
+[[introduction]]
 
 [[Option]]
 == link:../index.html[> 이전으로]
 
 [[common]]
-//include::./common/api-common-docs.adoc[]
-- link:./common/api-common-docs.html[How To Use]
+include::./src/docs/asciidoc/common/api-common-docs.adoc[]
 
 [[newcard]]
-//include::./newscard/index.adoc[]
-- link:./newscard/index.html[newscard]
+include::./src/docs/asciidoc/newscard/index.adoc[]
 
 [[news]]
-- link:./news/index.html[news]
+include::./src/docs/asciidoc/news/index.adoc[]
 
 [[membernewscard]]
-//include::./membernewscard/index.adoc[]
-- link:./membernewscard/index.html[membernewscard]
+include::./src/docs/asciidoc/membernewscard/index.adoc[]
 
 [[memberNews]]
-//include::./memberNews/index.adoc[]
-- link:./memberNews/index.html[memberNews]
+include::./src/docs/asciidoc/memberNews/index.adoc[]
 
 [[memberCategory]]
-//include::./memberCategory/index.adoc[]
-- link:./memberCategory/index.html[memberCategory]
+include::./src/docs/asciidoc/memberCategory/index.adoc[]
 
 [[keyword]]
-- link:./keyword/index.html[keyword]
+include::./src/docs/asciidoc/keyword/index.adoc[]
 
 [[memberInfo]]
-- link:./memberInfo/index.html[memberInfo]
+include::./src/docs/asciidoc/memberInfo/index.adoc[]

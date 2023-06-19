@@ -11,28 +11,28 @@ endif::[]
 
 ==== [Curl Request]
 
-include::{snippets}/뉴스 카드 내 뉴스 조회/curl-request.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/curl-request.adoc[]
 
 ==== [HTTP Request]
 
-include::{snippets}/뉴스 카드 내 뉴스 조회/http-request.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/http-request.adoc[]
 
 ==== [Request Query Parameters]
 
-include::{snippets}/뉴스 카드 내 뉴스 조회/query-parameters.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/query-parameters.adoc[]
 
 ==== [Request Path Parameters]
 
-include::{snippets}/뉴스 카드 내 뉴스 조회/path-parameters.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/path-parameters.adoc[]
 
 ===== [Response Field]
 
-include::{snippets}/뉴스 카드 내 뉴스 조회/response-fields.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/response-fields.adoc[]
 
 ===== [Response Body]
 
-include::{snippets}/뉴스 카드 내 뉴스 조회/response-body.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/response-body.adoc[]
 
 ===== [Response HTTP Example]
 
-include::{snippets}/뉴스 카드 내 뉴스 조회/http-response.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/http-response.adoc[]
