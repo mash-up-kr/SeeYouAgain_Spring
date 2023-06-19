@@ -31,7 +31,7 @@ class MemberInfoRetrieve(
             joinPeriod = (ChronoUnit.DAYS.between(LocalDate.from(member.createdAt), now) + 1).toInt(),
             totalShortsThisMonth = getTotalShortsThisMonth(now, member),
             todayShorts = memberNewsCardRepository.countAllByMember(member),
-            savedShorts = memberNewsRepository.countAllMyMember(member)
+            savedShorts = memberNewsRepository.countAllByMember(member)
         )
     }
 
