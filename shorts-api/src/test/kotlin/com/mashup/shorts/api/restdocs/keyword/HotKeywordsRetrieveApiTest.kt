@@ -20,14 +20,14 @@ import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.keyword.HotKeywordRetrieve
-import com.mashup.shorts.domain.keyword.HotKeywordsApi
+import com.mashup.shorts.domain.keyword.HotKeywordsRetrieveApi
 import com.mashup.shorts.domain.keyword.dtomapper.RetrieveDetailHotKeyWordResponseMapper
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
-@WebMvcTest(HotKeywordsApi::class)
-class HotKeywordsApiTest : ApiDocsTestBase() {
+@WebMvcTest(HotKeywordsRetrieveApi::class)
+class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
 
     @MockkBean
     private lateinit var hotKeywordRetrieve: HotKeywordRetrieve

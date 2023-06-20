@@ -15,7 +15,7 @@ import jakarta.validation.constraints.Min
 
 @RequestMapping("/v1/hot-keywords")
 @RestController
-class HotKeywordsApi(
+class HotKeywordsRetrieveApi(
     private val hotKeywordRetrieve: HotKeywordRetrieve,
 ) {
 
