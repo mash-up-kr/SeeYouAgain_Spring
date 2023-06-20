@@ -4,11 +4,11 @@ import com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsC
 
 interface NewsCardQueryDSLRepository {
 
-    fun findNewsCardsByMemberCategoryAndCursorId(
-        filteredNewsIds: List<String>,
+    fun findNewsCardsByMemberFilteredNewsIdsAndCursorId(
+        filteredNewsIds: List<Long>,
         cursorId: Long,
-        size: Int,
         categories: List<Long>,
+        size: Int,
     ): List<RetrieveAllNewsCardResponseMapper>
 
 }
