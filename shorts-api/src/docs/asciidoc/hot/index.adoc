@@ -34,3 +34,29 @@ include::../../../../../shorts-api/{snippets}/핫 키워드 조회/response-body
 ===== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/핫 키워드 조회/http-response.adoc[]
+
+=== 핫 키워드로 숏스 조회
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/page-header.adoc[]
+
+==== [Curl Request]
+
+include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/http-request.adoc[]
+
+===== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/response-fields.adoc[]
+
+==== [Response Body]
+
+include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/response-body.adoc[]
+
+===== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/http-response.adoc[]
