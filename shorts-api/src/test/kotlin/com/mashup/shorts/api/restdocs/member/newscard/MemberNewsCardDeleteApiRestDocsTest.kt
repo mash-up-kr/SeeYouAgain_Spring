@@ -8,18 +8,18 @@ import org.springframework.restdocs.headers.HeaderDocumentation
 import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
+import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.JsonFieldType.NUMBER
-import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
-import org.springframework.restdocs.request.RequestDocumentation
-import org.springframework.restdocs.request.RequestDocumentation.pathParameters
+import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils
-import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardClear
+import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardDelete
 import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardDeleteApi
+import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardBulkDeleteRequest
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -28,13 +28,13 @@ import io.mockk.every
 class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
 
     @MockkBean
-    private lateinit var memberNewsCardClear: MemberNewsCardClear
+    private lateinit var memberNewsCardDelete: MemberNewsCardDelete
 
     @Test
     fun 뉴스카드_다_읽었어요() {
-        every { memberNewsCardClear.clearMemberNewsCard(any(), any()) } returns (
+        every { memberNewsCardDelete.clearMemberNewsCard(any(), any()) } returns (
             mapOf("shortsCount" to 1234)
-        )
+            )
 
         // ready
         val url = "/v1/member-news-card"
@@ -61,7 +61,7 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
                         fieldWithPath("memberId").description("멤버 id"),
                         fieldWithPath("newsCardId").description("뉴스카드 id"),
                     ),
-                    PayloadDocumentation.responseFields(
+                    responseFields(
                         fieldWithPath("status").type(NUMBER).description("API 성공 여부"),
                         fieldWithPath("result.shortsCount").type(NUMBER).description("읽은 숏스 갯수"),
                     )
@@ -70,19 +70,20 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
     }
 
     @Test
-    fun 뉴스카드_삭제() {
+    fun `오늘의 숏스 삭제`() {
         // ready
-        val url = "/v1/member-news-card/{newsCardId}"
-        val newsCardId = 1L
+        val url = "/v1/member-news-card"
         val uniqueKey = "uniqueKey"
         val headerName = "Authorization"
+        val requestBody = MemberNewsCardBulkDeleteRequest(listOf(1L, 2L, 3L))
 
-        every { memberNewsCardClear.deleteMemberNewsCard(any(), any()) } returns (any())
+        every { memberNewsCardDelete.bulkDeleteMemberNewsCard(any(), any()) } returns (any())
 
         // execute
         val response = mockMvc.perform(
-            RestDocumentationRequestBuilders.delete(url, newsCardId)
+            RestDocumentationRequestBuilders.post(url)
                 .header(headerName, uniqueKey)
+                .content(objectMapper.writeValueAsString(requestBody))
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
         )
@@ -90,7 +91,7 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
         response.andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
                 document(
-                    "오늘의 숏스 단일 삭제",
+                    "오늘의 숏스 삭제",
                     RestDocsUtils.getDocumentRequest(),
                     RestDocsUtils.getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
@@ -99,14 +100,12 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
                             .headerWithName("Authorization")
                             .description("사용자 식별자 id")
                     ),
-                    pathParameters(
-                        RequestDocumentation
-                            .parameterWithName("newsCardId")
-                            .description("뉴스 카드 id"),
+                    requestFields(
+                        fieldWithPath("newsCardIds").type(JsonFieldType.ARRAY).description("삭제할 오늘의 숏스(뉴스카드) id 리스트")
                     ),
-                    PayloadDocumentation.responseFields(
-                        fieldWithPath("status").type(NUMBER).description("API 성공 여부"),
-                    )
+                    responseFields(
+                        fieldWithPath("status").type(NUMBER).description("API HTTP Status 값")
+                    ),
                 )
             )
     }

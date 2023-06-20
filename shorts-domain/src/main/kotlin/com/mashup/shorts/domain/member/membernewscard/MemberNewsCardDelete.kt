@@ -13,7 +13,7 @@ import com.mashup.shorts.domain.newscard.NewsCardRepository
 
 @Service
 @Transactional
-class MemberNewsCardClear(
+class MemberNewsCardDelete(
     private val memberNewsCardRepository: MemberNewsCardRepository,
     private val memberRepository: MemberRepository,
     private val newsCardRepository: NewsCardRepository,
@@ -25,10 +25,7 @@ class MemberNewsCardClear(
             shortsErrorCode = E404_NOT_FOUND,
             resultErrorMessage = "${memberId}에 해당하는 유저가 존재하지 않습니다."
         )
-
-
         val today = LocalDate.now()
-
         val memberShortsCount = memberShortsCountRepository.findByMemberAndTargetTime(
             member = member,
             targetTime = today
@@ -48,17 +45,18 @@ class MemberNewsCardClear(
         return mapOf("shortsCount" to newMemberShortsCount.count)
     }
 
-    fun deleteMemberNewsCard(uniqueId: String, newsCardId: Long) {
+    fun bulkDeleteMemberNewsCard(uniqueId: String, newsCardIds: List<Long>) {
         val member = memberRepository.findByUniqueId(uniqueId) ?: throw ShortsBaseException.from(
             shortsErrorCode = E404_NOT_FOUND,
             resultErrorMessage = "${uniqueId}에 해당하는 유저가 존재하지 않습니다."
         )
 
-        val newsCard = newsCardRepository.findByIdOrNull(newsCardId) ?: throw ShortsBaseException.from(
-            shortsErrorCode = E404_NOT_FOUND,
-            resultErrorMessage = "${newsCardId}에 해당하는 뉴스카드가 존재하지 않습니다."
-        )
-
-        memberNewsCardRepository.deleteByMemberAndNewsCard(member, newsCard)
+        for (newsCardId in newsCardIds) {
+            val newsCard = newsCardRepository.findByIdOrNull(newsCardId) ?: throw ShortsBaseException.from(
+                shortsErrorCode = E404_NOT_FOUND,
+                resultErrorMessage = "${newsCardIds}에 해당하는 뉴스카드가 존재하지 않습니다."
+            )
+            memberNewsCardRepository.deleteByMemberAndNewsCard(member, newsCard)
+        }
     }
 }
