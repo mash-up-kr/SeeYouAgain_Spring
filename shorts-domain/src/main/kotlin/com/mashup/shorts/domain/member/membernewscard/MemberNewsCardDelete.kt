@@ -50,13 +50,7 @@ class MemberNewsCardDelete(
             shortsErrorCode = E404_NOT_FOUND,
             resultErrorMessage = "${uniqueId}에 해당하는 유저가 존재하지 않습니다."
         )
-
-        for (newsCardId in newsCardIds) {
-            val newsCard = newsCardRepository.findByIdOrNull(newsCardId) ?: throw ShortsBaseException.from(
-                shortsErrorCode = E404_NOT_FOUND,
-                resultErrorMessage = "${newsCardIds}에 해당하는 뉴스카드가 존재하지 않습니다."
-            )
-            memberNewsCardRepository.deleteByMemberAndNewsCard(member, newsCard)
-        }
+        val newsCards = newsCardRepository.findAllById(newsCardIds)
+        memberNewsCardRepository.deleteAllByMemberAndNewsCardIn(member, newsCards)
     }
 }
