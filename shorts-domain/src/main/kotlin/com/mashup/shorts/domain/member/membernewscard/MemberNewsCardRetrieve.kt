@@ -8,17 +8,17 @@ import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.member.MemberRepository
 import com.mashup.shorts.domain.member.membercategory.MemberCategoryRepository
+import com.mashup.shorts.domain.member.membernews.MemberNewsRepository
 import com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsCardResponseMapper
 import com.mashup.shorts.domain.news.NewsRepository
 import com.mashup.shorts.domain.newscard.NewsCardQueryDSLRepository
-import com.mashup.shorts.domain.newscard.NewsCardRepository
 
 @Service
 @Transactional(readOnly = true)
 class MemberNewsCardRetrieve(
     private val memberRepository: MemberRepository,
     private val memberCategoryRepository: MemberCategoryRepository,
-    private val memberCardNewsRepository: MemberNewsCardRepository,
+    private val memberNewsRepository: MemberNewsRepository,
     private val memberNewsCardQueryDSLRepository: NewsCardQueryDSLRepository,
     private val newsRepository: NewsRepository,
 ) {
@@ -37,6 +37,8 @@ class MemberNewsCardRetrieve(
         val memberCategories = memberCategoryRepository.findByMember(member)
         val filteredNewsIds = filterAlreadySavedNews(member)
 
+        println("filteredNewsIds = ${filteredNewsIds}")
+
         return memberNewsCardQueryDSLRepository.findNewsCardsByMemberCategoryAndCursorId(
             filteredNewsIds = filteredNewsIds,
             cursorId = cursorId,
@@ -46,20 +48,9 @@ class MemberNewsCardRetrieve(
     }
 
     private fun filterAlreadySavedNews(member: Member): List<String> {
-        val memberNewsCards = memberCardNewsRepository.findAllByMember(member)
-
+        val memberNewsBundle = memberNewsRepository.findAllByMember(member)
         val result = mutableListOf<String>()
-        for (memberNewsCard in memberNewsCards) {
-            val newsCard = memberNewsCard.newsCard
-            val newsIds = newsCard.multipleNews.split(", ").map { it.toLong() }
-            val newsBundleByNewsIds = newsRepository.findAllById(newsIds)
-
-            for (news in newsBundleByNewsIds) {
-                if (news.crawledCount > 1) {
-                    result.add(news.id.toString())
-                }
-            }
-        }
+        memberNewsBundle.map { result.add(it.news.id.toString()) }
         return result
     }
 }
