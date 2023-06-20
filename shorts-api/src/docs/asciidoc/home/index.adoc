@@ -109,3 +109,33 @@ include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/respons
 ===== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/http-response.adoc[]
+
+---
+
+=== 멤버 관심 카테고리 조회(메인화면)
+
+image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/850768df-a965-41c1-9a5b-d0d4a9103e8f[alt=Flower,width=240,height=180]
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/page-header.adoc[]
+
+==== [Curl Request]
+
+include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/curl-request.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/http-request.adoc[]
+
+==== [Request Query Parameters]
+
+include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/query-parameters.adoc[]
+
+===== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/response-fields.adoc[]
+
+===== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/http-response.adoc[]
