@@ -11,6 +11,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.category.Category
@@ -62,6 +63,7 @@ class NewsCardApiRestDocsTest : ApiDocsTestBase() {
                     "뉴스 카드 내 뉴스 조회",
                     getDocumentRequest(),
                     getDocumentResponse(),
+                    PageHeaderSnippet.pageHeaderSnippet(),
                     RequestDocumentation.pathParameters(
                         RequestDocumentation
                             .parameterWithName("newsCardId")

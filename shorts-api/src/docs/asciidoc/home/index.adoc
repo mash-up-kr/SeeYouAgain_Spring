@@ -11,6 +11,10 @@ endif::[]
 
 image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/82651c72-be9d-4ab8-9875-827af70f831d[alt=Flower,width=240,height=180]
 
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 설정/page-header.adoc[]
+
 ==== [Curl Request]
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 설정/curl-request.adoc[]
@@ -44,6 +48,10 @@ include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 설정/
 
 image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/bf1be1fc-d40a-43fd-9327-845dc80f369b[alt=Flower,width=240,height=180]
 
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 수정/page-header.adoc[]
+
 ==== [Curl Request]
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 수정/curl-request.adoc[]
@@ -72,9 +80,15 @@ include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 수정/
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 수정/curl-request.adoc[]
 
+---
+
 === 숏스 모두 불러오기(메인화면)
 
 image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/850768df-a965-41c1-9a5b-d0d4a9103e8f[alt=Flower,width=240,height=180]
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/page-header.adoc[]
 
 ==== [Curl Request]
 

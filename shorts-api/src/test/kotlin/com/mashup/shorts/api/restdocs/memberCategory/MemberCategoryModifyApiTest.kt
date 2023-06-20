@@ -9,6 +9,7 @@ import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.member.membercategory.MemberCategoryCreate
@@ -52,6 +53,7 @@ class MemberCategoryModifyApiTest : ApiDocsTestBase() {
                     "멤버 관심 카테고리 수정",
                     RestDocsUtils.getDocumentRequest(),
                     RestDocsUtils.getDocumentResponse(),
+                    PageHeaderSnippet.pageHeaderSnippet(),
                     PayloadDocumentation.requestFields(
                         PayloadDocumentation.fieldWithPath("categoryNames").type(JsonFieldType.ARRAY).description("사용자가 수정할 카테고리 리스트 (ex: [POLITICS, ECONOMIC, SOCIETY, CULTURE, WORLD, SCIENCE]")
                     ),

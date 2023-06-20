@@ -10,6 +10,7 @@ import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.member.my.MemberInfo
@@ -45,6 +46,7 @@ class MemberInfoRetrieveApiTest : ApiDocsTestBase() {
                     "내 정보 조회",
                     getDocumentRequest(),
                     getDocumentResponse(),
+                    PageHeaderSnippet.pageHeaderSnippet(),
                     HeaderDocumentation.requestHeaders(
                         HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
                     ),

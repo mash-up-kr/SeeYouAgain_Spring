@@ -11,6 +11,10 @@ endif::[]
 
 image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/9d8a8d71-4575-4bcf-a998-dff040e931f3[alt=Flower,width=240,height=180]
 
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/내 정보 조회/page-header.adoc[]
+
 ===== [Curl Request]
 
 include::../../../../../shorts-api/{snippets}/내 정보 조회/curl-request.adoc[]
@@ -47,6 +51,10 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/368fa0a2
 
 저장 버튼을 누를 때 사용할 API
 
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/page-header.adoc[]
+
 ==== [Curl Request]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
@@ -77,6 +85,10 @@ include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/cur
 
 image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/bc47422a-74a0-43ae-af2d-d9dcde2f0d37[alt=Flower,width=240,height=180]
 
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/page-header.adoc[]
+
 ==== [Curl Request]
 
 include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/curl-request.adoc[]
@@ -94,6 +106,10 @@ include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오
 === 오늘의 숏스 삭제
 
 image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/adbb6187-7d53-4d66-95f8-71c8053a1f62[alt=Flower,width=240,height=180]
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/오늘의 숏스 단일 삭제/page-header.adoc[]
 
 ==== [Curl Request]
 
@@ -129,6 +145,10 @@ include::../../../../../shorts-api/{snippets}/오늘의 숏스 단일 삭제/htt
 
 image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/368fa0a2-93e2-454d-b3f6-e513ef264fd7[alt=Flower,width=240,height=180]
 
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/page-header.adoc[]
+
 ==== [Curl Request]
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/curl-request.adoc[]
@@ -156,5 +176,3 @@ include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/response-body
 ===== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/http-response.adoc[]
-
----

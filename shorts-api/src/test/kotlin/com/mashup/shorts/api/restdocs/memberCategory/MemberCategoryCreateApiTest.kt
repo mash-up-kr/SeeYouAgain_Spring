@@ -12,6 +12,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.category.CategoryName
@@ -55,6 +56,7 @@ class MemberCategoryCreateApiTest : ApiDocsTestBase() {
                     "멤버 관심 카테고리 설정",
                     getDocumentRequest(),
                     getDocumentResponse(),
+                    PageHeaderSnippet.pageHeaderSnippet(),
                     requestFields(
                         fieldWithPath("categoryNames").type(JsonFieldType.ARRAY).description("사용자가 선택한 카테고리 리스트 (ex: [POLITICS, ECONOMIC, SOCIETY, CULTURE, WORLD, SCIENCE]")
                     ),

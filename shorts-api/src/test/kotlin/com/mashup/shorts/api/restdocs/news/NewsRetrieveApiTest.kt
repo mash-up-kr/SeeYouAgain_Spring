@@ -11,6 +11,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.news.NewsRetrieve
@@ -42,6 +43,7 @@ class NewsRetrieveApiTest : ApiDocsTestBase() {
                     "뉴스 상세 조회",
                     getDocumentRequest(),
                     getDocumentResponse(),
+                    PageHeaderSnippet.pageHeaderSnippet(),
                     HeaderDocumentation.requestHeaders(
                         HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
                     ),

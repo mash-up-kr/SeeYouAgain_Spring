@@ -16,6 +16,7 @@ import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardClear
 import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardDeleteApi
@@ -92,6 +93,7 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
                     "오늘의 숏스 단일 삭제",
                     RestDocsUtils.getDocumentRequest(),
                     RestDocsUtils.getDocumentResponse(),
+                    PageHeaderSnippet.pageHeaderSnippet(),
                     requestHeaders(
                         HeaderDocumentation
                             .headerWithName("Authorization")
