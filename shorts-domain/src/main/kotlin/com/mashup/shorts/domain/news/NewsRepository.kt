@@ -14,4 +14,6 @@ interface NewsRepository : JpaRepository<News, Long> {
 
     @Query("SELECT distinct * FROM news WHERE news.title = :title", nativeQuery = true)
     fun customFindByTitle(title: String): News?
+
+
 }
