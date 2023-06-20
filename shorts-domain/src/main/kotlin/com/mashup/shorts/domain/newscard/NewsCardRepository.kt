@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 @Repository
-interface NewsCardRepository : JpaRepository<NewsCard, Long> {
+interface NewsCardRepository : JpaRepository<NewsCard, Long>, NewsCardQueryDSLRepository {
 
     @Query(
         "SELECT * FROM news_card " +
@@ -40,5 +40,4 @@ interface NewsCardRepository : JpaRepository<NewsCard, Long> {
         @Param("categories") categories: List<Long>,
         @Param("size") size: Int,
     ): List<NewsCard>
-
 }

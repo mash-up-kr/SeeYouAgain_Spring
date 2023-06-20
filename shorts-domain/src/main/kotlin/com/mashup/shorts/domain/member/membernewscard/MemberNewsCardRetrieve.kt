@@ -10,7 +10,6 @@ import com.mashup.shorts.domain.member.MemberRepository
 import com.mashup.shorts.domain.member.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.member.membernews.MemberNewsRepository
 import com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsCardResponseMapper
-import com.mashup.shorts.domain.newscard.NewsCardQueryDSLRepository
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 
 @Service
@@ -20,7 +19,6 @@ class MemberNewsCardRetrieve(
     private val memberRepository: MemberRepository,
     private val memberCategoryRepository: MemberCategoryRepository,
     private val memberNewsRepository: MemberNewsRepository,
-    private val memberNewsCardQueryDSLRepository: NewsCardQueryDSLRepository,
 ) {
 
     fun retrieveNewsCardByMember(

@@ -123,10 +123,6 @@ include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/http-reque
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/request-headers.adoc[]
 
-==== [Request Path Parameters]
-
-include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/path-parameters.adoc[]
-
 ===== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/response-fields.adoc[]

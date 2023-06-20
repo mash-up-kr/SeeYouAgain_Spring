@@ -11,4 +11,10 @@ interface NewsCardQueryDSLRepository {
         size: Int,
     ): List<RetrieveAllNewsCardResponseMapper>
 
+    fun findByKeywordsLikeAndCursorId(
+        keyword: String,
+        cursorId: Long,
+        size: Int,
+    ): List<NewsCard>
+
 }

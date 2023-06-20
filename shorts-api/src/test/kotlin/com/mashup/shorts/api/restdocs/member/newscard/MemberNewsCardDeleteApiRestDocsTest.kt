@@ -16,7 +16,8 @@ import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
-import com.mashup.shorts.api.restdocs.util.RestDocsUtils
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardDelete
 import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardDeleteApi
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardBulkDeleteRequest
@@ -55,8 +56,8 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
             .andDo(
                 document(
                     "뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)",
-                    RestDocsUtils.getDocumentRequest(),
-                    RestDocsUtils.getDocumentResponse(),
+                    getDocumentRequest(),
+                    getDocumentResponse(),
                     requestFields(
                         fieldWithPath("memberId").description("멤버 id"),
                         fieldWithPath("newsCardId").description("뉴스카드 id"),
@@ -92,8 +93,8 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
             .andDo(
                 document(
                     "오늘의 숏스 삭제",
-                    RestDocsUtils.getDocumentRequest(),
-                    RestDocsUtils.getDocumentResponse(),
+                    getDocumentRequest(),
+                    getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
                     requestHeaders(
                         HeaderDocumentation

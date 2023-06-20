@@ -37,6 +37,21 @@ class NewsCardQueryDSLRepositoryImpl(
             .fetch()
     }
 
+    override fun findByKeywordsLikeAndCursorId(
+        keyword: String,
+        cursorId: Long,
+        size: Int,
+    ): List<NewsCard> {
+        return queryFactory
+            .selectFrom(newsCard)
+            .where(newsCard.id.gt(cursorId))
+            .where(newsCard.keywords.like("%$keyword%"))
+            .orderBy(newsCard.id.asc())
+            .limit(size.toLong())
+            .fetch()
+
+    }
+
     private fun categoryCondition(categories: List<Long>): Predicate? {
         return if (categories.isNotEmpty()) {
             newsCard.category.id.`in`(categories)
