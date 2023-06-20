@@ -12,11 +12,11 @@ import com.querydsl.jpa.impl.JPAQueryFactory
 class NewsCardQueryDSLRepositoryImpl(
     private val queryFactory: JPAQueryFactory,
 ) : NewsCardQueryDSLRepository {
-    override fun findNewsCardsByMemberCategoryAndCursorId(
-        filteredNewsIds: List<String>,
+    override fun findNewsCardsByMemberFilteredNewsIdsAndCursorId(
+        filteredNewsIds: List<Long>,
         cursorId: Long,
-        size: Int,
         categories: List<Long>,
+        size: Int,
     ): List<RetrieveAllNewsCardResponseMapper> {
         return queryFactory
             .select(
@@ -29,7 +29,7 @@ class NewsCardQueryDSLRepositoryImpl(
             )
             .from(newsCard)
             .where(newsCard.id.gt(cursorId))
-            .where(newsCard.multipleNews.notIn(filteredNewsIds))
+            .where(newsCard.multipleNews.notIn(filteredNewsIds.toString()))
             .where(categoryCondition(categories))
             .where(newsCard.createdAt.loe(LocalDateTime.now()))
             .orderBy(newsCard.id.asc())

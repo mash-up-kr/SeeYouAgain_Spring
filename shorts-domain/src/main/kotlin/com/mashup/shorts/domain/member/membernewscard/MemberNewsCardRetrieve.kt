@@ -10,17 +10,17 @@ import com.mashup.shorts.domain.member.MemberRepository
 import com.mashup.shorts.domain.member.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.member.membernews.MemberNewsRepository
 import com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsCardResponseMapper
-import com.mashup.shorts.domain.news.NewsRepository
 import com.mashup.shorts.domain.newscard.NewsCardQueryDSLRepository
+import com.mashup.shorts.domain.newscard.NewsCardRepository
 
 @Service
 @Transactional(readOnly = true)
 class MemberNewsCardRetrieve(
+    private val newsCardRepository: NewsCardRepository,
     private val memberRepository: MemberRepository,
     private val memberCategoryRepository: MemberCategoryRepository,
     private val memberNewsRepository: MemberNewsRepository,
     private val memberNewsCardQueryDSLRepository: NewsCardQueryDSLRepository,
-    private val newsRepository: NewsRepository,
 ) {
 
     fun retrieveNewsCardByMember(
@@ -37,20 +37,30 @@ class MemberNewsCardRetrieve(
         val memberCategories = memberCategoryRepository.findByMember(member)
         val filteredNewsIds = filterAlreadySavedNews(member)
 
-        println("filteredNewsIds = ${filteredNewsIds}")
+        if (memberCategories.isNotEmpty()) {
+            return RetrieveAllNewsCardResponseMapper.persistenceToResponseForm(
+                newsCardRepository.retrieveNewsCardByMemberNoCategory(
+                    filteredNewsIds = filteredNewsIds.map { it },
+                    cursorId = cursorId,
+                    size = size
+                )
+            )
+        }
 
-        return memberNewsCardQueryDSLRepository.findNewsCardsByMemberCategoryAndCursorId(
-            filteredNewsIds = filteredNewsIds,
-            cursorId = cursorId,
-            size = size,
-            categories = memberCategories.map { it.category.id }
+        return RetrieveAllNewsCardResponseMapper.persistenceToResponseForm(
+            newsCardRepository.retrieveNewsCardByMemberAndCategory(
+                filteredNewsIds = filteredNewsIds.map { it },
+                cursorId = cursorId,
+                categories = memberCategories.map { it.id },
+                size = size
+            )
         )
     }
 
-    private fun filterAlreadySavedNews(member: Member): List<String> {
+    private fun filterAlreadySavedNews(member: Member): List<Long> {
         val memberNewsBundle = memberNewsRepository.findAllByMember(member)
-        val result = mutableListOf<String>()
-        memberNewsBundle.map { result.add(it.news.id.toString()) }
+        val result = mutableListOf<Long>()
+        memberNewsBundle.map { result.add(it.news.id) }
         return result
     }
 }
