@@ -2,7 +2,7 @@ package com.mashup.shorts.domain.member.membernewscard
 
 import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -10,21 +10,25 @@ import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
 import com.mashup.shorts.config.aop.Auth
 import com.mashup.shorts.config.aop.AuthContext
+import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardBulkDeleteRequest
 import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
 
 @RestController
 @RequestMapping("/v1/member-news-card")
 class MemberNewsCardDeleteApi(
-    private val memberNewsCardClear: MemberNewsCardClear,
+    private val memberNewsCardDelete: MemberNewsCardDelete,
 ) {
 
     @Auth
-    @DeleteMapping("/{newsCardId}")
-    fun deleteMemberNewsCard(
-        @PathVariable newsCardId: Long,
+    @PostMapping
+    fun bulkDeleteMemberNewsCard(
+        @RequestBody memberNewsCardBulkDeleteRequest: MemberNewsCardBulkDeleteRequest,
     ): ApiResponse<Void> {
         val memberUniqueId = AuthContext.getMemberId()
-        memberNewsCardClear.deleteMemberNewsCard(memberUniqueId, newsCardId)
+        memberNewsCardDelete.bulkDeleteMemberNewsCard(
+            uniqueId = memberUniqueId,
+            newsCardIds = memberNewsCardBulkDeleteRequest.newsCardIds
+        )
         return success(OK)
     }
 
@@ -34,11 +38,10 @@ class MemberNewsCardDeleteApi(
     ): ApiResponse<Map<String, Int>> {
         return success(
             OK,
-            memberNewsCardClear.clearMemberNewsCard(
+            memberNewsCardDelete.clearMemberNewsCard(
                 memberId = memberNewsCardRequest.memberId,
                 newsCardId = memberNewsCardRequest.newsCardId,
             )
         )
     }
-
 }
