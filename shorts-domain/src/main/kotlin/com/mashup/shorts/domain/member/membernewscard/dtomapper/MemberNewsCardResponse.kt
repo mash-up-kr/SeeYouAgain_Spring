@@ -2,13 +2,15 @@ package com.mashup.shorts.domain.member.membernewscard.dtomapper
 
 import java.time.LocalDateTime
 import com.mashup.shorts.domain.newscard.NewsCard
+import com.querydsl.core.annotations.QueryProjection
 
-data class RetrieveAllNewsCardResponseMapper(
+data class RetrieveAllNewsCardResponseMapper @QueryProjection constructor(
     var id: Long,
     var keywords: String,
     var category: String,
     var crawledDateTime: LocalDateTime,
 ) {
+
     companion object {
         fun persistenceToResponseForm(newsCards: List<NewsCard>): List<RetrieveAllNewsCardResponseMapper> {
             return newsCards.map {

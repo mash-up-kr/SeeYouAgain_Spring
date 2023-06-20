@@ -10,6 +10,7 @@ import com.mashup.shorts.domain.member.MemberRepository
 import com.mashup.shorts.domain.member.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsCardResponseMapper
 import com.mashup.shorts.domain.news.NewsRepository
+import com.mashup.shorts.domain.newscard.NewsCardQueryDSLRepository
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 
 @Service
@@ -18,7 +19,7 @@ class MemberNewsCardRetrieve(
     private val memberRepository: MemberRepository,
     private val memberCategoryRepository: MemberCategoryRepository,
     private val memberCardNewsRepository: MemberNewsCardRepository,
-    private val newsCardRepository: NewsCardRepository,
+    private val memberNewsCardQueryDSLRepository: NewsCardQueryDSLRepository,
     private val newsRepository: NewsRepository,
 ) {
 
@@ -34,36 +35,20 @@ class MemberNewsCardRetrieve(
         )
 
         val memberCategories = memberCategoryRepository.findByMember(member)
-
-        if (memberCategories.isEmpty()) {
-            return RetrieveAllNewsCardResponseMapper.persistenceToResponseForm(
-                newsCardRepository.findNewsCardsByTargetTimeAndAndMemberCategoryAndCursorId(
-                    targetDate = targetDateTime.toLocalDate(),
-                    targetHour = targetDateTime.hour,
-                    cursorId = cursorId,
-                    size = size
-                )
-            )
-        }
-
         val filteredNewsIds = filterAlreadySavedNews(member)
 
-        return RetrieveAllNewsCardResponseMapper.persistenceToResponseForm(
-            newsCardRepository.findNewsCardsByTargetTimeAndAndMemberCategoryAndCursorIdAndCategory(
-                targetDate = targetDateTime.toLocalDate(),
-                targetHour = targetDateTime.hour,
-                filteredNewsIds = filteredNewsIds,
-                cursorId = cursorId,
-                size = size,
-                categories = memberCategories.map { it.category.id }
-            )
+        return memberNewsCardQueryDSLRepository.findNewsCardsByMemberCategoryAndCursorId(
+            filteredNewsIds = filteredNewsIds,
+            cursorId = cursorId,
+            size = size,
+            categories = memberCategories.map { it.category.id }
         )
     }
 
-    private fun filterAlreadySavedNews(member: Member): List<Long> {
+    private fun filterAlreadySavedNews(member: Member): List<String> {
         val memberNewsCards = memberCardNewsRepository.findAllByMember(member)
 
-        val result = mutableListOf<Long>()
+        val result = mutableListOf<String>()
         for (memberNewsCard in memberNewsCards) {
             val newsCard = memberNewsCard.newsCard
             val newsIds = newsCard.multipleNews.split(", ").map { it.toLong() }
@@ -71,7 +56,7 @@ class MemberNewsCardRetrieve(
 
             for (news in newsBundleByNewsIds) {
                 if (news.crawledCount > 1) {
-                    result.add(news.id)
+                    result.add(news.id.toString())
                 }
             }
         }
