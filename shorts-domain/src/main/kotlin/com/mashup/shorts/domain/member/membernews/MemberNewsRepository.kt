@@ -13,4 +13,6 @@ interface MemberNewsRepository : JpaRepository<MemberNews, Long> {
     fun existsByMemberAndNews(member: Member, news: News): Boolean
 
     fun countAllByMember(member: Member): Int
+
+    fun findAllByMember(member: Member): List<MemberNews>
 }
