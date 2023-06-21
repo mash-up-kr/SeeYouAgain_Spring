@@ -9,7 +9,9 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
+import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.request.RequestDocumentation
+import org.springframework.restdocs.request.RequestDocumentation.queryParameters
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
@@ -82,7 +84,7 @@ class MemberNewsCardRetrieveTest : ApiDocsTestBase() {
                             .headerWithName("Authorization")
                             .description("사용자 식별자 id")
                     ),
-                    RequestDocumentation.queryParameters(
+                    queryParameters(
                         RequestDocumentation
                             .parameterWithName("targetDateTime")
                             .description("요청 날짜 및 시간"),
@@ -94,15 +96,15 @@ class MemberNewsCardRetrieveTest : ApiDocsTestBase() {
                             .description("<필수값> 페이징 사이즈(최대 10까지 허용합니다.)"),
                     ),
                     PayloadDocumentation.responseFields(
-                        PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)
+                        fieldWithPath("status").type(JsonFieldType.NUMBER)
                             .description("API 성공 여부"),
-                        PayloadDocumentation.fieldWithPath("result[].id").type(JsonFieldType.NUMBER)
+                        fieldWithPath("result[].id").type(JsonFieldType.NUMBER)
                             .description("카드뉴스 id"),
-                        PayloadDocumentation.fieldWithPath("result[].keywords").type(JsonFieldType.STRING)
+                        fieldWithPath("result[].keywords").type(JsonFieldType.STRING)
                             .description("키워드"),
-                        PayloadDocumentation.fieldWithPath("result[].category").type(JsonFieldType.STRING)
+                        fieldWithPath("result[].category").type(JsonFieldType.STRING)
                             .description("카테고리"),
-                        PayloadDocumentation.fieldWithPath("result[].crawledDateTime").type(JsonFieldType.STRING)
+                        fieldWithPath("result[].crawledDateTime").type(JsonFieldType.STRING)
                             .description("크롤링 된 시각"),
                     )
                 )

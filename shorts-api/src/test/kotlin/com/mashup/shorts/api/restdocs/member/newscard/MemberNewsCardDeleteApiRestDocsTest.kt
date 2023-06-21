@@ -58,6 +58,7 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
                     "뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)",
                     getDocumentRequest(),
                     getDocumentResponse(),
+                    PageHeaderSnippet.pageHeaderSnippet(),
                     requestFields(
                         fieldWithPath("memberId").description("멤버 id"),
                         fieldWithPath("newsCardId").description("뉴스카드 id"),
