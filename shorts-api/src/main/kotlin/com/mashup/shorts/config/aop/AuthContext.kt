@@ -2,6 +2,7 @@ package com.mashup.shorts.config.aop
 
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
+import com.mashup.shorts.domain.member.Member
 
 /**
  * AuthContext
@@ -12,9 +13,9 @@ import com.mashup.shorts.common.exception.ShortsErrorCode
  */
 object AuthContext {
 
-    val USER_CONTEXT: ThreadLocal<String> = ThreadLocal()
+    val USER_CONTEXT: ThreadLocal<Member> = ThreadLocal()
 
-    fun getMemberId(): String {
+    fun getMember(): Member {
         USER_CONTEXT.get()?.let {
             return USER_CONTEXT.get()
         } ?: throw ShortsBaseException.from(

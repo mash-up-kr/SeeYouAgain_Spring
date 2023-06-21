@@ -35,8 +35,8 @@ class MemberCategoryCreateApi(
     @Auth
     @PutMapping
     fun modifyMemberCategory(@RequestBody categoryCreateBulkRequest: CategoryCreateBulkRequest): ApiResponse<Void> {
-        val memberUniqueId = AuthContext.getMemberId()
-        memberCategoryCreate.modifyMemberCategory(categoryCreateBulkRequest.categoryNames, memberUniqueId)
+        val member = AuthContext.getMember()
+        memberCategoryCreate.modifyMemberCategory(categoryCreateBulkRequest.categoryNames, member)
         return ApiResponse.success(HttpStatus.OK)
     }
 }

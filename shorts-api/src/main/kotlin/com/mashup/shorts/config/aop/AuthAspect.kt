@@ -38,7 +38,7 @@ class AuthAspect(
                 resultErrorMessage = "존재하지 않는 유저입니다. memberId : $memberId"
             )
 
-        AuthContext.USER_CONTEXT.set(member.uniqueId)
+        AuthContext.USER_CONTEXT.set(member)
         return pjp.proceed(pjp.args)
     }
 

@@ -19,11 +19,9 @@ class MemberNewsCreateApi(
 
     @Auth
     @PostMapping
-    fun createMemberNews(@RequestHeader("Authorization") uniqueId: String,
-                         @RequestBody memberNewsCreateRequest: MemberNewsCreateRequest
-    ): ApiResponse<Void> {
-        val memberUniqueId = AuthContext.getMemberId()
-        memberNewsCreate.createMemberNews(memberUniqueId, memberNewsCreateRequest.newsId)
+    fun createMemberNews(@RequestBody memberNewsCreateRequest: MemberNewsCreateRequest): ApiResponse<Void> {
+        val member = AuthContext.getMember()
+        memberNewsCreate.createMemberNews(member, memberNewsCreateRequest.newsId)
         return ApiResponse.success(HttpStatus.CREATED)
     }
 }
