@@ -15,10 +15,6 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/c1a493c3
 
 include::../../../../../shorts-api/{snippets}/핫 키워드 조회/page-header.adoc[]
 
-==== [Curl Request]
-
-include::../../../../../shorts-api/{snippets}/핫 키워드 조회/curl-request.adoc[]
-
 ==== [HTTP Request]
 
 include::../../../../../shorts-api/{snippets}/핫 키워드 조회/http-request.adoc[]
@@ -40,10 +36,6 @@ include::../../../../../shorts-api/{snippets}/핫 키워드 조회/http-response
 ==== [Request URI]
 
 include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/page-header.adoc[]
-
-==== [Curl Request]
-
-include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/curl-request.adoc[]
 
 ==== [HTTP Request]
 

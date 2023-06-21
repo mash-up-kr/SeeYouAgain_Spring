@@ -15,10 +15,6 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/9d8a8d71
 
 include::../../../../../shorts-api/{snippets}/내 정보 조회/page-header.adoc[]
 
-===== [Curl Request]
-
-include::../../../../../shorts-api/{snippets}/내 정보 조회/curl-request.adoc[]
-
 ==== [HTTP Request]
 
 include::../../../../../shorts-api/{snippets}/내 정보 조회/http-request.adoc[]
@@ -39,10 +35,6 @@ include::../../../../../shorts-api/{snippets}/내 정보 조회/http-response.ad
 
 include::../../../../../shorts-api/{snippets}/내 정보 조회/response-body.adoc[]
 
-===== [Curl Request HTTP Example]
-
-include::../../../../../shorts-api/{snippets}/내 정보 조회/curl-request.adoc[]
-
 ---
 
 === 오래 간직할 숏스
@@ -54,10 +46,6 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/368fa0a2
 ==== [Request URI]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/page-header.adoc[]
-
-==== [Curl Request]
-
-include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
 
 ==== [HTTP Request]
 
@@ -75,10 +63,6 @@ include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/res
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/http-response.adoc[]
 
-===== [Curl Request HTTP Example]
-
-include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/curl-request.adoc[]
-
 ---
 
 === 숏스 다 읽었어요
@@ -88,10 +72,6 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/bc47422a
 ==== [Request URI]
 
 include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/page-header.adoc[]
-
-==== [Curl Request]
-
-include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/curl-request.adoc[]
 
 ==== [HTTP Request]
 
@@ -110,10 +90,6 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/adbb6187
 ==== [Request URI]
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/page-header.adoc[]
-
-==== [Curl Request]
-
-include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/curl-request.adoc[]
 
 ==== [HTTP Request]
 
@@ -144,10 +120,6 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/368fa0a2
 ==== [Request URI]
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/page-header.adoc[]
-
-==== [Curl Request]
-
-include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/curl-request.adoc[]
 
 ==== [HTTP Request]
 
