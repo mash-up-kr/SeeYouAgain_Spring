@@ -20,8 +20,8 @@ class MemberInfoRetrieveApi(
     @Auth
     @GetMapping
     fun retrieveMemberInfo(): ApiResponse<MemberInfoRetrieveResponse> {
-        val memberUniqueId = AuthContext.getMemberId()
-        val memberInfo = memberInfoRetrieve.retrieveMemberInfo(memberUniqueId, LocalDate.now())
+        val member = AuthContext.getMember()
+        val memberInfo = memberInfoRetrieve.retrieveMemberInfo(member, LocalDate.now())
         return ApiResponse.success(HttpStatus.OK, MemberInfoMapper.memberInfoToResponse(memberInfo))
     }
 }

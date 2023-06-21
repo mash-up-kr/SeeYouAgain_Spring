@@ -24,9 +24,9 @@ class MemberNewsCardDeleteApi(
     fun bulkDeleteMemberNewsCard(
         @RequestBody memberNewsCardBulkDeleteRequest: MemberNewsCardBulkDeleteRequest,
     ): ApiResponse<Void> {
-        val memberUniqueId = AuthContext.getMemberId()
+        val member = AuthContext.getMember()
         memberNewsCardDelete.bulkDeleteMemberNewsCard(
-            uniqueId = memberUniqueId,
+            member = member,
             newsCardIds = memberNewsCardBulkDeleteRequest.newsCardIds
         )
         return success(OK)

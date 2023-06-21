@@ -22,16 +22,11 @@ class MemberNewsCardRetrieve(
 ) {
 
     fun retrieveNewsCardByMember(
-        memberUniqueId: String,
+        member: Member,
         targetDateTime: LocalDateTime,
         cursorId: Long,
         size: Int,
     ): List<NewsCard> {
-        val member = memberRepository.findByUniqueId(memberUniqueId) ?: throw ShortsBaseException.from(
-            shortsErrorCode = E404_NOT_FOUND,
-            resultErrorMessage = "${memberUniqueId}에 해당하는 사용자는 존재하지 않습니다."
-        )
-
         val memberCategories = memberCategoryRepository.findByMember(member)
         val filteredNewsIds = filterAlreadySavedNews(member)
 

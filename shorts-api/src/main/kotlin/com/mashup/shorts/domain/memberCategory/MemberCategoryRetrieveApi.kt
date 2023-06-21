@@ -26,7 +26,7 @@ class MemberCategoryRetrieveApi(
     @Auth
     @GetMapping
     fun retrieveMemberCategory(): ApiResponse<Map<String, List<CategoryName>>> {
-        val memberUniqueId = AuthContext.getMemberId()
-        return ApiResponse.success(HttpStatus.OK, mapOf("categories" to memberCategoryRetrieve.retrieveMemberCategory(memberUniqueId)))
+        val member = AuthContext.getMember()
+        return ApiResponse.success(HttpStatus.OK, mapOf("categories" to memberCategoryRetrieve.retrieveMemberCategory(member)))
     }
 }

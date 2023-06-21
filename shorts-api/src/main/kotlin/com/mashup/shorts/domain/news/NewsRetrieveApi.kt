@@ -20,8 +20,8 @@ class NewsRetrieveApi(
     @Auth
     @GetMapping("/{newsId}")
     fun retrieveNews(@PathVariable newsId: Long): ApiResponse<NewsRetrieveResponse> {
-        val memberUniqueId = AuthContext.getMemberId()
-        val newsRetrieveInfo = newsRetrieve.retrieveNews(memberUniqueId, newsId)
+        val member = AuthContext.getMember()
+        val newsRetrieveInfo = newsRetrieve.retrieveNews(member, newsId)
         return ApiResponse.success(OK, NewsRetrieveMapper.newsRetrieveInfoToResponse(newsRetrieveInfo))
     }
 }

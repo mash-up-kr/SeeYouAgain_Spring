@@ -34,7 +34,7 @@ class MemberNewsCardRetrieveApi(
             OK,
             RetrieveAllNewsCardResponse.domainResponseFormToApiResponseForm(
                 memberNewsCardRetrieve.retrieveNewsCardByMember(
-                    memberUniqueId = AuthContext.getMemberId(),
+                    member = AuthContext.getMember(),
                     targetDateTime = targetDateTime,
                     cursorId = cursorId,
                     size = size

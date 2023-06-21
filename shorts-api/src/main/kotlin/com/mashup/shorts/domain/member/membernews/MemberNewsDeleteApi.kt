@@ -19,8 +19,8 @@ class MemberNewsDeleteApi(
     @Auth
     @PostMapping("/bulk-delete")
     fun deleteMemberNews(@RequestBody memberNewsDeleteBulkRequest: MemberNewsDeleteBulkRequest): ApiResponse<Void> {
-        val memberUniqueId = AuthContext.getMemberId()
-        memberNewsDelete.deleteMemberNews(memberUniqueId, memberNewsDeleteBulkRequest.newsIds)
+        val member = AuthContext.getMember()
+        memberNewsDelete.deleteMemberNews(member, memberNewsDeleteBulkRequest.newsIds)
         return ApiResponse.success(HttpStatus.OK)
     }
 }

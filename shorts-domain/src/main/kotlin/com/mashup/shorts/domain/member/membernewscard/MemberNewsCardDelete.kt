@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
+import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.member.MemberRepository
 import com.mashup.shorts.domain.member.membershortscount.MemberShortsCount
 import com.mashup.shorts.domain.member.membershortscount.MemberShortsCountRepository
@@ -45,11 +46,7 @@ class MemberNewsCardDelete(
         return mapOf("shortsCount" to newMemberShortsCount.count)
     }
 
-    fun bulkDeleteMemberNewsCard(uniqueId: String, newsCardIds: List<Long>) {
-        val member = memberRepository.findByUniqueId(uniqueId) ?: throw ShortsBaseException.from(
-            shortsErrorCode = E404_NOT_FOUND,
-            resultErrorMessage = "${uniqueId}에 해당하는 유저가 존재하지 않습니다."
-        )
+    fun bulkDeleteMemberNewsCard(member: Member, newsCardIds: List<Long>) {
         val newsCards = newsCardRepository.findAllById(newsCardIds)
         memberNewsCardRepository.deleteAllByMemberAndNewsCardIn(member, newsCards)
     }
