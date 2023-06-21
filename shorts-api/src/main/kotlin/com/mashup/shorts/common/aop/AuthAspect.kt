@@ -54,6 +54,6 @@ class AuthAspect(
     companion object {
         private const val AUTHORIZATION = "Authorization"
         private const val PREFIX_BEARER = "Bearer "
-        private const val SHORTS_PACKAGE = "com.mashup.shorts.config.aop.Auth"
+        private const val SHORTS_PACKAGE = "com.mashup.shorts.common.aop.Auth"
     }
 }
