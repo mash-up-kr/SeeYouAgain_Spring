@@ -1,7 +1,5 @@
 package com.mashup.shorts.domain.newscard
 
-import com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsCardResponseMapper
-
 interface NewsCardQueryDSLRepository {
 
     fun findNewsCardsByMemberFilteredNewsIdsAndCursorId(
@@ -9,7 +7,7 @@ interface NewsCardQueryDSLRepository {
         cursorId: Long,
         categories: List<Long>,
         size: Int,
-    ): List<RetrieveAllNewsCardResponseMapper>
+    ): List<NewsCard>
 
     fun findByKeywordsLikeAndCursorId(
         keyword: String,

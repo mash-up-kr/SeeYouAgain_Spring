@@ -10,10 +10,10 @@ interface NewsCardRepository : JpaRepository<NewsCard, Long>, NewsCardQueryDSLRe
 
     @Query(
         "SELECT * FROM news_card " +
-            "JOIN category on category.id = news_card.category.id " +
+            "JOIN category on category.id = news_card.category_id " +
             "WHERE news_card.id > :cursorId " +
             "AND news_card.multiple_news not in (:filteredNewsIds) " +
-            "AND news_card.category in (:categories) " +
+            "AND news_card.category_id in (:categories) " +
             "AND news_card.created_at < NOW() " +
             "ORDER BY news_card.id ASC " +
             "LIMIT :size",
