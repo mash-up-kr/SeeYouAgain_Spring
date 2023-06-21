@@ -102,10 +102,6 @@ include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/http-request.adoc[]
 
-==== [Request Query Parameters]
-
-include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/query-parameters.adoc[]
-
 ===== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/response-fields.adoc[]

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.shorts.api.ApiTestBase
 import com.mashup.shorts.common.aop.AuthContext
+import com.mashup.shorts.domain.member.Member
 
 @SpringBootTest
 @Disabled
@@ -143,7 +144,7 @@ class NewsCardIntegrationTest(
         val size = 20
 
         val auth = "shorts-user"
-        AuthContext.USER_CONTEXT.set(auth)
+        AuthContext.USER_CONTEXT.set(Member(uniqueId = "unique", nickname = "nickname"))
 
         // execute
         val result = mockMvc.perform(

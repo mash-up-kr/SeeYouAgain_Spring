@@ -16,6 +16,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
 import com.mashup.shorts.common.aop.AuthContext
+import com.mashup.shorts.domain.member.Member
 
 @ExtendWith(RestDocumentationExtension::class)
 @AutoConfigureRestDocs
@@ -43,6 +44,6 @@ abstract class ApiDocsTestBase : ApiTestBase() {
 
     @BeforeEach
     fun init() {
-        AuthContext.USER_CONTEXT.set("shorts-user")
+        AuthContext.USER_CONTEXT.set(Member(uniqueId = "unique", nickname = "nickname"))
     }
 }

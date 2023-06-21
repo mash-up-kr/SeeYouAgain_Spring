@@ -35,19 +35,11 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
     @Test
     fun 뉴스카드_모두_조회() {
         // ready
-        val memberUniqueId = AuthContext.getMemberId()
         val targetDateTime = LocalDateTime.now().minusDays(1)
         val cursorId = 0L
         val size = 10
 
-        every {
-            memberNewsCardRetrieve.retrieveNewsCardByMember(
-                memberUniqueId = memberUniqueId,
-                targetDateTime = targetDateTime,
-                cursorId = cursorId,
-                size = size
-            )
-        } returns (
+        every { memberNewsCardRetrieve.retrieveNewsCardByMember(any(), any(), any(), any()) } returns (
             listOf(
                 NewsCard(
                     category = Category(CategoryName.POLITICS),
@@ -62,7 +54,6 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .get("/v1/member-news-card")
-                .header("Authorization", "Bearer $memberUniqueId")
                 .param("targetDateTime", targetDateTime.toString())
                 .param("cursorId", cursorId.toString())
                 .param("size", size.toString())
@@ -76,11 +67,6 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                     RestDocsUtils.getDocumentRequest(),
                     RestDocsUtils.getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
-                    HeaderDocumentation.requestHeaders(
-                        HeaderDocumentation
-                            .headerWithName("Authorization")
-                            .description("사용자 식별자 id")
-                    ),
                     queryParameters(
                         RequestDocumentation
                             .parameterWithName("targetDateTime")
