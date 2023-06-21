@@ -18,10 +18,10 @@ import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
-import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardDelete
-import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardDeleteApi
-import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardBulkDeleteRequest
-import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
+import com.mashup.shorts.domain.membernewscard.MemberNewsCardDelete
+import com.mashup.shorts.domain.my.membernewscard.MemberNewsCardDeleteApi
+import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardBulkDeleteRequest
+import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardClearRequest
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 

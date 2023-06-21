@@ -14,9 +14,9 @@ import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
-import com.mashup.shorts.domain.member.membernews.MemberNewsDelete
-import com.mashup.shorts.domain.member.membernews.MemberNewsDeleteApi
-import com.mashup.shorts.domain.member.membernews.dto.MemberNewsDeleteBulkRequest
+import com.mashup.shorts.domain.membernews.MemberNewsDelete
+import com.mashup.shorts.domain.my.membernews.MemberNewsDeleteApi
+import com.mashup.shorts.domain.my.membernews.dto.MemberNewsDeleteBulkRequest
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 

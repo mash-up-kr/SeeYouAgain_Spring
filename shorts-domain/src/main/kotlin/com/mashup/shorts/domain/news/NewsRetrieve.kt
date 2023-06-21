@@ -7,7 +7,7 @@ import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.member.MemberRepository
-import com.mashup.shorts.domain.member.membernews.MemberNewsRepository
+import com.mashup.shorts.domain.membernews.MemberNewsRepository
 
 @Service
 @Transactional(readOnly = true)

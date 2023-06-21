@@ -13,9 +13,9 @@ import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
-import com.mashup.shorts.domain.member.my.MemberInfo
-import com.mashup.shorts.domain.member.my.MemberInfoRetrieve
-import com.mashup.shorts.domain.member.my.MemberInfoRetrieveApi
+import com.mashup.shorts.domain.my.MemberInfo
+import com.mashup.shorts.domain.my.MemberInfoRetrieve
+import com.mashup.shorts.domain.my.info.MemberInfoRetrieveApi
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 

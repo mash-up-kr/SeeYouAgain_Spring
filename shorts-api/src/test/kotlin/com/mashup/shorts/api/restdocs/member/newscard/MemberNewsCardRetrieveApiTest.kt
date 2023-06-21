@@ -17,11 +17,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils
-import com.mashup.shorts.config.aop.AuthContext
+import com.mashup.shorts.common.aop.AuthContext
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
-import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardRetrieve
-import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardRetrieveApi
+import com.mashup.shorts.domain.membernewscard.MemberNewsCardRetrieve
+import com.mashup.shorts.domain.my.membernewscard.MemberNewsCardRetrieveApi
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
