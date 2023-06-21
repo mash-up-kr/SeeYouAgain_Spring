@@ -15,7 +15,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
-import com.mashup.shorts.config.aop.AuthContext
+import com.mashup.shorts.common.aop.AuthContext
 
 @ExtendWith(RestDocumentationExtension::class)
 @AutoConfigureRestDocs

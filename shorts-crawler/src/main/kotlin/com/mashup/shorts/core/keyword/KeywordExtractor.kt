@@ -8,12 +8,6 @@ import org.springframework.stereotype.Component
 @Component
 class KeywordExtractor {
 
-    companion object {
-        val stopWords = setOf(
-            "은", "는", "이", "가", "을", "를", "과", "와", "에서", "으로", "에게", "으로부터", "에", "의"
-        )
-    }
-
     internal fun extractKeyword(content: String): String {
         val keywordCount = 4
         val analyzer = KoreanAnalyzer()
@@ -39,5 +33,11 @@ class KeywordExtractor {
         return topKeywords.joinToString(", ")
             .replace("[", "")
             .replace("]", "")
+    }
+
+    companion object {
+        val stopWords = setOf(
+            "은", "는", "이", "가", "을", "를", "과", "와", "에서", "으로", "에게", "으로부터", "에", "의"
+        )
     }
 }

@@ -18,8 +18,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.transaction.annotation.Transactional
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.shorts.api.ApiTestBase
-import com.mashup.shorts.config.aop.AuthContext
-import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardClearRequest
+import com.mashup.shorts.common.aop.AuthContext
+import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardClearRequest
 
 @SpringBootTest
 @Disabled

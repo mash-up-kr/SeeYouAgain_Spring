@@ -12,8 +12,8 @@ import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.domain.category.CategoryName
-import com.mashup.shorts.domain.member.membercategory.MemberCategoryRetrieve
-import com.mashup.shorts.domain.memberCategory.MemberCategoryRetrieveApi
+import com.mashup.shorts.domain.membercategory.MemberCategoryRetrieve
+import com.mashup.shorts.domain.home.memberCategory.MemberCategoryRetrieveApi
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 

@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.transaction.annotation.Transactional
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.shorts.api.ApiTestBase
-import com.mashup.shorts.config.aop.AuthContext
+import com.mashup.shorts.common.aop.AuthContext
 
 @SpringBootTest
 @Disabled

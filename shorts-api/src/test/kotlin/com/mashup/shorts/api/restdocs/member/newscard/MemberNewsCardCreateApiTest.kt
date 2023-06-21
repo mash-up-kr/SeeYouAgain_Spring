@@ -15,9 +15,9 @@ import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
-import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardCreate
-import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardCreateApi
-import com.mashup.shorts.domain.member.membernewscard.dto.MemberNewsCardCreateRequest
+import com.mashup.shorts.domain.membernewscard.MemberNewsCardCreate
+import com.mashup.shorts.domain.my.membernewscard.MemberNewsCardCreateApi
+import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardCreateRequest
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 

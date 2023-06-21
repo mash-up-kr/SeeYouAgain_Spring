@@ -16,9 +16,9 @@ import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.category.CategoryName
-import com.mashup.shorts.domain.member.membercategory.MemberCategoryCreate
-import com.mashup.shorts.domain.memberCategory.CategoryCreateBulkRequest
-import com.mashup.shorts.domain.memberCategory.MemberCategoryCreateApi
+import com.mashup.shorts.domain.membercategory.MemberCategoryCreate
+import com.mashup.shorts.domain.home.memberCategory.CategoryCreateBulkRequest
+import com.mashup.shorts.domain.home.memberCategory.MemberCategoryCreateApi
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 

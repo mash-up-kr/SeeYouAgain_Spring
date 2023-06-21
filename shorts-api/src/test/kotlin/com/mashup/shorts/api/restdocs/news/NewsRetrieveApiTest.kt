@@ -15,7 +15,7 @@ import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.news.NewsRetrieve
-import com.mashup.shorts.domain.news.NewsRetrieveApi
+import com.mashup.shorts.domain.home.news.NewsRetrieveApi
 import com.mashup.shorts.domain.news.NewsRetrieveInfo
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every

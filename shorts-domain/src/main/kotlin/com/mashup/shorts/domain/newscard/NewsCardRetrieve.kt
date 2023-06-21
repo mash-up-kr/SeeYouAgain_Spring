@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
 import com.mashup.shorts.domain.news.News
-import com.mashup.shorts.domain.news.newsnewscard.NewsNewsCardQueryDSLRepository
+import com.mashup.shorts.domain.newsnewscard.NewsNewsCardQueryDSLRepository
 
 @Service
 @Transactional(readOnly = true)

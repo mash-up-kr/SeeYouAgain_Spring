@@ -20,7 +20,7 @@ import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.keyword.HotKeywordRetrieve
-import com.mashup.shorts.domain.keyword.HotKeywordsRetrieveApi
+import com.mashup.shorts.domain.hot.keyword.HotKeywordsRetrieveApi
 import com.mashup.shorts.domain.keyword.dtomapper.RetrieveDetailHotKeyWordResponseMapper
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.ninjasquad.springmockk.MockkBean
