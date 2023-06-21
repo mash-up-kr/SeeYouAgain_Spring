@@ -35,19 +35,9 @@ class MemberNewsCardRetrieve(
         val memberCategories = memberCategoryRepository.findByMember(member)
         val filteredNewsIds = filterAlreadySavedNews(member)
 
-        if (memberCategories.isNotEmpty()) {
-            return RetrieveAllNewsCardResponseMapper.persistenceToResponseForm(
-                newsCardRepository.retrieveNewsCardByMemberNoCategory(
-                    filteredNewsIds = filteredNewsIds.map { it },
-                    cursorId = cursorId,
-                    size = size
-                )
-            )
-        }
-
         return RetrieveAllNewsCardResponseMapper.persistenceToResponseForm(
             newsCardRepository.retrieveNewsCardByMemberAndCategory(
-                filteredNewsIds = filteredNewsIds.map { it },
+                filteredNewsIds = filteredNewsIds,
                 cursorId = cursorId,
                 categories = memberCategories.map { it.id },
                 size = size
@@ -56,9 +46,6 @@ class MemberNewsCardRetrieve(
     }
 
     private fun filterAlreadySavedNews(member: Member): List<Long> {
-        val memberNewsBundle = memberNewsRepository.findAllByMember(member)
-        val result = mutableListOf<Long>()
-        memberNewsBundle.map { result.add(it.news.id) }
-        return result
+        return memberNewsRepository.findAllByMember(member).map { it.news.id }
     }
 }
