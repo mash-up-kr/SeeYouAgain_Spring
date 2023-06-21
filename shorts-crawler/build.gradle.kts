@@ -11,9 +11,6 @@ dependencies {
     // Lucene Dependency
     implementation("org.apache.lucene:lucene-core:8.4.1")
     implementation("org.apache.lucene:lucene-analyzers-nori:8.4.1")
-
-    // Flyway
-    implementation("org.flywaydb:flyway-mysql")
 }
 
 application {
