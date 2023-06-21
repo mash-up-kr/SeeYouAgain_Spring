@@ -22,13 +22,12 @@ import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardRetrieve
 import com.mashup.shorts.domain.member.membernewscard.MemberNewsCardRetrieveApi
-import com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsCardResponseMapper
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
 @WebMvcTest(MemberNewsCardRetrieveApi::class)
-class MemberNewsCardRetrieveTest : ApiDocsTestBase() {
+class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
 
     @MockkBean
     private lateinit var memberNewsCardRetrieve: MemberNewsCardRetrieve
@@ -49,18 +48,16 @@ class MemberNewsCardRetrieveTest : ApiDocsTestBase() {
                 size = size
             )
         } returns (
-            RetrieveAllNewsCardResponseMapper.persistenceToResponseForm(
-                listOf(
-                    NewsCard(
-                        category = Category(CategoryName.POLITICS),
-                        multipleNews = "1, 2, 3, 4, 5",
-                        keywords = "테스트 키워드1, 테스트 키워드2, 테스트 키워드3, 테스트 키워드4,",
-                        createdAt = LocalDateTime.now(),
-                        modifiedAt = LocalDateTime.now(),
-                    )
+            listOf(
+                NewsCard(
+                    category = Category(CategoryName.POLITICS),
+                    multipleNews = "1, 2, 3, 4, 5",
+                    keywords = "테스트 키워드1, 테스트 키워드2, 테스트 키워드3, 테스트 키워드4,",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
                 )
             )
-            )
+        )
 
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders

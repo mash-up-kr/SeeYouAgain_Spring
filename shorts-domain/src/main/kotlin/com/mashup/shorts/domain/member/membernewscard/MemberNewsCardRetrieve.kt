@@ -9,7 +9,7 @@ import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.member.MemberRepository
 import com.mashup.shorts.domain.member.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.member.membernews.MemberNewsRepository
-import com.mashup.shorts.domain.member.membernewscard.dtomapper.RetrieveAllNewsCardResponseMapper
+import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 
 @Service
@@ -26,7 +26,7 @@ class MemberNewsCardRetrieve(
         targetDateTime: LocalDateTime,
         cursorId: Long,
         size: Int,
-    ): List<RetrieveAllNewsCardResponseMapper> {
+    ): List<NewsCard> {
         val member = memberRepository.findByUniqueId(memberUniqueId) ?: throw ShortsBaseException.from(
             shortsErrorCode = E404_NOT_FOUND,
             resultErrorMessage = "${memberUniqueId}에 해당하는 사용자는 존재하지 않습니다."
@@ -35,14 +35,19 @@ class MemberNewsCardRetrieve(
         val memberCategories = memberCategoryRepository.findByMember(member)
         val filteredNewsIds = filterAlreadySavedNews(member)
 
-        return RetrieveAllNewsCardResponseMapper.persistenceToResponseForm(
-            newsCardRepository.retrieveNewsCardByMemberAndCategory(
-                filteredNewsIds = filteredNewsIds,
-                cursorId = cursorId,
-                categories = memberCategories.map { it.id },
-                size = size
-            )
+        val newsCards = newsCardRepository.findNewsCardsByMemberFilteredNewsIdsAndCursorId(
+            filteredNewsIds = filteredNewsIds,
+            cursorId = cursorId,
+            categories = memberCategories.map { it.id },
+            size = size
         )
+
+        return newsCards.filter { it ->
+            it.multipleNews.split(", ")
+                .map { it.toLong() }
+                .intersect(filteredNewsIds.toSet())
+                .isEmpty()
+        }
     }
 
     private fun filterAlreadySavedNews(member: Member): List<Long> {
