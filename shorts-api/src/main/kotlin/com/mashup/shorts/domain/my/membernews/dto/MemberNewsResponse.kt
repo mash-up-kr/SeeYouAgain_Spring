@@ -5,7 +5,7 @@ import com.mashup.shorts.domain.news.News
 
 data class MemberNewsRetrieveResponse(
     val today: LocalDate? = LocalDate.now(),
-    var savedShortsCount: Int = 0,
+    var savedNewsCount: Int = 0,
     var memberNewsResponse: List<MemberNewsResponse>,
 )
 
