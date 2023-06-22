@@ -37,7 +37,7 @@ include::../../../../../shorts-api/{snippets}/내 정보 조회/response-body.ad
 
 ---
 
-=== 오래 간직할 숏스
+=== 오래 간직할 숏스 추가
 
 image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/368fa0a2-93e2-454d-b3f6-e513ef264fd7[alt=Flower,width=240,height=180]
 
@@ -77,15 +77,11 @@ include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조회/http-request.adoc[]
 
-==== [Request Filed]
-
-include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조회/request-fields.adoc[]
-
-===== [Response Field]
+==== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조회/response-fields.adoc[]
 
-===== [Response HTTP Example]
+==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조회/http-response.adoc[]
 
