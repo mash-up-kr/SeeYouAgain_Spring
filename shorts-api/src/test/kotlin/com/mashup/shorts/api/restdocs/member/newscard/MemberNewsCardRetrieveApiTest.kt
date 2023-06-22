@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.restdocs.headers.HeaderDocumentation
+import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
-import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
+import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.restdocs.request.RequestDocumentation.queryParameters
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
@@ -17,7 +18,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils
-import com.mashup.shorts.common.aop.AuthContext
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.membernewscard.MemberNewsCardRetrieve
@@ -33,11 +33,13 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
     private lateinit var memberNewsCardRetrieve: MemberNewsCardRetrieve
 
     @Test
-    fun 뉴스카드_모두_조회() {
+    fun `홈 조회`() {
         // ready
         val targetDateTime = LocalDateTime.now().minusDays(1)
         val cursorId = 0L
         val size = 10
+        val uniqueKey = "uniqueKey"
+        val headerName = "Authorization"
 
         every { memberNewsCardRetrieve.retrieveNewsCardByMember(any(), any(), any(), any()) } returns (
             listOf(
@@ -49,11 +51,12 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                     modifiedAt = LocalDateTime.now(),
                 )
             )
-        )
+            )
 
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .get("/v1/member-news-card")
+                .header(headerName, uniqueKey)
                 .param("targetDateTime", targetDateTime.toString())
                 .param("cursorId", cursorId.toString())
                 .param("size", size.toString())
@@ -67,6 +70,9 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                     RestDocsUtils.getDocumentRequest(),
                     RestDocsUtils.getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
+                    requestHeaders(
+                        HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
+                    ),
                     queryParameters(
                         RequestDocumentation
                             .parameterWithName("targetDateTime")
@@ -78,7 +84,7 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                             .parameterWithName("size")
                             .description("<필수값> 페이징 사이즈(최대 10까지 허용합니다.)"),
                     ),
-                    PayloadDocumentation.responseFields(
+                    responseFields(
                         fieldWithPath("status").type(JsonFieldType.NUMBER)
                             .description("API 성공 여부"),
                         fieldWithPath("result[].id").type(JsonFieldType.NUMBER)

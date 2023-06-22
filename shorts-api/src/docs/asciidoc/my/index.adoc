@@ -23,15 +23,15 @@ include::../../../../../shorts-api/{snippets}/내 정보 조회/http-request.ado
 
 include::../../../../../shorts-api/{snippets}/내 정보 조회/request-headers.adoc[]
 
-===== [Response Field]
+==== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/내 정보 조회/response-fields.adoc[]
 
-===== [Response HTTP Example]
+==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/내 정보 조회/http-response.adoc[]
 
-===== [Response Body]
+==== [Response Body]
 
 include::../../../../../shorts-api/{snippets}/내 정보 조회/response-body.adoc[]
 
@@ -49,7 +49,11 @@ include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오
 
 include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/http-request.adoc[]
 
-===== [Response HTTP Example]
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/request-headers.adoc[]
+
+==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/http-response.adoc[]
 
@@ -71,15 +75,15 @@ include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/http-reque
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/request-headers.adoc[]
 
-===== [Response Field]
+==== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/response-fields.adoc[]
 
-===== [Response Body]
+==== [Response Body]
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/response-body.adoc[]
 
-===== [Response HTTP Example]
+==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/http-response.adoc[]
 
@@ -99,15 +103,19 @@ include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/pag
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/http-request.adoc[]
 
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/request-headers.adoc[]
+
 ==== [Request Filed]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/request-fields.adoc[]
 
-===== [Response Field]
+==== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/response-fields.adoc[]
 
-===== [Response HTTP Example]
+==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/http-response.adoc[]
 
@@ -124,6 +132,10 @@ include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조
 ==== [HTTP Request]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조회/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조회/request-headers.adoc[]
 
 ==== [Response Field]
 
@@ -155,14 +167,14 @@ include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/request-heade
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/path-parameters.adoc[]
 
-===== [Response Field]
+==== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/response-fields.adoc[]
 
-===== [Response Body]
+==== [Response Body]
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/response-body.adoc[]
 
-===== [Response HTTP Example]
+==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/http-response.adoc[]

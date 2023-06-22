@@ -19,7 +19,7 @@ include::../../../../../shorts-api/{snippets}/핫 키워드 조회/page-header.a
 
 include::../../../../../shorts-api/{snippets}/핫 키워드 조회/http-request.adoc[]
 
-===== [Response Field]
+==== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/핫 키워드 조회/response-fields.adoc[]
 
@@ -27,7 +27,7 @@ include::../../../../../shorts-api/{snippets}/핫 키워드 조회/response-fiel
 
 include::../../../../../shorts-api/{snippets}/핫 키워드 조회/response-body.adoc[]
 
-===== [Response HTTP Example]
+==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/핫 키워드 조회/http-response.adoc[]
 
@@ -41,7 +41,7 @@ include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/pag
 
 include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/http-request.adoc[]
 
-===== [Response Field]
+==== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/response-fields.adoc[]
 
@@ -49,6 +49,6 @@ include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/res
 
 include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/response-body.adoc[]
 
-===== [Response HTTP Example]
+==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/핫 키워드로 숏스 조회/http-response.adoc[]
