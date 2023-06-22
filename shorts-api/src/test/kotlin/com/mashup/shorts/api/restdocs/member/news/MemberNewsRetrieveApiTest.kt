@@ -3,6 +3,8 @@ package com.mashup.shorts.api.restdocs.member.news
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
+import org.springframework.restdocs.headers.HeaderDocumentation
+import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
@@ -31,6 +33,9 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
         val cursorWrittenDateTime = "2023.06.15. 오후 3:38"
         val size = 10
         val pivot = "ASC"
+        val uniqueKey = "uniqueKey"
+        val headerName = "Authorization"
+
         every { memberNewsRetrieve.retrieveMemberNews(any(), any(), any(), any()) } returns (
             listOf(
                 News(
@@ -49,6 +54,7 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .get("/v1/member-news")
+                .header(headerName, uniqueKey)
                 .param("cursorWrittenDateTime", cursorWrittenDateTime)
                 .param("size", size.toString())
                 .param("pivot", pivot)
@@ -62,6 +68,9 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
                     RestDocsUtils.getDocumentRequest(),
                     RestDocsUtils.getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
+                    requestHeaders(
+                        HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
+                    ),
                     RequestDocumentation.queryParameters(
                         RequestDocumentation
                             .parameterWithName("cursorWrittenDateTime")

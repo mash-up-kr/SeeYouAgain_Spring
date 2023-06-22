@@ -32,9 +32,12 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
 
     @Test
     fun 뉴스카드_다_읽었어요() {
+        val uniqueKey = "uniqueKey"
+        val headerName = "Authorization"
+
         every { memberNewsCardDelete.clearMemberNewsCard(any(), any()) } returns (
             mapOf("shortsCount" to 1234)
-        )
+            )
 
         // ready
         val url = "/v1/member-news-card"
@@ -43,6 +46,7 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .delete(url)
+                .header(headerName, uniqueKey)
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
         )
@@ -50,10 +54,13 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
         response.andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
                 document(
-                    "뉴스카드 다 읽었어요 (오늘의 숏스 모두 삭제 후 숏스 카운트 + 1)",
+                    "뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)",
                     getDocumentRequest(),
                     getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
+                    requestHeaders(
+                        HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
+                    ),
                     responseFields(
                         fieldWithPath("status").type(NUMBER).description("API 성공 여부"),
                         fieldWithPath("result.shortsCount").type(NUMBER).description("읽은 숏스 갯수"),

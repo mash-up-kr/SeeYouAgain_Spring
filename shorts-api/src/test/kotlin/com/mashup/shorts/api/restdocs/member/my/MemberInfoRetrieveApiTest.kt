@@ -10,7 +10,7 @@ import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
-import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
+import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet.Companion.pageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.my.MemberInfo
@@ -46,17 +46,23 @@ class MemberInfoRetrieveApiTest : ApiDocsTestBase() {
                     "내 정보 조회",
                     getDocumentRequest(),
                     getDocumentResponse(),
-                    PageHeaderSnippet.pageHeaderSnippet(),
+                    pageHeaderSnippet(),
                     HeaderDocumentation.requestHeaders(
                         HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
                     ),
                     PayloadDocumentation.responseFields(
-                        PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER).description("API HTTP Status 값"),
-                        PayloadDocumentation.fieldWithPath("result.nickname").type(JsonFieldType.STRING).description("사용자 닉네임"),
-                        PayloadDocumentation.fieldWithPath("result.joinPeriod").type(JsonFieldType.NUMBER).description("가입 기간"),
-                        PayloadDocumentation.fieldWithPath("result.totalShortsThisMonth").type(JsonFieldType.NUMBER).description("이번 달에 '다 읽었어요' 누른 횟수"),
-                        PayloadDocumentation.fieldWithPath("result.todayShorts").type(JsonFieldType.NUMBER).description("오늘의 숏스 개수"),
-                        PayloadDocumentation.fieldWithPath("result.savedShorts").type(JsonFieldType.NUMBER).description("오래 간직할 숏스 개수")
+                        PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)
+                            .description("API HTTP Status 값"),
+                        PayloadDocumentation.fieldWithPath("result.nickname").type(JsonFieldType.STRING)
+                            .description("사용자 닉네임"),
+                        PayloadDocumentation.fieldWithPath("result.joinPeriod").type(JsonFieldType.NUMBER)
+                            .description("가입 기간"),
+                        PayloadDocumentation.fieldWithPath("result.totalShortsThisMonth").type(JsonFieldType.NUMBER)
+                            .description("이번 달에 '다 읽었어요' 누른 횟수"),
+                        PayloadDocumentation.fieldWithPath("result.todayShorts").type(JsonFieldType.NUMBER)
+                            .description("오늘의 숏스 개수"),
+                        PayloadDocumentation.fieldWithPath("result.savedShorts").type(JsonFieldType.NUMBER)
+                            .description("오래 간직할 숏스 개수")
                     )
                 )
             )

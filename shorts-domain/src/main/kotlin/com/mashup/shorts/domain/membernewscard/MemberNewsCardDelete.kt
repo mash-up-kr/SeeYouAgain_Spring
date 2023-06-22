@@ -1,13 +1,9 @@
 package com.mashup.shorts.domain.membernewscard
 
 import java.time.LocalDate
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
 import com.mashup.shorts.domain.member.Member
-import com.mashup.shorts.domain.member.MemberRepository
 import com.mashup.shorts.domain.membershortscount.MemberShortsCount
 import com.mashup.shorts.domain.membershortscount.MemberShortsCountRepository
 import com.mashup.shorts.domain.newscard.NewsCardRepository
@@ -16,17 +12,11 @@ import com.mashup.shorts.domain.newscard.NewsCardRepository
 @Transactional
 class MemberNewsCardDelete(
     private val memberNewsCardRepository: MemberNewsCardRepository,
-    private val memberRepository: MemberRepository,
     private val newsCardRepository: NewsCardRepository,
     private val memberShortsCountRepository: MemberShortsCountRepository,
 ) {
 
-    fun clearMemberNewsCard(memberId: Long, newsCardId: Long): Map<String, Int> {
-        val member = memberRepository.findByIdOrNull(memberId) ?: throw ShortsBaseException.from(
-            shortsErrorCode = E404_NOT_FOUND,
-            resultErrorMessage = "${memberId}에 해당하는 유저가 존재하지 않습니다."
-        )
-        val today = LocalDate.now()
+    fun clearMemberNewsCard(today: LocalDate, member: Member): Map<String, Int> {
         val memberShortsCount = memberShortsCountRepository.findByMemberAndTargetDate(
             member = member,
             targetDate = today
