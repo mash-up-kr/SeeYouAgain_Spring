@@ -28,4 +28,8 @@ class MemberNewsRetrieve(
             pivot
         )
     }
+
+    fun retrieveMemberNewsCount(member: Member): Int {
+        return memberNewsRepository.findAllByMember(member).size
+    }
 }

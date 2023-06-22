@@ -7,7 +7,7 @@ import com.mashup.shorts.domain.member.Member
 
 @Repository
 interface MemberShortsCountRepository : JpaRepository<MemberShortsCount, Long> {
-    fun findByMemberAndTargetTime(member: Member, targetTime: LocalDate): MemberShortsCount?
+    fun findByMemberAndTargetDate(member: Member, targetDate: LocalDate): MemberShortsCount?
 
-    fun findAllByMemberAndTargetTimeAfter(member: Member, targetTime: LocalDate): List<MemberShortsCount>
+    fun findAllByMemberAndTargetDateAfter(member: Member, targetDate: LocalDate): List<MemberShortsCount>
 }
