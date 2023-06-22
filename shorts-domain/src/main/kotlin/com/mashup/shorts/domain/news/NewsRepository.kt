@@ -6,11 +6,9 @@ import org.springframework.stereotype.Repository
 import com.mashup.shorts.domain.category.Category
 
 @Repository
-interface NewsRepository : JpaRepository<News, Long> {
+interface NewsRepository : JpaRepository<News, Long>, NewsQueryDSLRepository {
 
     fun findAllByCategory(category: Category): List<News>
-
-    fun findByTitle(title: String): News?
 
     @Query("SELECT distinct * FROM news WHERE news.title = :title", nativeQuery = true)
     fun customFindByTitle(title: String): News?
