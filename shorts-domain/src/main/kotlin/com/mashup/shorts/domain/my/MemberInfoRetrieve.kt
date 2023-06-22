@@ -30,7 +30,7 @@ class MemberInfoRetrieve(
     private fun getTotalShortsThisMonth(now: LocalDate, member: Member): Int {
         val targetDateTime = LocalDate.of(now.year, now.month, 1).minusDays(1)
         var totalShorts = 0
-        memberShortsCountRepository.findAllByMemberAndTargetTimeAfter(member, targetDateTime)
+        memberShortsCountRepository.findAllByMemberAndTargetDateAfter(member, targetDateTime)
             .map { msc -> totalShorts += msc.count }
         return totalShorts
     }
