@@ -74,7 +74,7 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
                     RequestDocumentation.queryParameters(
                         RequestDocumentation
                             .parameterWithName("cursorWrittenDateTime")
-                            .description("커서 지정 값 ex) 2023.06.15. 오후 3:38 와 같이 입력해 주시고, 첫 페이지 요청 시 빈 문자열을 넣어주세요"),
+                            .description("STRING 타입, 커서 지정 값 ex) 2023.06.15. 오후 3:38 와 같이 입력해 주시고, 첫 페이지 요청 시 빈 문자열을 넣어주세요"),
                         RequestDocumentation
                             .parameterWithName("size")
                             .description("<필수값> 페이징 사이즈(최대 10까지 허용합니다.)"),
@@ -111,7 +111,7 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
                             .description("작성 시각"),
                         PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].type")
                             .type(JsonFieldType.STRING)
-                            .description("헤드라인 뉴스인지, 일반 뉴스인지"),
+                            .description("응답 예시 : [HEADLINE, NORMAL],헤드라인 뉴스인지 일반 뉴스인지 구분하는 필드입니다."),
                     )
                 )
             )
