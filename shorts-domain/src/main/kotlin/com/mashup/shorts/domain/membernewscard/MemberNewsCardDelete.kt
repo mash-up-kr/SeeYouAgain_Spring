@@ -30,7 +30,7 @@ class MemberNewsCardDelete(
         val newMemberShortsCount = MemberShortsCount(
             member = member,
             count = 1,
-            targetTime = today
+            targetDate = today
         )
         memberShortsCountRepository.save(newMemberShortsCount)
         return mapOf("shortsCount" to newMemberShortsCount.count)

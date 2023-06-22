@@ -6,13 +6,13 @@ import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
 import com.mashup.shorts.domain.news.News
-import com.mashup.shorts.domain.newsnewscard.NewsNewsCardQueryDSLRepository
+import com.mashup.shorts.domain.news.NewsRepository
 
 @Service
 @Transactional(readOnly = true)
 class NewsCardRetrieve(
     private val newsCardRepository: NewsCardRepository,
-    private val newsNewsCardQueryDSLRepository: NewsNewsCardQueryDSLRepository,
+    private val newsRepository: NewsRepository,
 ) {
 
     fun retrieveDetailNewsInNewsCard(
@@ -28,7 +28,7 @@ class NewsCardRetrieve(
             )
         val newsIdBundle = newsCard.multipleNews.split(", ").map { it.toLong() }
 
-        return newsNewsCardQueryDSLRepository.loadNewsBundleByCursorAndNewsCardMultipleNews(
+        return newsRepository.loadNewsBundleByCursorAndNewsCardMultipleNews(
             cursorWrittenDateTime,
             newsIdBundle,
             size,
