@@ -26,11 +26,28 @@ class MemberNewsCardRetrieve(
         val memberCategories = memberCategoryRepository.findByMember(member)
         val filteredNewsIds = filterAlreadySavedNews(member)
 
+        val startDateTime = targetDateTime
+            .withHour(targetDateTime.hour)
+            .withMinute(0)
+            .withSecond(0)
+            .withNano(0)
+
+        val endDateTime = targetDateTime
+            .withHour(targetDateTime.hour)
+            .withMinute(59)
+            .withSecond(59)
+            .withNano(59)
+
+        println("startDateTime = ${startDateTime}")
+        println("endDateTime = ${endDateTime}")
+
         val newsCards = newsCardRepository.findNewsCardsByMemberFilteredNewsIdsAndCursorId(
             filteredNewsIds = filteredNewsIds,
             cursorId = cursorId,
+            startDateTime = startDateTime,
+            endDateTime = endDateTime,
             categories = memberCategories.map { it.category.id },
-            size = size
+            size = size,
         )
 
         return newsCards.filter { it ->

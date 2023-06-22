@@ -14,6 +14,8 @@ class NewsCardQueryDSLRepositoryImpl(
     override fun findNewsCardsByMemberFilteredNewsIdsAndCursorId(
         filteredNewsIds: List<Long>,
         cursorId: Long,
+        startDateTime: LocalDateTime,
+        endDateTime: LocalDateTime,
         categories: List<Long>,
         size: Int,
     ): List<NewsCard> {
@@ -23,8 +25,8 @@ class NewsCardQueryDSLRepositoryImpl(
             .fetchJoin()
             .where(cursorCondition(cursorId))
             .where(categoryCondition(categories))
-            .where(newsCard.createdAt.loe(LocalDateTime.now()))
-            .orderBy(newsCard.id.desc())
+            .where(newsCard.createdAt.between(startDateTime, endDateTime))
+            .orderBy(newsCard.id.asc())
             .limit(size.toLong())
             .fetch()
     }
@@ -55,7 +57,7 @@ class NewsCardQueryDSLRepositoryImpl(
 
     private fun cursorCondition(cursorId: Long): Predicate? {
         return if (cursorId != 0.toLong()) {
-            newsCard.id.lt(cursorId)
+            newsCard.id.gt(cursorId)
         } else {
             null
         }
