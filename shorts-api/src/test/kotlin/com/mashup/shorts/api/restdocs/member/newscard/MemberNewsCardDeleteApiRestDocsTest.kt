@@ -21,7 +21,6 @@ import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.membernewscard.MemberNewsCardDelete
 import com.mashup.shorts.domain.my.membernewscard.MemberNewsCardDeleteApi
 import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardBulkDeleteRequest
-import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardClearRequest
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
@@ -35,19 +34,15 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
     fun 뉴스카드_다_읽었어요() {
         every { memberNewsCardDelete.clearMemberNewsCard(any(), any()) } returns (
             mapOf("shortsCount" to 1234)
-            )
+        )
 
         // ready
         val url = "/v1/member-news-card"
-        val memberId = 1L
-        val newsCardId = 1L
-        val body = MemberNewsCardClearRequest(memberId, newsCardId)
 
         // execute
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .delete(url)
-                .content(objectMapper.writeValueAsString(body))
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
         )
@@ -55,14 +50,10 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
         response.andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
                 document(
-                    "뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)",
+                    "뉴스카드 다 읽었어요 (오늘의 숏스 모두 삭제 후 숏스 카운트 + 1)",
                     getDocumentRequest(),
                     getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
-                    requestFields(
-                        fieldWithPath("memberId").description("멤버 id"),
-                        fieldWithPath("newsCardId").description("뉴스카드 id"),
-                    ),
                     responseFields(
                         fieldWithPath("status").type(NUMBER).description("API 성공 여부"),
                         fieldWithPath("result.shortsCount").type(NUMBER).description("읽은 숏스 갯수"),

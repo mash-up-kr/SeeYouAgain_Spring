@@ -65,14 +65,10 @@ class MemberNewsCardIntegrationTest(
     fun 뉴스카드_다읽었어요() {
         // ready
         val url = "/v1/member-news-card"
-        val memberId = 1L
-        val newsCardId = 1L
-        val body = MemberNewsCardClearRequest(memberId, newsCardId)
 
         // execute
         val response = mockMvc.perform(
             MockMvcRequestBuilders.delete(url)
-                .content(objectMapper.writeValueAsString(body))
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
