@@ -19,8 +19,8 @@ import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
-import com.mashup.shorts.domain.keyword.HotKeywordRetrieve
 import com.mashup.shorts.domain.hot.keyword.HotKeywordsRetrieveApi
+import com.mashup.shorts.domain.keyword.HotKeywordRetrieve
 import com.mashup.shorts.domain.keyword.dtomapper.RetrieveDetailHotKeyWordResponseMapper
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.ninjasquad.springmockk.MockkBean
@@ -103,8 +103,6 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
                     responseFields(
                         PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)
                             .description("API HTTP Status 값"),
-                        PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)
-                            .description("API 성공 여부"),
                         PayloadDocumentation.fieldWithPath("result[].id").type(JsonFieldType.NUMBER)
                             .description("숏스 id"),
                         PayloadDocumentation.fieldWithPath("result[].keywords").type(JsonFieldType.STRING)
