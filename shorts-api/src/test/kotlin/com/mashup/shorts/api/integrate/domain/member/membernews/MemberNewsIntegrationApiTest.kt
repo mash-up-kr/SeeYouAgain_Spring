@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.shorts.api.ApiTestBase
 import com.mashup.shorts.common.aop.AuthContext
 import com.mashup.shorts.domain.member.Member
+import com.mashup.shorts.domain.newscard.Pivots
 
 @SpringBootTest
 @Disabled
@@ -25,7 +26,7 @@ import com.mashup.shorts.domain.member.Member
 @Transactional
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class MemberNewsRetrieveApiTest(
+class MemberNewsIntegrationApiTest(
     @Autowired
     protected val mockMvc: MockMvc,
     @Autowired
@@ -34,11 +35,10 @@ class MemberNewsRetrieveApiTest(
 
     @Test
     @DisplayName("[통합 테스트] : 멤버 오래 간직할 뉴스 모두 조회")
-    fun 카드뉴스_전체_조회() {
+    fun `오래 간직할 뉴스 모두 조회`() {
         // ready
         val url = "/v1/member-news"
-        val cursorId = 0L
-        val size = 20
+        val size = 10
 
         val auth = "Bearer shorts-user"
         AuthContext.USER_CONTEXT.set(Member(uniqueId = "unique", nickname = "nickname"))
@@ -47,9 +47,9 @@ class MemberNewsRetrieveApiTest(
         val result = mockMvc.perform(
             MockMvcRequestBuilders.get(url)
                 .header("Authorization", auth)
-                .param("targetDateTime", LocalDateTime.now().minusDays(1).minusHours(0).toString())
-                .param("cursorId", cursorId.toString())
+                .param("cursorWrittenDateTime", LocalDateTime.now().minusDays(1).minusHours(0).toString())
                 .param("size", size.toString())
+                .param("pivot", Pivots.ASC.name)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )

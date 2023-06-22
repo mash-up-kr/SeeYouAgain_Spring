@@ -7,6 +7,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
+import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
@@ -44,7 +45,7 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
                     category = Category(CategoryName.SCIENCE)
                 )
             ))
-
+        every { memberNewsRetrieve.retrieveMemberNewsCount(any()) } returns (1234)
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .get("/v1/member-news")
@@ -72,22 +73,35 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
                             .parameterWithName("pivot")
                             .description("<필수값> 정렬 기준 [ASC, DESC] 둘 중 하나만 허용합니다. ASC는 오래된 순, DESC는 최신 순 입니다."),
                     ),
-                    PayloadDocumentation.responseFields(
+                    responseFields(
                         PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)
                             .description("API 성공 여부"),
-                        PayloadDocumentation.fieldWithPath("result[].id").type(JsonFieldType.NUMBER)
+                        PayloadDocumentation.fieldWithPath("result.today").type(JsonFieldType.STRING)
+                            .description("오늘 날짜"),
+                        PayloadDocumentation.fieldWithPath("result.savedNewsCount").type(JsonFieldType.NUMBER)
+                            .description("저장한 뉴스 갯수"),
+                        PayloadDocumentation.subsectionWithPath("result.memberNewsResponse[]")
+                            .description("멤버 뉴스 응답"),
+                        PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].id")
+                            .type(JsonFieldType.NUMBER)
                             .description("뉴스 id"),
-                        PayloadDocumentation.fieldWithPath("result[].title").type(JsonFieldType.STRING)
+                        PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].title")
+                            .type(JsonFieldType.STRING)
                             .description("뉴스 제목"),
-                        PayloadDocumentation.fieldWithPath("result[].thumbnailImageUrl").type(JsonFieldType.STRING)
+                        PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].thumbnailImageUrl")
+                            .type(JsonFieldType.STRING)
                             .description("뉴스 이미지 링크"),
-                        PayloadDocumentation.fieldWithPath("result[].newsLink").type(JsonFieldType.STRING)
+                        PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].newsLink")
+                            .type(JsonFieldType.STRING)
                             .description("뉴스 링크"),
-                        PayloadDocumentation.fieldWithPath("result[].press").type(JsonFieldType.STRING)
+                        PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].press")
+                            .type(JsonFieldType.STRING)
                             .description("언론사"),
-                        PayloadDocumentation.fieldWithPath("result[].writtenDateTime").type(JsonFieldType.STRING)
+                        PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].writtenDateTime")
+                            .type(JsonFieldType.STRING)
                             .description("작성 시각"),
-                        PayloadDocumentation.fieldWithPath("result[].type").type(JsonFieldType.STRING)
+                        PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].type")
+                            .type(JsonFieldType.STRING)
                             .description("헤드라인 뉴스인지, 일반 뉴스인지"),
                     )
                 )
