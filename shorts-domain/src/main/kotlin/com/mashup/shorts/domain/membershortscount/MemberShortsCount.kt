@@ -26,8 +26,8 @@ class MemberShortsCount(
     @Column(name = "count", nullable = false)
     var count: Int = 0,
 
-    @Column(name = "targetTime", nullable = false)
-    val targetTime: LocalDate,
+    @Column(name = "target_date", nullable = false)
+    val targetDate: LocalDate,
 ) {
 
     fun increaseCount() {
