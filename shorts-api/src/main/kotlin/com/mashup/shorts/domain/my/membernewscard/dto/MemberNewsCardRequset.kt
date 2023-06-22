@@ -5,7 +5,6 @@ data class MemberNewsCardCreateRequest(
 )
 
 data class MemberNewsCardClearRequest(
-    val memberId: Long,
     val newsCardId: Long,
 )
 

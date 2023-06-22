@@ -71,15 +71,15 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/bc47422a
 
 ==== [Request URI]
 
-include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/page-header.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘의 숏스 모두 삭제 후 숏스 카운트 + 1)/page-header.adoc[]
 
 ==== [HTTP Request]
 
-include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/http-request.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘의 숏스 모두 삭제 후 숏스 카운트 + 1)/http-request.adoc[]
 
 ===== [Response HTTP Example]
 
-include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/http-response.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘의 숏스 모두 삭제 후 숏스 카운트 + 1)/http-response.adoc[]
 
 ---
 
