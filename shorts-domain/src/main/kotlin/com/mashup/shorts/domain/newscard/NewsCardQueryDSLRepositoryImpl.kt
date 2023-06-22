@@ -21,10 +21,10 @@ class NewsCardQueryDSLRepositoryImpl(
             .selectFrom(newsCard)
             .join(newsCard.category, category)
             .fetchJoin()
-            .where(newsCard.id.gt(cursorId))
+            .where(cursorCondition(cursorId))
             .where(categoryCondition(categories))
             .where(newsCard.createdAt.loe(LocalDateTime.now()))
-            .orderBy(newsCard.id.asc())
+            .orderBy(newsCard.id.desc())
             .limit(size.toLong())
             .fetch()
     }
@@ -48,6 +48,14 @@ class NewsCardQueryDSLRepositoryImpl(
     private fun categoryCondition(categories: List<Long>): Predicate? {
         return if (categories.isNotEmpty()) {
             newsCard.category.id.`in`(categories)
+        } else {
+            null
+        }
+    }
+
+    private fun cursorCondition(cursorId: Long): Predicate? {
+        return if (cursorId != 0.toLong()) {
+            newsCard.id.lt(cursorId)
         } else {
             null
         }

@@ -29,7 +29,7 @@ class MemberNewsCardRetrieve(
         val newsCards = newsCardRepository.findNewsCardsByMemberFilteredNewsIdsAndCursorId(
             filteredNewsIds = filteredNewsIds,
             cursorId = cursorId,
-            categories = memberCategories.map { it.id },
+            categories = memberCategories.map { it.category.id },
             size = size
         )
 
