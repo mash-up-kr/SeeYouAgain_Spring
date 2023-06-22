@@ -59,14 +59,20 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
 
     @Test
     fun `핫 키워드로 숏스 조회`() {
-
         every { hotKeywordRetrieve.retrieveDetailHotKeyword(any(), any(), any()) } returns (
             RetrieveDetailHotKeyWordResponseMapper.persistenceToResponseForm(
                 listOf(
                     NewsCard(
-                        category = Category(CategoryName.POLITICS),
+                        category = Category(CategoryName.CULTURE),
                         multipleNews = "1, 2, 3, 4, 5",
-                        keywords = "테스트 키워드1, 테스트 키워드2, 테스트 키워드3, 테스트 키워드4,",
+                        keywords = "스프링, 빠지, 가평, 디스코드",
+                        createdAt = LocalDateTime.now(),
+                        modifiedAt = LocalDateTime.now(),
+                    ),
+                    NewsCard(
+                        category = Category(CategoryName.SOCIETY),
+                        multipleNews = "6, 7, 8, 9, 10",
+                        keywords = "에어컨, 선풍기, 무더위, 장마",
                         createdAt = LocalDateTime.now(),
                         modifiedAt = LocalDateTime.now(),
                     )

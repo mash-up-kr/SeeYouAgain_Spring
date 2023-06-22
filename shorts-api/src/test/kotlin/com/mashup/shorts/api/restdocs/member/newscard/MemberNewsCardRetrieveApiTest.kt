@@ -88,7 +88,7 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                         fieldWithPath("status").type(JsonFieldType.NUMBER)
                             .description("API 성공 여부"),
                         fieldWithPath("result[].id").type(JsonFieldType.NUMBER)
-                            .description("카드뉴스 id"),
+                            .description("숏스 id"),
                         fieldWithPath("result[].keywords").type(JsonFieldType.STRING)
                             .description("키워드"),
                         fieldWithPath("result[].category").type(JsonFieldType.STRING)
