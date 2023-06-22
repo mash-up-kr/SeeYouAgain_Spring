@@ -1,6 +1,13 @@
 package com.mashup.shorts.domain.my.membernews.dto
 
+import java.time.LocalDate
 import com.mashup.shorts.domain.news.News
+
+data class MemberNewsRetrieveResponse(
+    val today: LocalDate? = LocalDate.now(),
+    var savedShortsCount: Int = 0,
+    var memberNewsResponse: List<MemberNewsResponse>,
+)
 
 data class MemberNewsResponse(
     var id: Long,
