@@ -38,9 +38,6 @@ class MemberNewsCardRetrieve(
             .withSecond(59)
             .withNano(59)
 
-        println("startDateTime = ${startDateTime}")
-        println("endDateTime = ${endDateTime}")
-
         val newsCards = newsCardRepository.findNewsCardsByMemberFilteredNewsIdsAndCursorId(
             filteredNewsIds = filteredNewsIds,
             cursorId = cursorId,
