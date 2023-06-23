@@ -12,7 +12,6 @@ class NewsCardQueryDSLRepositoryImpl(
     private val queryFactory: JPAQueryFactory,
 ) : NewsCardQueryDSLRepository {
     override fun findNewsCardsByMemberFilteredNewsIdsAndCursorId(
-        filteredNewsIds: List<Long>,
         cursorId: Long,
         startDateTime: LocalDateTime,
         endDateTime: LocalDateTime,
