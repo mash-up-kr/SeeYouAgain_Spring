@@ -32,11 +32,12 @@ class CrawlerCore(
     private val keywordExtractor: KeywordExtractor,
 ) {
 
-    @Scheduled(cron = "0 55 * * * *")
+    @Scheduled(cron = "0 0 * * * *")
     internal fun executeCrawling() {
+        val crawledDateTime = LocalDateTime.now()
         for (categoryPair in categoryToUrl) {
             log.info {
-                "${LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))} - crawling start"
+                "${categoryPair.key} - ${crawledDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))} - crawling start"
             }
             val category = when (categoryPair.key) {
                 POLITICS -> categoryRepository.findByName(POLITICS)
@@ -88,14 +89,16 @@ class CrawlerCore(
                     multipleNews = filterSquareBracket(
                         persistenceTargetNewsList.map { it.id }.toString()
                     ),
-                    keywords = extractKeyword
+                    keywords = extractKeyword,
+                    createdAt = crawledDateTime,
+                    modifiedAt = crawledDateTime,
                 )
                 newsCardRepository.save(persistenceNewsCard)
             }
             log.info("Take a break for 1 seconds to prevent request overload")
             Thread.sleep(1000)
         }
-        log.info(LocalDateTime.now().toString() + " - " + "crawling done")
+        log.info("$crawledDateTime - crawling done")
     }
 
     private fun filterSquareBracket(target: String): String {
