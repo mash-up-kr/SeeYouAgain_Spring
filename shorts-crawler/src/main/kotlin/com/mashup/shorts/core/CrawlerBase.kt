@@ -3,15 +3,16 @@ package com.mashup.shorts.core
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import org.springframework.stereotype.Component
-import com.mashup.shorts.core.const.NewsDOMClassNameConst
-import com.mashup.shorts.core.const.NewsDOMClassNameConst.CONTENT_CLASS_NAME
-import com.mashup.shorts.core.const.NewsDOMClassNameConst.IMAGE_ID_NAME
-import com.mashup.shorts.core.const.NewsDOMClassNameConst.PRESS_CLASS_NAME
-import com.mashup.shorts.core.const.NewsDOMClassNameConst.TITLE_CLASS_NAME
-import com.mashup.shorts.core.const.NewsDOMClassNameConst.WRITTEN_DATETIME_CLASS_NAME
-import com.mashup.shorts.core.const.NewsDOMClassNameConst.detailDocClassNames
-import com.mashup.shorts.core.const.NewsLinkElementConst.moreHeadLineLinksElements
-import com.mashup.shorts.core.const.NewsUrlConst.SYMBOLIC_LINK_BASE_URL
+import com.mashup.shorts.core.const.CONTENT_CLASS_NAME
+import com.mashup.shorts.core.const.HEADLINE
+import com.mashup.shorts.core.const.IMAGE_ID_NAME
+import com.mashup.shorts.core.const.NORMAL
+import com.mashup.shorts.core.const.PRESS_CLASS_NAME
+import com.mashup.shorts.core.const.SYMBOLIC_LINK_BASE_URL
+import com.mashup.shorts.core.const.TITLE_CLASS_NAME
+import com.mashup.shorts.core.const.WRITTEN_DATETIME_CLASS_NAME
+import com.mashup.shorts.core.const.detailDocClassNames
+import com.mashup.shorts.core.const.moreHeadLineLinksElements
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.news.News
@@ -117,9 +118,9 @@ class CrawlerBase {
 
     private fun convertHeadLine(headLineFlag: Boolean): String {
         return if (headLineFlag) {
-            NewsDOMClassNameConst.HEADLINE
+            HEADLINE
         } else {
-            NewsDOMClassNameConst.NORMAL
+            NORMAL
         }
     }
 }
