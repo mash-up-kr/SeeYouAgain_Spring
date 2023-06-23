@@ -74,7 +74,7 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
                         multipleNews = "6, 7, 8, 9, 10",
                         keywords = "에어컨, 선풍기, 무더위, 장마",
                         createdAt = LocalDateTime.now(),
-                        modifiedAt = LocalDateTime.now(),
+                        modifiedAt = LocalDateTime.now()
                     )
                 )
             )
