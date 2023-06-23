@@ -15,6 +15,7 @@ class MemberNewsCardRetrieve(
     private val newsCardRepository: NewsCardRepository,
     private val memberCategoryRepository: MemberCategoryRepository,
     private val memberNewsRepository: MemberNewsRepository,
+    private val memberNewsCardRepository: MemberNewsCardRepository,
 ) {
 
     fun retrieveNewsCardByMember(
@@ -25,6 +26,7 @@ class MemberNewsCardRetrieve(
     ): List<NewsCard> {
         val memberCategories = memberCategoryRepository.findByMember(member)
         val filteredNewsIds = filterAlreadySavedNews(member)
+        val filteredNewsCardIds = filterAlreadySavedNewsCards(member)
 
         val startDateTime = targetDateTime
             .withHour(targetDateTime.hour)
@@ -39,7 +41,6 @@ class MemberNewsCardRetrieve(
             .withNano(59)
 
         val newsCards = newsCardRepository.findNewsCardsByMemberFilteredNewsIdsAndCursorId(
-            filteredNewsIds = filteredNewsIds,
             cursorId = cursorId,
             startDateTime = startDateTime,
             endDateTime = endDateTime,
@@ -48,11 +49,16 @@ class MemberNewsCardRetrieve(
         )
 
         return newsCards.filter { it ->
-            it.multipleNews.split(", ")
-                .map { it.toLong() }
-                .intersect(filteredNewsIds.toSet())
-                .isEmpty()
+            !filteredNewsCardIds.contains(it.id) &&
+                it.multipleNews.split(", ")
+                    .map { it.toLong() }
+                    .intersect(filteredNewsIds.toSet())
+                    .isEmpty()
         }
+    }
+
+    private fun filterAlreadySavedNewsCards(member: Member): List<Long> {
+        return memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id }
     }
 
     private fun filterAlreadySavedNews(member: Member): List<Long> {
