@@ -17,6 +17,8 @@ import com.mashup.shorts.domain.category.CategoryName.SCIENCE
 import com.mashup.shorts.domain.category.CategoryName.SOCIETY
 import com.mashup.shorts.domain.category.CategoryName.WORLD
 import com.mashup.shorts.domain.category.CategoryRepository
+import com.mashup.shorts.domain.keyword.HotKeyword
+import com.mashup.shorts.domain.keyword.HotKeywordRepository
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.news.NewsRepository
 import com.mashup.shorts.domain.newscard.NewsCard
@@ -30,11 +32,13 @@ class CrawlerCore(
     private val categoryRepository: CategoryRepository,
     private val crawlerBase: CrawlerBase,
     private val keywordExtractor: KeywordExtractor,
+    private val hotKeywordRepository: HotKeywordRepository
 ) {
 
     @Scheduled(cron = "0 0 * * * *")
     internal fun executeCrawling() {
         val crawledDateTime = LocalDateTime.now()
+        val numOfKeywords: Map<String, Int> = HashMap()
         for (categoryPair in categoryToUrl) {
             log.info {
                 "${categoryPair.key} - ${crawledDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))} - crawling start"
@@ -96,11 +100,37 @@ class CrawlerCore(
                 )
                 newsCardRepository.save(persistenceNewsCard)
 
+                //TODO: 키워드 횟수 카운트
+                countKeyword(numOfKeywords, extractKeyword)
+
                 log.info("Take a break for 1 seconds to prevent request overload")
                 Thread.sleep(1000)
             }
         }
         log.info("$crawledDateTime - crawling done")
+
+        //TODO: 키워드 랭킹 저장
+        saveKeywordRanking(numOfKeywords)
+    }
+
+    //TODO: 테스트 코드 작성
+    private fun saveKeywordRanking(numOfKeywords: Map<String, Int>) {
+        //1위 ~ 10위까지 키워드 랭킹 산정 및 저장, value 기준 내림차순
+        val sortedKeywords = numOfKeywords.toList().sortedByDescending { it.second }
+        val keywordRanking = StringBuilder()
+        for (rank: Int in 0..9) {
+            keywordRanking.append(sortedKeywords[rank]).append(", ")
+        }
+        hotKeywordRepository.save(HotKeyword(keywordRanking = keywordRanking.toString()))
+    }
+
+    //TODO: 테스트 코드 작성
+    private fun countKeyword(numOfKeywords: Map<String, Int>, extractKeyword: String) {
+        val keywords = extractKeyword.split(",")
+        for (keyword: String in keywords) {
+            val cnt = numOfKeywords.getOrDefault(keyword, 0)
+            numOfKeywords.plus(Pair(keyword, cnt + 1))
+        }
     }
 
     private fun filterSquareBracket(target: String): String {
