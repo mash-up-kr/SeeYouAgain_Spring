@@ -64,15 +64,15 @@ class CrawlerCore(
                 category,
             )
 
-            for (newsCard in newsCardBundle) {
+            newsCardBundle.map { newsCard ->
                 val persistenceTargetNewsList = mutableListOf<News>()
-                for (news in newsCard) {
+                newsCard.map { news ->
                     if (news.title !in persistenceNewsBundle.map { it.title }) {
                         persistenceTargetNewsList.add(news)
                         newsRepository.save(news)
                     } else {
                         val alreadyExistNews =
-                            newsRepository.customFindByTitle(news.title) ?: throw ShortsBaseException.from(
+                            newsRepository.findByTitleAndPress(news.title, news.press) ?: throw ShortsBaseException.from(
                                 shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
                                 resultErrorMessage = "뉴스를 저장하는 중 ${news.title} 에 해당하는 뉴스를 찾을 수 없습니다."
                             )
@@ -82,8 +82,9 @@ class CrawlerCore(
                     }
                 }
 
-                // 뉴스 내용 가져올 인덱스를 0으로 고정할지 랜덤값을 넣을지 고려해봐야함.
-                val extractKeyword = keywordExtractor.extractKeyword(persistenceTargetNewsList[0].content)
+                val extractKeyword = keywordExtractor.extractKeyword(
+                    persistenceTargetNewsList[0].content
+                )
                 val persistenceNewsCard = NewsCard(
                     category = category,
                     multipleNews = filterSquareBracket(
@@ -94,9 +95,10 @@ class CrawlerCore(
                     modifiedAt = crawledDateTime,
                 )
                 newsCardRepository.save(persistenceNewsCard)
+
+                log.info("Take a break for 1 seconds to prevent request overload")
+                Thread.sleep(1000)
             }
-            log.info("Take a break for 1 seconds to prevent request overload")
-            Thread.sleep(1000)
         }
         log.info("$crawledDateTime - crawling done")
     }

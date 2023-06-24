@@ -1,7 +1,6 @@
 package com.mashup.shorts.domain.news
 
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import com.mashup.shorts.domain.category.Category
 
@@ -10,6 +9,5 @@ interface NewsRepository : JpaRepository<News, Long>, NewsQueryDSLRepository {
 
     fun findAllByCategory(category: Category): List<News>
 
-    @Query("SELECT distinct * FROM news WHERE news.title = :title", nativeQuery = true)
-    fun customFindByTitle(title: String): News?
+    fun findByTitleAndPress(title: String, press: String): News?
 }
