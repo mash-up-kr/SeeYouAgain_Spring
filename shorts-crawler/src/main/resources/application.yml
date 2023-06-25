@@ -1,5 +1,5 @@
 spring:
   application:
-    name: shorts-web
+    name: shorts-crawler
   messages:
     encoding: UTF-8
