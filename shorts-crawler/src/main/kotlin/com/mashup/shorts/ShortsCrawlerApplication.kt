@@ -9,5 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 class ShortsCrawlerApplication
 
 fun main(args: Array<String>) {
+    System.setProperty("spring.config.location", "classpath:/domain-config/,classpath:/")
     runApplication<ShortsCrawlerApplication>(*args)
 }
