@@ -31,10 +31,6 @@ include::../../../../../shorts-api/{snippets}/내 정보 조회/response-fields.
 
 include::../../../../../shorts-api/{snippets}/내 정보 조회/http-response.adoc[]
 
-==== [Response Body]
-
-include::../../../../../shorts-api/{snippets}/내 정보 조회/response-body.adoc[]
-
 ---
 
 === 오늘의 숏스 다 읽었어요
@@ -78,10 +74,6 @@ include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/request-he
 ==== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/response-fields.adoc[]
-
-==== [Response Body]
-
-include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/response-body.adoc[]
 
 ==== [Response HTTP Example]
 
@@ -170,10 +162,6 @@ include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/path-paramete
 ==== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/response-fields.adoc[]
-
-==== [Response Body]
-
-include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/response-body.adoc[]
 
 ==== [Response HTTP Example]
 
