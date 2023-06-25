@@ -21,6 +21,7 @@ import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.hot.keyword.HotKeywordsRetrieveApi
 import com.mashup.shorts.domain.keyword.HotKeywordRetrieve
+import com.mashup.shorts.domain.keyword.KeywordRanking
 import com.mashup.shorts.domain.keyword.dtomapper.RetrieveDetailHotKeyWordResponseMapper
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.ninjasquad.springmockk.MockkBean
@@ -34,6 +35,11 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
 
     @Test
     fun `핫 키워드 조회`() {
+        every { hotKeywordRetrieve.retrieveHotKeywords(any()) } returns (KeywordRanking(
+            createdAt = "2023-06-25 11:00",
+            ranking = listOf("키워드1", "키워드2", "키워드3")
+        ))
+
         mockMvc.perform(
             RestDocumentationRequestBuilders.get("/v1/hot-keywords")
                 .contentType(MediaType.APPLICATION_JSON)
