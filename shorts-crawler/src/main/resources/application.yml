@@ -3,3 +3,6 @@ spring:
     name: shorts-crawler
   messages:
     encoding: UTF-8
+
+server:
+  port: 8081
