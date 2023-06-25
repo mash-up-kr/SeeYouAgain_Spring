@@ -19,7 +19,7 @@ class KeywordExtractor {
 
         tokenStream.reset()
         while (tokenStream.incrementToken()) {
-            val term = charTermAttribute.toString()
+            val term = charTermAttribute.toString().replace(" ", "")
             if (term !in stopWords && term.length > 1) {
                 wordFrequencies[term] = wordFrequencies.getOrDefault(term, 0) + 1
             }
