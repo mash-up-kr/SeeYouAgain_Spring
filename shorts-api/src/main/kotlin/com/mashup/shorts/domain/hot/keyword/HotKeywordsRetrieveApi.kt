@@ -1,6 +1,7 @@
 package com.mashup.shorts.domain.hot.keyword
 
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -23,8 +24,11 @@ class HotKeywordsRetrieveApi(
 ) {
 
     @GetMapping
-    fun retrieveHotKeywords(): ApiResponse<HotKeywordsResponse> {
-        val keywordRanking = hotKeywordRetrieve.retrieveHotKeywords(LocalDateTime.now())
+    fun retrieveHotKeywords(@RequestParam targetTime: String): ApiResponse<HotKeywordsResponse> {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        // 핫키워드 조회 시간
+        val retrieveTime = LocalDateTime.parse(targetTime, formatter)
+        val keywordRanking = hotKeywordRetrieve.retrieveHotKeywords(retrieveTime)
         return success(OK, KeywordRankingMapper.keywordRankingToResponse(keywordRanking))
     }
 

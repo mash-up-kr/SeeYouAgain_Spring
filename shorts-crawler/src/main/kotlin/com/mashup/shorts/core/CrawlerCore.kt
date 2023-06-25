@@ -10,12 +10,8 @@ import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.core.const.categoryToUrl
 import com.mashup.shorts.core.keyword.KeywordExtractor
-import com.mashup.shorts.domain.category.CategoryName.CULTURE
-import com.mashup.shorts.domain.category.CategoryName.ECONOMIC
-import com.mashup.shorts.domain.category.CategoryName.POLITICS
-import com.mashup.shorts.domain.category.CategoryName.SCIENCE
-import com.mashup.shorts.domain.category.CategoryName.SOCIETY
-import com.mashup.shorts.domain.category.CategoryName.WORLD
+import com.mashup.shorts.domain.category.CategoryName
+import com.mashup.shorts.domain.category.CategoryName.*
 import com.mashup.shorts.domain.category.CategoryRepository
 import com.mashup.shorts.domain.keyword.HotKeyword
 import com.mashup.shorts.domain.keyword.HotKeywordRepository
@@ -38,7 +34,7 @@ class CrawlerCore(
     @Scheduled(cron = "0 0 * * * *")
     internal fun executeCrawling() {
         val crawledDateTime = LocalDateTime.now()
-        val numOfKeywords: Map<String, Int> = HashMap()
+        val numOfKeywords = mutableMapOf<String, Int>()
         for (categoryPair in categoryToUrl) {
             log.info {
                 "${categoryPair.key} - ${crawledDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))} - crawling start"

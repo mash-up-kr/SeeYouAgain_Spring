@@ -28,17 +28,21 @@ class HotKeywordRetrieve(
         return RetrieveDetailHotKeyWordResponseMapper.persistenceToResponseForm(newsCards)
     }
 
-    fun retrieveHotKeywords(now: LocalDateTime): KeywordRanking {
-        val targetTime = LocalDateTime.of(now.year, now.month, now.dayOfMonth, now.hour, 0)
-        val hotKeyword = hotKeywordRepository.findByCreatedAtAfter(targetTime)
+    fun retrieveHotKeywords(targetTime: LocalDateTime): KeywordRanking {
+        val hotKeyword = hotKeywordRepository.findByCreatedAtBetween(targetTime, targetTime.plusHours(1))
             ?: throw ShortsBaseException.from(
                 shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
                 resultErrorMessage = "해당 시간대의 핫 키워드가 존재하지 않습니다."
             )
-        val ranking: List<String> = emptyList()
-        for (keyword in hotKeyword.keywordRanking.split(",")) {
-            ranking.plus(keyword)
+
+        // TODO: 임시 코드 => 리팩터링 해야 함
+        val regex = "\\((.*?), (\\d+)\\)".toRegex()
+        val matches = regex.findAll(hotKeyword.keywordRanking)
+        val result = mutableListOf<String>()
+        for (match in matches) {
+            result.add(match.groupValues[1])
         }
-        return KeywordRanking(hotKeyword.createdAt.toString(), ranking)
+
+        return KeywordRanking(hotKeyword.createdAt.toString(), result)
     }
 }

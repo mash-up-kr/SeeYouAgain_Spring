@@ -19,6 +19,8 @@ include::../../../../../shorts-api/{snippets}/핫 키워드 조회/page-header.a
 
 include::../../../../../shorts-api/{snippets}/핫 키워드 조회/http-request.adoc[]
 
+- Request Parameter: targetTime에는 `yyyy-MM-dd HH:mm` 형식의 String 으로 요청 주시면 됩니다.
+
 ==== [Response Field]
 
 include::../../../../../shorts-api/{snippets}/핫 키워드 조회/response-fields.adoc[]

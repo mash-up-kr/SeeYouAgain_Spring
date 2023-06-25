@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface HotKeywordRepository : JpaRepository<HotKeyword, Long> {
 
-    fun findByCreatedAtAfter(createdAt: LocalDateTime): HotKeyword?
+    fun findByCreatedAtBetween(startTime: LocalDateTime, endTime: LocalDateTime): HotKeyword?
 }
