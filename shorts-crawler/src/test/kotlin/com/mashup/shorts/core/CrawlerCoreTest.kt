@@ -1,4 +1,4 @@
-package main.core
+package com.mashup.shorts.core
 
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
