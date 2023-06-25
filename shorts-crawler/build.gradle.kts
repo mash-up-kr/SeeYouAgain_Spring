@@ -1,7 +1,3 @@
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     api(project(":shorts-domain"))
 
