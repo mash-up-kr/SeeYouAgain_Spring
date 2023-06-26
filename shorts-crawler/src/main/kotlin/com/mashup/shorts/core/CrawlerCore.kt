@@ -10,7 +10,6 @@ import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.core.const.categoryToUrl
 import com.mashup.shorts.core.keyword.KeywordExtractor
-import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.category.CategoryName.*
 import com.mashup.shorts.domain.category.CategoryRepository
 import com.mashup.shorts.domain.keyword.HotKeyword
@@ -82,7 +81,7 @@ class CrawlerCore(
                     }
                 }
 
-                val extractKeyword = keywordExtractor.extractKeyword(
+                val extractedKeywords = keywordExtractor.extractKeywordV2(
                     persistenceTargetNewsList[0].content
                 )
                 val persistenceNewsCard = NewsCard(
@@ -90,18 +89,17 @@ class CrawlerCore(
                     multipleNews = filterSquareBracket(
                         persistenceTargetNewsList.map { it.id }.toString()
                     ),
-                    keywords = extractKeyword,
+                    keywords = extractedKeywords,
                     createdAt = crawledDateTime,
                     modifiedAt = crawledDateTime,
                 )
                 newsCardRepository.save(persistenceNewsCard)
 
                 //TODO: 키워드 횟수 카운트
-                countKeyword(numOfKeywords, extractKeyword)
-
-                log.info("Take a break for 1 seconds to prevent request overload")
-                Thread.sleep(1000)
+                countKeyword(numOfKeywords, extractedKeywords)
             }
+            log.info("Take a break for 1 seconds to prevent request overload")
+            Thread.sleep(1000)
         }
         log.info("$crawledDateTime - crawling done")
 
