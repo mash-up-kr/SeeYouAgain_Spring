@@ -71,10 +71,11 @@ class CrawlerCore(
                         newsRepository.save(news)
                     } else {
                         val alreadyExistNews =
-                            newsRepository.findByTitleAndPress(news.title, news.press) ?: throw ShortsBaseException.from(
-                                shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
-                                resultErrorMessage = "뉴스를 저장하는 중 ${news.title} 에 해당하는 뉴스를 찾을 수 없습니다."
-                            )
+                            newsRepository.findByTitleAndPress(news.title, news.press)
+                                ?: throw ShortsBaseException.from(
+                                    shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
+                                    resultErrorMessage = "뉴스를 저장하는 중 ${news.title} 에 해당하는 뉴스를 찾을 수 없습니다."
+                                )
                         alreadyExistNews.increaseCrawledCount()
                         newsRepository.save(alreadyExistNews)
                         persistenceTargetNewsList.add(alreadyExistNews)
@@ -98,10 +99,10 @@ class CrawlerCore(
                 //TODO: 키워드 횟수 카운트
                 countKeyword(numOfKeywords, extractedKeywords)
             }
-            log.info("Take a break for 1 seconds to prevent request overload")
+            log.info("${categoryPair.key} - crawled complete!!")
             Thread.sleep(1000)
         }
-        log.info("$crawledDateTime - crawling done")
+        log.info("$crawledDateTime - all crawling done")
 
         //TODO: 키워드 랭킹 저장
         saveKeywordRanking(numOfKeywords)
