@@ -9,5 +9,5 @@ interface NewsRepository : JpaRepository<News, Long>, NewsQueryDSLRepository {
 
     fun findAllByCategory(category: Category): List<News>
 
-    fun findByTitleAndPress(title: String, press: String): News?
+    fun findByNewsLink(newsLink: String): News?
 }

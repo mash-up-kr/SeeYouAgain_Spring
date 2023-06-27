@@ -71,26 +71,26 @@ class CrawlerCore(
             newsCardBundle.map { newsCard ->
                 val persistenceTargetNewsBundle = mutableListOf<News>()
                 newsCard.map { news ->
-                    if (news.title !in persistenceNewsBundle.map { it.title }) {
+                    // 이미 저장한 뉴스인 경우
+                    if (news.newsLink in persistenceNewsBundle.map { it.newsLink }) {
+                        val alreadyExistNews =
+                            newsRepository.findByNewsLink(news.newsLink) ?: throw ShortsBaseException.from(
+                                shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
+                                resultErrorMessage = "뉴스를 저장하는 중 ${news.title} 에 해당하는 뉴스를 찾을 수 없습니다."
+                            )
+                        alreadyExistNews.increaseCrawledCount()
+                        persistenceTargetNewsBundle.add(alreadyExistNews)
+                    }
+                    // DB에 존재하지 않는 뉴스인 경우
+                    else {
                         persistenceTargetNewsBundle.add(news)
                         newsRepository.save(news)
-                    } else {
-                        val alreadyExistNews =
-                            newsRepository.findByTitleAndPress(news.title, news.press)
-                                ?: throw ShortsBaseException.from(
-                                    shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
-                                    resultErrorMessage = "뉴스를 저장하는 중 ${news.title} 에 해당하는 뉴스를 찾을 수 없습니다."
-                                )
-                        alreadyExistNews.increaseCrawledCount()
-                        newsRepository.save(alreadyExistNews)
-                        persistenceTargetNewsBundle.add(alreadyExistNews)
                     }
                 }
 
                 val extractedKeywords = keywordExtractor.extractKeywordV2(
-                    persistenceTargetNewsBundle[0].content
+                    persistenceTargetNewsBundle.first().content
                 )
-
                 val persistenceNewsCard = NewsCard(
                     category = category,
                     multipleNews = filterSquareBracket(
@@ -100,17 +100,15 @@ class CrawlerCore(
                     createdAt = crawledDateTime,
                     modifiedAt = crawledDateTime,
                 )
+
                 newsCardRepository.save(persistenceNewsCard)
 
-                //TODO: 키워드 횟수 카운트
                 keywordsCountingPair = countKeyword(keywordsCountingPair, extractedKeywords)
             }
             log.info("${categoryPair.key} - crawled complete!!")
             Thread.sleep(1000)
         }
         log.info("$crawledDateTime - all crawling done")
-
-        //TODO: 키워드 랭킹 저장
         saveKeywordRanking(keywordsCountingPair)
     }
 
