@@ -5,10 +5,11 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 import com.mashup.shorts.ShortsCrawlerApplication
-import com.mashup.shorts.core.CrawlerCore
 
 @Disabled
+@ActiveProfiles("dev")
 @SpringBootTest(classes = [ShortsCrawlerApplication::class])
 class CrawlerCoreTest @Autowired constructor(
     private val crawlerCore: CrawlerCore,

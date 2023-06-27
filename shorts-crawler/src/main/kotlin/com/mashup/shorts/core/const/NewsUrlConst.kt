@@ -2,7 +2,6 @@ package com.mashup.shorts.core.const
 
 import com.mashup.shorts.domain.category.CategoryName
 
-
 internal const val POLITICS_URL = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100"
 internal const val ECONOMY_URL = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101"
 internal const val SOCIETY_URL = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=102"

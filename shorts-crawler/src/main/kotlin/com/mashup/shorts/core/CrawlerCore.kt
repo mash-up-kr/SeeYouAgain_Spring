@@ -10,7 +10,12 @@ import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.core.const.categoryToUrl
 import com.mashup.shorts.core.keyword.KeywordExtractor
-import com.mashup.shorts.domain.category.CategoryName.*
+import com.mashup.shorts.domain.category.CategoryName.CULTURE
+import com.mashup.shorts.domain.category.CategoryName.ECONOMIC
+import com.mashup.shorts.domain.category.CategoryName.POLITICS
+import com.mashup.shorts.domain.category.CategoryName.SCIENCE
+import com.mashup.shorts.domain.category.CategoryName.SOCIETY
+import com.mashup.shorts.domain.category.CategoryName.WORLD
 import com.mashup.shorts.domain.category.CategoryRepository
 import com.mashup.shorts.domain.keyword.HotKeyword
 import com.mashup.shorts.domain.keyword.HotKeywordRepository
@@ -27,13 +32,13 @@ class CrawlerCore(
     private val categoryRepository: CategoryRepository,
     private val crawlerBase: CrawlerBase,
     private val keywordExtractor: KeywordExtractor,
-    private val hotKeywordRepository: HotKeywordRepository
+    private val hotKeywordRepository: HotKeywordRepository,
 ) {
 
     @Scheduled(cron = "0 0 * * * *")
     internal fun executeCrawling() {
         val crawledDateTime = LocalDateTime.now()
-        val numOfKeywords = mutableMapOf<String, Int>()
+        var keywordsCountingPair = mutableMapOf<String, Int>()
         for (categoryPair in categoryToUrl) {
             log.info {
                 "${categoryPair.key} - ${crawledDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))} - crawling start"
@@ -64,10 +69,10 @@ class CrawlerCore(
             )
 
             newsCardBundle.map { newsCard ->
-                val persistenceTargetNewsList = mutableListOf<News>()
+                val persistenceTargetNewsBundle = mutableListOf<News>()
                 newsCard.map { news ->
                     if (news.title !in persistenceNewsBundle.map { it.title }) {
-                        persistenceTargetNewsList.add(news)
+                        persistenceTargetNewsBundle.add(news)
                         newsRepository.save(news)
                     } else {
                         val alreadyExistNews =
@@ -78,17 +83,18 @@ class CrawlerCore(
                                 )
                         alreadyExistNews.increaseCrawledCount()
                         newsRepository.save(alreadyExistNews)
-                        persistenceTargetNewsList.add(alreadyExistNews)
+                        persistenceTargetNewsBundle.add(alreadyExistNews)
                     }
                 }
 
                 val extractedKeywords = keywordExtractor.extractKeywordV2(
-                    persistenceTargetNewsList[0].content
+                    persistenceTargetNewsBundle[0].content
                 )
+
                 val persistenceNewsCard = NewsCard(
                     category = category,
                     multipleNews = filterSquareBracket(
-                        persistenceTargetNewsList.map { it.id }.toString()
+                        persistenceTargetNewsBundle.map { it.id }.toString()
                     ),
                     keywords = extractedKeywords,
                     createdAt = crawledDateTime,
@@ -97,7 +103,7 @@ class CrawlerCore(
                 newsCardRepository.save(persistenceNewsCard)
 
                 //TODO: 키워드 횟수 카운트
-                countKeyword(numOfKeywords, extractedKeywords)
+                keywordsCountingPair = countKeyword(keywordsCountingPair, extractedKeywords)
             }
             log.info("${categoryPair.key} - crawled complete!!")
             Thread.sleep(1000)
@@ -105,27 +111,35 @@ class CrawlerCore(
         log.info("$crawledDateTime - all crawling done")
 
         //TODO: 키워드 랭킹 저장
-        saveKeywordRanking(numOfKeywords)
+        saveKeywordRanking(keywordsCountingPair)
     }
 
     //TODO: 테스트 코드 작성
-    private fun saveKeywordRanking(numOfKeywords: Map<String, Int>) {
+    private fun saveKeywordRanking(keywordsCountingPair: Map<String, Int>) {
         //1위 ~ 10위까지 키워드 랭킹 산정 및 저장, value 기준 내림차순
-        val sortedKeywords = numOfKeywords.toList().sortedByDescending { it.second }
+        val sortedKeywords = keywordsCountingPair.toList().sortedByDescending { it.second }
         val keywordRanking = StringBuilder()
+
         for (rank: Int in 0..9) {
             keywordRanking.append(sortedKeywords[rank]).append(", ")
         }
+
         hotKeywordRepository.save(HotKeyword(keywordRanking = keywordRanking.toString()))
     }
 
     //TODO: 테스트 코드 작성
-    private fun countKeyword(numOfKeywords: Map<String, Int>, extractKeyword: String) {
-        val keywords = extractKeyword.split(",")
-        for (keyword: String in keywords) {
-            val cnt = numOfKeywords.getOrDefault(keyword, 0)
-            numOfKeywords.plus(Pair(keyword, cnt + 1))
+    private fun countKeyword(
+        keywordsCountingPair: MutableMap<String, Int>,
+        extractedKeyword: String,
+    ): MutableMap<String, Int> {
+        val keywords = extractedKeyword.split(", ")
+
+        for (keyword in keywords) {
+            val count = keywordsCountingPair.getOrDefault(keyword, 0)
+            keywordsCountingPair[keyword] = count + 1
         }
+
+        return keywordsCountingPair
     }
 
     private fun filterSquareBracket(target: String): String {
