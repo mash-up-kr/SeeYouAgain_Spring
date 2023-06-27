@@ -24,11 +24,9 @@ class HotKeywordsRetrieveApi(
 ) {
 
     @GetMapping
-    fun retrieveHotKeywords(@RequestParam targetTime: String): ApiResponse<HotKeywordsResponse> {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        // 핫키워드 조회 시간
-        val retrieveTime = LocalDateTime.parse(targetTime, formatter)
-        val keywordRanking = hotKeywordRetrieve.retrieveHotKeywords(retrieveTime)
+    fun retrieveHotKeywords(): ApiResponse<HotKeywordsResponse> {
+        val targetTime = LocalDateTime.now().withSecond(0).withNano(0)
+        val keywordRanking = hotKeywordRetrieve.retrieveHotKeywords(targetTime)
         return success(OK, KeywordRankingMapper.keywordRankingToResponse(keywordRanking))
     }
 

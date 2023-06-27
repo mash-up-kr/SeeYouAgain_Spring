@@ -40,11 +40,9 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
             ranking = listOf("키워드1", "키워드2", "키워드3")
         ))
 
-        val targetTime = "2023-06-26 10:00"
         mockMvc.perform(
             RestDocumentationRequestBuilders.get("/v1/hot-keywords")
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("targetTime", targetTime)
         ).andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(

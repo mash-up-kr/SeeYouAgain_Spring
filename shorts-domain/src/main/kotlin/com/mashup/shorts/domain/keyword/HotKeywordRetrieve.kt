@@ -29,10 +29,10 @@ class HotKeywordRetrieve(
     }
 
     fun retrieveHotKeywords(targetTime: LocalDateTime): KeywordRanking {
-        val hotKeyword = hotKeywordRepository.findByCreatedAtBetween(targetTime, targetTime.plusHours(1))
+        val hotKeyword = hotKeywordRepository.findTopByOrderByIdDesc()
             ?: throw ShortsBaseException.from(
                 shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
-                resultErrorMessage = "해당 시간대의 핫 키워드가 존재하지 않습니다."
+                resultErrorMessage = "해당 시간대의 핫 키워드가 존재하지 않습니다. (time: ${targetTime}}"
             )
 
         // TODO: 임시 코드 => 리팩터링 해야 함
