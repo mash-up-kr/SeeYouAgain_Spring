@@ -57,6 +57,20 @@ class MemberNewsCardRetrieve(
         }
     }
 
+    fun retrieveSavedNewsCardByMember(
+        member: Member,
+        cursorId: Long,
+        size: Int,
+    ): List<NewsCard> {
+        val findAllByMember = memberNewsCardRepository.findAllByMember(member)
+
+        return newsCardRepository.findSavedNewsCardsByNewsCardIds(
+            newsCardIds = findAllByMember.map { it.newsCard.id },
+            cursorId = cursorId,
+            size = size,
+        )
+    }
+
     private fun filterAlreadySavedNewsCards(member: Member): List<Long> {
         return memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id }
     }

@@ -99,4 +99,75 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                 )
             )
     }
+
+    @Test
+    fun `저장한 오늘의 숏스 조회`() {
+        // ready
+        val cursorId = 0L
+        val size = 10
+        val uniqueKey = "uniqueKey"
+        val headerName = "Authorization"
+
+        every { memberNewsCardRetrieve.retrieveSavedNewsCardByMember(any(), any(), any()) } returns (
+            listOf(
+                NewsCard(
+                    category = Category(CategoryName.POLITICS),
+                    multipleNews = "1, 2, 3, 4, 5",
+                    keywords = "테스트 키워드1, 테스트 키워드2, 테스트 키워드3, 테스트 키워드4,",
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now(),
+                )
+            )
+            )
+
+        val response = mockMvc.perform(
+            RestDocumentationRequestBuilders
+                .get("/v1/member-news-card/")
+                .header(headerName, uniqueKey)
+                .param("cursorId", cursorId.toString())
+                .param("size", size.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andDo(MockMvcResultHandlers.print())
+
+        response.andExpect(MockMvcResultMatchers.status().isOk)
+            .andDo(
+                MockMvcRestDocumentation.document(
+                    "숏스 모두 불러오기",
+                    RestDocsUtils.getDocumentRequest(),
+                    RestDocsUtils.getDocumentResponse(),
+                    PageHeaderSnippet.pageHeaderSnippet(),
+                    requestHeaders(
+                        HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
+                    ),
+                    queryParameters(
+                        RequestDocumentation
+                            .parameterWithName("cursorId")
+                            .description("커서 아이디(기본 값은 0으로 지정됩니다.)"),
+                        RequestDocumentation
+                            .parameterWithName("size")
+                            .description("<필수값> 페이징 사이즈(최대 10까지 허용합니다.)"),
+                    ),
+                    responseFields(
+                        fieldWithPath("status")
+                            .type(JsonFieldType.NUMBER)
+                            .description("API 성공 여부"),
+                        fieldWithPath("result.numberOfShorts")
+                            .type(JsonFieldType.NUMBER)
+                            .description("저장한 숏스 갯수"),
+                        fieldWithPath("result.memberShorts[].id")
+                            .type(JsonFieldType.NUMBER)
+                            .description("숏스 id"),
+                        fieldWithPath("result.memberShorts[].keywords")
+                            .type(JsonFieldType.STRING)
+                            .description("숏스 키워드"),
+                        fieldWithPath("result.memberShorts[].category")
+                            .type(JsonFieldType.STRING)
+                            .description("숏스 카테고리"),
+                        fieldWithPath("result.memberShorts[].crawledDateTime")
+                            .type(JsonFieldType.STRING)
+                            .description("크롤링 된 시각"),
+                    )
+                )
+            )
+    }
 }
