@@ -57,6 +57,30 @@ include::../../../../../shorts-api/{snippets}/오늘의 숏스 추가/http-respo
 
 ---
 
+=== 저장한 오늘의 숏스 조회
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/request-headers.adoc[]
+
+==== [Request Filed]
+
+include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/request-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/http-response.adoc[]
+
+---
+
 === 오늘의 숏스 다 읽었어요
 
 image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/bc47422a-74a0-43ae-af2d-d9dcde2f0d37[alt=Flower,width=240,height=180]
