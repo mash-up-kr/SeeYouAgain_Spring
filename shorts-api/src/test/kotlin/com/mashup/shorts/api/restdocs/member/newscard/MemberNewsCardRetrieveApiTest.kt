@@ -132,7 +132,7 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
         response.andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
                 MockMvcRestDocumentation.document(
-                    "숏스 모두 불러오기",
+                    "저장한 오늘의 숏스 조회",
                     RestDocsUtils.getDocumentRequest(),
                     RestDocsUtils.getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
