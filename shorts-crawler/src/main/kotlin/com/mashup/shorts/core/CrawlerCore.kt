@@ -72,7 +72,11 @@ class CrawlerCore(
                 val persistenceTargetNewsBundle = mutableListOf<News>()
                 newsCard.map { news ->
                     // 이미 저장한 뉴스인 경우
-                    if (news.newsLink in persistenceNewsBundle.map { it.newsLink }) {
+                    if (isAlreadySavedNews(
+                            news = news,
+                            persistenceNewsBundle = persistenceNewsBundle
+                        )
+                    ) {
                         val alreadyExistNews =
                             newsRepository.findByNewsLink(news.newsLink) ?: throw ShortsBaseException.from(
                                 shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
@@ -144,5 +148,15 @@ class CrawlerCore(
         return target
             .replace("[", "")
             .replace("]", "")
+    }
+
+    private fun isAlreadySavedNews(news: News, persistenceNewsBundle: List<News>): Boolean {
+        if (news.title in persistenceNewsBundle.map { it.title } &&
+            news.newsLink in persistenceNewsBundle.map { it.newsLink } &&
+            news.press in persistenceNewsBundle.map { it.press } &&
+            news.writtenDateTime in persistenceNewsBundle.map { it.writtenDateTime }) {
+            return true
+        }
+        return false
     }
 }
