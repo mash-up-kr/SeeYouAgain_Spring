@@ -110,3 +110,31 @@ include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/
 ==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 조회/http-response.adoc[]
+
+=== 숏스 내 뉴스 조회(메인화면)
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/http-request.adoc[]
+
+==== [Path Parameter]
+
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/path-parameters.adoc[]
+
+==== [Query Parameter]
+
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/query-parameters.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/뉴스 카드 내 뉴스 조회/http-response.adoc[]
+
+---
