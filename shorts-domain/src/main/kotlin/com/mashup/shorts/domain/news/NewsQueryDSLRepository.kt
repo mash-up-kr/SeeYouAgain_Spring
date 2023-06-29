@@ -9,17 +9,23 @@ interface NewsQueryDSLRepository {
         firstDayOfMonth: LocalDateTime,
         lastDayOfMonth: LocalDateTime,
         cursorWrittenDateTime: String,
-        newsCardMultipleNews: List<Long>,
+        newsIds: List<Long>,
         size: Int,
         pivot: Pivots,
+    ): List<News>
+
+    fun loadNewsBundleByCursorIdAndNewsCardMultipleNewsAndTargetTime(
+        firstDayOfMonth: LocalDateTime,
+        lastDayOfMonth: LocalDateTime,
+        cursorId: Long,
+        newsIds: List<Long>,
+        size: Int,
     ): List<News>
 
     fun loadNewsBundleByCursorAndNewsCardMultipleNews(
         cursorWrittenDateTime: String,
-        newsCardMultipleNews: List<Long>,
+        newsIds: List<Long>,
         size: Int,
         pivot: Pivots,
     ): List<News>
-
-
 }

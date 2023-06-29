@@ -1,7 +1,6 @@
 package com.mashup.shorts.domain.hot.keyword
 
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import org.springframework.http.HttpStatus.*
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
+import com.mashup.shorts.domain.home.newscard.dto.DetailNewsCardResponse
 import com.mashup.shorts.domain.hot.keyword.dto.HotKeywordsResponse
 import com.mashup.shorts.domain.hot.keyword.dto.KeywordRankingMapper
-import com.mashup.shorts.domain.hot.keyword.dto.RetrieveDetailHotKeywordResponse
 import com.mashup.shorts.domain.keyword.HotKeywordRetrieve
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
@@ -35,14 +34,20 @@ class HotKeywordsRetrieveApi(
     @GetMapping("/{keyword}")
     fun retrieveDetailHotKeyword(
         @PathVariable keyword: String,
-        @RequestParam(defaultValue = "0", required = false)
-        @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
+        @RequestParam targetDateTime: LocalDateTime,
+        @RequestParam(defaultValue = "0", required = false) @Min(0) @Max(Long.MAX_VALUE)
+        cursorId: Long,
         @RequestParam(required = true) @Min(1) @Max(20) size: Int,
-    ): ApiResponse<List<RetrieveDetailHotKeywordResponse>> {
+    ): ApiResponse<List<DetailNewsCardResponse>> {
         return success(
             OK,
-            RetrieveDetailHotKeywordResponse.mapperToResponseForm(
-                hotKeywordRetrieve.retrieveDetailHotKeyword(keyword, cursorId, size)
+            DetailNewsCardResponse.persistenceToResponseForm(
+                hotKeywordRetrieve.retrieveDetailHotKeyword(
+                    targetDateTime = targetDateTime,
+                    keyword = keyword,
+                    cursorId = cursorId,
+                    size = size
+                )
             )
         )
     }

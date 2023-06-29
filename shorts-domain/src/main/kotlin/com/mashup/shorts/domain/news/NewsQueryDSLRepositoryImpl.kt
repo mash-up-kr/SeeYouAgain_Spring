@@ -17,7 +17,7 @@ class NewsQueryDSLRepositoryImpl(
         firstDayOfMonth: LocalDateTime,
         lastDayOfMonth: LocalDateTime,
         cursorWrittenDateTime: String,
-        newsCardMultipleNews: List<Long>,
+        newsIds: List<Long>,
         size: Int,
         pivot: Pivots,
     ): List<News> {
@@ -27,12 +27,28 @@ class NewsQueryDSLRepositoryImpl(
                 cursorWrittenDateTimeLessThanGraterThanSpecifyByPivot(
                     cursorWrittenDateTime,
                     pivot,
-                    newsCardMultipleNews
+                    newsIds
                 )
             ).where(
                 news.createdAt.between(firstDayOfMonth, lastDayOfMonth)
             )
             .orderBy(writtenDateTimeOrderSpecifyByPivot(pivot))
+            .limit(size.toLong())
+            .fetch()
+    }
+
+    override fun loadNewsBundleByCursorIdAndNewsCardMultipleNewsAndTargetTime(
+        firstDayOfMonth: LocalDateTime,
+        lastDayOfMonth: LocalDateTime,
+        cursorId: Long,
+        newsIds: List<Long>,
+        size: Int,
+    ): List<News> {
+        return queryFactory
+            .selectFrom(news)
+            .where(news.id.gt(cursorId))
+            .where(news.createdAt.between(firstDayOfMonth, lastDayOfMonth))
+            .orderBy(news.id.asc())
             .limit(size.toLong())
             .fetch()
     }
@@ -60,18 +76,18 @@ class NewsQueryDSLRepositoryImpl(
     private fun cursorWrittenDateTimeLessThanGraterThanSpecifyByPivot(
         cursorWrittenDateTime: String,
         pivot: Pivots,
-        newsCardMultipleNews: List<Long>,
+        newsIds: List<Long>,
     ): BooleanExpression? {
         if (cursorWrittenDateTime == "") {
-            return news.id.`in`(newsCardMultipleNews)
+            return news.id.`in`(newsIds)
         }
 
         return if (pivot == Pivots.ASC) {
             news.writtenDateTime.gt(cursorWrittenDateTime)
-                .and(news.id.`in`(newsCardMultipleNews))
+                .and(news.id.`in`(newsIds))
         } else
             news.writtenDateTime.lt(cursorWrittenDateTime)
-                .and(news.id.`in`(newsCardMultipleNews))
+                .and(news.id.`in`(newsIds))
     }
 
     private fun writtenDateTimeOrderSpecifyByPivot(pivot: Pivots): OrderSpecifier<String> {

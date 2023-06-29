@@ -9,4 +9,6 @@ interface NewsRepository : JpaRepository<News, Long>, NewsQueryDSLRepository {
 
     fun findAllByCategory(category: Category): List<News>
     fun findByTitleAndContent(title: String, content: String): List<News>
+
+    fun findByIdIn(ids: List<Long>): List<News>
 }
