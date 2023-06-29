@@ -2,6 +2,7 @@ package com.mashup.shorts.domain.my.membernewscard
 
 import java.time.LocalDateTime
 import org.springframework.http.HttpStatus.OK
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -16,6 +17,7 @@ import com.mashup.shorts.domain.my.membernewscard.dto.SavedRetrieveNewsCardByMem
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 
+@Validated
 @RestController
 @RequestMapping("/v1/member-news-card")
 class MemberNewsCardRetrieveApi(

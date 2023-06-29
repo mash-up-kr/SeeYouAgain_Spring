@@ -3,6 +3,7 @@ package com.mashup.shorts.domain.hot.keyword
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import org.springframework.http.HttpStatus.*
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,6 +18,7 @@ import com.mashup.shorts.domain.keyword.HotKeywordRetrieve
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 
+@Validated
 @RequestMapping("/v1/hot-keywords")
 @RestController
 class HotKeywordsRetrieveApi(
