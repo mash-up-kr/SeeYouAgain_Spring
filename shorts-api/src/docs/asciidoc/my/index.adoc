@@ -189,6 +189,31 @@ include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조
 
 ---
 
+
+=== 오래 간직할 숏스 삭제
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/request-headers.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/http-response.adoc[]
+
+---
+
 === 뉴스 상세 조회 (웹 뷰)
 
 image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/368fa0a2-93e2-454d-b3f6-e513ef264fd7[alt=Flower,width=240,height=180]
