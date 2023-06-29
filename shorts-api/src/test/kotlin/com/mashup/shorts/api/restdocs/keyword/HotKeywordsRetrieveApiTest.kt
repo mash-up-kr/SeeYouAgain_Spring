@@ -8,6 +8,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
+import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.restdocs.request.RequestDocumentation.pathParameters
@@ -22,8 +23,7 @@ import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.hot.keyword.HotKeywordsRetrieveApi
 import com.mashup.shorts.domain.keyword.HotKeywordRetrieve
 import com.mashup.shorts.domain.keyword.KeywordRanking
-import com.mashup.shorts.domain.keyword.dtomapper.RetrieveDetailHotKeyWordResponseMapper
-import com.mashup.shorts.domain.newscard.NewsCard
+import com.mashup.shorts.domain.news.News
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
@@ -52,11 +52,11 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
                     RestDocsUtils.getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
                     responseFields(
-                        PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)
+                        fieldWithPath("status").type(JsonFieldType.NUMBER)
                             .description("API HTTP Status 값"),
-                        PayloadDocumentation.fieldWithPath("result.createdAt").type(JsonFieldType.STRING)
+                        fieldWithPath("result.createdAt").type(JsonFieldType.STRING)
                             .description("핫 키워드 생성 시간"),
-                        PayloadDocumentation.fieldWithPath("result.ranking").type(JsonFieldType.ARRAY)
+                        fieldWithPath("result.ranking").type(JsonFieldType.ARRAY)
                             .description("핫 키워드 순위 (1위 ~ 10위)")
                     )
                 )
@@ -64,30 +64,42 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
     }
 
     @Test
-    fun `핫 키워드로 숏스 조회`() {
-        every { hotKeywordRetrieve.retrieveDetailHotKeyword(any(), any(), any()) } returns (
-            RetrieveDetailHotKeyWordResponseMapper.persistenceToResponseForm(
-                listOf(
-                    NewsCard(
-                        category = Category(CategoryName.CULTURE),
-                        multipleNews = "1, 2, 3, 4, 5",
-                        keywords = "스프링, 빠지, 가평, 디스코드",
-                        createdAt = LocalDateTime.now(),
-                        modifiedAt = LocalDateTime.now(),
-                    ),
-                    NewsCard(
-                        category = Category(CategoryName.SOCIETY),
-                        multipleNews = "6, 7, 8, 9, 10",
-                        keywords = "에어컨, 선풍기, 무더위, 장마",
-                        createdAt = LocalDateTime.now(),
-                        modifiedAt = LocalDateTime.now()
-                    )
-                )
+    fun `핫 키워드로 뉴스 조회`() {
+        every {
+            hotKeywordRetrieve.retrieveDetailHotKeyword(
+                any(), any(), any(), any()
             )
+        } returns (
+            listOf(
+                News(
+                    title = "Title~!",
+                    content = "Contents ",
+                    thumbnailImageUrl = "IMAGE LINK",
+                    newsLink = "NEWS LINK",
+                    press = "TYN",
+                    writtenDateTime = "TODAY",
+                    type = "HEADLINE",
+                    crawledCount = 1,
+                    category = Category(CategoryName.CULTURE)
+                ),
+                News(
+                    title = "Title~!",
+                    content = "Contents ",
+                    thumbnailImageUrl = "IMAGE LINK",
+                    newsLink = "NEWS LINK",
+                    press = "TYN",
+                    writtenDateTime = "TODAY",
+                    type = "HEADLINE",
+                    crawledCount = 1,
+                    category = Category(CategoryName.CULTURE)
+                ),
             )
+        )
 
         mockMvc.perform(
-            RestDocumentationRequestBuilders.get("/v1/hot-keywords/{keyword}", "위원")
+            RestDocumentationRequestBuilders
+                .get("/v1/hot-keywords/{keyword}", "위원")
+                .param("targetDateTime", LocalDateTime.now().toString())
                 .param("cursorId", "0")
                 .param("size", "10")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -95,7 +107,7 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
                 MockMvcRestDocumentation.document(
-                    "핫 키워드로 숏스 조회",
+                    "핫 키워드로 뉴스 조회",
                     RestDocsUtils.getDocumentRequest(),
                     RestDocsUtils.getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
@@ -106,23 +118,32 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
                     ),
                     queryParameters(
                         RequestDocumentation
+                            .parameterWithName("targetDateTime")
+                            .description("타입 : LocalDateTime, 조회할 날짜/시간"),
+                        RequestDocumentation
                             .parameterWithName("cursorId")
                             .description("커서 아이디(기본 값은 0으로 지정됩니다.)"),
                         RequestDocumentation
                             .parameterWithName("size")
                             .description("<필수값> 페이징 사이즈(최대 20까지 허용합니다.)"),
                     ),
-                    responseFields(
-                        PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)
-                            .description("API HTTP Status 값"),
-                        PayloadDocumentation.fieldWithPath("result[].id").type(JsonFieldType.NUMBER)
-                            .description("숏스 id"),
-                        PayloadDocumentation.fieldWithPath("result[].keywords").type(JsonFieldType.STRING)
-                            .description("키워드"),
-                        PayloadDocumentation.fieldWithPath("result[].category").type(JsonFieldType.STRING)
-                            .description("카테고리"),
-                        PayloadDocumentation.fieldWithPath("result[].crawledDateTime").type(JsonFieldType.STRING)
-                            .description("크롤링 된 시각"),
+                    PayloadDocumentation.responseFields(
+                        fieldWithPath("status").type(JsonFieldType.NUMBER)
+                            .description("API 성공 여부"),
+                        fieldWithPath("result[].id").type(JsonFieldType.NUMBER)
+                            .description("뉴스 id"),
+                        fieldWithPath("result[].title").type(JsonFieldType.STRING)
+                            .description("뉴스 제목"),
+                        fieldWithPath("result[].thumbnailImageUrl").type(JsonFieldType.STRING)
+                            .description("뉴스 이미지 링크"),
+                        fieldWithPath("result[].newsLink").type(JsonFieldType.STRING)
+                            .description("뉴스 링크"),
+                        fieldWithPath("result[].press").type(JsonFieldType.STRING)
+                            .description("언론사"),
+                        fieldWithPath("result[].writtenDateTime").type(JsonFieldType.STRING)
+                            .description("작성 시각"),
+                        fieldWithPath("result[].type").type(JsonFieldType.STRING)
+                            .description("헤드라인 뉴스인지, 일반 뉴스인지"),
                     )
                 )
             )

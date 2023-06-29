@@ -6,15 +6,13 @@ import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
 import com.mashup.shorts.domain.member.Member
-import com.mashup.shorts.domain.member.MemberRepository
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
 
 @Service
 @Transactional(readOnly = true)
 class NewsRetrieve(
-    private val memberRepository: MemberRepository,
     private val newsRepository: NewsRepository,
-    private val memberNewsRepository: MemberNewsRepository
+    private val memberNewsRepository: MemberNewsRepository,
 ) {
 
     fun retrieveNews(member: Member, newsId: Long): NewsRetrieveInfo {
