@@ -1,6 +1,7 @@
 package com.mashup.shorts.domain.membernewscard
 
 import java.time.LocalDate
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.domain.member.Member
@@ -39,5 +40,10 @@ class MemberNewsCardDelete(
     fun bulkDeleteMemberNewsCard(member: Member, newsCardIds: List<Long>) {
         val newsCards = newsCardRepository.findAllById(newsCardIds)
         memberNewsCardRepository.deleteAllByMemberAndNewsCardIn(member, newsCards)
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    fun autoDeleteMemberNewsCard() {
+        memberNewsCardRepository.deleteAll()
     }
 }
