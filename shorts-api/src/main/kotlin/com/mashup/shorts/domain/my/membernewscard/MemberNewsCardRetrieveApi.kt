@@ -32,7 +32,7 @@ class MemberNewsCardRetrieveApi(
             defaultValue = "0",
             required = false
         ) @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
-        @RequestParam(required = true) @Min(1) @Max(10) size: Int,
+        @RequestParam(required = true) @Min(1) @Max(20) size: Int,
     ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
         return success(
             OK,
@@ -54,7 +54,7 @@ class MemberNewsCardRetrieveApi(
             defaultValue = "0",
             required = false
         ) @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
-        @RequestParam(required = true) @Min(1) @Max(10) size: Int,
+        @RequestParam(required = true) @Min(1) @Max(20) size: Int,
     ): ApiResponse<SavedRetrieveNewsCardByMember> {
         return success(
             OK,
