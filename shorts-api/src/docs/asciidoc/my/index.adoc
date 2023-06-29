@@ -65,13 +65,17 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/60564431/f6e5892f
 
 include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/page-header.adoc[]
 
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/request-headers.adoc[]
+
 ==== [HTTP Request]
 
 include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/http-request.adoc[]
 
-==== [Request Header]
+==== [Query Parameters]
 
-include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/request-headers.adoc[]
+include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/query-parameters.adoc[]
 
 ==== [Request Filed]
 
@@ -113,13 +117,17 @@ image::https://github.com/wjdrbs96/Today-I-Learn/assets/45676906/f60c1765-a30d-4
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/page-header.adoc[]
 
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/request-headers.adoc[]
+
 ==== [HTTP Request]
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/http-request.adoc[]
 
-==== [Request Header]
+==== [Request Fields]
 
-include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/request-headers.adoc[]
+include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/request-fields.adoc[]
 
 ==== [Response Field]
 
@@ -171,13 +179,17 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/60564431/dfef33e8
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조회/page-header.adoc[]
 
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조회/request-headers.adoc[]
+
 ==== [HTTP Request]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조회/http-request.adoc[]
 
-==== [Request Header]
+==== [Query Parameters]
 
-include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조회/request-headers.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조회/query-parameters.adoc[]
 
 ==== [Response Field]
 
@@ -189,20 +201,23 @@ include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 모두 조
 
 ---
 
-
 === 오래 간직할 숏스 삭제
 
 ==== [Request URI]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/page-header.adoc[]
 
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/request-headers.adoc[]
+
 ==== [HTTP Request]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/http-request.adoc[]
 
-==== [Request Header]
+==== [Request Field]
 
-include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/request-headers.adoc[]
+include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 삭제/request-fields.adoc[]
 
 ==== [Response Field]
 
@@ -222,10 +237,6 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/368fa0a2
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/page-header.adoc[]
 
-==== [HTTP Request]
-
-include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/http-request.adoc[]
-
 ==== [Request Header]
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/request-headers.adoc[]
@@ -233,6 +244,10 @@ include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/request-heade
 ==== [Request Path Parameter]
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/path-parameters.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/http-request.adoc[]
 
 ==== [Response Field]
 

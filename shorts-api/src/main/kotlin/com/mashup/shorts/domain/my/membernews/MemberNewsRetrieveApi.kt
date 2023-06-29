@@ -28,6 +28,7 @@ class MemberNewsRetrieveApi(
     @Auth
     @GetMapping
     fun retrieveNewsByMember(
+        @RequestParam targetDate: LocalDate,
         @RequestParam cursorWrittenDateTime: String,
         @RequestParam(required = true) @Min(1) @Max(20) size: Int,
         @RequestParam pivot: Pivots,
@@ -40,6 +41,7 @@ class MemberNewsRetrieveApi(
                 savedNewsCount = memberNewsRetrieve.retrieveMemberNewsCount(member),
                 memberNewsResponse = persistenceToResponseForm(
                     memberNewsRetrieve.retrieveMemberNews(
+                        targetDate = targetDate,
                         member = member,
                         cursorWrittenDateTime = cursorWrittenDateTime,
                         size = size,

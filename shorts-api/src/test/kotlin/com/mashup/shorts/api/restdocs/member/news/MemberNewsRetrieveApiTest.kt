@@ -1,5 +1,6 @@
 package com.mashup.shorts.api.restdocs.member.news
 
+import java.time.LocalDate
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
@@ -30,13 +31,14 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
 
     @Test
     fun `오래 간직할 뉴스 모두 조회`() {
+        val targetDate = LocalDate.of(2023, 6, 30)
         val cursorWrittenDateTime = "2023.06.15. 오후 3:38"
         val size = 10
         val pivot = "ASC"
         val uniqueKey = "uniqueKey"
         val headerName = "Authorization"
 
-        every { memberNewsRetrieve.retrieveMemberNews(any(), any(), any(), any()) } returns (
+        every { memberNewsRetrieve.retrieveMemberNews(any(), any(), any(), any(), any()) } returns (
             listOf(
                 News(
                     title = "뉴스 제목",
@@ -55,6 +57,7 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
             RestDocumentationRequestBuilders
                 .get("/v1/member-news")
                 .header(headerName, uniqueKey)
+                .param("targetDate", targetDate.toString())
                 .param("cursorWrittenDateTime", cursorWrittenDateTime)
                 .param("size", size.toString())
                 .param("pivot", pivot)
@@ -72,6 +75,9 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
                         HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
                     ),
                     RequestDocumentation.queryParameters(
+                        RequestDocumentation
+                            .parameterWithName("targetDate")
+                            .description("LocalDate 타입, 조회할 날짜를 입력해주세요"),
                         RequestDocumentation
                             .parameterWithName("cursorWrittenDateTime")
                             .description("STRING 타입, 커서 지정 값 ex) 2023.06.15. 오후 3:38 와 같이 입력해 주시고, 첫 페이지 요청 시 빈 문자열을 넣어주세요"),
