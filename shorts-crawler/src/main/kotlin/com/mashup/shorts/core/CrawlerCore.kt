@@ -70,25 +70,24 @@ class CrawlerCore(
 
             newsCardBundle.map { newsCard ->
                 val persistenceTargetNewsBundle = mutableListOf<News>()
-                newsCard.map { news ->
+                newsCard.map { crawledNews ->
                     // 이미 저장한 뉴스인 경우
                     if (isAlreadySavedNews(
-                            news = news,
-                            persistenceNewsBundle = persistenceNewsBundle
+                            news = crawledNews,
+                            persistenceNewsBundle = persistenceNewsBundle,
                         )
                     ) {
-                        val alreadyExistNews =
-                            newsRepository.findByNewsLink(news.newsLink) ?: throw ShortsBaseException.from(
-                                shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
-                                resultErrorMessage = "뉴스를 저장하는 중 ${news.title} 에 해당하는 뉴스를 찾을 수 없습니다."
-                            )
+                        val alreadyExistNews = newsRepository.findByTitleAndContent(
+                            title = crawledNews.title,
+                            content = crawledNews.content,
+                        ).first()
                         alreadyExistNews.increaseCrawledCount()
                         persistenceTargetNewsBundle.add(alreadyExistNews)
                     }
                     // DB에 존재하지 않는 뉴스인 경우
                     else {
-                        persistenceTargetNewsBundle.add(news)
-                        newsRepository.save(news)
+                        persistenceTargetNewsBundle.add(crawledNews)
+                        newsRepository.save(crawledNews)
                     }
                 }
 
@@ -151,12 +150,7 @@ class CrawlerCore(
     }
 
     private fun isAlreadySavedNews(news: News, persistenceNewsBundle: List<News>): Boolean {
-        if (news.title in persistenceNewsBundle.map { it.title } &&
-            news.newsLink in persistenceNewsBundle.map { it.newsLink } &&
-            news.press in persistenceNewsBundle.map { it.press } &&
-            news.writtenDateTime in persistenceNewsBundle.map { it.writtenDateTime }) {
-            return true
-        }
-        return false
+        return news.title in persistenceNewsBundle.map { it.title } &&
+            news.content in persistenceNewsBundle.map { it.content }
     }
 }
