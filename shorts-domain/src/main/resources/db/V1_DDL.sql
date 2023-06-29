@@ -87,19 +87,19 @@ create table member_news_card
 );
 
 insert into category(name, created_at, modified_at)
-values (POLITICS, now(), now());
+values ("POLITICS", now(), now());
 
 insert into category(name, created_at, modified_at)
-values (ECONOMIC, now(), now());
+values ("ECONOMIC", now(), now());
 
 insert into category(name, created_at, modified_at)
-values (SOCIETY, now(), now());
+values ("SOCIETY", now(), now());
 
 insert into category(name, created_at, modified_at)
-values (CULTURE, now(), now());
+values ("CULTURE", now(), now());
 
 insert into category(name, created_at, modified_at)
-values (WORLD, now(), now());
+values ("WORLD", now(), now());
 
 insert into category(name, created_at, modified_at)
-values (SCIENCE, now(), now());
+values ("SCIENCE", now(), now());
