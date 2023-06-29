@@ -110,7 +110,7 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
                             .description("커서 아이디(기본 값은 0으로 지정됩니다.)"),
                         RequestDocumentation
                             .parameterWithName("size")
-                            .description("<필수값> 페이징 사이즈(최대 10까지 허용합니다.)"),
+                            .description("<필수값> 페이징 사이즈(최대 20까지 허용합니다.)"),
                     ),
                     responseFields(
                         PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)

@@ -75,7 +75,7 @@ class NewsCardRetrieveApiRestDocsTest : ApiDocsTestBase() {
                             .description("커서 지정 값 ex) 2023.06.15. 오후 3:38 와 같이 입력해 주시고, 첫 페이지 요청 시 빈 문자열을 넣어주세요"),
                         RequestDocumentation
                             .parameterWithName("size")
-                            .description("<필수값> 페이징 사이즈(최대 10까지 허용합니다.)"),
+                            .description("<필수값> 페이징 사이즈(최대 20까지 허용합니다.)"),
                         RequestDocumentation
                             .parameterWithName("pivot")
                             .description("<필수값> 정렬 기준 [ASC, DESC] 둘 중 하나만 허용합니다. ASC는 오래된 순, DESC는 최신 순 입니다."),
