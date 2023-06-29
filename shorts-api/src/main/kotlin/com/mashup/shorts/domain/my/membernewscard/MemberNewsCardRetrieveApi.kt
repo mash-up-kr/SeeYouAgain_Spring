@@ -12,7 +12,6 @@ import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
 import com.mashup.shorts.domain.membernewscard.MemberNewsCardRetrieve
 import com.mashup.shorts.domain.my.membernewscard.dto.RetrieveAllNewsCardResponse
-import com.mashup.shorts.domain.my.membernewscard.dto.MemberShorts.Companion.domainResponseFormToApiResponseForm
 import com.mashup.shorts.domain.my.membernewscard.dto.SavedRetrieveNewsCardByMember
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
@@ -55,16 +54,14 @@ class MemberNewsCardRetrieveApi(
         ) @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
         @RequestParam(required = true) @Min(1) @Max(10) size: Int,
     ): ApiResponse<SavedRetrieveNewsCardByMember> {
-        val result = memberNewsCardRetrieve.retrieveSavedNewsCardByMember(
-            member = AuthContext.getMember(),
-            cursorId = cursorId,
-            size = size
-        )
         return success(
             OK,
-            SavedRetrieveNewsCardByMember(
-                numberOfShorts = result.size,
-                memberShorts = domainResponseFormToApiResponseForm(result)
+            SavedRetrieveNewsCardByMember.domainResponseFormToApiResponseForm(
+                memberNewsCardRetrieve.retrieveSavedNewsCardByMember(
+                    member = AuthContext.getMember(),
+                    cursorId = cursorId,
+                    size = size
+                )
             )
         )
     }

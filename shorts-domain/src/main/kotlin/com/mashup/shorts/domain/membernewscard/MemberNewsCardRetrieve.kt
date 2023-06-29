@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
+import com.mashup.shorts.domain.membernewscard.dtomapper.MemberTodayShorts
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 
@@ -61,13 +62,14 @@ class MemberNewsCardRetrieve(
         member: Member,
         cursorId: Long,
         size: Int,
-    ): List<NewsCard> {
-        val findAllByMember = memberNewsCardRepository.findAllByMember(member)
-
-        return newsCardRepository.findSavedNewsCardsByNewsCardIds(
-            newsCardIds = findAllByMember.map { it.newsCard.id },
-            cursorId = cursorId,
-            size = size,
+    ): MemberTodayShorts {
+        return MemberTodayShorts(
+            numberOfShorts = memberNewsCardRepository.countAllByMember(member),
+            memberShorts = newsCardRepository.findSavedNewsCardsByNewsCardIds(
+                newsCardIds = memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id },
+                cursorId = cursorId,
+                size = size,
+            )
         )
     }
 

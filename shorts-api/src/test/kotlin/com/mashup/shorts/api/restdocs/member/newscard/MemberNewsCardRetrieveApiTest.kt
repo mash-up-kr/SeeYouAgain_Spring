@@ -21,6 +21,7 @@ import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.membernewscard.MemberNewsCardRetrieve
+import com.mashup.shorts.domain.membernewscard.dtomapper.MemberTodayShorts
 import com.mashup.shorts.domain.my.membernewscard.MemberNewsCardRetrieveApi
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.ninjasquad.springmockk.MockkBean
@@ -109,13 +110,16 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
         val headerName = "Authorization"
 
         every { memberNewsCardRetrieve.retrieveSavedNewsCardByMember(any(), any(), any()) } returns (
-            listOf(
-                NewsCard(
-                    category = Category(CategoryName.POLITICS),
-                    multipleNews = "1, 2, 3, 4, 5",
-                    keywords = "테스트 키워드1, 테스트 키워드2, 테스트 키워드3, 테스트 키워드4,",
-                    createdAt = LocalDateTime.now(),
-                    modifiedAt = LocalDateTime.now(),
+            MemberTodayShorts(
+                numberOfShorts = 1234,
+                memberShorts = listOf(
+                    NewsCard(
+                        category = Category(CategoryName.POLITICS),
+                        multipleNews = "1, 2, 3, 4, 5",
+                        keywords = "테스트 키워드1, 테스트 키워드2, 테스트 키워드3, 테스트 키워드4,",
+                        createdAt = LocalDateTime.now(),
+                        modifiedAt = LocalDateTime.now(),
+                    )
                 )
             )
             )
