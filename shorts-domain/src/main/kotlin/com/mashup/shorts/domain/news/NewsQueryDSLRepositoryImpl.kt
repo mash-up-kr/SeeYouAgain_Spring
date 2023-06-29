@@ -1,5 +1,6 @@
 package com.mashup.shorts.domain.news
 
+import java.time.LocalDateTime
 import org.springframework.stereotype.Repository
 import com.mashup.shorts.domain.news.QNews.news
 import com.mashup.shorts.domain.newscard.Pivots
@@ -11,6 +12,30 @@ import com.querydsl.jpa.impl.JPAQueryFactory
 class NewsQueryDSLRepositoryImpl(
     private val queryFactory: JPAQueryFactory,
 ) : NewsQueryDSLRepository {
+
+    override fun loadNewsBundleByCursorAndNewsCardMultipleNewsAndTargetTime(
+        firstDayOfMonth: LocalDateTime,
+        lastDayOfMonth: LocalDateTime,
+        cursorWrittenDateTime: String,
+        newsCardMultipleNews: List<Long>,
+        size: Int,
+        pivot: Pivots,
+    ): List<News> {
+        return queryFactory
+            .selectFrom(news)
+            .where(
+                cursorWrittenDateTimeLessThanGraterThanSpecifyByPivot(
+                    cursorWrittenDateTime,
+                    pivot,
+                    newsCardMultipleNews
+                )
+            ).where(
+                news.createdAt.between(firstDayOfMonth, lastDayOfMonth)
+            )
+            .orderBy(writtenDateTimeOrderSpecifyByPivot(pivot))
+            .limit(size.toLong())
+            .fetch()
+    }
 
     override fun loadNewsBundleByCursorAndNewsCardMultipleNews(
         cursorWrittenDateTime: String,

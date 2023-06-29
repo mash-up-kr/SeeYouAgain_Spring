@@ -15,7 +15,6 @@ image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/82651c72
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 설정/page-header.adoc[]
 
-
 ==== [HTTP Request]
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 설정/http-request.adoc[]
@@ -72,6 +71,10 @@ include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/page-he
 ==== [HTTP Request]
 
 include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/http-request.adoc[]
+
+==== [Query Parameters]
+
+include::../../../../../shorts-api/{snippets}/숏스 모두 불러오기/query-parameters.adoc[]
 
 ==== [Request Header]
 
