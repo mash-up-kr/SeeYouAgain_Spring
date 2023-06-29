@@ -28,7 +28,6 @@ class NewsQueryDSLRepositoryImpl(
                 )
             )
             .orderBy(writtenDateTimeOrderSpecifyByPivot(pivot))
-            .orderBy(cursorOrderSpecifyByPivot(pivot))
             .limit(size.toLong())
             .fetch()
     }
@@ -52,9 +51,5 @@ class NewsQueryDSLRepositoryImpl(
 
     private fun writtenDateTimeOrderSpecifyByPivot(pivot: Pivots): OrderSpecifier<String> {
         return if (pivot == Pivots.ASC) news.writtenDateTime.asc() else news.writtenDateTime.desc()
-    }
-
-    private fun cursorOrderSpecifyByPivot(pivot: Pivots): OrderSpecifier<Long> {
-        return if (pivot == Pivots.ASC) news.id.asc() else news.id.desc()
     }
 }
