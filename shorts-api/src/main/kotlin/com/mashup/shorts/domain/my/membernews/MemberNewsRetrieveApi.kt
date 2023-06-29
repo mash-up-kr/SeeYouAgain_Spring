@@ -29,7 +29,7 @@ class MemberNewsRetrieveApi(
     @GetMapping
     fun retrieveNewsByMember(
         @RequestParam cursorWrittenDateTime: String,
-        @RequestParam(required = true) @Min(1) @Max(10) size: Int,
+        @RequestParam(required = true) @Min(1) @Max(20) size: Int,
         @RequestParam pivot: Pivots,
     ): ApiResponse<MemberNewsRetrieveResponse> {
         val member = AuthContext.getMember()
