@@ -77,9 +77,10 @@ class CrawlerCore(
                             persistenceNewsBundle = persistenceNewsBundle,
                         )
                     ) {
-                        val alreadyExistNews = newsRepository.findByTitleAndContent(
+                        val alreadyExistNews = newsRepository.findByTitleAndNewsLinkAndPress(
                             title = crawledNews.title,
-                            content = crawledNews.content,
+                            newsLink = crawledNews.newsLink,
+                            press = crawledNews.press,
                         ).first()
                         alreadyExistNews.increaseCrawledCount()
                         persistenceTargetNewsBundle.add(alreadyExistNews)
@@ -151,6 +152,7 @@ class CrawlerCore(
 
     private fun isAlreadySavedNews(news: News, persistenceNewsBundle: List<News>): Boolean {
         return news.title in persistenceNewsBundle.map { it.title } &&
-            news.content in persistenceNewsBundle.map { it.content }
+            news.newsLink in persistenceNewsBundle.map { it.newsLink } &&
+            news.press in persistenceNewsBundle.map { it.press }
     }
 }

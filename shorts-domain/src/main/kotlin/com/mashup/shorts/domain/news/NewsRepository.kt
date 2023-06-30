@@ -8,7 +8,5 @@ import com.mashup.shorts.domain.category.Category
 interface NewsRepository : JpaRepository<News, Long>, NewsQueryDSLRepository {
 
     fun findAllByCategory(category: Category): List<News>
-    fun findByTitleAndContent(title: String, content: String): List<News>
-
-    fun findByIdIn(ids: List<Long>): List<News>
+    fun findByTitleAndNewsLinkAndPress(title: String, newsLink: String, press: String): List<News>
 }
