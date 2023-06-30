@@ -99,6 +99,10 @@ include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오
 
 include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/request-headers.adoc[]
 
+==== [Request Fields]
+
+include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/request-fields.adoc[]
+
 ==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/http-response.adoc[]
