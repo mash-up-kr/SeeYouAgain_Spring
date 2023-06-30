@@ -12,7 +12,7 @@ import com.mashup.shorts.domain.news.NewsRepository
 @Service
 class MemberNewsCreate(
     private val newsRepository: NewsRepository,
-    private val memberNewsRepository: MemberNewsRepository
+    private val memberNewsRepository: MemberNewsRepository,
 ) {
 
     @Transactional
@@ -21,6 +21,13 @@ class MemberNewsCreate(
             shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
             resultErrorMessage = "${newsId}에 해당하는 뉴스가 존재하지 않습니다."
         )
+
+        if (memberNewsRepository.existsByMemberAndNews(member, news)) {
+            throw ShortsBaseException.from(
+                shortsErrorCode = ShortsErrorCode.E400_BAD_REQUEST,
+                resultErrorMessage = "뉴스는 중복해서 저장할 수 없습니다."
+            )
+        }
         memberNewsRepository.save(MemberNews(member = member, news = news))
     }
 }

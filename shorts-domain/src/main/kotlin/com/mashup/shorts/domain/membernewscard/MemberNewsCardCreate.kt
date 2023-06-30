@@ -12,7 +12,7 @@ import com.mashup.shorts.domain.newscard.NewsCardRepository
 @Service
 class MemberNewsCardCreate(
     private val newsCardRepository: NewsCardRepository,
-    private val memberNewsCardRepository: MemberNewsCardRepository
+    private val memberNewsCardRepository: MemberNewsCardRepository,
 ) {
 
     @Transactional
@@ -21,6 +21,13 @@ class MemberNewsCardCreate(
             shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
             resultErrorMessage = "${newsCardId}에 해당하는 뉴스카드가 존재하지 않습니다."
         )
+
+        if (memberNewsCardRepository.existsByMemberAndNewsCard(member, newsCard)) {
+            throw ShortsBaseException.from(
+                shortsErrorCode = ShortsErrorCode.E400_BAD_REQUEST,
+                resultErrorMessage = "숏스는 중복해서 저장할 수 없습니다."
+            )
+        }
         memberNewsCardRepository.save(MemberNewsCard(member = member, newsCard = newsCard))
     }
 }
