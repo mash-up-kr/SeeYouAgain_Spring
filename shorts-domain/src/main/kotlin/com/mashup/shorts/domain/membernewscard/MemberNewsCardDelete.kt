@@ -1,6 +1,7 @@
 package com.mashup.shorts.domain.membernewscard
 
 import java.time.LocalDate
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,7 +20,18 @@ class MemberNewsCardDelete(
     private val memberShortsCountRepository: MemberShortsCountRepository,
 ) {
 
-    fun clearMemberNewsCard(today: LocalDate, member: Member): Map<String, Int> {
+    fun clearMemberNewsCard(
+        today: LocalDate,
+        member: Member,
+        newsCardId: Long,
+    ): Map<String, Int> {
+        memberNewsCardRepository.deleteByNewsCard(
+            newsCardRepository.findByIdOrNull(newsCardId) ?: throw ShortsBaseException.from(
+                shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
+                resultErrorMessage = "뉴스카드 다 읽었어요 처리 중 ${newsCardId}를 찾을 수 없습니다."
+            )
+        )
+
         val memberShortsCount = memberShortsCountRepository.findByMemberAndTargetDate(
             member = member,
             targetDate = today
@@ -35,6 +47,7 @@ class MemberNewsCardDelete(
             count = 1,
             targetDate = today
         )
+
         memberShortsCountRepository.save(newMemberShortsCount)
         return mapOf("shortsCount" to newMemberShortsCount.count)
     }

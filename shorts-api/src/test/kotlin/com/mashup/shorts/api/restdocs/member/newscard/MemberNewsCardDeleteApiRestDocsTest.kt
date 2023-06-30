@@ -10,6 +10,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.JsonFieldType.NUMBER
+import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
@@ -21,6 +22,7 @@ import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.membernewscard.MemberNewsCardDelete
 import com.mashup.shorts.domain.my.membernewscard.MemberNewsCardDeleteApi
 import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardBulkDeleteRequest
+import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardClearRequest
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
@@ -35,9 +37,13 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
         val uniqueKey = "uniqueKey"
         val headerName = "Authorization"
 
-        every { memberNewsCardDelete.clearMemberNewsCard(any(), any()) } returns (
+        every { memberNewsCardDelete.clearMemberNewsCard(any(), any(), any()) } returns (
             mapOf("shortsCount" to 1234)
             )
+
+        val memberNewsCardClearRequest = MemberNewsCardClearRequest(
+            3L
+        )
 
         // ready
         val url = "/v1/member-news-card"
@@ -46,6 +52,7 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .delete(url)
+                .content(objectMapper.writeValueAsString(memberNewsCardClearRequest))
                 .header(headerName, uniqueKey)
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
@@ -60,6 +67,11 @@ class MemberNewsCardDeleteApiRestDocsTest : ApiDocsTestBase() {
                     PageHeaderSnippet.pageHeaderSnippet(),
                     requestHeaders(
                         HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
+                    ),
+                    requestFields(
+                        fieldWithPath("newsCardId")
+                            .type(NUMBER)
+                            .description("뉴스카드 id")
                     ),
                     responseFields(
                         fieldWithPath("status").type(NUMBER).description("API 성공 여부"),

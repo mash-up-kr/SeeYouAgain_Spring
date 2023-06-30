@@ -13,6 +13,7 @@ import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
 import com.mashup.shorts.domain.membernewscard.MemberNewsCardDelete
 import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardBulkDeleteRequest
+import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardClearRequest
 
 @RestController
 @RequestMapping("/v1/member-news-card")
@@ -37,14 +38,21 @@ class MemberNewsCardDeleteApi(
         return success(OK)
     }
 
+    /**
+    오늘의 숏스 다 읽었어요 API
+    @Body : {newsCardIds: Long},
+     */
     @Auth
     @DeleteMapping
-    fun clearMemberNewsCard(): ApiResponse<Map<String, Int>> {
+    fun clearMemberNewsCard(
+        @RequestBody memberNewsCardClearRequest: MemberNewsCardClearRequest,
+    ): ApiResponse<Map<String, Int>> {
         return success(
             OK,
             memberNewsCardDelete.clearMemberNewsCard(
                 member = AuthContext.getMember(),
-                today = LocalDate.now()
+                today = LocalDate.now(),
+                newsCardId = memberNewsCardClearRequest.newsCardId
             )
         )
     }

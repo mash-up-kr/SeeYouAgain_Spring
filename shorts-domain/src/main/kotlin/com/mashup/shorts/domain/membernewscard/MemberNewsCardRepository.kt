@@ -11,8 +11,7 @@ interface MemberNewsCardRepository : JpaRepository<MemberNewsCard, Long> {
     fun findAllByMember(member: Member): List<MemberNewsCard>
     fun findByNewsCardIn(newsCard: List<NewsCard>): List<MemberNewsCard>
     fun existsByMemberAndNewsCard(member: Member, newsCard: NewsCard): Boolean
-    fun existsByNewsCardIn(newsCard: List<NewsCard>): Boolean
     fun deleteAllByMemberAndNewsCardIn(member: Member, newsList: List<NewsCard>)
-    fun deleteByMember(member: Member)
+    fun deleteByNewsCard(newsCard: NewsCard)
     fun countAllByMember(member: Member): Int
 }
