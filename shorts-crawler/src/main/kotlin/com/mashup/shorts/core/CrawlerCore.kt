@@ -106,7 +106,7 @@ class CrawlerCore(
 
                 newsCardRepository.save(persistenceNewsCard)
 
-                keywordsCountingPair = countKeyword(keywordsCountingPair, extractedKeywords)
+                keywordsCountingPair += countKeyword(keywordsCountingPair, extractedKeywords)
             }
             log.info("${categoryPair.key} - crawled complete!!")
             Thread.sleep(1000)
