@@ -80,7 +80,7 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                             .description("요청 날짜 및 시간"),
                         RequestDocumentation
                             .parameterWithName("cursorId")
-                            .description("커서 아이디(기본 값은 0으로 지정됩니다.)"),
+                            .description("커서 아이디, 가장 마지막에 받은 id를 넣어주세요 (기본 값은 0으로 지정됩니다.)"),
                         RequestDocumentation
                             .parameterWithName("size")
                             .description("<필수값> 페이징 사이즈(최대 20까지 허용합니다.)"),
@@ -147,7 +147,7 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                     queryParameters(
                         RequestDocumentation
                             .parameterWithName("cursorId")
-                            .description("커서 아이디(기본 값은 0으로 지정됩니다.)"),
+                            .description("커서 아이디, 가장 마지막에 받은 id를 넣어주세요 (기본 값은 0으로 지정됩니다.)"),
                         RequestDocumentation
                             .parameterWithName("size")
                             .description("<필수값> 페이징 사이즈(최대 20까지 허용합니다.)"),
