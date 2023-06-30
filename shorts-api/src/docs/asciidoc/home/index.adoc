@@ -19,7 +19,7 @@ include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 설정/
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 설정/http-request.adoc[]
 
-==== [Request Filed]
+==== [Request Field]
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 설정/request-fields.adoc[]
 
@@ -46,7 +46,7 @@ include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 수정/
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 수정/http-request.adoc[]
 
-==== [Request Filed]
+==== [Request Field]
 
 include::../../../../../shorts-api/{snippets}/멤버 관심 카테고리 수정/request-fields.adoc[]
 

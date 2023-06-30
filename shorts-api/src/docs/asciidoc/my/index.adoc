@@ -47,7 +47,7 @@ include::../../../../../shorts-api/{snippets}/오늘의 숏스 추가/http-reque
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 추가/request-headers.adoc[]
 
-==== [Request Filed]
+==== [Request Field]
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 추가/request-fields.adoc[]
 
@@ -76,10 +76,6 @@ include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/
 ==== [Query Parameters]
 
 include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/query-parameters.adoc[]
-
-==== [Request Filed]
-
-include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/request-fields.adoc[]
 
 ==== [Response HTTP Example]
 
@@ -125,7 +121,7 @@ include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/request-he
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/http-request.adoc[]
 
-==== [Request Fields]
+==== [Request Field]
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 삭제/request-fields.adoc[]
 
@@ -157,7 +153,7 @@ include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/htt
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/request-headers.adoc[]
 
-==== [Request Filed]
+==== [Request Field]
 
 include::../../../../../shorts-api/{snippets}/오래 간직할 뉴스 추가/request-fields.adoc[]
 

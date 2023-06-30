@@ -95,7 +95,8 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                         fieldWithPath("result[].category").type(JsonFieldType.STRING)
                             .description("카테고리"),
                         fieldWithPath("result[].crawledDateTime").type(JsonFieldType.STRING)
-                            .description("크롤링 된 시각"),
+                            .description("크롤링 된 시각 ex) 2023-06-30T21:30:42"),
+
                     )
                 )
             )
@@ -169,7 +170,7 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                             .description("숏스 카테고리"),
                         fieldWithPath("result.memberShorts[].crawledDateTime")
                             .type(JsonFieldType.STRING)
-                            .description("크롤링 된 시각"),
+                            .description("크롤링 된 시각 ex) 2023-06-30T21:30:42"),
                     )
                 )
             )

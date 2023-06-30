@@ -114,7 +114,7 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
                             .description("언론사"),
                         PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].writtenDateTime")
                             .type(JsonFieldType.STRING)
-                            .description("작성 시각"),
+                            .description("작성 시각 ex) 2023.06.15. 오후 3:38"),
                         PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].type")
                             .type(JsonFieldType.STRING)
                             .description("응답 예시 : [HEADLINE, NORMAL],헤드라인 뉴스인지 일반 뉴스인지 구분하는 필드입니다."),
