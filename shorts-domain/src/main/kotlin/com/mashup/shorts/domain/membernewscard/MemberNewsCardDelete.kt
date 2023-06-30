@@ -41,7 +41,7 @@ class MemberNewsCardDelete(
 
     fun bulkDeleteMemberNewsCard(member: Member, newsCardIds: List<Long>) {
         val newsCards = newsCardRepository.findAllById(newsCardIds)
-        if (memberNewsCardRepository.findAllById(newsCardIds).size == 0) {
+        if (memberNewsCardRepository.findByNewsCardIn(newsCards).isEmpty()) {
             throw ShortsBaseException.from(
                 shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
                 resultErrorMessage = "저장되지 않은 숏스를 삭제할 수 없습니다."
