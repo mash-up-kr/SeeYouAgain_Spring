@@ -77,7 +77,7 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
                     thumbnailImageUrl = "IMAGE LINK",
                     newsLink = "NEWS LINK",
                     press = "TYN",
-                    writtenDateTime = "TODAY",
+                    writtenDateTime = "2023.06.29. 오전 11:41",
                     type = "HEADLINE",
                     crawledCount = 1,
                     category = Category(CategoryName.CULTURE)
@@ -88,13 +88,13 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
                     thumbnailImageUrl = "IMAGE LINK",
                     newsLink = "NEWS LINK",
                     press = "TYN",
-                    writtenDateTime = "TODAY",
+                    writtenDateTime = "2023.06.29. 오전 11:41",
                     type = "HEADLINE",
                     crawledCount = 1,
                     category = Category(CategoryName.CULTURE)
                 ),
             )
-            )
+        )
 
         mockMvc.perform(
             RestDocumentationRequestBuilders

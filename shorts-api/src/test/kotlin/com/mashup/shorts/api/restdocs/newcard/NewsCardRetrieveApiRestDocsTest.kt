@@ -40,7 +40,7 @@ class NewsCardRetrieveApiRestDocsTest : ApiDocsTestBase() {
                     content = "뉴스 내용",
                     thumbnailImageUrl = "이미지 링크",
                     newsLink = "뉴스 링크",
-                    writtenDateTime = "작성시각",
+                    writtenDateTime = "2023.06.29. 오전 11:41",
                     type = "타입",
                     press = "언론사",
                     crawledCount = 1,
