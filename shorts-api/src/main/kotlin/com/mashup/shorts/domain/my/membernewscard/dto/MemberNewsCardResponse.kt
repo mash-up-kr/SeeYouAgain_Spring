@@ -1,6 +1,7 @@
 package com.mashup.shorts.domain.my.membernewscard.dto
 
 import java.time.LocalDateTime
+import com.mashup.shorts.common.util.convert
 import com.mashup.shorts.domain.membernewscard.dtomapper.MemberTodayShorts
 import com.mashup.shorts.domain.newscard.NewsCard
 
@@ -19,7 +20,7 @@ data class RetrieveAllNewsCardResponse(
                     id = it.id,
                     keywords = it.keywords,
                     category = it.category.name.name,
-                    crawledDateTime = it.createdAt,
+                    crawledDateTime = convert(it.createdAt),
                 )
             }
         }
@@ -34,7 +35,6 @@ data class SavedRetrieveNewsCardByMember(
         fun domainResponseFormToApiResponseForm(
             memberTodayShorts: MemberTodayShorts,
         ): SavedRetrieveNewsCardByMember {
-
             return SavedRetrieveNewsCardByMember(
                 numberOfShorts = memberTodayShorts.numberOfShorts,
                 memberShorts = memberTodayShorts.memberShorts.map {
@@ -42,7 +42,7 @@ data class SavedRetrieveNewsCardByMember(
                         id = it.id,
                         keywords = it.keywords,
                         category = it.category.name.name,
-                        crawledDateTime = it.createdAt,
+                        crawledDateTime = convert(it.createdAt),
                     )
                 }
             )
@@ -56,4 +56,3 @@ data class MemberShorts(
     var category: String,
     var crawledDateTime: LocalDateTime,
 )
-

@@ -7,7 +7,10 @@ class NewsRetrieveMapper {
     companion object {
 
         fun newsRetrieveInfoToResponse(newsRetrieveInfo: NewsRetrieveInfo): NewsRetrieveResponse {
-            return NewsRetrieveResponse(newsLink = newsRetrieveInfo.newsLink, isSaved = newsRetrieveInfo.isSaved)
+            return NewsRetrieveResponse(
+                newsLink = newsRetrieveInfo.newsLink,
+                isSaved = newsRetrieveInfo.isSaved
+            )
         }
     }
 }

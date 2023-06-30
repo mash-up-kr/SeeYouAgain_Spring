@@ -16,8 +16,8 @@ import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
-import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.home.newscard.NewsCardRetrieveApi
+import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.newscard.NewsCardRetrieve
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -81,14 +81,30 @@ class NewsCardRetrieveApiRestDocsTest : ApiDocsTestBase() {
                             .description("<필수값> 정렬 기준 [ASC, DESC] 둘 중 하나만 허용합니다. ASC는 오래된 순, DESC는 최신 순 입니다."),
                     ),
                     PayloadDocumentation.responseFields(
-                        fieldWithPath("status").type(JsonFieldType.NUMBER).description("API 성공 여부"),
-                        fieldWithPath("result[].id").type(JsonFieldType.NUMBER).description("뉴스 id"),
-                        fieldWithPath("result[].title").type(JsonFieldType.STRING).description("뉴스 제목"),
-                        fieldWithPath("result[].thumbnailImageUrl").type(JsonFieldType.STRING).description("뉴스 이미지 링크"),
-                        fieldWithPath("result[].newsLink").type(JsonFieldType.STRING).description("뉴스 링크"),
-                        fieldWithPath("result[].press").type(JsonFieldType.STRING).description("언론사"),
-                        fieldWithPath("result[].writtenDateTime").type(JsonFieldType.STRING).description("작성 시각"),
-                        fieldWithPath("result[].type").type(JsonFieldType.STRING).description("헤드라인 뉴스인지, 일반 뉴스인지"),
+                        fieldWithPath("status")
+                            .type(JsonFieldType.NUMBER)
+                            .description("API 성공 여부"),
+                        fieldWithPath("result[].id")
+                            .type(JsonFieldType.NUMBER)
+                            .description("뉴스 id"),
+                        fieldWithPath("result[].title")
+                            .type(JsonFieldType.STRING)
+                            .description("뉴스 제목"),
+                        fieldWithPath("result[].thumbnailImageUrl")
+                            .type(JsonFieldType.STRING)
+                            .description("뉴스 이미지 링크"),
+                        fieldWithPath("result[].newsLink")
+                            .type(JsonFieldType.STRING)
+                            .description("뉴스 링크"),
+                        fieldWithPath("result[].press")
+                            .type(JsonFieldType.STRING)
+                            .description("언론사"),
+                        fieldWithPath("result[].writtenDateTime")
+                            .type(JsonFieldType.STRING)
+                            .description("작성 시각"),
+                        fieldWithPath("result[].type")
+                            .type(JsonFieldType.STRING)
+                            .description("헤드라인 뉴스인지, 일반 뉴스인지"),
                     )
                 )
             )

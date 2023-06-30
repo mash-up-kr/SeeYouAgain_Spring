@@ -7,7 +7,10 @@ class KeywordRankingMapper {
     companion object {
 
         fun keywordRankingToResponse(keywordRanking: KeywordRanking): HotKeywordsResponse {
-            return HotKeywordsResponse(keywordRanking.createdAt, keywordRanking.ranking)
+            return HotKeywordsResponse(
+                keywordRanking.createdAt,
+                keywordRanking.ranking
+            )
         }
     }
 }

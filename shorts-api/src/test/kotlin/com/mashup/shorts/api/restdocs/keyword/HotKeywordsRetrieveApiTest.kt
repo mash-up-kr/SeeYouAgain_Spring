@@ -36,7 +36,7 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
     @Test
     fun `핫 키워드 조회`() {
         every { hotKeywordRetrieve.retrieveHotKeywords(any()) } returns (KeywordRanking(
-            createdAt = "2023-06-25 11:00",
+            createdAt = "2023-06-30T10:12:16.913821",
             ranking = listOf("키워드1", "키워드2", "키워드3")
         ))
 
@@ -55,7 +55,7 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
                         fieldWithPath("status").type(JsonFieldType.NUMBER)
                             .description("API HTTP Status 값"),
                         fieldWithPath("result.createdAt").type(JsonFieldType.STRING)
-                            .description("핫 키워드 생성 시간"),
+                            .description("키워드 시간대 ex) 2023-06-30T21:30:42"),
                         fieldWithPath("result.ranking").type(JsonFieldType.ARRAY)
                             .description("핫 키워드 순위 (1위 ~ 10위)")
                     )
@@ -94,7 +94,7 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
                     category = Category(CategoryName.CULTURE)
                 ),
             )
-        )
+            )
 
         mockMvc.perform(
             RestDocumentationRequestBuilders
@@ -119,7 +119,7 @@ class HotKeywordsRetrieveApiTest : ApiDocsTestBase() {
                     queryParameters(
                         RequestDocumentation
                             .parameterWithName("targetDateTime")
-                            .description("타입 : LocalDateTime, 조회할 날짜/시간"),
+                            .description("타입 : LocalDateTime, 조회할 날짜/시간 ex) 2023-06-30T21:30:42"),
                         RequestDocumentation
                             .parameterWithName("cursorId")
                             .description("커서 아이디(기본 값은 0으로 지정됩니다.)"),
