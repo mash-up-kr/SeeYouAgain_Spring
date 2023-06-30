@@ -4,6 +4,8 @@ import java.time.LocalDate
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import com.mashup.shorts.common.exception.ShortsBaseException
+import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membershortscount.MemberShortsCount
 import com.mashup.shorts.domain.membershortscount.MemberShortsCountRepository
@@ -39,6 +41,12 @@ class MemberNewsCardDelete(
 
     fun bulkDeleteMemberNewsCard(member: Member, newsCardIds: List<Long>) {
         val newsCards = newsCardRepository.findAllById(newsCardIds)
+        if (memberNewsCardRepository.findAllById(newsCardIds).size == 0) {
+            throw ShortsBaseException.from(
+                shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
+                resultErrorMessage = "저장되지 않은 숏스를 삭제할 수 없습니다."
+            )
+        }
         memberNewsCardRepository.deleteAllByMemberAndNewsCardIn(member, newsCards)
     }
 
