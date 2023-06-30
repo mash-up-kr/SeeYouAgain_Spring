@@ -18,6 +18,10 @@ class NewsRetrieveApi(
     private val newsRetrieve: NewsRetrieve,
 ) {
 
+    /**
+    뉴스 자세히 보기 API (웹 뷰)
+    @PathVariable : newsId
+     */
     @Auth
     @GetMapping("/{newsId}")
     fun retrieveNews(@PathVariable newsId: Long): ApiResponse<NewsRetrieveResponse> {

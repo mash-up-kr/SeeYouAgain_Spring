@@ -5,19 +5,22 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import com.mashup.shorts.common.response.ApiResponse
-import com.mashup.shorts.domain.my.MemberInfoRetrieve
 import com.mashup.shorts.common.aop.Auth
 import com.mashup.shorts.common.aop.AuthContext
+import com.mashup.shorts.common.response.ApiResponse
+import com.mashup.shorts.domain.my.MemberInfoRetrieve
 import com.mashup.shorts.domain.my.info.dto.MemberInfoMapper
 import com.mashup.shorts.domain.my.info.dto.MemberInfoRetrieveResponse
 
 @RequestMapping("/v1/member/info")
 @RestController
 class MemberInfoRetrieveApi(
-    private val memberInfoRetrieve: MemberInfoRetrieve
+    private val memberInfoRetrieve: MemberInfoRetrieve,
 ) {
 
+    /**
+    유저 정보 조회 API
+     */
     @Auth
     @GetMapping
     fun retrieveMemberInfo(): ApiResponse<MemberInfoRetrieveResponse> {

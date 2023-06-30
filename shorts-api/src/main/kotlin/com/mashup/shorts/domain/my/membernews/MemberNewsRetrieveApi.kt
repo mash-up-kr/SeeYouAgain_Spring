@@ -25,6 +25,10 @@ class MemberNewsRetrieveApi(
     private val memberNewsRetrieve: MemberNewsRetrieve,
 ) {
 
+    /**
+    오래 간직할 뉴스 조회 API
+    @Param : targetDate, cursorWrittenDateTime, size, pivot
+     */
     @Auth
     @GetMapping
     fun retrieveNewsByMember(

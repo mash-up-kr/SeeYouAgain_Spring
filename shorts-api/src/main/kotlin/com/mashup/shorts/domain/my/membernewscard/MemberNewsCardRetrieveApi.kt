@@ -12,8 +12,8 @@ import com.mashup.shorts.common.aop.AuthContext
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
 import com.mashup.shorts.domain.membernewscard.MemberNewsCardRetrieve
-import com.mashup.shorts.domain.my.membernewscard.dto.RetrieveAllNewsCardResponse
-import com.mashup.shorts.domain.my.membernewscard.dto.SavedRetrieveNewsCardByMember
+import com.mashup.shorts.domain.my.membernewscard.dto.RetrieveHomeNewsCardResponse
+import com.mashup.shorts.domain.my.membernewscard.dto.RetrieveSavedNewsCardResponse
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 
@@ -24,6 +24,10 @@ class MemberNewsCardRetrieveApi(
     private val memberNewsCardRetrieve: MemberNewsCardRetrieve,
 ) {
 
+    /**
+     홈 조회 API
+     @Param : targetDateTime, cursorId, size
+     */
     @Auth
     @GetMapping
     fun retrieveNewsCardByMember(
@@ -33,10 +37,10 @@ class MemberNewsCardRetrieveApi(
             required = false
         ) @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
         @RequestParam(required = true) @Min(1) @Max(20) size: Int,
-    ): ApiResponse<List<RetrieveAllNewsCardResponse>> {
+    ): ApiResponse<List<RetrieveHomeNewsCardResponse>> {
         return success(
             OK,
-            RetrieveAllNewsCardResponse.domainResponseFormToApiResponseForm(
+            RetrieveHomeNewsCardResponse.domainResponseFormToApiResponseForm(
                 memberNewsCardRetrieve.retrieveNewsCardByMember(
                     member = AuthContext.getMember(),
                     targetDateTime = targetDateTime,
@@ -47,6 +51,10 @@ class MemberNewsCardRetrieveApi(
         )
     }
 
+    /**
+    저장한 오늘의 숏스 조회 API
+     @Param : cursorId, size
+     */
     @Auth
     @GetMapping("/")
     fun retrieveSavedNewsCardByMember(
@@ -55,10 +63,10 @@ class MemberNewsCardRetrieveApi(
             required = false
         ) @Min(0) @Max(Long.MAX_VALUE) cursorId: Long,
         @RequestParam(required = true) @Min(1) @Max(20) size: Int,
-    ): ApiResponse<SavedRetrieveNewsCardByMember> {
+    ): ApiResponse<RetrieveSavedNewsCardResponse> {
         return success(
             OK,
-            SavedRetrieveNewsCardByMember.domainResponseFormToApiResponseForm(
+            RetrieveSavedNewsCardResponse.domainResponseFormToApiResponseForm(
                 memberNewsCardRetrieve.retrieveSavedNewsCardByMember(
                     member = AuthContext.getMember(),
                     cursorId = cursorId,

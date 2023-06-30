@@ -12,9 +12,9 @@ import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils
 import com.mashup.shorts.domain.category.CategoryName
-import com.mashup.shorts.domain.membercategory.MemberCategoryCreate
-import com.mashup.shorts.domain.home.memberCategory.CategoryCreateBulkRequest
 import com.mashup.shorts.domain.home.memberCategory.MemberCategoryCreateApi
+import com.mashup.shorts.domain.home.memberCategory.dto.CategoryCreateBulkRequest
+import com.mashup.shorts.domain.membercategory.MemberCategoryCreate
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
@@ -34,7 +34,7 @@ class MemberCategoryModifyApiTest : ApiDocsTestBase() {
 
     @Test
     fun `멤버 관심 카테고리 수정`() {
-        every { memberCategoryCreate.modifyMemberCategory(any(), any()) } returns(Unit)
+        every { memberCategoryCreate.modifyMemberCategory(any(), any()) } returns (Unit)
 
         val requestBody = CategoryCreateBulkRequest(
             categoryNames = listOf(CategoryName.CULTURE, CategoryName.ECONOMIC)
@@ -55,10 +55,12 @@ class MemberCategoryModifyApiTest : ApiDocsTestBase() {
                     RestDocsUtils.getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
                     PayloadDocumentation.requestFields(
-                        PayloadDocumentation.fieldWithPath("categoryNames").type(JsonFieldType.ARRAY).description("사용자가 수정할 카테고리 리스트 (ex: [POLITICS, ECONOMIC, SOCIETY, CULTURE, WORLD, SCIENCE]")
+                        PayloadDocumentation.fieldWithPath("categoryNames").type(JsonFieldType.ARRAY)
+                            .description("사용자가 수정할 카테고리 리스트 (ex: [POLITICS, ECONOMIC, SOCIETY, CULTURE, WORLD, SCIENCE]")
                     ),
                     PayloadDocumentation.responseFields(
-                        PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER).description("API HTTP Status 값")
+                        PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)
+                            .description("API HTTP Status 값")
                     )
                 )
             )

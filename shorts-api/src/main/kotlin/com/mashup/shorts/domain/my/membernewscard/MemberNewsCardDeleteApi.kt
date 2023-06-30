@@ -20,6 +20,10 @@ class MemberNewsCardDeleteApi(
     private val memberNewsCardDelete: MemberNewsCardDelete,
 ) {
 
+    /**
+    오늘의 숏스 제거 API
+    @Body : {newsCardIds: List<Long>},
+     */
     @Auth
     @PostMapping
     fun bulkDeleteMemberNewsCard(

@@ -5,7 +5,7 @@ import com.mashup.shorts.common.util.convert
 import com.mashup.shorts.domain.membernewscard.dtomapper.MemberTodayShorts
 import com.mashup.shorts.domain.newscard.NewsCard
 
-data class RetrieveAllNewsCardResponse(
+data class RetrieveHomeNewsCardResponse(
     var id: Long,
     var keywords: String,
     var category: String,
@@ -14,9 +14,9 @@ data class RetrieveAllNewsCardResponse(
     companion object {
         fun domainResponseFormToApiResponseForm(
             newsCards: List<NewsCard>,
-        ): List<RetrieveAllNewsCardResponse> {
+        ): List<RetrieveHomeNewsCardResponse> {
             return newsCards.map {
-                RetrieveAllNewsCardResponse(
+                RetrieveHomeNewsCardResponse(
                     id = it.id,
                     keywords = it.keywords,
                     category = it.category.name.name,
@@ -27,15 +27,15 @@ data class RetrieveAllNewsCardResponse(
     }
 }
 
-data class SavedRetrieveNewsCardByMember(
+data class RetrieveSavedNewsCardResponse(
     var numberOfShorts: Int,
     var memberShorts: List<MemberShorts>,
 ) {
     companion object {
         fun domainResponseFormToApiResponseForm(
             memberTodayShorts: MemberTodayShorts,
-        ): SavedRetrieveNewsCardByMember {
-            return SavedRetrieveNewsCardByMember(
+        ): RetrieveSavedNewsCardResponse {
+            return RetrieveSavedNewsCardResponse(
                 numberOfShorts = memberTodayShorts.numberOfShorts,
                 memberShorts = memberTodayShorts.memberShorts.map {
                     MemberShorts(

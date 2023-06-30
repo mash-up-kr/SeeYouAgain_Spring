@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
-import com.mashup.shorts.domain.home.newscard.dto.DetailNewsCardResponse
+import com.mashup.shorts.domain.home.newscard.dto.RetrieveNewsBundleInNewsCardResponse
 import com.mashup.shorts.domain.hot.keyword.dto.HotKeywordsResponse
 import com.mashup.shorts.domain.hot.keyword.dto.KeywordRankingMapper
 import com.mashup.shorts.domain.keyword.HotKeywordRetrieve
@@ -24,6 +24,9 @@ class HotKeywordsRetrieveApi(
     private val hotKeywordRetrieve: HotKeywordRetrieve,
 ) {
 
+    /**
+    키워드 랭킹 조회 API
+     */
     @GetMapping
     fun retrieveHotKeywords(): ApiResponse<HotKeywordsResponse> {
         val targetTime = LocalDateTime.now().withSecond(0).withNano(0)
@@ -31,6 +34,11 @@ class HotKeywordsRetrieveApi(
         return success(OK, KeywordRankingMapper.keywordRankingToResponse(keywordRanking))
     }
 
+    /**
+    키워드로 관련 뉴스 조회 API
+    @PathVariable : keyword
+    @Param : targetDateTime, cursorId, size
+     */
     @GetMapping("/{keyword}")
     fun retrieveDetailHotKeyword(
         @PathVariable keyword: String,
@@ -38,10 +46,10 @@ class HotKeywordsRetrieveApi(
         @RequestParam(defaultValue = "0", required = false) @Min(0) @Max(Long.MAX_VALUE)
         cursorId: Long,
         @RequestParam(required = true) @Min(1) @Max(20) size: Int,
-    ): ApiResponse<List<DetailNewsCardResponse>> {
+    ): ApiResponse<List<RetrieveNewsBundleInNewsCardResponse>> {
         return success(
             OK,
-            DetailNewsCardResponse.persistenceToResponseForm(
+            RetrieveNewsBundleInNewsCardResponse.persistenceToResponseForm(
                 hotKeywordRetrieve.retrieveDetailHotKeyword(
                     targetDateTime = targetDateTime,
                     keyword = keyword,
