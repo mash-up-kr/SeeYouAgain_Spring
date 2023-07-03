@@ -51,6 +51,10 @@ include::../../../../../shorts-api/{snippets}/오늘의 숏스 추가/request-he
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 추가/request-fields.adoc[]
 
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/오늘의 숏스 추가/response-fields.adoc[]
+
 ==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/오늘의 숏스 추가/http-response.adoc[]
@@ -77,6 +81,10 @@ include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/
 
 include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/query-parameters.adoc[]
 
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/response-fields.adoc[]
+
 ==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/http-response.adoc[]
@@ -102,6 +110,10 @@ include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오
 ==== [Request Fields]
 
 include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/request-fields.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/뉴스카드 다 읽었어요 (오늘 읽을 모든 숏스 삭제)/response-fields.adoc[]
 
 ==== [Response HTTP Example]
 
