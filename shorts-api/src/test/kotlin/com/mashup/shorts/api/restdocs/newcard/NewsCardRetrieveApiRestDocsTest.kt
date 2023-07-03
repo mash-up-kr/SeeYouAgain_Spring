@@ -105,6 +105,9 @@ class NewsCardRetrieveApiRestDocsTest : ApiDocsTestBase() {
                         fieldWithPath("result[].type")
                             .type(JsonFieldType.STRING)
                             .description("헤드라인 뉴스인지, 일반 뉴스인지"),
+                        fieldWithPath("result[].category")
+                            .type(JsonFieldType.STRING)
+                            .description("카테고리"),
                     )
                 )
             )
