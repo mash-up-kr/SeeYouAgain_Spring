@@ -1,12 +1,10 @@
 package com.mashup.shorts.core
 
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ofPattern
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.core.const.categoryToUrl
 import com.mashup.shorts.core.keyword.KeywordExtractor
@@ -20,17 +18,19 @@ import com.mashup.shorts.domain.category.CategoryRepository
 import com.mashup.shorts.domain.keyword.HotKeyword
 import com.mashup.shorts.domain.keyword.HotKeywordRepository
 import com.mashup.shorts.domain.news.News
+import com.mashup.shorts.domain.news.NewsBulkInsertRepository
 import com.mashup.shorts.domain.news.NewsRepository
 import com.mashup.shorts.domain.newscard.NewsCard
-import com.mashup.shorts.domain.newscard.NewsCardRepository
+import com.mashup.shorts.domain.newscard.NewsCardBulkInsertRepository
 
 @Component
 @Transactional
 class CrawlerCore(
-    private val newsRepository: NewsRepository,
-    private val newsCardRepository: NewsCardRepository,
-    private val categoryRepository: CategoryRepository,
     private val crawlerBase: CrawlerBase,
+    private val categoryRepository: CategoryRepository,
+    private val newsRepository: NewsRepository,
+    private val newsBulkInsertRepository: NewsBulkInsertRepository,
+    private val newsCardBulkInsertRepository: NewsCardBulkInsertRepository,
     private val keywordExtractor: KeywordExtractor,
     private val hotKeywordRepository: HotKeywordRepository,
 ) {
@@ -38,82 +38,85 @@ class CrawlerCore(
     @Scheduled(cron = "0 0 * * * *")
     internal fun executeCrawling() {
         val crawledDateTime = LocalDateTime.now()
-        var keywordsCountingPair = mutableMapOf<String, Int>()
+        val keywordsCountingPair = mutableMapOf<String, Int>()
+        val persistenceTargetNewsCards = mutableListOf<NewsCard>()
         for (categoryPair in categoryToUrl) {
-            log.info {
-                "${categoryPair.key} - ${crawledDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))} - crawling start"
-            }
-            val category = when (categoryPair.key) {
+            val categoryName = categoryPair.key
+            val categoryURL = categoryPair.value
+
+            log.info { "$categoryName - ${crawledDateTime.format(ofPattern("yyyy-MM-dd HH:mm:ss"))} - crawling start" }
+
+            val category = when (categoryName) {
                 POLITICS -> categoryRepository.findByName(POLITICS)
                 ECONOMIC -> categoryRepository.findByName(ECONOMIC)
                 SOCIETY -> categoryRepository.findByName(SOCIETY)
                 CULTURE -> categoryRepository.findByName(CULTURE)
                 WORLD -> categoryRepository.findByName(WORLD)
                 SCIENCE -> categoryRepository.findByName(SCIENCE)
-                else -> throw ShortsBaseException.from(
-                    shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
-                    resultErrorMessage = "${LocalDateTime.now()} - 크롤링 시도 중 ${categoryPair.key} 를 찾을 수 없습니다."
-                )
             }
 
             val headLineLinks = crawlerBase.extractMoreHeadLineLinks(
-                url = categoryPair.value,
-                categoryName = categoryPair.key
+                url = categoryURL,
+                categoryName = categoryName
             )
-            val allNewsLinks = crawlerBase.extractAllHeadLineNewsLinks(headLineLinks)
+            val crawledNewsCards = crawlerBase.extractNewsCardBundle(
+                allHeadLineNewsLinks = crawlerBase.extractAllHeadLineNewsLinks(headLineLinks),
+                categoryName = categoryName,
+                category = category,
+            )
             val persistenceNewsBundle = newsRepository.findAllByCategory(category)
-            val newsCardBundle = crawlerBase.extractNewsCardBundle(
-                allNewsLinks,
-                categoryPair.key,
-                category,
-            )
 
-            newsCardBundle.map { newsCard ->
+            crawledNewsCards.map { crawledNewsCard ->
                 val persistenceTargetNewsBundle = mutableListOf<News>()
-                newsCard.map { crawledNews ->
-                    // 이미 저장한 뉴스인 경우
-                    if (isAlreadySavedNews(
-                            news = crawledNews,
-                            persistenceNewsBundle = persistenceNewsBundle,
-                        )
-                    ) {
-                        val alreadyExistNews = newsRepository.findByTitleAndNewsLinkAndPress(
-                            title = crawledNews.title,
-                            newsLink = crawledNews.newsLink,
-                            press = crawledNews.press,
-                        ).first()
-                        alreadyExistNews.increaseCrawledCount()
-                        persistenceTargetNewsBundle.add(alreadyExistNews)
-                    }
-                    // DB에 존재하지 않는 뉴스인 경우
-                    else {
+                crawledNewsCard.map { crawledNews ->
+                    val alreadySavedNews = isAlreadySavedNews(crawledNews, persistenceNewsBundle)
+                    if (alreadySavedNews != null) {
+                        alreadySavedNews.increaseCrawledCount()
+                        persistenceTargetNewsBundle.add(alreadySavedNews)
+                    } else {
                         persistenceTargetNewsBundle.add(crawledNews)
-                        newsRepository.save(crawledNews)
                     }
                 }
 
-                val extractedKeywords = keywordExtractor.extractKeywordV2(
-                    persistenceTargetNewsBundle.first().content
+                // 크롤러한 뉴스 삽입 전 마지막 News의 Index
+                var currentLastNewsIndex = 1L
+
+                // 현재 DB에 존재하는 가장 마지막 뉴스
+                val lastNews = newsRepository.findTopByOrderByIdDesc()
+
+                // 만약 DB에 뉴스가 존재한다면 해당 뉴스의 id + 1를 다음에 삽입될 인덱스로 지정
+                if (lastNews != null) {
+                    currentLastNewsIndex = lastNews.id + 1
+                }
+
+                // 크롤러한 뉴스 삽입 후 마지막 News의 Index
+                val newNewsLastIndex = newsBulkInsertRepository.bulkInsert(
+                    newsBundle = persistenceTargetNewsBundle,
+                    crawledDateTime = crawledDateTime
                 )
+
+                val extractedKeywords = keywordExtractor.extractKeywordV2(
+                    newsRepository.findById(newNewsLastIndex!!.toLong()).get().content
+                )
+
                 val persistenceNewsCard = NewsCard(
                     category = category,
                     multipleNews = filterSquareBracket(
-                        persistenceTargetNewsBundle.map { it.id }.toString()
+                        (currentLastNewsIndex..newNewsLastIndex).joinToString(", ")
                     ),
                     keywords = extractedKeywords,
-                    createdAt = crawledDateTime,
+                    createdAt = LocalDateTime.now(),
                     modifiedAt = crawledDateTime,
                 )
-
-                newsCardRepository.save(persistenceNewsCard)
-
+                persistenceTargetNewsCards.add(persistenceNewsCard)
                 keywordsCountingPair += countKeyword(keywordsCountingPair, extractedKeywords)
             }
-            log.info("${categoryPair.key} - crawled complete!!")
+            log.info("$categoryName - crawled complete!!")
             Thread.sleep(1000)
         }
-        log.info("$crawledDateTime - all crawling done")
+        newsCardBulkInsertRepository.bulkInsert(persistenceTargetNewsCards, crawledDateTime)
         saveKeywordRanking(keywordsCountingPair)
+        log.info("$crawledDateTime - all crawling done")
     }
 
     //TODO: 테스트 코드 작성
@@ -150,9 +153,15 @@ class CrawlerCore(
             .replace("]", "")
     }
 
-    private fun isAlreadySavedNews(news: News, persistenceNewsBundle: List<News>): Boolean {
-        return news.title in persistenceNewsBundle.map { it.title } &&
-            news.newsLink in persistenceNewsBundle.map { it.newsLink } &&
-            news.press in persistenceNewsBundle.map { it.press }
+    private fun isAlreadySavedNews(crawledNews: News, persistenceNewsBundle: List<News>): News? {
+        for (persistenceNews in persistenceNewsBundle) {
+            if (crawledNews.title in persistenceNews.title &&
+                crawledNews.newsLink in persistenceNews.newsLink &&
+                crawledNews.press in persistenceNews.press
+            ) {
+                return persistenceNews
+            }
+        }
+        return null
     }
 }
