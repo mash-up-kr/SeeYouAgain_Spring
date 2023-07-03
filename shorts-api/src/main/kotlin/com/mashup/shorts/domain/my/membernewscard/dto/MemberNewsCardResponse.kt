@@ -29,6 +29,7 @@ data class RetrieveHomeNewsCardResponse(
 
 data class RetrieveSavedNewsCardResponse(
     var numberOfShorts: Int,
+    var numberOfReadShorts: Int,
     var memberShorts: List<MemberShorts>,
 ) {
     companion object {
@@ -37,6 +38,7 @@ data class RetrieveSavedNewsCardResponse(
         ): RetrieveSavedNewsCardResponse {
             return RetrieveSavedNewsCardResponse(
                 numberOfShorts = memberTodayShorts.numberOfShorts,
+                numberOfReadShorts = memberTodayShorts.numberOfReadShorts,
                 memberShorts = memberTodayShorts.memberShorts.map {
                     MemberShorts(
                         id = it.id,

@@ -113,6 +113,7 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
         every { memberNewsCardRetrieve.retrieveSavedNewsCardByMember(any(), any(), any()) } returns (
             MemberTodayShorts(
                 numberOfShorts = 1234,
+                numberOfReadShorts = 5678,
                 memberShorts = listOf(
                     NewsCard(
                         category = Category(CategoryName.POLITICS),
@@ -158,7 +159,10 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                             .description("API 성공 여부"),
                         fieldWithPath("result.numberOfShorts")
                             .type(JsonFieldType.NUMBER)
-                            .description("저장한 숏스 갯수"),
+                            .description("오늘 저장한 숏스 갯수"),
+                        fieldWithPath("result.numberOfReadShorts")
+                            .type(JsonFieldType.NUMBER)
+                            .description("오늘 읽은 숏스 갯수"),
                         fieldWithPath("result.memberShorts[].id")
                             .type(JsonFieldType.NUMBER)
                             .description("숏스 id"),

@@ -1,5 +1,6 @@
 package com.mashup.shorts.domain.membernewscard
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -7,6 +8,7 @@ import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
 import com.mashup.shorts.domain.membernewscard.dtomapper.MemberTodayShorts
+import com.mashup.shorts.domain.membershortscount.MemberShortsCountRepository
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 
@@ -17,6 +19,7 @@ class MemberNewsCardRetrieve(
     private val memberCategoryRepository: MemberCategoryRepository,
     private val memberNewsRepository: MemberNewsRepository,
     private val memberNewsCardRepository: MemberNewsCardRepository,
+    private val memberShortsCountRepository: MemberShortsCountRepository,
 ) {
 
     fun retrieveNewsCardByMember(
@@ -63,8 +66,27 @@ class MemberNewsCardRetrieve(
         cursorId: Long,
         size: Int,
     ): MemberTodayShorts {
+
+        val memberShortsCount = memberShortsCountRepository.findByMemberAndTargetDate(
+            member = member,
+            targetDate = LocalDate.now()
+        )
+
+        if (memberShortsCount != null) {
+            return MemberTodayShorts(
+                numberOfShorts = memberNewsCardRepository.countAllByMember(member),
+                numberOfReadShorts = memberShortsCount.count,
+                memberShorts = newsCardRepository.findSavedNewsCardsByNewsCardIds(
+                    newsCardIds = memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id },
+                    cursorId = cursorId,
+                    size = size,
+                )
+            )
+        }
+
         return MemberTodayShorts(
             numberOfShorts = memberNewsCardRepository.countAllByMember(member),
+            numberOfReadShorts = 0,
             memberShorts = newsCardRepository.findSavedNewsCardsByNewsCardIds(
                 newsCardIds = memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id },
                 cursorId = cursorId,

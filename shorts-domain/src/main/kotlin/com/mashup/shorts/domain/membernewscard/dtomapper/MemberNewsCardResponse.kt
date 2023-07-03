@@ -27,5 +27,6 @@ data class RetrieveAllNewsCardResponseMapper @QueryProjection constructor(
 
 data class MemberTodayShorts(
     var numberOfShorts: Int,
+    var numberOfReadShorts: Int,
     var memberShorts: List<NewsCard>,
 )
