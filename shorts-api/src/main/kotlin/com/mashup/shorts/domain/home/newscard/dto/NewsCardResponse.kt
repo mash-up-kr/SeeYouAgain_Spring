@@ -10,6 +10,7 @@ data class RetrieveNewsBundleInNewsCardResponse(
     var press: String,
     var writtenDateTime: String,
     var type: String,
+    var category: String,
 ) {
     companion object {
         fun persistenceToResponseForm(newsBundle: List<News>):
@@ -23,7 +24,8 @@ data class RetrieveNewsBundleInNewsCardResponse(
                     newsLink = it.newsLink,
                     press = it.press,
                     writtenDateTime = it.writtenDateTime,
-                    type = it.type
+                    type = it.type,
+                    category = it.category.name.name
                 )
             }
         }
