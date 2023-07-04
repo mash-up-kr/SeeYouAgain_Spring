@@ -72,7 +72,7 @@ class NewsCardRetrieveApiRestDocsTest : ApiDocsTestBase() {
                     RequestDocumentation.queryParameters(
                         RequestDocumentation
                             .parameterWithName("cursorWrittenDateTime")
-                            .description("커서 지정 값 ex) 2023.06.15. 오후 3:38 와 같이 입력해 주시고, 첫 페이지 요청 시 빈 문자열을 넣어주세요"),
+                            .description("커서 지정 값 ex) 2023.06.15. 오후 3:38 와 같이 입력해 주시고, 첫 페이지 요청 시 빈 값으로 요청해주세요 (빈 문자열 X)"),
                         RequestDocumentation
                             .parameterWithName("size")
                             .description("<필수값> 페이징 사이즈(최대 20까지 허용합니다.)"),

@@ -22,7 +22,7 @@ import com.mashup.shorts.domain.member.Member
 
 @SpringBootTest
 @Disabled
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 @Transactional
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
