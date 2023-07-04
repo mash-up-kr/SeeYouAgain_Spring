@@ -26,13 +26,72 @@ class NewsCardRetrieve(
                 shortsErrorCode = E404_NOT_FOUND,
                 resultErrorMessage = "${newsCardId}에 해당 뉴스 카드는 존재하지 않습니다."
             )
-        val newsIdBundle = newsCard.multipleNews.split(", ").map { it.toLong() }
+        val newsIds = newsCard.multipleNews.split(", ").map { it.toLong() }
+
+        if (cursorWrittenDateTime.isEmpty()) {
+            return notContainedCursor(
+                newsIds,
+                size,
+                pivot,
+            )
+        }
+
+        return containedCursor(
+            newsIds,
+            cursorWrittenDateTime,
+            size,
+            pivot,
+        )
+    }
+
+    private fun notContainedCursor(
+        newsIds: List<Long>,
+        size: Int,
+        pivot: Pivots,
+    ): List<News> {
+        if (pivot == Pivots.ASC) {
+            val newsBundle = newsRepository.findAllById(newsIds)
+                .sortedBy { it.writtenDateTime }
+
+            return newsRepository.loadNewsBundleByCursorAndNewsCardMultipleNews(
+                newsIds = newsBundle.map { it.id },
+                size = size
+            ).sortedBy { it.writtenDateTime }
+        }
+
+        val newsBundle = newsRepository.findAllById(newsIds)
+            .sortedByDescending { it.writtenDateTime }
 
         return newsRepository.loadNewsBundleByCursorAndNewsCardMultipleNews(
-            cursorWrittenDateTime,
-            newsIdBundle,
-            size,
-            pivot
-        )
+            newsIds = newsBundle.map { it.id },
+            size = size
+        ).sortedByDescending { it.writtenDateTime }
+    }
+
+    private fun containedCursor(
+        newsIds: List<Long>,
+        cursorWrittenDateTime: String,
+        size: Int,
+        pivot: Pivots,
+    ): List<News> {
+        if (pivot == Pivots.ASC) {
+            val newsBundle = newsRepository.findAllById(newsIds)
+                .sortedBy { it.writtenDateTime }
+                .filter { it.writtenDateTime > cursorWrittenDateTime }
+
+            return newsRepository.loadNewsBundleByCursorAndNewsCardMultipleNews(
+                newsIds = newsBundle.map { it.id },
+                size = size
+            ).sortedBy { it.writtenDateTime }
+        }
+
+        val newsBundle = newsRepository.findAllById(newsIds)
+            .sortedByDescending { it.writtenDateTime }
+            .filter { it.writtenDateTime < cursorWrittenDateTime }
+
+        return newsRepository.loadNewsBundleByCursorAndNewsCardMultipleNews(
+            newsIds = newsBundle.map { it.id },
+            size = size
+        ).sortedByDescending { it.writtenDateTime }
     }
 }

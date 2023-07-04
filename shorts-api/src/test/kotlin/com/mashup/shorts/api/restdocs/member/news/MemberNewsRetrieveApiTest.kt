@@ -80,7 +80,7 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
                             .description("LocalDate 타입, 조회할 날짜를 입력해주세요"),
                         RequestDocumentation
                             .parameterWithName("cursorWrittenDateTime")
-                            .description("STRING 타입, 커서 지정 값 ex) 2023.06.15. 오후 3:38 와 같이 입력해 주시고, 첫 페이지 요청 시 빈 문자열을 넣어주세요"),
+                            .description("커서 지정 값 ex) 2023.06.15. 오후 3:38 와 같이 입력해 주시고, 첫 페이지 요청 시 빈 값으로 요청해주세요 (빈 문자열 X)"),
                         RequestDocumentation
                             .parameterWithName("size")
                             .description("<필수값> 페이징 사이즈(최대 20까지 허용합니다.)"),

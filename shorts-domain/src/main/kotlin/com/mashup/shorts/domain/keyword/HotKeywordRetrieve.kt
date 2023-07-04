@@ -43,14 +43,13 @@ class HotKeywordRetrieve(
             LocalTime.of(23, 59)
         )
 
-        return newsRepository.loadNewsBundleByCursorIdAndNewsCardMultipleNewsAndTargetTime(
+        return newsRepository.loadNewsBundleByCursorIdAndTargetTime(
             firstDayOfMonth,
             lastDayOfMonth,
             cursorId,
             newsIds.flatten(),
             size,
         )
-
     }
 
     fun retrieveHotKeywords(targetTime: LocalDateTime): KeywordRanking {
