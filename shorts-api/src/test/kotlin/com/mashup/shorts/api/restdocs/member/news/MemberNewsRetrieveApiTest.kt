@@ -118,10 +118,11 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
                         PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].type")
                             .type(JsonFieldType.STRING)
                             .description("응답 예시 : [HEADLINE, NORMAL],헤드라인 뉴스인지 일반 뉴스인지 구분하는 필드입니다."),
+                        PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].category")
+                            .type(JsonFieldType.STRING)
+                            .description("카테고리"),
                     )
                 )
             )
     }
 }
-
-

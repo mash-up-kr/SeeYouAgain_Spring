@@ -17,6 +17,7 @@ data class MemberNewsResponse(
     var press: String,
     var writtenDateTime: String,
     var type: String,
+    var category: String,
 ) {
     companion object {
         fun persistenceToResponseForm(newsBundle: List<News>): List<MemberNewsResponse> {
@@ -28,7 +29,8 @@ data class MemberNewsResponse(
                     newsLink = it.newsLink,
                     press = it.press,
                     writtenDateTime = it.writtenDateTime,
-                    type = it.type
+                    type = it.type,
+                    category = it.category.name.name
                 )
             }
         }
