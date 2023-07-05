@@ -41,8 +41,10 @@ class MemberNewsRetrieveApi(
         return success(
             OK,
             MemberNewsRetrieveResponse(
-                today = LocalDate.now(),
-                savedNewsCount = memberNewsRetrieve.retrieveMemberNewsCount(member),
+                savedNewsCount = memberNewsRetrieve.retrieveMemberNewsCountByTargetDateTime(
+                    member,
+                    targetDate
+                ),
                 memberNewsResponse = persistenceToResponseForm(
                     memberNewsRetrieve.retrieveMemberNews(
                         targetDate = targetDate,
