@@ -24,14 +24,9 @@ class MemberNewsRetrieve(
         size: Int,
         pivot: Pivots,
     ): List<News> {
-        val firstDayOfMonth = LocalDateTime.of(
-            targetDate.withDayOfMonth(1),
-            LocalTime.of(0, 0)
-        )
-        val lastDayOfMonth = LocalDateTime.of(
-            targetDate.withDayOfMonth(targetDate.lengthOfMonth()),
-            LocalTime.of(23, 59)
-        )
+        val targetDateTimePeriod = parseTargetDateTimePeriod(targetDate)
+        val firstDayOfMonth = targetDateTimePeriod.first
+        val lastDayOfMonth = targetDateTimePeriod.second
 
         if (cursorWrittenDateTime.isEmpty()) {
             return notContainedCursor(
@@ -54,8 +49,19 @@ class MemberNewsRetrieve(
 
     }
 
-    fun retrieveMemberNewsCount(member: Member): Int {
-        return memberNewsRepository.findAllByMember(member).size
+    fun retrieveMemberNewsCountByTargetDateTime(
+        member: Member,
+        targetDate: LocalDate,
+    ): Int {
+        val targetDateTimePeriod = parseTargetDateTimePeriod(targetDate)
+        val firstDayOfMonth = targetDateTimePeriod.first
+        val lastDayOfMonth = targetDateTimePeriod.second
+
+        return memberNewsRepository.countByMemberAndCreatedAtBetween(
+            member,
+            firstDayOfMonth,
+            lastDayOfMonth
+        )
     }
 
     private fun notContainedCursor(
@@ -127,5 +133,18 @@ class MemberNewsRetrieve(
             newsBundle.map { it.id },
             size
         ).sortedByDescending { it.writtenDateTime }
+    }
+
+    private fun parseTargetDateTimePeriod(targetDate: LocalDate): Pair<LocalDateTime, LocalDateTime> {
+        val firstDayOfMonth = LocalDateTime.of(
+            targetDate.withDayOfMonth(1),
+            LocalTime.of(0, 0)
+        )
+        val lastDayOfMonth = LocalDateTime.of(
+            targetDate.withDayOfMonth(targetDate.lengthOfMonth()),
+            LocalTime.of(23, 59)
+        )
+
+        return Pair(firstDayOfMonth, lastDayOfMonth)
     }
 }

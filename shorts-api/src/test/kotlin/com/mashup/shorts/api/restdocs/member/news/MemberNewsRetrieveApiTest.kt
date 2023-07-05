@@ -52,7 +52,7 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
                     category = Category(CategoryName.SCIENCE)
                 )
             ))
-        every { memberNewsRetrieve.retrieveMemberNewsCount(any()) } returns (1234)
+        every { memberNewsRetrieve.retrieveMemberNewsCountByTargetDateTime(any(), any()) } returns (1234)
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
                 .get("/v1/member-news")
@@ -91,10 +91,8 @@ class MemberNewsRetrieveApiTest : ApiDocsTestBase() {
                     responseFields(
                         PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)
                             .description("API 성공 여부"),
-                        PayloadDocumentation.fieldWithPath("result.today").type(JsonFieldType.STRING)
-                            .description("오늘 날짜"),
                         PayloadDocumentation.fieldWithPath("result.savedNewsCount").type(JsonFieldType.NUMBER)
-                            .description("저장한 뉴스 갯수"),
+                            .description("요청한 월에 저장한 뉴스 갯수"),
                         PayloadDocumentation.subsectionWithPath("result.memberNewsResponse[]")
                             .description("멤버 뉴스 응답"),
                         PayloadDocumentation.fieldWithPath("result.memberNewsResponse[].id")
