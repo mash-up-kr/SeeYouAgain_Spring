@@ -52,11 +52,11 @@ class MemberNewsCardRetrieveApi(
     }
 
     /**
-    저장한 오늘의 숏스 조회 API
+    저장한 오늘의 숏스(뉴스카드) 조회 API
      @Param : cursorId, size
      */
     @Auth
-    @GetMapping("/")
+    @GetMapping("/saved")
     fun retrieveSavedNewsCardByMember(
         @RequestParam(
             defaultValue = "0",
