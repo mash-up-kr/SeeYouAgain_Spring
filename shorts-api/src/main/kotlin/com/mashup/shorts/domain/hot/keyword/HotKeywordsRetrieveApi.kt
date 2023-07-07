@@ -33,30 +33,4 @@ class HotKeywordsRetrieveApi(
         val keywordRanking = hotKeywordRetrieve.retrieveHotKeywords(targetTime)
         return success(OK, KeywordRankingMapper.keywordRankingToResponse(keywordRanking))
     }
-
-    /**
-    키워드로 관련 뉴스 조회 API
-    @PathVariable : keyword
-    @Param : targetDateTime, cursorId, size
-     */
-    @GetMapping("/{keyword}")
-    fun retrieveDetailHotKeyword(
-        @PathVariable keyword: String,
-        @RequestParam targetDateTime: LocalDateTime,
-        @RequestParam(defaultValue = "0", required = false) @Min(0) @Max(Long.MAX_VALUE)
-        cursorId: Long,
-        @RequestParam(required = true) @Min(1) @Max(20) size: Int,
-    ): ApiResponse<List<RetrieveNewsBundleInNewsCardResponse>> {
-        return success(
-            OK,
-            RetrieveNewsBundleInNewsCardResponse.persistenceToResponseForm(
-                hotKeywordRetrieve.retrieveDetailHotKeyword(
-                    targetDateTime = targetDateTime,
-                    keyword = keyword,
-                    cursorId = cursorId,
-                    size = size
-                )
-            )
-        )
-    }
 }

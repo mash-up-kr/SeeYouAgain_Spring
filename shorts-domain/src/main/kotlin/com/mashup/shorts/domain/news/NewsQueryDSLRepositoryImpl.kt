@@ -25,17 +25,17 @@ class NewsQueryDSLRepositoryImpl(
     }
 
     override fun loadNewsBundleByCursorIdAndTargetTime(
-        firstDayOfMonth: LocalDateTime,
-        lastDayOfMonth: LocalDateTime,
+        startDateTime: LocalDateTime,
+        endDateTime: LocalDateTime,
         cursorId: Long,
         newsIds: List<Long>,
         size: Int,
     ): List<News> {
         return queryFactory
             .selectFrom(news)
-            .where(news.id.`in`(newsIds))
             .where(news.id.gt(cursorId))
-            .where(news.createdAt.between(firstDayOfMonth, lastDayOfMonth))
+            .where(news.id.`in`(newsIds))
+            .where(news.createdAt.between(startDateTime, endDateTime))
             .limit(size.toLong())
             .fetch()
     }
