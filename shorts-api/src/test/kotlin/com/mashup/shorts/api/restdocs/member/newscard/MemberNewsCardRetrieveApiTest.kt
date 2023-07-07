@@ -37,12 +37,10 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
     fun `홈 조회`() {
         // ready
         val targetDateTime = LocalDateTime.now().minusDays(1)
-        val cursorId = 0L
-        val size = 10
         val uniqueKey = "uniqueKey"
         val headerName = "Authorization"
 
-        every { memberNewsCardRetrieve.retrieveNewsCardByMember(any(), any(), any(), any()) } returns (
+        every { memberNewsCardRetrieve.retrieveNewsCardByMember(any(), any()) } returns (
             listOf(
                 NewsCard(
                     category = Category(CategoryName.POLITICS),
@@ -59,8 +57,6 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                 .get("/v1/member-news-card")
                 .header(headerName, uniqueKey)
                 .param("targetDateTime", targetDateTime.toString())
-                .param("cursorId", cursorId.toString())
-                .param("size", size.toString())
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
 
@@ -78,12 +74,6 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                         RequestDocumentation
                             .parameterWithName("targetDateTime")
                             .description("요청 날짜 및 시간"),
-                        RequestDocumentation
-                            .parameterWithName("cursorId")
-                            .description("커서 아이디, 가장 마지막에 받은 id를 넣어주세요 (기본 값은 0으로 지정됩니다.)"),
-                        RequestDocumentation
-                            .parameterWithName("size")
-                            .description("<필수값> 페이징 사이즈(최대 20까지 허용합니다.)"),
                     ),
                     responseFields(
                         fieldWithPath("status").type(JsonFieldType.NUMBER)
@@ -97,7 +87,7 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                         fieldWithPath("result[].crawledDateTime").type(JsonFieldType.STRING)
                             .description("크롤링 된 시각 ex) 2023-06-30T21:30:42"),
 
-                    )
+                        )
                 )
             )
     }

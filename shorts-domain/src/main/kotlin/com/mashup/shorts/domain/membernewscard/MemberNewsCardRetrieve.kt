@@ -4,6 +4,9 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import com.mashup.shorts.common.exception.ShortsBaseException
+import com.mashup.shorts.common.exception.ShortsErrorCode
+import com.mashup.shorts.common.util.StartEndDateTimeExtractor.extractStarDateTimeAndEndDateTime
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
@@ -25,40 +28,35 @@ class MemberNewsCardRetrieve(
     fun retrieveNewsCardByMember(
         member: Member,
         targetDateTime: LocalDateTime,
-        cursorId: Long,
-        size: Int,
     ): List<NewsCard> {
         val memberCategories = memberCategoryRepository.findByMember(member)
         val filteredNewsIds = filterAlreadySavedNews(member)
         val filteredNewsCardIds = filterAlreadySavedNewsCards(member)
 
-        val startDateTime = targetDateTime
-            .withHour(targetDateTime.hour)
-            .withMinute(0)
-            .withSecond(0)
-            .withNano(0)
+        val (startDateTime, endDateTime) = extractStarDateTimeAndEndDateTime(targetDateTime)
 
-        val endDateTime = targetDateTime
-            .withHour(targetDateTime.hour)
-            .withMinute(59)
-            .withSecond(59)
-            .withNano(59)
-
-        val newsCards = newsCardRepository.findNewsCardsByMemberFilteredNewsIdsAndCursorId(
-            cursorId = cursorId,
+        val newsCards = newsCardRepository.findNewsCardsByMemberFilteredNewsIds(
             startDateTime = startDateTime,
             endDateTime = endDateTime,
             categories = memberCategories.map { it.category.id },
-            size = size,
         )
 
-        return newsCards.filter { it ->
-            !filteredNewsCardIds.contains(it.id) &&
-                it.multipleNews.split(", ")
+        newsCards.map {
+            if (it.multipleNews.isEmpty()) {
+                throw ShortsBaseException.from(
+                    shortsErrorCode = ShortsErrorCode.E500_INTERNAL_SERVER_ERROR,
+                    resultErrorMessage = "뉴스를 불러오는 중 ${it.multipleNews} 가 비어있습니다."
+                )
+            }
+        }
+
+        return newsCards.filter { newsCard ->
+            !filteredNewsCardIds.contains(newsCard.id) &&
+                newsCard.multipleNews.split(", ")
                     .map { it.toLong() }
                     .intersect(filteredNewsIds.toSet())
                     .isEmpty()
-        }
+        }.shuffled()
     }
 
     fun retrieveSavedNewsCardByMember(
