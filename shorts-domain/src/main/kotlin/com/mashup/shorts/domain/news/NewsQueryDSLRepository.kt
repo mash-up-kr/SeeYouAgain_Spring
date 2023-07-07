@@ -12,8 +12,8 @@ interface NewsQueryDSLRepository {
     ): List<News>
 
     fun loadNewsBundleByCursorIdAndTargetTime(
-        firstDayOfMonth: LocalDateTime,
-        lastDayOfMonth: LocalDateTime,
+        startDateTime: LocalDateTime,
+        endDateTime: LocalDateTime,
         cursorId: Long,
         newsIds: List<Long>,
         size: Int,
