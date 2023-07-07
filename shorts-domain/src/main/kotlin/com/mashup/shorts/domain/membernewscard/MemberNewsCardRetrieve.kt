@@ -8,6 +8,7 @@ import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.StartEndDateTimeExtractor.extractStarDateTimeAndEndDateTime
 import com.mashup.shorts.domain.member.Member
+import com.mashup.shorts.domain.membercategory.MemberCategory
 import com.mashup.shorts.domain.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
 import com.mashup.shorts.domain.membernewscard.dtomapper.MemberTodayShorts
@@ -33,12 +34,9 @@ class MemberNewsCardRetrieve(
         val filteredNewsIds = filterAlreadySavedNews(member)
         val filteredNewsCardIds = filterAlreadySavedNewsCards(member)
 
-        val (startDateTime, endDateTime) = extractStarDateTimeAndEndDateTime(targetDateTime)
-
-        val newsCards = newsCardRepository.findNewsCardsByMemberFilteredNewsIds(
-            startDateTime = startDateTime,
-            endDateTime = endDateTime,
-            categories = memberCategories.map { it.category.id },
+        val newsCards = extractExistNewsCards(
+            targetDateTime = targetDateTime,
+            memberCategories = memberCategories
         )
 
         newsCards.map {
@@ -99,5 +97,29 @@ class MemberNewsCardRetrieve(
 
     private fun filterAlreadySavedNews(member: Member): List<Long> {
         return memberNewsRepository.findAllByMember(member).map { it.news.id }
+    }
+
+    private fun extractExistNewsCards(
+        targetDateTime: LocalDateTime,
+        memberCategories: List<MemberCategory>,
+    ): List<NewsCard> {
+        var (startDateTime, endDateTime) = extractStarDateTimeAndEndDateTime(targetDateTime)
+        var newsCards = newsCardRepository.findNewsCardsByMemberFilteredNewsIds(
+            startDateTime = startDateTime,
+            endDateTime = endDateTime,
+            categories = memberCategories.map { it.category.id },
+        )
+
+        while (newsCards.isEmpty()) {
+            startDateTime = startDateTime.minusHours(1)
+            endDateTime = endDateTime.minusHours(1)
+            newsCards = newsCardRepository.findNewsCardsByMemberFilteredNewsIds(
+                startDateTime = startDateTime,
+                endDateTime = endDateTime,
+                categories = memberCategories.map { it.category.id },
+            )
+        }
+
+        return newsCards
     }
 }
