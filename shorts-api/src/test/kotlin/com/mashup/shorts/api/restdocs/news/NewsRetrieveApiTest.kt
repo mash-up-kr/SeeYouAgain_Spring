@@ -100,7 +100,7 @@ class NewsRetrieveApiTest : ApiDocsTestBase() {
 
         mockMvc.perform(
             RestDocumentationRequestBuilders
-                .get("/v1/hot-keywords")
+                .get("/v1/news")
                 .param("keyword", "대통령")
                 .param("targetDateTime", LocalDateTime.now().toString())
                 .param("cursorId", "0")

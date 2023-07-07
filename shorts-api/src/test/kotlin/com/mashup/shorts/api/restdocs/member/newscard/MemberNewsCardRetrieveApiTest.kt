@@ -128,7 +128,7 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
 
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
-                .get("/v1/member-news-card/")
+                .get("/v1/member-news-card/saved")
                 .header(headerName, uniqueKey)
                 .param("cursorId", cursorId.toString())
                 .param("size", size.toString())
