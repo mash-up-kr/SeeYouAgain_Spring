@@ -103,3 +103,6 @@ values ("WORLD", now(), now());
 
 insert into category(name, created_at, modified_at)
 values ("SCIENCE", now(), now());
+
+CREATE INDEX news_index ON news(created_at);
+ANALYZE TABLE news;

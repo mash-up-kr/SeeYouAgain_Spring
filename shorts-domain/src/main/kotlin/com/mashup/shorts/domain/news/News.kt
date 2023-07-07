@@ -5,11 +5,17 @@ import com.mashup.shorts.domain.category.Category
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
+import jakarta.persistence.Index
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 
-@Table(name = "news")
+@Table(
+    name = "news",
+    indexes = [
+        Index(name = "news_index", columnList = "created_at"),
+    ]
+)
 @Entity
 class News(
 
