@@ -39,10 +39,6 @@ include::../../../../../shorts-api/{snippets}/핫 키워드로 뉴스 조회/pag
 
 include::../../../../../shorts-api/{snippets}/핫 키워드로 뉴스 조회/http-request.adoc[]
 
-==== [Path Parameters]
-
-include::../../../../../shorts-api/{snippets}/핫 키워드로 뉴스 조회/path-parameters.adoc[]
-
 ==== [Query Parameters]
 
 include::../../../../../shorts-api/{snippets}/핫 키워드로 뉴스 조회/query-parameters.adoc[]
