@@ -43,5 +43,5 @@ jobs:
       - name: Execute Gradle Jib
         run: ./gradlew :shorts-api:jib -Dimage=${IMAGE} -Dtag=${TAG}
         env:
-          IMAGE: shorts/shorts-api
+          IMAGE: wjdrbs96/shorts
           TAG: v${{ steps.get_version.outputs.version }}
