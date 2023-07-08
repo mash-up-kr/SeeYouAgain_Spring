@@ -1,11 +1,15 @@
 name: SeeYouAgain-Spring CI with Gradle
 
 on:
-  pull_request:
+  push:
     branches:
       - master
       - develop
+  pull_request:
+    branches:
       - feature/*
+      - refactor/*
+      - fix/*
 jobs:
   build:
     runs-on: ubuntu-latest
