@@ -68,4 +68,4 @@ jobs:
           environment_name: shorts-prod
           version_label: shorts-${{steps.current-time.outputs.formattedTime}}
           deployment_package: ./Dockerrun.aws.json
-          wait_for_environment_recovery: 300
+          wait_for_environment_recovery: 600
