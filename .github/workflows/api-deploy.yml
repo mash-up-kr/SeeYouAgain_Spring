@@ -37,4 +37,4 @@ jobs:
         run: ./gradlew :shorts-api:jib -Dimage=${IMAGE} -Dtag=${TAG}
         env:
           IMAGE: shorts/shorts-api
-          TAG: ${{ steps.version.outputs.version }}
+          TAG: v${{ steps.get_version.outputs.version }}
