@@ -1,7 +1,7 @@
 {
     "AWSEBDockerrunVersion": "1",
     "Image": {
-        "Name": "wjdrbs96/shorts",
+        "Name": "wjdrbs96/shorts:latest",
         "Update": "true"
     },
     "Ports": [
