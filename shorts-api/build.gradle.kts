@@ -47,7 +47,7 @@ application {
 
 jib {
     from {
-        image = "eclipse-temurin:11-jre-focal"
+        image = "eclipse-temurin:17-jre-alpine"
     }
     to {
         image = System.getProperty("image", "shorts/shorts-api")
