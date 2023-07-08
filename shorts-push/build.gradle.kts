@@ -22,5 +22,5 @@ tasks.test {
 }
 
 application {
-    mainClass.set("com.mashup.shorts.ShortsCrawlerApplicationKt")
+    mainClass.set("com.mashup.shorts.ShortsPushApplicationKt")
 }
