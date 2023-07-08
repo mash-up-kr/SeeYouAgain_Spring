@@ -26,6 +26,8 @@ jobs:
         run: chmod +x ./gradlew
         shell: bash
 
-      - name: Build with Gradle
-        run: ./gradlew clean build
-        shell: bash
+      - name: Execute Gradle Jib
+        run: ./gradlew :shorts-api:jib -Dimage=${IMAGE} -Dtag=${TAG}
+        env:
+          IMAGE: shorts/shorts-api
+          TAG: ${{ steps.version.outputs.version }}
