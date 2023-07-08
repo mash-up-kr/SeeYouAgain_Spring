@@ -68,7 +68,7 @@ class NewsRetrieveApiTest : ApiDocsTestBase() {
     @Test
     fun `핫 키워드로 뉴스 조회`() {
         every {
-            newsRetrieve.retrieveByHotKeyword(
+            newsRetrieve.retrieveByKeyword(
                 any(), any(), any(), any()
             )
         } returns (

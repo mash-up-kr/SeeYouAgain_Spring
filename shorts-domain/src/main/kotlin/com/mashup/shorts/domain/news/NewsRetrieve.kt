@@ -1,12 +1,12 @@
 package com.mashup.shorts.domain.news
 
 import java.time.LocalDateTime
-import java.time.LocalTime
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
+import com.mashup.shorts.common.util.StartEndDateTimeExtractor.extractStarDateTimeAndEndDateTime
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
 
@@ -28,22 +28,19 @@ class NewsRetrieve(
         return NewsRetrieveInfo(newsLink = news.newsLink, isSaved = false)
     }
 
-    fun retrieveByHotKeyword(
+    fun retrieveByKeyword(
         targetDateTime: LocalDateTime,
         keyword: String,
         cursorId: Long,
         size: Int,
     ): List<News> {
-        val startDateTime = LocalDateTime.of(
-            targetDateTime.toLocalDate(),
-            LocalTime.of(targetDateTime.hour, 0)
-        )
-
-        val endDateTime = LocalDateTime.of(
-            targetDateTime.toLocalDate(),
-            LocalTime.of(targetDateTime.hour, 59)
-        )
-        val newsBundle = newsRepository.findAllByCreatedAtBetween(startDateTime, endDateTime)
+        val targetDateTimePair = extractStarDateTimeAndEndDateTime(targetDateTime)
+        val startDateTime = targetDateTimePair.first
+        val endDateTime = targetDateTimePair.second
+        val newsBundle = newsRepository.findAllByCreatedAtBetween(
+            startDateTime,
+            endDateTime,
+        ).filter { it.title.contains(keyword) }
         val newsIds = newsBundle.map { it.id }
 
         return newsRepository.loadNewsBundleByCursorIdAndTargetTime(

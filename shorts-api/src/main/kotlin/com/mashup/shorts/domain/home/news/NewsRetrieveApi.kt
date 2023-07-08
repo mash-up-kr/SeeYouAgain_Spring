@@ -54,7 +54,7 @@ class NewsRetrieveApi(
         return ApiResponse.success(
             OK,
             RetrieveNewsBundleInNewsCardResponse.persistenceToResponseForm(
-                newsRetrieve.retrieveByHotKeyword(
+                newsRetrieve.retrieveByKeyword(
                     targetDateTime = targetDateTime,
                     keyword = keyword,
                     cursorId = cursorId,
