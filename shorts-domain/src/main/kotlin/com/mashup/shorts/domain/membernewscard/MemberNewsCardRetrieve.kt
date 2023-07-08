@@ -4,8 +4,6 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.StartEndDateTimeExtractor.extractStarDateTimeAndEndDateTime
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membercategory.MemberCategory
@@ -33,20 +31,10 @@ class MemberNewsCardRetrieve(
         val memberCategories = memberCategoryRepository.findByMember(member)
         val filteredNewsIds = filterAlreadySavedNews(member)
         val filteredNewsCardIds = filterAlreadySavedNewsCards(member)
-
         val newsCards = extractExistNewsCards(
             targetDateTime = targetDateTime,
             memberCategories = memberCategories
-        )
-
-        newsCards.map {
-            if (it.multipleNews.isEmpty()) {
-                throw ShortsBaseException.from(
-                    shortsErrorCode = ShortsErrorCode.E500_INTERNAL_SERVER_ERROR,
-                    resultErrorMessage = "뉴스를 불러오는 중 ${it.multipleNews} 가 비어있습니다."
-                )
-            }
-        }
+        ).filter { it.multipleNews.isNotEmpty() }
 
         return newsCards.filter { newsCard ->
             !filteredNewsCardIds.contains(newsCard.id) &&
