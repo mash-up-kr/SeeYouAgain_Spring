@@ -44,3 +44,19 @@ dependencies {
 application {
     mainClass.set("com.mashup.shorts.ShortsApiApplicationKt")
 }
+
+jib {
+    from {
+        image = "adoptopenjdk/openjdk17:alpine-jre"
+    }
+    to {
+        image = System.getProperty("image", "shorts/shorts-api")
+        tags = setOf(System.getProperty("tag", "latest"))
+    }
+    container {
+        jvmFlags = listOf(
+            "-Duser.timezone=Asia/Seoul"
+        )
+        ports = listOf("8080")
+    }
+}
