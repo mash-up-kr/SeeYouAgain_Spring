@@ -47,7 +47,7 @@ application {
 
 jib {
     from {
-        image = "adoptopenjdk/openjdk17:alpine-jre"
+        image = "eclipse-temurin:11-jre-focal"
     }
     to {
         image = System.getProperty("image", "shorts/shorts-api")
