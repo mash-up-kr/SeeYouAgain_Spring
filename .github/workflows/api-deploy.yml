@@ -63,8 +63,8 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: ${{ secrets.AWS_REGION }}
-          application_name: shorts
-          environment_name: shorts-prod
+          application_name: shorts-application
+          environment_name: shorts-application-env
           version_label: shorts-${{steps.current-time.outputs.formattedTime}}
           deployment_package: ./Dockerrun.aws.json
           wait_for_environment_recovery: 300
