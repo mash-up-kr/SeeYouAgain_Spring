@@ -30,7 +30,7 @@ jobs:
         id: version
         run: |
           VERSION=${VERSIONING}-${{ github.run_id }}
-          echo "::core.setOutput name=version::${VERSION}"
+          echo "::set-output name=version::${VERSION}"
         env:
           VERSIONING: ${{ github.event.inputs.version }}
       - name: Execute Gradle Jib
