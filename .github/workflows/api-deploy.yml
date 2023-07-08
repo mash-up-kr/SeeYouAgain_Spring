@@ -11,6 +11,7 @@ on:
       - feature/*
       - refactor/*
       - fix/*
+
 jobs:
   build:
     runs-on: ubuntu-latest
