@@ -9,7 +9,6 @@ on:
   pull_request:
     branches:
       - feature/*
-      - refactor/*
 
 env:
   JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
