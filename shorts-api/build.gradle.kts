@@ -50,7 +50,7 @@ jib {
         image = "eclipse-temurin:17-jre-alpine"
     }
     to {
-        image = System.getProperty("image", "shorts/shorts-api")
+        image = System.getProperty("image", "wjdrbs96/shorts")
         tags = setOf(System.getProperty("tag", "latest"))
     }
     container {
