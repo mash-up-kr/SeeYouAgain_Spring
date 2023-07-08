@@ -10,6 +10,7 @@ on:
     branches:
       - feature/*
       - refactor/*
+      - fix/*
 
 env:
   JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
@@ -67,3 +68,4 @@ jobs:
           environment_name: shorts-prod
           version_label: shorts-${{steps.current-time.outputs.formattedTime}}
           deployment_package: ./Dockerrun.aws.json
+          wait_for_environment_recovery: 300
