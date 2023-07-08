@@ -40,6 +40,7 @@ jobs:
           echo "::set-output name=version::${VERSION}"
         env:
           VERSIONING: ${{ github.event.inputs.version }}
+
       - name: Execute Gradle Jib
         run: ./gradlew :shorts-api:jib -Dimage=${IMAGE} -Dtag=${TAG}
         env:
