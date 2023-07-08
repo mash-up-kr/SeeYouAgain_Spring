@@ -45,3 +45,14 @@ jobs:
         env:
           IMAGE: wjdrbs96/shorts
           TAG: v${{ steps.get_version.outputs.version }}
+
+      - name: deploy
+        uses: einaregilsson/beanstalk-deploy@v20
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: ${{ secrets.AWS_REGION }}
+          application_name: shorts
+          environment_name: shorts-prod
+          version_label: shorts-${{steps.current-time.outputs.formattedTime}}
+          deployment_package: ./Dockerrun.aws.json
