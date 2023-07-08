@@ -12,6 +12,9 @@ on:
       - refactor/*
       - fix/*
 
+env:
+  JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -47,6 +50,13 @@ jobs:
         env:
           IMAGE: wjdrbs96/shorts
           TAG: v${{ steps.get_version.outputs.version }}
+
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYYMMDD_HH-mm-ss
+          utcOffset: "+09:00"
 
       - name: deploy
         uses: einaregilsson/beanstalk-deploy@v20
