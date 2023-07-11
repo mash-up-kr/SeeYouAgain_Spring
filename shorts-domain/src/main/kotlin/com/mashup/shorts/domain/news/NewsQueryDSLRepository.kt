@@ -23,4 +23,20 @@ interface NewsQueryDSLRepository {
         newsIds: List<Long>,
         size: Int,
     ): List<News>
+
+    fun loadNewsBundleByCursorAndKeyword(
+        keyword: String,
+        startDateTime: LocalDateTime,
+        endDateTime: LocalDateTime,
+        cursorId: Long,
+        size: Int,
+    ): List<News>
+
+    fun loadNewsBundleByCursorAndCompany(
+        company: List<String>,
+        startDateTime: LocalDateTime,
+        endDateTime: LocalDateTime,
+        cursorId: Long,
+        size: Int,
+    ): List<News>
 }
