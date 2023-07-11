@@ -16,7 +16,7 @@ object StartEndDateTimeExtractor {
             .withHour(targetDateTime.hour)
             .withMinute(59)
             .withSecond(59)
-            .withNano(59)
+            .withNano(999999999)
 
         return Pair(startDateTime, endDateTime)
     }

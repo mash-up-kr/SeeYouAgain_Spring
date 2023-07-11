@@ -7,6 +7,10 @@ data class MemberNewsRetrieveResponse(
     var memberNewsResponse: List<MemberNewsResponse>,
 )
 
+data class MemberNewsRetrieveByCompanyResponse(
+    var memberNewsResponse: List<MemberNewsResponse>,
+)
+
 data class MemberNewsResponse(
     var id: Long,
     var title: String,

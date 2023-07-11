@@ -6,8 +6,10 @@ import java.time.LocalTime
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.domain.member.Member
+import com.mashup.shorts.domain.membercompany.MemberCompanyRepository
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.news.NewsRepository
+import com.mashup.shorts.domain.news.NewsRetrieve
 import com.mashup.shorts.domain.newscard.Pivots
 
 @Service
@@ -15,6 +17,8 @@ import com.mashup.shorts.domain.newscard.Pivots
 class MemberNewsRetrieve(
     private val memberNewsRepository: MemberNewsRepository,
     private val newsRepository: NewsRepository,
+    private val newsRetrieve: NewsRetrieve,
+    private val memberCompanyRepository: MemberCompanyRepository,
 ) {
 
     fun retrieveMemberNews(
@@ -61,6 +65,18 @@ class MemberNewsRetrieve(
             member,
             firstDayOfMonth,
             lastDayOfMonth
+        )
+    }
+
+    fun retrieveNewsByMemberCompany(
+        member: Member,
+        cursorId: Long,
+        size: Int,
+    ): List<News> {
+        return newsRetrieve.retrieveByCompany(
+            companies = memberCompanyRepository.findAllByMember(member).map { it.company },
+            cursorId = cursorId,
+            size = size
         )
     }
 

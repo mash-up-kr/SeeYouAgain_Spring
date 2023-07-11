@@ -1,6 +1,8 @@
 package com.mashup.shorts.domain.news
 
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -37,18 +39,36 @@ class NewsRetrieve(
         val targetDateTimePair = extractStarDateTimeAndEndDateTime(targetDateTime)
         val startDateTime = targetDateTimePair.first
         val endDateTime = targetDateTimePair.second
-        val newsBundle = newsRepository.findAllByCreatedAtBetween(
-            startDateTime,
-            endDateTime,
-        ).filter { it.title.contains(keyword) }
-        val newsIds = newsBundle.map { it.id }
 
-        return newsRepository.loadNewsBundleByCursorIdAndTargetTime(
-            startDateTime,
-            endDateTime,
-            cursorId,
-            newsIds,
-            size,
+        return newsRepository.loadNewsBundleByCursorAndKeyword(
+            keyword = keyword,
+            startDateTime = startDateTime,
+            endDateTime = endDateTime,
+            cursorId = cursorId,
+            size = size
+        )
+    }
+
+    fun retrieveByCompany(
+        companies: List<String>,
+        cursorId: Long,
+        size: Int,
+    ): List<News> {
+        val startDateTime = LocalDateTime.of(
+            LocalDate.now(),
+            LocalTime.of(LocalTime.now().hour, LocalTime.now().minute, 0, 0)
+        ).minusDays(7)
+        val endDateTime = LocalDateTime.of(
+            LocalDate.now(),
+            LocalTime.of(LocalTime.now().hour, LocalTime.now().minute, 59, 999999999)
+        )
+
+        return newsRepository.loadNewsBundleByCursorAndCompany(
+            company = companies,
+            startDateTime = startDateTime,
+            endDateTime = endDateTime,
+            cursorId = cursorId,
+            size = size
         )
     }
 
