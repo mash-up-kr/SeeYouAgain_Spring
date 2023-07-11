@@ -21,11 +21,4 @@ interface NewsCardQueryDSLRepository {
         cursorId: Long,
         size: Int,
     ): List<NewsCard>
-
-    fun findByKeywordsLikeAndCursorId(
-        keyword: String,
-        cursorId: Long,
-        size: Int,
-    ): List<NewsCard>
-
 }

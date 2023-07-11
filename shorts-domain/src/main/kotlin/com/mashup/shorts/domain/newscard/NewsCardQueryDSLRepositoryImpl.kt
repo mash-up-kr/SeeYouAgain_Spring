@@ -56,22 +56,6 @@ class NewsCardQueryDSLRepositoryImpl(
             .fetch()
     }
 
-    // 애플리케이션에서 필터링 하는 방법 고려해볼 것
-    // 와일드카드를 맨 앞에 붙이면 인덱스를 타지 못하는 이유?
-    override fun findByKeywordsLikeAndCursorId(
-        keyword: String,
-        cursorId: Long,
-        size: Int,
-    ): List<NewsCard> {
-        return queryFactory
-            .selectFrom(newsCard)
-            .where(newsCard.id.gt(cursorId))
-            .where(newsCard.keywords.like("%$keyword%"))
-            .orderBy(newsCard.id.asc())
-            .limit(size.toLong())
-            .fetch()
-    }
-
     private fun categoryCondition(categories: List<Long>): Predicate? {
         return if (categories.isNotEmpty()) {
             newsCard.category.id.`in`(categories)
