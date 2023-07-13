@@ -20,7 +20,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.shorts.api.ApiTestBase
 import com.mashup.shorts.common.aop.AuthContext
 import com.mashup.shorts.domain.member.Member
-import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardClearRequest
 
 @SpringBootTest
 @Disabled
@@ -44,7 +43,14 @@ class MemberNewsCardRetrieveApiTestIntegrationTest(
         val size = 20
 
         val auth = "Bearer shorts-user"
-        AuthContext.USER_CONTEXT.set(Member(uniqueId = "unique", nickname = "nickname"))
+        AuthContext.USER_CONTEXT.set(
+            Member(
+                uniqueId = "Unique",
+                nickname = "nickname",
+                fcmTokenPayload = "payload",
+                isAllowedAlarm = true
+            )
+        )
 
         // execute
         val result = mockMvc.perform(

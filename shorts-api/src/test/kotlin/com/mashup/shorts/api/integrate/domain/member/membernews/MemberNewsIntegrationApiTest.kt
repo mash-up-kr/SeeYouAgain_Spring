@@ -41,7 +41,12 @@ class MemberNewsIntegrationApiTest(
         val size = 10
 
         val auth = "Bearer shorts-user"
-        AuthContext.USER_CONTEXT.set(Member(uniqueId = "unique", nickname = "nickname"))
+        AuthContext.USER_CONTEXT.set(
+            Member(
+                uniqueId = "unique",
+                nickname = "nickname",
+                fcmTokenPayload = "payload"
+            ))
 
         // execute
         val result = mockMvc.perform(
