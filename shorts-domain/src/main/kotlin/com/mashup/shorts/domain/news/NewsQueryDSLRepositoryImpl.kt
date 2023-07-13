@@ -63,8 +63,8 @@ class NewsQueryDSLRepositoryImpl(
             .selectFrom(news)
             .where(news.createdAt.between(startDateTime, endDateTime))
             .where(news.id.gt(cursorId))
-            .where(news.title.contains(keyword))
-            .where(news.content.contains(keyword))
+            .where(news.title.like("%$keyword%"))
+            .where(news.content.like("%$keyword%"))
             .limit(size.toLong())
             .fetch()
     }

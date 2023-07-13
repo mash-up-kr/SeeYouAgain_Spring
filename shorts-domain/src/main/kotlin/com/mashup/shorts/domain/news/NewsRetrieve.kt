@@ -37,16 +37,29 @@ class NewsRetrieve(
         size: Int,
     ): List<News> {
         val targetDateTimePair = extractStarDateTimeAndEndDateTime(targetDateTime)
-        val startDateTime = targetDateTimePair.first
-        val endDateTime = targetDateTimePair.second
+        var startDateTime = targetDateTimePair.first
+        var endDateTime = targetDateTimePair.second
 
-        return newsRepository.loadNewsBundleByCursorAndKeyword(
+        var newsBundle = newsRepository.loadNewsBundleByCursorAndKeyword(
             keyword = keyword,
             startDateTime = startDateTime,
             endDateTime = endDateTime,
             cursorId = cursorId,
             size = size
         )
+
+        while (newsBundle.isEmpty()) {
+            startDateTime = startDateTime.minusHours(1)
+            endDateTime = endDateTime.minusHours(1)
+            newsBundle = newsRepository.loadNewsBundleByCursorAndKeyword(
+                keyword = keyword,
+                startDateTime = startDateTime,
+                endDateTime = endDateTime,
+                cursorId = cursorId,
+                size = size
+            )
+        }
+        return newsBundle
     }
 
     fun retrieveByCompany(
@@ -64,7 +77,7 @@ class NewsRetrieve(
         )
 
         return newsRepository.loadNewsBundleByCursorAndCompany(
-            company = companies,
+            companies = companies,
             startDateTime = startDateTime,
             endDateTime = endDateTime,
             cursorId = cursorId,
