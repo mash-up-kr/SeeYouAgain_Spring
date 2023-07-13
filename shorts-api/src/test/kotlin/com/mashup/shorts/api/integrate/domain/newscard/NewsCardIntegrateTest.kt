@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType.APPLICATION_JSON
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
@@ -144,7 +143,14 @@ class NewsCardIntegrationTest(
         val size = 20
 
         val auth = "shorts-user"
-        AuthContext.USER_CONTEXT.set(Member(uniqueId = "unique", nickname = "nickname"))
+        AuthContext.USER_CONTEXT.set(
+            Member(
+                uniqueId = "Unique",
+                nickname = "nickname",
+                fcmTokenPayload = "payload",
+                isAllowedAlarm = true
+            )
+        )
 
         // execute
         val result = mockMvc.perform(

@@ -3,7 +3,6 @@ package com.mashup.shorts.api.restdocs.memberCategory
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
@@ -16,9 +15,9 @@ import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.category.CategoryName
-import com.mashup.shorts.domain.membercategory.MemberCategoryCreate
-import com.mashup.shorts.domain.home.memberCategory.dto.CategoryCreateBulkRequest
 import com.mashup.shorts.domain.home.memberCategory.MemberCategoryCreateApi
+import com.mashup.shorts.domain.home.memberCategory.dto.CategoryCreateBulkRequest
+import com.mashup.shorts.domain.membercategory.MemberCategoryCreate
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
@@ -37,10 +36,11 @@ class MemberCategoryCreateApiTest : ApiDocsTestBase() {
 
     @Test
     fun `멤버 관심 카테고리 설정`() {
-        every { memberCategoryCreate.createCategory(any(), any()) } returns(Unit)
+        every { memberCategoryCreate.createCategory(any(), any(), any()) } returns (Unit)
 
         val requestBody = CategoryCreateBulkRequest(
-            categoryNames = listOf(CategoryName.CULTURE, CategoryName.ECONOMIC)
+            categoryNames = listOf(CategoryName.CULTURE, CategoryName.ECONOMIC),
+            fcmTokenPayload = "payload"
         )
 
         val response = mockMvc.perform(
@@ -58,7 +58,12 @@ class MemberCategoryCreateApiTest : ApiDocsTestBase() {
                     getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
                     requestFields(
-                        fieldWithPath("categoryNames").type(JsonFieldType.ARRAY).description("사용자가 선택한 카테고리 리스트 (ex: [POLITICS, ECONOMIC, SOCIETY, CULTURE, WORLD, SCIENCE]")
+                        fieldWithPath("categoryNames").type(JsonFieldType.ARRAY)
+                            .description("사용자가 선택한 카테고리 리스트 (ex: [POLITICS, ECONOMIC, SOCIETY, CULTURE, WORLD, SCIENCE]")
+                    ),
+                    requestFields(
+                        fieldWithPath("fcmTokenPayload").type(JsonFieldType.STRING)
+                            .description("각 디바이스의 FCM Token Payload를 넣어주세요.")
                     ),
                     PayloadDocumentation.responseFields(
                         fieldWithPath("status").type(JsonFieldType.NUMBER).description("API HTTP Status 값"),

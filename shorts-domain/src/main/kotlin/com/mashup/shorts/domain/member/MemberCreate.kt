@@ -21,7 +21,7 @@ class MemberCreate(
 ) {
 
     @Transactional
-    fun createMember(memberUUID: String): Member {
+    fun createMember(memberUUID: String, fcmTokenPayload: String): Member {
         // TODO: 이미 존재하면 어떻게 처리할지 클라이언트와 논의 필요할 듯
         if (memberRepository.existsByUniqueId(memberUUID)) {
             throw ShortsBaseException.from(
@@ -32,7 +32,8 @@ class MemberCreate(
 
         return memberRepository.save(Member(
             uniqueId = memberUUID,
-            nickname = Member.generateNickname()
+            nickname = Member.generateNickname(),
+            fcmTokenPayload = fcmTokenPayload
         ))
     }
 }

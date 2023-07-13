@@ -19,13 +19,13 @@ import com.mashup.shorts.domain.member.MemberCreate
 class MemberCategoryCreate(
     private val memberCategoryRepository: MemberCategoryRepository,
     private val categoryRetrieve: CategoryRetrieve,
-    private val memberCreate: MemberCreate
+    private val memberCreate: MemberCreate,
 ) {
 
     @Transactional
-    fun createCategory(categoryNames: List<CategoryName>, uniqueId: String) {
+    fun createCategory(categoryNames: List<CategoryName>, uniqueId: String, fcmTokenPayload: String) {
         val categories = categoryRetrieve.getCategories(categoryNames)
-        val member = memberCreate.createMember(uniqueId)
+        val member = memberCreate.createMember(uniqueId, fcmTokenPayload)
         val memberCategories = categories.map { MemberCategory(category = it, member = member) }
         memberCategoryRepository.saveAll(memberCategories)
     }

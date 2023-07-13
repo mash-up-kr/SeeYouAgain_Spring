@@ -44,6 +44,11 @@ abstract class ApiDocsTestBase : ApiTestBase() {
 
     @BeforeEach
     fun init() {
-        AuthContext.USER_CONTEXT.set(Member(uniqueId = "unique", nickname = "nickname"))
+        AuthContext.USER_CONTEXT.set(
+            Member(
+                uniqueId = "unique",
+                nickname = "nickname",
+                fcmTokenPayload = "payload"
+            ))
     }
 }

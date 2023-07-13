@@ -16,6 +16,12 @@ class Member(
 
     @Column(name = "nickname", nullable = false, length = 20)
     val nickname: String,
+
+    @Column(name = "fcm_token_payload", nullable = false, length = 200)
+    var fcmTokenPayload: String,
+
+    @Column(name = "is_allowed_alarm", nullable = false)
+    var isAllowedAlarm: Boolean = true,
 ) : BaseEntity() {
     companion object {
         fun generateNickname(): String {

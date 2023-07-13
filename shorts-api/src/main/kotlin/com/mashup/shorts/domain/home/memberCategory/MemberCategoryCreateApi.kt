@@ -11,6 +11,7 @@ import com.mashup.shorts.common.aop.Auth
 import com.mashup.shorts.common.aop.AuthContext
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.domain.home.memberCategory.dto.CategoryCreateBulkRequest
+import com.mashup.shorts.domain.home.memberCategory.dto.CategoryUpdateBulkRequest
 import com.mashup.shorts.domain.membercategory.MemberCategoryCreate
 
 @RequestMapping("/v1/member/category")
@@ -28,7 +29,11 @@ class MemberCategoryCreateApi(
         @RequestBody categoryCreateBulkRequest: CategoryCreateBulkRequest,
     ): ApiResponse<Map<String, String>> {
         val memberUniqueId = UUID.randomUUID().toString()
-        memberCategoryCreate.createCategory(categoryCreateBulkRequest.categoryNames, memberUniqueId)
+        memberCategoryCreate.createCategory(
+            categoryCreateBulkRequest.categoryNames,
+            memberUniqueId,
+            categoryCreateBulkRequest.fcmTokenPayload
+        )
         return ApiResponse.success(HttpStatus.CREATED, mapOf("uniqueId" to memberUniqueId))
     }
 
@@ -39,10 +44,10 @@ class MemberCategoryCreateApi(
     @Auth
     @PutMapping
     fun modifyMemberCategory(
-        @RequestBody categoryCreateBulkRequest: CategoryCreateBulkRequest,
+        @RequestBody categoryUpdateBulkRequest: CategoryUpdateBulkRequest,
     ): ApiResponse<Void> {
         val member = AuthContext.getMember()
-        memberCategoryCreate.modifyMemberCategory(categoryCreateBulkRequest.categoryNames, member)
+        memberCategoryCreate.modifyMemberCategory(categoryUpdateBulkRequest.categoryNames, member)
         return ApiResponse.success(HttpStatus.OK)
     }
 }
