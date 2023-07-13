@@ -33,7 +33,7 @@ interface NewsQueryDSLRepository {
     ): List<News>
 
     fun loadNewsBundleByCursorAndCompany(
-        company: List<String>,
+        companies: List<String>,
         startDateTime: LocalDateTime,
         endDateTime: LocalDateTime,
         cursorId: Long,
