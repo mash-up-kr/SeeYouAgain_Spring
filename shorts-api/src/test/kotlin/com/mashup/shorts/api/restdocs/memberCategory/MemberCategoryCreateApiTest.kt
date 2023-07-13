@@ -58,11 +58,11 @@ class MemberCategoryCreateApiTest : ApiDocsTestBase() {
                     getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
                     requestFields(
-                        fieldWithPath("categoryNames").type(JsonFieldType.ARRAY)
-                            .description("사용자가 선택한 카테고리 리스트 (ex: [POLITICS, ECONOMIC, SOCIETY, CULTURE, WORLD, SCIENCE]")
-                    ),
-                    requestFields(
-                        fieldWithPath("fcmTokenPayload").type(JsonFieldType.STRING)
+                        fieldWithPath("categoryNames")
+                            .type(JsonFieldType.ARRAY)
+                            .description("사용자가 선택한 카테고리 리스트 (ex: [POLITICS, ECONOMIC, SOCIETY, CULTURE, WORLD, SCIENCE]"),
+                        fieldWithPath("fcmTokenPayload")
+                            .type(JsonFieldType.STRING)
                             .description("각 디바이스의 FCM Token Payload를 넣어주세요.")
                     ),
                     PayloadDocumentation.responseFields(
