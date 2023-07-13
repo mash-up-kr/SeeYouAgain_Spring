@@ -2,17 +2,12 @@ package com.mashup.shorts.domain.membercompany
 
 import com.mashup.shorts.domain.BaseEntity
 import com.mashup.shorts.domain.member.Member
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.OneToOne
-import jakarta.persistence.Table
+import jakarta.persistence.*
 
 @Table(name = "member_company")
 @Entity
 class MemberCompany(
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     var member: Member,
 
