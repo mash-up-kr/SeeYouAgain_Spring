@@ -16,11 +16,13 @@ create table hot_keyword
 
 create table member
 (
-    id          bigint auto_increment primary key,
-    unique_id   varchar(100) not null,
-    nickname    varchar(20)  not null,
-    created_at  datetime(6)  not null,
-    modified_at datetime(6)  null
+    id                bigint auto_increment primary key,
+    unique_id         varchar(100) not null,
+    nickname          varchar(20)  not null,
+    fcm_token_payload varchar(200) not null,
+    is_allowed_alarm  boolean      not null default true,
+    created_at        datetime(6)  not null,
+    modified_at       datetime(6)  null
 );
 
 create table member_category
@@ -31,6 +33,17 @@ create table member_category
     created_at  datetime(6) not null,
     modified_at datetime(6) not null
 );
+
+create table member_company
+(
+    id          bigint auto_increment primary key,
+    member_id   bigint                             not null,
+    company     varchar(100)                       not null,
+    created_at  datetime default CURRENT_TIMESTAMP null,
+    modified_at datetime default CURRENT_TIMESTAMP null
+);
+
+
 
 create table member_shorts_count
 (
@@ -104,5 +117,5 @@ values ("WORLD", now(), now());
 insert into category(name, created_at, modified_at)
 values ("SCIENCE", now(), now());
 
-CREATE INDEX news_index ON news(created_at);
+CREATE INDEX news_index ON news (created_at);
 ANALYZE TABLE news;
