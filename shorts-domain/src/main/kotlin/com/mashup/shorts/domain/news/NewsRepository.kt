@@ -11,7 +11,8 @@ interface NewsRepository : JpaRepository<News, Long>, NewsQueryDSLRepository {
     fun findAllByCategory(category: Category): List<News>
     fun findTopByOrderByIdDesc(): News?
 
-    fun findAllByCreatedAtBetween(
+    fun findAllByCategoryAndCreatedAtBetween(
+        category: Category,
         startDateTime: LocalDateTime,
         endDateTime: LocalDateTime,
     ): List<News>

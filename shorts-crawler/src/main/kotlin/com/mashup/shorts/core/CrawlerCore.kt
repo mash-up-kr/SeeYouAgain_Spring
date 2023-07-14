@@ -54,17 +54,28 @@ class CrawlerCore(
                 WORLD -> categoryRepository.findByName(WORLD)
                 SCIENCE -> categoryRepository.findByName(SCIENCE)
             }
+            log.info { "${category.name.name} is loaded" }
 
             val headLineLinks = crawlerBase.extractMoreHeadLineLinks(
                 url = categoryURL,
                 categoryName = categoryName
             )
+            log.info { "$headLineLinks is loaded" }
+
             val crawledNewsCards = crawlerBase.extractNewsCardBundle(
                 allHeadLineNewsLinks = crawlerBase.extractAllHeadLineNewsLinks(headLineLinks),
                 categoryName = categoryName,
                 category = category,
             )
-            val persistenceNewsBundle = newsRepository.findAllByCategory(category)
+            log.info { "crawledNewsCards size = ${crawledNewsCards.size}" }
+
+
+            val persistenceNewsBundle = newsRepository.findAllByCategoryAndCreatedAtBetween(
+                category = category,
+                startDateTime = crawledDateTime.minusDays(7),
+                endDateTime = crawledDateTime
+            )
+            log.info { "persistenceNewsBundle size = ${persistenceNewsBundle.size}" }
 
             crawledNewsCards.map { crawledNewsCard ->
                 val persistenceTargetNewsBundle = mutableListOf<News>()
@@ -83,6 +94,8 @@ class CrawlerCore(
 
                 // 현재 DB에 존재하는 가장 마지막 뉴스
                 val lastNews = newsRepository.findTopByOrderByIdDesc()
+                log.info { "$lastNews is loaded" }
+
 
                 // 만약 DB에 뉴스가 존재한다면 해당 뉴스의 id + 1를 다음에 삽입될 인덱스로 지정
                 if (lastNews != null) {
@@ -98,6 +111,7 @@ class CrawlerCore(
                 val extractedKeywords = keywordExtractor.extractKeywordV2(
                     newsRepository.findById(newNewsLastIndex!!.toLong()).get().content
                 )
+                log.info { "$extractedKeywords - keyword is extracted" }
 
                 val persistenceNewsCard = NewsCard(
                     category = category,
