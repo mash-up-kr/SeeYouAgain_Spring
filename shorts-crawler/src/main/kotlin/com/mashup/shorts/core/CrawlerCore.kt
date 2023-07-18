@@ -2,6 +2,7 @@ package com.mashup.shorts.core
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
+import org.springframework.retry.annotation.Recover
 import org.springframework.retry.annotation.Retryable
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -135,6 +136,19 @@ class CrawlerCore(
         saveKeywordRanking(keywordsCountingPair)
         log.info("$crawledDateTime - all crawling done")
     }
+
+    @Recover
+    fun recover(exception: Exception) {
+        log.error { "크롤링 중 예외가 발생하여 총 3회를 시도했으나 작업이 실패했습니다." }
+        log.error { "ExceptionMessage : ${exception.message}" }
+        log.error { "ExceptionCause : ${exception.cause}" }
+        log.error { "ExceptionStackTrace : ${exception.stackTrace}" }
+        throw ShortsBaseException.from(
+            shortsErrorCode = ShortsErrorCode.E500_INTERNAL_SERVER_ERROR,
+            resultErrorMessage = "크롤링 중 예외가 발생하여 총 3회를 시도했으나 작업이 실패했습니다."
+        )
+    }
+
 
     //TODO: 테스트 코드 작성
     private fun saveKeywordRanking(keywordsCountingPair: Map<String, Int>) {
