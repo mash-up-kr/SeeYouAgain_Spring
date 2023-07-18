@@ -13,7 +13,10 @@ dependencies {
     implementation("org.apache.lucene:lucene-analyzers-nori:8.4.1")
 
     // Komoran Dependency
-    implementation ("com.github.shin285:KOMORAN:3.3.9")
+    implementation("com.github.shin285:KOMORAN:3.3.9")
+
+    // Spring Retry
+    implementation("org.springframework.retry:spring-retry")
 }
 
 application {
