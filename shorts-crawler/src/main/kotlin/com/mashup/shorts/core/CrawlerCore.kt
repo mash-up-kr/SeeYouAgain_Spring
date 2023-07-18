@@ -60,7 +60,6 @@ class CrawlerCore(
                 url = categoryURL,
                 categoryName = categoryName
             )
-            log.info { "$headLineLinks is loaded" }
 
             val crawledNewsCards = crawlerBase.extractNewsCardBundle(
                 allHeadLineNewsLinks = crawlerBase.extractAllHeadLineNewsLinks(headLineLinks),
@@ -72,7 +71,7 @@ class CrawlerCore(
 
             val persistenceNewsBundle = newsRepository.findAllByCategoryAndCreatedAtBetween(
                 category = category,
-                startDateTime = crawledDateTime.minusDays(7),
+                startDateTime = crawledDateTime.minusDays(1),
                 endDateTime = crawledDateTime
             )
             log.info { "persistenceNewsBundle size = ${persistenceNewsBundle.size}" }
