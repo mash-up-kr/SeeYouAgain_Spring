@@ -2,9 +2,12 @@ package com.mashup.shorts.core
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
+import org.springframework.retry.annotation.Retryable
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import com.mashup.shorts.common.exception.ShortsBaseException
+import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.core.const.categoryToUrl
 import com.mashup.shorts.core.keyword.KeywordExtractor
@@ -24,7 +27,6 @@ import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardBulkInsertRepository
 
 @Component
-@Transactional
 class CrawlerCore(
     private val crawlerBase: CrawlerBase,
     private val categoryRepository: CategoryRepository,
@@ -35,6 +37,8 @@ class CrawlerCore(
     private val hotKeywordRepository: HotKeywordRepository,
 ) {
 
+    @Retryable(value = [Exception::class], maxAttempts = 3)
+    @Transactional(rollbackFor = [Exception::class])
     @Scheduled(cron = "0 0 * * * *")
     internal fun executeCrawling() {
         val crawledDateTime = LocalDateTime.now()
