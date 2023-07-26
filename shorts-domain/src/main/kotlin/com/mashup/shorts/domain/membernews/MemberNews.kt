@@ -1,6 +1,7 @@
 package com.mashup.shorts.domain.membernews
 
 import com.mashup.shorts.domain.BaseEntity
+import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.news.News
 import jakarta.persistence.Entity
@@ -19,4 +20,8 @@ class MemberNews(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "news_id")
     val news: News,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    val category: Category,
 ) : BaseEntity()

@@ -1,13 +1,12 @@
 package com.mashup.shorts.domain.membernewscard
 
-import java.time.LocalDate
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.stereotype.Repository
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.newscard.NewsCard
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
 @Repository
-interface MemberNewsCardRepository : JpaRepository<MemberNewsCard, Long> {
+interface MemberNewsCardRepository : JpaRepository<MemberNewsCard, Long>, MemberNewsCardQueryDSLRepository {
 
     fun findAllByMember(member: Member): List<MemberNewsCard>
     fun findByNewsCardIn(newsCard: List<NewsCard>): List<MemberNewsCard>

@@ -20,4 +20,26 @@ object StartEndDateTimeExtractor {
 
         return Pair(startDateTime, endDateTime)
     }
+
+    fun extractStarDateMonthAndEndDateMonth(
+        targetDateTime: LocalDateTime,
+    ): Pair<LocalDateTime, LocalDateTime> {
+        val startDateMonth = targetDateTime
+            .withMonth(targetDateTime.monthValue)
+            .withDayOfMonth(1)
+            .withHour(0)
+            .withMinute(0)
+            .withSecond(0)
+            .withNano(0)
+
+        val endDateTime = targetDateTime
+            .withMonth(targetDateTime.monthValue)
+            .withDayOfMonth(targetDateTime.dayOfMonth)
+            .withHour(targetDateTime.hour)
+            .withMinute(targetDateTime.minute)
+            .withSecond(targetDateTime.second)
+            .withNano(targetDateTime.nano)
+
+        return Pair(startDateMonth, endDateTime)
+    }
 }

@@ -28,6 +28,12 @@ class MemberNewsCreate(
                 resultErrorMessage = "뉴스는 중복해서 저장할 수 없습니다."
             )
         }
-        memberNewsRepository.save(MemberNews(member = member, news = news))
+        memberNewsRepository.save(
+            MemberNews(
+                member = member,
+                news = news,
+                category = news.category
+            )
+        )
     }
 }

@@ -28,6 +28,12 @@ class MemberNewsCardCreate(
                 resultErrorMessage = "숏스는 중복해서 저장할 수 없습니다."
             )
         }
-        memberNewsCardRepository.save(MemberNewsCard(member = member, newsCard = newsCard))
+        memberNewsCardRepository.save(
+            MemberNewsCard(
+                member = member,
+                newsCard = newsCard,
+                category = newsCard.category
+            )
+        )
     }
 }

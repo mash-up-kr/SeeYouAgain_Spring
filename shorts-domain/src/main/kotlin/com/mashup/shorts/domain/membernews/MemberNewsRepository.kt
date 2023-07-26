@@ -7,7 +7,7 @@ import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.news.News
 
 @Repository
-interface MemberNewsRepository : JpaRepository<MemberNews, Long> {
+interface MemberNewsRepository : JpaRepository<MemberNews, Long>, MemberNewsQueryDSLRepository {
 
     fun deleteAllByMemberAndNewsIn(member: Member, newsList: List<News>)
 
