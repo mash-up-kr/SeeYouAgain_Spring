@@ -1,6 +1,7 @@
 package com.mashup.shorts.domain.my.memberstatistics
 
 import com.mashup.shorts.common.util.StartEndDateTimeExtractor.extractStarDateMonthAndEndDateMonth
+import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
 import com.mashup.shorts.domain.membernewscard.MemberNewsCardRepository
@@ -16,7 +17,7 @@ class MemberStatisticsRetrieve(
     private val memberNewsRepository: MemberNewsRepository,
 ) {
 
-    fun retrieveMemberStatisticsByMemberCategoryTargetDate(
+    fun retrieveMemberStatisticsByMemberAndTargetDate(
         member: Member,
         targetDateTime: LocalDateTime,
     ): MutableMap<String, Long> {
@@ -33,16 +34,25 @@ class MemberStatisticsRetrieve(
             endDateTime = extractStarDateTimeAndEndDateTime.second
         )
 
-        val result = mutableMapOf<String, Long>()
+        val result = mutableMapOf(
+            CategoryName.POLITICS.name to 0L,
+            CategoryName.ECONOMIC.name to 0L,
+            CategoryName.SOCIETY.name to 0L,
+            CategoryName.CULTURE.name to 0L,
+            CategoryName.WORLD.name to 0L,
+            CategoryName.SCIENCE.name to 0L,
+        )
 
         memberNewsCardStatistics.forEach { (category, count) ->
-            result[category] = count ?: 0L
+            if (count != 0L) {
+                result[category] = count
+            }
         }
 
         memberNewsStatistics.forEach { (category, count) ->
-            val currentCount = result[category] ?: 0L
-            val updatedCount = count ?: 0L
-            result[category] = currentCount + updatedCount
+            if (count != 0L) {
+                result[category] = result[category]!! + count
+            }
         }
 
         return result
