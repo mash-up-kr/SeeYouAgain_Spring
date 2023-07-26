@@ -143,19 +143,11 @@ class NewsCardIntegrationTest(
         val size = 20
 
         val auth = "shorts-user"
-        AuthContext.USER_CONTEXT.set(
-            Member(
-                uniqueId = "Unique",
-                nickname = "nickname",
-                fcmTokenPayload = "payload",
-                isAllowedAlarm = true
-            )
-        )
 
         // execute
         val result = mockMvc.perform(
             MockMvcRequestBuilders.get(url)
-                .header("Authorization", "$auth")
+                .header("Authorization", auth)
                 .param("targetDateTime", LocalDateTime.now().minusDays(1).minusHours(0).toString())
                 .param("cursorId", cursorId.toString())
                 .param("size", size.toString())

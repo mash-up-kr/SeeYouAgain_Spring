@@ -1,4 +1,4 @@
-package com.usw.sugo.global.infrastructure.fcm.config
+package com.mashup.shorts.config
 
 import java.io.IOException
 import org.springframework.beans.factory.annotation.Value
@@ -15,14 +15,14 @@ import com.mashup.shorts.common.exception.ShortsErrorCode
 class FcmConfig {
 
     @Value("\${fcm.project-id}")
-    private val projectId: String? = null
+    private lateinit var projectId: String
 
     @Value("\${fcm.secret}")
-    private val secretKey: String? = null
+    private lateinit var secretKey: String
 
     @Bean
     fun firebaseApp(): FirebaseApp {
-        val resource = ClassPathResource(secretKey!!)
+        val resource = ClassPathResource(secretKey)
         try {
             resource.inputStream.use { stream ->
                 val firebaseOptions: FirebaseOptions = FirebaseOptions.builder()
