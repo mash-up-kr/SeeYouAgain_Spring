@@ -8,67 +8,65 @@ import java.time.LocalDateTime
 @Table(name = "member_badge")
 @Entity
 class MemberBadge(
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     val member: Member,
 
     // 작심삼일 뱃지
-    @Column
-    var threeDaysContinuousAttendance: Boolean,
+    @Column(nullable = false)
+    var threeDaysContinuousAttendance: Boolean = false,
 
-    @Column
+    @Column(nullable = true)
     var threeDaysContinuousAttendanceCreatedAt: LocalDateTime,
 
     // 단골손님 뱃지
-    @Column
-    var tenDaysContinuousAttendance: Boolean,
+    @Column(nullable = false)
+    var tenDaysContinuousAttendance: Boolean = false,
 
-    @Column
+    @Column(nullable = true)
     var tenDaysContinuousAttendanceCreatedAt: LocalDateTime,
 
-    // 세상 탐험가 뱃지 - 독서왕
-    @Column
-    var kingOfRead: Boolean,
+    // 세상 탐험가 뱃지
+    @Column(nullable = false)
+    var explorer: Boolean = false,
 
-    @Column
-    var kingOfReadCreatedAt: LocalDateTime,
+    @Column(nullable = true)
+    var explorerCreatedAt: LocalDateTime,
 
     // 뿌듯한 첫 공유 뱃지
-    @Column
-    var kingOfSharing: Boolean,
+    @Column(nullable = false)
+    var kingOfSharing: Boolean = false,
 
-    @Column
+    @Column(nullable = true)
     var kingOfSharingCreatedAt: LocalDateTime,
 
     // 설레는 첫 저장 뱃지
-    @Column
-    var firstTodayShortsSaving: Boolean,
+    @Column(nullable = false)
+    var firstTodayShortsSaving: Boolean = false,
 
-    @Column
+    @Column(nullable = true)
     var firstTodayShortsSavingCreatedAt: LocalDateTime,
 
     // 시작이 반 뱃지
-    @Column
-    var firstAllReadShorts: Boolean,
+    @Column(nullable = false)
+    var firstAllReadShorts: Boolean = false,
 
-    @Column
+    @Column(nullable = true)
     var firstAllReadShortsCreatedAt: LocalDateTime,
 
-    // 오래 간질될 지식 뱃지
-    @Column
-    var firstOldShortsSaving: Boolean,
+    // 오래 간직될 지식 뱃지
+    @Column(nullable = false)
+    var firstOldShortsSaving: Boolean = false,
 
-    @Column
+    @Column(nullable = true)
     var firstOldShortsSavingCreatedAt: LocalDateTime,
 
     // 취향 존중 뱃지
-    @Column
-    var changeMode: Boolean,
+    @Column(nullable = false)
+    var changeMode: Boolean = false,
 
-    @Column
+    @Column(nullable = true)
     var changeModeCreatedAt: LocalDateTime
-
-
 ) : BaseEntity() {
 
     fun achieveThreeDaysContinuousAttendance() {
@@ -81,9 +79,9 @@ class MemberBadge(
         this.tenDaysContinuousAttendanceCreatedAt = LocalDateTime.now()
     }
 
-    fun achieveKingOfRead() {
-        this.kingOfRead = true
-        this.kingOfReadCreatedAt = LocalDateTime.now()
+    fun achieveExplorer() {
+        this.explorer = true
+        this.explorerCreatedAt = LocalDateTime.now()
     }
 
     fun achieveKingOfSharing() {
@@ -96,7 +94,7 @@ class MemberBadge(
         this.firstTodayShortsSavingCreatedAt = LocalDateTime.now()
     }
 
-    fun achieveFirstAllShortsSaving() {
+    fun achieveFirstReadCompleteShortsSaving() {
         this.firstAllReadShorts = true
         this.firstAllReadShortsCreatedAt = LocalDateTime.now()
     }
