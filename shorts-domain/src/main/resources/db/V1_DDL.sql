@@ -60,19 +60,19 @@ create table member_log
     member_id                  bigint,
 
     -- 연속 접속일 수
-    continuous_count           int,
+    continuous_count           int not null default 0,
 
     -- 1주일 동안 숏스를 읽은 갯수 이 컬럼은 매주 월요일 00시마다 0으로 초기화 되어야한다.
-    continuous_week_read_count int,
+    continuous_week_read_count int not null default 0,
 
     -- 공유 횟수
-    shared_count               int,
+    shared_count               int not null default 0,
 
     -- 저장한 오늘의 숏스의 모든 갯수
-    saved_today_shorts_count   bigint,
+    saved_today_shorts_count   bigint not null default 0,
 
     -- 저장한 오래 간직할 숏스의 모든 갯수
-    saved_old_shorts_count     bigint,
+    saved_old_shorts_count     bigint not null default 0,
 
     created_at                 datetime(6),
     modified_at                datetime(6)
@@ -84,35 +84,35 @@ create table member_badge
     member_id                                   bigint,
 
     -- 작심삼일 뱃지
-    three_days_continuous_attendance            boolean,
+    three_days_continuous_attendance            boolean not null default false,
     three_days_continuous_attendance_created_at datetime,
 
     -- 단골손님 뱃지
-    ten_days_continuous_attendance              boolean,
+    ten_days_continuous_attendance              boolean not null default false,
     ten_days_continuous_attendance_created_at   datetime,
 
     -- 세상 탐험가 뱃지
-    king_of_read                                boolean,
+    king_of_read                                boolean not null default false,
     king_of_read_created_at                     datetime,
 
     -- 뿌듯한 첫 공유 뱃지
-    king_of_sharing                             boolean,
+    king_of_sharing                             boolean not null default false,
     king_of_sharing_created_at                  datetime,
 
     -- 설레는 첫 저장 뱃지
-    first_today_shorts_saving                   boolean,
+    first_today_shorts_saving                   boolean not null default false,
     first_today_shorts_saving_created_at        datetime,
 
     -- 시작이 반 뱃지
-    first_all_read_shorts                       boolean,
+    first_all_read_shorts                       boolean not null default false,
     first_all_read_shorts_created_at            datetime,
 
     -- 오래 간직될 지식 뱃지
-    first_old_shorts_saving                     boolean,
+    first_old_shorts_saving                     boolean not null default false,
     first_old_shorts_saving_created_at          datetime,
 
     -- 취향 존중 뱃지
-    change_mode                                 boolean,
+    change_mode                                 boolean not null default false,
     change_mode_created_at                      datetime
 );
 
