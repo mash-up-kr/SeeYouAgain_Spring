@@ -268,3 +268,27 @@ include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/response-fiel
 ==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/http-response.adoc[]
+
+---
+
+=== 주간 숏스 통계
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/주간 숏스 통계/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/주간 숏스 통계/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/주간 숏스 통계/request-headers.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/주간 숏스 통계/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/주간 숏스 통계/http-response.adoc[]
