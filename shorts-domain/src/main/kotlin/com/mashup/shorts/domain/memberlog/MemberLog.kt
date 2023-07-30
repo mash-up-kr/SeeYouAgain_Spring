@@ -3,6 +3,8 @@ package com.mashup.shorts.domain.memberlog
 import com.mashup.shorts.domain.BaseEntity
 import com.mashup.shorts.domain.member.Member
 import jakarta.persistence.*
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Table(name = "member_log")
 @Entity
@@ -11,9 +13,13 @@ class MemberLog(
     @JoinColumn(name = "member_id")
     val member: Member,
 
+    // 최근 접속 일자
+    @Column(nullable = true)
+    var lastAttendanceDateTime: LocalDateTime = LocalDateTime.now(),
+
     // 연속 접속일 수
     @Column(nullable = false)
-    var continuousCount: Int = 0,
+    var continuousAttendanceCount: Int = 1,
 
     // 1주일 동안 숏스를 읽은 갯수
     // 이 컬럼은 매주 월요일 00시마다 0으로 초기화 되어야함
@@ -38,11 +44,11 @@ class MemberLog(
 ) : BaseEntity() {
 
     fun increaseContinuousCount() {
-        this.continuousCount += 1
+        this.continuousAttendanceCount += 1
     }
 
     fun clearContinuousCount() {
-        this.continuousCount = 0
+        this.continuousAttendanceCount = 0
     }
 
     fun increaseContinuousWeekReadCount() {
@@ -67,5 +73,16 @@ class MemberLog(
 
     fun increaseSavedOldShortsCount() {
         this.savedOldShortsCount += 1
+    }
+
+    fun isContinuousAttendance() {
+        val lastAttendanceDateTime = this.lastAttendanceDateTime.toLocalDate()
+        val now = LocalDate.now()
+
+        if (lastAttendanceDateTime == now.minusDays(1)) {
+            continuousAttendanceCount++
+        } else {
+            continuousAttendanceCount = 1
+        }
     }
 }
