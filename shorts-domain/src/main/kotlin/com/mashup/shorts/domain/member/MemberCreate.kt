@@ -1,23 +1,17 @@
 package com.mashup.shorts.domain.member
 
-import java.util.*
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
-import com.mashup.shorts.domain.member.Member
-import com.mashup.shorts.domain.member.MemberRepository
+import com.mashup.shorts.domain.facade.memberlogbadge.MemberLogBadgeFacadeService
+import com.mashup.shorts.domain.memberlog.MemberLog
+import com.mashup.shorts.domain.memberlog.MemberLogRepository
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
-/**
- * MemberCategoryCreate
- *
- * @author JungGyun.Choi
- * @version 1.0.0
- * @since 2023. 06. 11.
- */
 @Service
 class MemberCreate(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val memberLogBadgeFacadeService: MemberLogBadgeFacadeService,
 ) {
 
     @Transactional
@@ -30,10 +24,13 @@ class MemberCreate(
             )
         }
 
-        return memberRepository.save(Member(
+        val member = Member(
             uniqueId = memberUUID,
             nickname = Member.generateNickname(),
             fcmTokenPayload = fcmTokenPayload
-        ))
+        )
+
+        memberLogBadgeFacadeService.createLogAndBadgeByMember(member)
+        return memberRepository.save(member)
     }
 }

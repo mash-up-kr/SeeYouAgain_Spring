@@ -1,23 +1,27 @@
 package com.mashup.shorts.domain.membernewscard
 
-import java.time.LocalDate
+import com.mashup.shorts.common.exception.ShortsBaseException
+import com.mashup.shorts.common.exception.ShortsErrorCode
+import com.mashup.shorts.domain.facade.memberlogbadge.MemberLogBadgeFacadeService
+import com.mashup.shorts.domain.member.Member
+import com.mashup.shorts.domain.membershortscount.MemberShortsCount
+import com.mashup.shorts.domain.membershortscount.MemberShortsCountRepository
+import com.mashup.shorts.domain.my.MemberInfoRetrieve
+import com.mashup.shorts.domain.newscard.NewsCardRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode
-import com.mashup.shorts.domain.member.Member
-import com.mashup.shorts.domain.membershortscount.MemberShortsCount
-import com.mashup.shorts.domain.membershortscount.MemberShortsCountRepository
-import com.mashup.shorts.domain.newscard.NewsCardRepository
+import java.time.LocalDate
 
 @Service
 @Transactional
 class MemberNewsCardDelete(
     private val memberNewsCardRepository: MemberNewsCardRepository,
     private val newsCardRepository: NewsCardRepository,
+    private val memberInfoRetrieve: MemberInfoRetrieve,
     private val memberShortsCountRepository: MemberShortsCountRepository,
+    private val memberLogBadgeFacadeService: MemberLogBadgeFacadeService,
 ) {
 
     fun clearMemberNewsCard(
@@ -35,21 +39,22 @@ class MemberNewsCardDelete(
         val memberShortsCount = memberShortsCountRepository.findByMemberAndTargetDate(
             member = member,
             targetDate = today
-        )
-
-        memberShortsCount?.let {
-            memberShortsCount.increaseCount()
-            return mapOf("shortsCount" to memberShortsCount.count)
-        }
-
-        val newMemberShortsCount = MemberShortsCount(
+        ) ?: MemberShortsCount(
             member = member,
-            count = 1,
+            count = 0,
             targetDate = today
         )
 
-        memberShortsCountRepository.save(newMemberShortsCount)
-        return mapOf("shortsCount" to newMemberShortsCount.count)
+        memberShortsCount.increaseCount()
+
+        memberShortsCountRepository.save(memberShortsCount)
+        memberLogBadgeFacadeService.readCompleteLog(member)
+        memberLogBadgeFacadeService.memberNumberOfReadsPerWeekLog(
+            member = member,
+            count = memberInfoRetrieve.getNumberOfReadsPerWeek(member)
+        )
+
+        return mapOf("shortsCount" to memberShortsCount.count)
     }
 
     fun bulkDeleteMemberNewsCard(member: Member, newsCardIds: List<Long>) {

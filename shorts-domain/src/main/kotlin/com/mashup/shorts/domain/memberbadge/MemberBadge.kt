@@ -17,56 +17,56 @@ class MemberBadge(
     var threeDaysContinuousAttendance: Boolean = false,
 
     @Column(nullable = true)
-    var threeDaysContinuousAttendanceCreatedAt: LocalDateTime,
+    var threeDaysContinuousAttendanceCreatedAt: LocalDateTime? = null,
 
     // 단골손님 뱃지
     @Column(nullable = false)
     var tenDaysContinuousAttendance: Boolean = false,
 
     @Column(nullable = true)
-    var tenDaysContinuousAttendanceCreatedAt: LocalDateTime,
+    var tenDaysContinuousAttendanceCreatedAt: LocalDateTime? = null,
 
     // 세상 탐험가 뱃지
     @Column(nullable = false)
     var explorer: Boolean = false,
 
     @Column(nullable = true)
-    var explorerCreatedAt: LocalDateTime,
+    var explorerCreatedAt: LocalDateTime? = null,
 
     // 뿌듯한 첫 공유 뱃지
     @Column(nullable = false)
     var kingOfSharing: Boolean = false,
 
     @Column(nullable = true)
-    var kingOfSharingCreatedAt: LocalDateTime,
+    var kingOfSharingCreatedAt: LocalDateTime? = null,
 
     // 설레는 첫 저장 뱃지
     @Column(nullable = false)
     var firstTodayShortsSaving: Boolean = false,
 
     @Column(nullable = true)
-    var firstTodayShortsSavingCreatedAt: LocalDateTime,
+    var firstTodayShortsSavingCreatedAt: LocalDateTime? = null,
 
     // 시작이 반 뱃지
     @Column(nullable = false)
     var firstAllReadShorts: Boolean = false,
 
     @Column(nullable = true)
-    var firstAllReadShortsCreatedAt: LocalDateTime,
+    var firstAllReadShortsCreatedAt: LocalDateTime? = null,
 
     // 오래 간직될 지식 뱃지
     @Column(nullable = false)
     var firstOldShortsSaving: Boolean = false,
 
     @Column(nullable = true)
-    var firstOldShortsSavingCreatedAt: LocalDateTime,
+    var firstOldShortsSavingCreatedAt: LocalDateTime? = null,
 
     // 취향 존중 뱃지
     @Column(nullable = false)
     var changeMode: Boolean = false,
 
     @Column(nullable = true)
-    var changeModeCreatedAt: LocalDateTime
+    var changeModeCreatedAt: LocalDateTime? = null
 ) : BaseEntity() {
 
     fun achieveThreeDaysContinuousAttendance() {

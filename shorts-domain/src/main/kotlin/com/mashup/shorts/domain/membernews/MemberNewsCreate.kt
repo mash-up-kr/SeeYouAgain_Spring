@@ -1,18 +1,20 @@
 package com.mashup.shorts.domain.membernews
 
+import com.mashup.shorts.common.exception.ShortsBaseException
+import com.mashup.shorts.common.exception.ShortsErrorCode
+import com.mashup.shorts.domain.facade.memberlogbadge.MemberLogBadgeFacadeService
+import com.mashup.shorts.domain.member.Member
+import com.mashup.shorts.domain.news.NewsRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode
-import com.mashup.shorts.domain.member.Member
-import com.mashup.shorts.domain.news.NewsRepository
 
 @Transactional(readOnly = true)
 @Service
 class MemberNewsCreate(
     private val newsRepository: NewsRepository,
     private val memberNewsRepository: MemberNewsRepository,
+    private val memberLogBadgeFacadeService: MemberLogBadgeFacadeService,
 ) {
 
     @Transactional
@@ -29,5 +31,6 @@ class MemberNewsCreate(
             )
         }
         memberNewsRepository.save(MemberNews(member = member, news = news))
+        memberLogBadgeFacadeService.oldShortsLog(member = member)
     }
 }
