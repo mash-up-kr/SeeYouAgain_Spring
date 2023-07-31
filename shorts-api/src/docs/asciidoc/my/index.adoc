@@ -7,6 +7,82 @@ endif::[]
 :toc: left
 :toclevels: 2
 
+=== 저 출석했어요 ~
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/유저 출석/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/유저 출석/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/유저 출석/request-headers.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/유저 출석/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/유저 출석/http-response.adoc[]
+
+---
+
+=== 저 뉴스 공유했어요 ~
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/유저 공유 완료 로깅/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/유저 공유 완료 로깅/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/유저 공유 완료 로깅/request-headers.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/유저 공유 완료 로깅/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/유저 공유 완료 로깅/http-response.adoc[]
+
+---
+
+=== 뉴스 조회 모드 변경
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/유저 조회 모드 변경/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/유저 조회 모드 변경/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/유저 조회 모드 변경/request-headers.adoc[]
+
+==== [Request Fields]
+
+include::../../../../../shorts-api/{snippets}/유저 조회 모드 변경/request-fields.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/유저 조회 모드 변경/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/유저 조회 모드 변경/http-response.adoc[]
+
+---
+
 === 내 정보 조회
 
 image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/45676906/9d8a8d71-4575-4bcf-a998-dff040e931f3[alt=Flower,width=240,height=180]
@@ -30,6 +106,30 @@ include::../../../../../shorts-api/{snippets}/내 정보 조회/response-fields.
 ==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/내 정보 조회/http-response.adoc[]
+
+---
+
+=== 유저 뱃지 조회
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/유저 뱃지 조회/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/유저 뱃지 조회/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/유저 뱃지 조회/request-headers.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/유저 뱃지 조회/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/유저 뱃지 조회/http-response.adoc[]
 
 ---
 
