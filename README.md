@@ -1,6 +1,7 @@
 ## ERD
 
-![category](https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/60564431/e2f149ac-1e16-4c82-bd60-24adb247d445)
+![SHORT-ERD](https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/60564431/c5250a92-4615-413e-9885-c30db26e4e68)
+
 
 ## Module Architecutre
 
