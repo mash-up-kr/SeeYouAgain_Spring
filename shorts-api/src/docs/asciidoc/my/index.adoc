@@ -163,8 +163,6 @@ include::../../../../../shorts-api/{snippets}/오늘의 숏스 추가/http-respo
 
 === 저장한 오늘의 숏스 조회
 
-image::https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/60564431/f6e5892f-ab62-483c-aeda-c1c94219df40
-
 ==== [Request URI]
 
 include::../../../../../shorts-api/{snippets}/저장한 오늘의 숏스 조회/page-header.adoc[]
