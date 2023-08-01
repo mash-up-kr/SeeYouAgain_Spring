@@ -21,59 +21,22 @@ class MemberLog(
     @Column(nullable = false)
     var continuousAttendanceCount: Int = 1,
 
-    // 1주일 동안 숏스를 읽은 갯수
-    // 이 컬럼은 매주 월요일 00시마다 0으로 초기화 되어야함
-    @Column(nullable = false)
-    var continuousWeekReadCount: Int = 0,
-
-    // 숏스 다 읽었어요 누적 갯수
-    @Column(nullable = false)
-    var readCompleteCount: Int = 0,
-
     // 공유 횟수
     @Column(nullable = false)
     var sharedCount: Int = 0,
 
-    // 저장한 오늘의 숏스 모든 갯수
+    // 키워드를 통해 조회한 뉴스를 저장한 갯수
     @Column(nullable = false)
-    var savedTodayShortsCount: Long = 0L,
+    var savedNewsCountByKeyword: Int = 0,
 
-    // 저장한 오래 간직할 숏스의 모든 갯수
+    // 뉴스 카드에 담긴 뉴스를 저장한 갯수
     @Column(nullable = false)
-    var savedOldShortsCount: Long = 0L,
+    var savedNewsCountByNewsCard: Int = 0,
+
+    // 저장한 뉴스를 읽은 횟수
+    @Column(nullable = false)
+    var clearingNewsCount: Int = 0,
 ) : BaseEntity() {
-
-    fun increaseContinuousCount() {
-        this.continuousAttendanceCount += 1
-    }
-
-    fun clearContinuousCount() {
-        this.continuousAttendanceCount = 0
-    }
-
-    fun increaseContinuousWeekReadCount() {
-        this.continuousWeekReadCount += 1
-    }
-
-    fun increaseReadCompleteCount() {
-        this.readCompleteCount += 1
-    }
-
-    fun clearContinuousWeekReadCount() {
-        this.continuousWeekReadCount = 0
-    }
-
-    fun increaseSharedCount() {
-        this.sharedCount += 1
-    }
-
-    fun increaseSavedTodayShortsCount() {
-        this.savedTodayShortsCount += 1
-    }
-
-    fun increaseSavedOldShortsCount() {
-        this.savedOldShortsCount += 1
-    }
 
     fun isContinuousAttendance() {
         val lastAttendanceDateTime = this.lastAttendanceDateTime.toLocalDate()
@@ -85,4 +48,21 @@ class MemberLog(
             continuousAttendanceCount = 1
         }
     }
+
+    fun increaseSharedCount() {
+        this.sharedCount += 1
+    }
+
+    fun increaseSavedNewsCountByKeyword() {
+        this.savedNewsCountByKeyword += 1
+    }
+
+    fun increaseSavedNewsCountByNewsCard() {
+        this.savedNewsCountByNewsCard += 1
+    }
+
+    fun increaseClearingNewsCount() {
+        this.clearingNewsCount += 1
+    }
+
 }

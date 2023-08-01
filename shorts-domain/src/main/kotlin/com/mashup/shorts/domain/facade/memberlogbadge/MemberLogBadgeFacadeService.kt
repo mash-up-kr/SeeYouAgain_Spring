@@ -6,6 +6,7 @@ import com.mashup.shorts.domain.memberbadge.MemberBadge
 import com.mashup.shorts.domain.memberbadge.MemberBadgeRepository
 import com.mashup.shorts.domain.memberlog.MemberLog
 import com.mashup.shorts.domain.memberlog.MemberLogRepository
+import com.mashup.shorts.domain.news.News
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -30,33 +31,23 @@ class MemberLogBadgeFacadeService(
         )
     }
 
-    fun todayShortsLog(member: Member) {
+    fun saveNewsLogByNewsCard(member: Member) {
         val memberLog = memberLogRepository.findByMember(member)
-        memberLog.increaseSavedTodayShortsCount()
+        memberLog.increaseSavedNewsCountByNewsCard()
 
-        if (memberLog.savedTodayShortsCount == 1L) {
+        if (memberLog.savedNewsCountByNewsCard == 1) {
             val memberBadge = memberBadgeRepository.findByMember(member)
-            memberBadge.achieveFirstTodayShortsSaving()
+            memberBadge.achieveFirstNewsSaving()
         }
     }
 
-    fun oldShortsLog(member: Member) {
+    fun saveNewsLogByKeyword(member: Member) {
         val memberLog = memberLogRepository.findByMember(member)
-        memberLog.increaseSavedOldShortsCount()
+        memberLog.increaseSavedNewsCountByKeyword()
 
-        if (memberLog.savedOldShortsCount == 1L) {
+        if (memberLog.savedNewsCountByKeyword == 1) {
             val memberBadge = memberBadgeRepository.findByMember(member)
-            memberBadge.achieveFirstOldShortsSaving()
-        }
-    }
-
-    fun readCompleteLog(member: Member) {
-        val memberLog = memberLogRepository.findByMember(member)
-        memberLog.increaseReadCompleteCount()
-
-        if (memberLog.readCompleteCount == 1) {
-            val memberBadge = memberBadgeRepository.findByMember(member)
-            memberBadge.achieveFirstReadCompleteShortsSaving()
+            memberBadge.achieveFirstNewsSaving()
         }
     }
 
@@ -87,6 +78,16 @@ class MemberLogBadgeFacadeService(
         } else if (memberLog.continuousAttendanceCount == CONTINUOUS_LOGIN_TEN_TIME) {
             val memberBadge = memberBadgeRepository.findByMember(member)
             memberBadge.achieveTenDaysContinuousAttendance()
+        }
+    }
+
+    fun memberClearingNewsLog(member: Member, news: News) {
+        val memberLog = memberLogRepository.findByMember(member)
+        memberLog.increaseClearingNewsCount()
+
+        if (memberLog.clearingNewsCount == 1) {
+            val memberBadge = memberBadgeRepository.findByMember(member)
+            memberBadge.achieveFirstClearNews()
         }
     }
 

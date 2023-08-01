@@ -1,4 +1,4 @@
-package com.mashup.shorts.domain.home.memberCategory
+package com.mashup.shorts.domain.home.membercategory
 
 import java.util.*
 import org.springframework.http.HttpStatus
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController
 import com.mashup.shorts.common.aop.Auth
 import com.mashup.shorts.common.aop.AuthContext
 import com.mashup.shorts.common.response.ApiResponse
-import com.mashup.shorts.domain.home.memberCategory.dto.CategoryCreateBulkRequest
-import com.mashup.shorts.domain.home.memberCategory.dto.CategoryUpdateBulkRequest
+import com.mashup.shorts.domain.home.membercategory.dto.CategoryCreateBulkRequest
+import com.mashup.shorts.domain.home.membercategory.dto.CategoryUpdateBulkRequest
 import com.mashup.shorts.domain.membercategory.MemberCategoryCreate
 
 @RequestMapping("/v1/member/category")

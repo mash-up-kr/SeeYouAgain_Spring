@@ -1,16 +1,13 @@
 package com.mashup.shorts.domain.membernews
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membercompany.MemberCompanyRepository
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.news.NewsRepository
 import com.mashup.shorts.domain.news.NewsRetrieve
 import com.mashup.shorts.domain.newscard.Pivots
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
@@ -21,51 +18,32 @@ class MemberNewsRetrieve(
     private val memberCompanyRepository: MemberCompanyRepository,
 ) {
 
-    fun retrieveMemberNews(
-        targetDate: LocalDate,
+    fun retrieveMemberNewsCount(member: Member): Int {
+        return memberNewsRepository.findAllByMember(member).count()
+    }
+
+    fun retrieveMemberNewsBySorting(
         member: Member,
         cursorWrittenDateTime: String,
         size: Int,
         pivot: Pivots,
+        savedFlag: SavedFlag
     ): List<News> {
-        val targetDateTimePeriod = parseTargetDateTimePeriod(targetDate)
-        val firstDayOfMonth = targetDateTimePeriod.first
-        val lastDayOfMonth = targetDateTimePeriod.second
-
-        if (cursorWrittenDateTime.isEmpty()) {
-            return notContainedCursor(
-                firstDayOfMonth,
-                lastDayOfMonth,
-                member,
-                size,
-                pivot
-            )
+        val memberNewsList = memberNewsRepository.findAllByMember(member).filter {
+            it.savedFlag == savedFlag
         }
 
-        return containedCursor(
-            firstDayOfMonth,
-            lastDayOfMonth,
-            member,
-            size,
-            pivot,
-            cursorWrittenDateTime
-        )
+        if (cursorWrittenDateTime.isEmpty()) {
+            return when (pivot) {
+                Pivots.ASC -> ascNewsListNoCursor(memberNewsList, size)
+                Pivots.DESC -> descNewsListNoCursor(memberNewsList, size)
+            }
+        }
 
-    }
-
-    fun retrieveMemberNewsCountByTargetDateTime(
-        member: Member,
-        targetDate: LocalDate,
-    ): Int {
-        val targetDateTimePeriod = parseTargetDateTimePeriod(targetDate)
-        val firstDayOfMonth = targetDateTimePeriod.first
-        val lastDayOfMonth = targetDateTimePeriod.second
-
-        return memberNewsRepository.countByMemberAndCreatedAtBetween(
-            member,
-            firstDayOfMonth,
-            lastDayOfMonth
-        )
+        return when (pivot) {
+            Pivots.ASC -> ascNewsList(memberNewsList, cursorWrittenDateTime, size)
+            Pivots.DESC -> descNewsList(memberNewsList, cursorWrittenDateTime, size)
+        }
     }
 
     fun retrieveNewsByMemberCompany(
@@ -80,87 +58,59 @@ class MemberNewsRetrieve(
         )
     }
 
-    private fun notContainedCursor(
-        firstDayOfMonth: LocalDateTime,
-        lastDayOfMonth: LocalDateTime,
-        member: Member,
-        size: Int,
-        pivot: Pivots,
+    private fun ascNewsListNoCursor(
+        memberNewsList: List<MemberNews>,
+        size: Int
     ): List<News> {
-        if (pivot == Pivots.ASC) {
-            val memberNewsBundle = memberNewsRepository.findAllByMember(member)
-            val newsBundle = memberNewsBundle
-                .map { it.news }
-                .sortedBy { it.writtenDateTime }
+        val newsList = memberNewsList
+            .map { it.news }
+            .sortedBy { it.writtenDateTime }
 
-            return newsRepository.loadNewsBundleByCursorAndNewsCardMultipleNewsAndTargetTime(
-                firstDayOfMonth,
-                lastDayOfMonth,
-                newsBundle.map { it.id },
-                size
-            ).sortedBy { it.writtenDateTime }
-        }
+        return newsRepository.findAllById(newsList.map { it.id })
+            .sortedBy { it.writtenDateTime }
+            .take(size)
+    }
 
-        val memberNewsBundle = memberNewsRepository.findAllByMember(member)
-        val newsBundle = memberNewsBundle
+    private fun descNewsListNoCursor(
+        memberNewsList: List<MemberNews>,
+        size: Int
+    ): List<News> {
+        val newsList = memberNewsList
             .map { it.news }
             .sortedByDescending { it.writtenDateTime }
 
-        return newsRepository.loadNewsBundleByCursorAndNewsCardMultipleNewsAndTargetTime(
-            firstDayOfMonth,
-            lastDayOfMonth,
-            newsBundle.map { it.id },
-            size
-        ).sortedByDescending { it.writtenDateTime }
+        return newsRepository.findAllById(newsList.map { it.id })
+            .sortedByDescending { it.writtenDateTime }
+            .take(size)
     }
 
-    private fun containedCursor(
-        firstDayOfMonth: LocalDateTime,
-        lastDayOfMonth: LocalDateTime,
-        member: Member,
-        size: Int,
-        pivot: Pivots,
+    private fun ascNewsList(
+        memberNewsList: List<MemberNews>,
         cursorWrittenDateTime: String,
+        size: Int
     ): List<News> {
-        if (pivot == Pivots.ASC) {
-            val memberNewsBundle = memberNewsRepository.findAllByMember(member)
-            val newsBundle = memberNewsBundle
-                .map { it.news }
-                .sortedBy { it.writtenDateTime }
-                .filter { it.writtenDateTime > cursorWrittenDateTime }
+        val newsList = memberNewsList
+            .map { it.news }
+            .sortedBy { it.writtenDateTime }
+            .filter { it.writtenDateTime > cursorWrittenDateTime }
 
-            return newsRepository.loadNewsBundleByCursorAndNewsCardMultipleNewsAndTargetTime(
-                firstDayOfMonth,
-                lastDayOfMonth,
-                newsBundle.map { it.id },
-                size
-            ).sortedBy { it.writtenDateTime }
-        }
+        return newsRepository.findAllById(newsList.map { it.id })
+            .sortedBy { it.writtenDateTime }
+            .take(size)
+    }
 
-        val memberNewsBundle = memberNewsRepository.findAllByMember(member)
-        val newsBundle = memberNewsBundle
+    private fun descNewsList(
+        memberNewsList: List<MemberNews>,
+        cursorWrittenDateTime: String,
+        size: Int
+    ): List<News> {
+        val newsList = memberNewsList
             .map { it.news }
             .sortedByDescending { it.writtenDateTime }
             .filter { it.writtenDateTime < cursorWrittenDateTime }
 
-        return newsRepository.loadNewsBundleByCursorAndNewsCardMultipleNewsAndTargetTime(
-            firstDayOfMonth,
-            lastDayOfMonth,
-            newsBundle.map { it.id },
-            size
-        ).sortedByDescending { it.writtenDateTime }
-    }
-
-    private fun parseTargetDateTimePeriod(targetDate: LocalDate): Pair<LocalDateTime, LocalDateTime> {
-        val firstDayOfMonth = LocalDateTime.of(
-            targetDate.withDayOfMonth(1),
-            LocalTime.of(0, 0)
-        )
-        val lastDayOfMonth = LocalDateTime.of(
-            targetDate.withDayOfMonth(targetDate.lengthOfMonth()),
-            LocalTime.of(23, 59)
-        )
-
-        return Pair(firstDayOfMonth, lastDayOfMonth)
+        return newsRepository.findAllById(newsList.map { it.id })
+            .sortedByDescending { it.writtenDateTime }
+            .take(size)
     }
 }

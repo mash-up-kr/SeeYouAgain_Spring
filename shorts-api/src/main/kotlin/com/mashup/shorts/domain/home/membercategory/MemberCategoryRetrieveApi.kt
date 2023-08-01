@@ -1,4 +1,4 @@
-package com.mashup.shorts.domain.home.memberCategory
+package com.mashup.shorts.domain.home.membercategory
 
 import org.springframework.http.HttpStatus.OK
 import org.springframework.web.bind.annotation.GetMapping

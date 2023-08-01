@@ -22,7 +22,7 @@ data class MemberNewsResponse(
     var category: String,
 ) {
     companion object {
-        fun persistenceToResponseForm(newsBundle: List<News>): List<MemberNewsResponse> {
+        fun makeMemberNewsResponse(newsBundle: List<News>): List<MemberNewsResponse> {
             return newsBundle.map {
                 MemberNewsResponse(
                     id = it.id,

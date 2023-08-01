@@ -1,18 +1,15 @@
 package com.mashup.shorts.domain.membernewscard
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.util.StartEndDateTimeExtractor.extractStarDateTimeAndEndDateTime
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membercategory.MemberCategory
 import com.mashup.shorts.domain.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
-import com.mashup.shorts.domain.membernewscard.dtomapper.MemberTodayShorts
-import com.mashup.shorts.domain.membershortscount.MemberShortsCountRepository
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
 @Transactional(readOnly = true)
@@ -20,8 +17,6 @@ class MemberNewsCardRetrieve(
     private val newsCardRepository: NewsCardRepository,
     private val memberCategoryRepository: MemberCategoryRepository,
     private val memberNewsRepository: MemberNewsRepository,
-    private val memberNewsCardRepository: MemberNewsCardRepository,
-    private val memberShortsCountRepository: MemberShortsCountRepository,
 ) {
 
     fun retrieveNewsCardByMember(
@@ -38,49 +33,16 @@ class MemberNewsCardRetrieve(
 
         return newsCards.filter { newsCard ->
             !filteredNewsCardIds.contains(newsCard.id) &&
-                newsCard.multipleNews.split(", ")
-                    .map { it.toLong() }
-                    .intersect(filteredNewsIds.toSet())
-                    .isEmpty()
+                    newsCard.multipleNews.split(", ")
+                        .map { it.toLong() }
+                        .intersect(filteredNewsIds.toSet())
+                        .isEmpty()
         }.shuffled()
     }
 
-    fun retrieveSavedNewsCardByMember(
-        member: Member,
-        cursorId: Long,
-        size: Int,
-    ): MemberTodayShorts {
-
-        val memberShortsCount = memberShortsCountRepository.findByMemberAndTargetDate(
-            member = member,
-            targetDate = LocalDate.now()
-        )
-
-        if (memberShortsCount != null) {
-            return MemberTodayShorts(
-                numberOfShorts = memberNewsCardRepository.countAllByMember(member),
-                numberOfReadShorts = memberShortsCount.count,
-                memberShorts = newsCardRepository.findSavedNewsCardsByNewsCardIds(
-                    newsCardIds = memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id },
-                    cursorId = cursorId,
-                    size = size,
-                )
-            )
-        }
-
-        return MemberTodayShorts(
-            numberOfShorts = memberNewsCardRepository.countAllByMember(member),
-            numberOfReadShorts = 0,
-            memberShorts = newsCardRepository.findSavedNewsCardsByNewsCardIds(
-                newsCardIds = memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id },
-                cursorId = cursorId,
-                size = size,
-            )
-        )
-    }
 
     private fun filterAlreadySavedNewsCards(member: Member): List<Long> {
-        return memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id }
+        return memberNewsRepository.findAllByMember(member).map { it.id }
     }
 
     private fun filterAlreadySavedNews(member: Member): List<Long> {
