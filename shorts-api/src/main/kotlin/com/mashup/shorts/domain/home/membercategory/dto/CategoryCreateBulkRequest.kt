@@ -1,4 +1,4 @@
-package com.mashup.shorts.domain.home.memberCategory.dto
+package com.mashup.shorts.domain.home.membercategory.dto
 
 import com.mashup.shorts.domain.category.CategoryName
 

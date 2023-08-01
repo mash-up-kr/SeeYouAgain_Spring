@@ -1,14 +1,5 @@
 package com.mashup.shorts.api.restdocs.member.my
 
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.http.MediaType
-import org.springframework.restdocs.headers.HeaderDocumentation
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
-import org.springframework.restdocs.payload.JsonFieldType
-import org.springframework.restdocs.payload.PayloadDocumentation
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet.Companion.pageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
@@ -18,6 +9,15 @@ import com.mashup.shorts.domain.my.MemberInfoRetrieve
 import com.mashup.shorts.domain.my.info.MemberInfoRetrieveApi
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import org.junit.jupiter.api.Test
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.http.MediaType
+import org.springframework.restdocs.headers.HeaderDocumentation
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
+import org.springframework.restdocs.payload.JsonFieldType
+import org.springframework.restdocs.payload.PayloadDocumentation
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @WebMvcTest(MemberInfoRetrieveApi::class)
 class MemberInfoRetrieveApiTest : ApiDocsTestBase() {
@@ -30,9 +30,9 @@ class MemberInfoRetrieveApiTest : ApiDocsTestBase() {
         every { memberInfoRetrieve.retrieveMemberInfo(any(), any()) } returns MemberInfo(
             nickname = "똑똑한여행가",
             joinPeriod = 114,
-            totalShortsThisMonth = 56,
-            todayShorts = 5,
-            savedShorts = 56
+            totalSavedShortCount = 56,
+            savedNewsCountByKeyword = 5,
+            savedNewsCountByNewsCard = 56
         )
 
         mockMvc.perform(
@@ -57,12 +57,12 @@ class MemberInfoRetrieveApiTest : ApiDocsTestBase() {
                             .description("사용자 닉네임"),
                         PayloadDocumentation.fieldWithPath("result.joinPeriod").type(JsonFieldType.NUMBER)
                             .description("가입 기간"),
-                        PayloadDocumentation.fieldWithPath("result.totalShortsThisMonth").type(JsonFieldType.NUMBER)
-                            .description("이번 달에 '다 읽었어요' 누른 횟수"),
-                        PayloadDocumentation.fieldWithPath("result.todayShorts").type(JsonFieldType.NUMBER)
-                            .description("오늘의 숏스 개수"),
-                        PayloadDocumentation.fieldWithPath("result.savedShorts").type(JsonFieldType.NUMBER)
-                            .description("오래 간직할 숏스 개수")
+                        PayloadDocumentation.fieldWithPath("result.totalSavedShortCount").type(JsonFieldType.NUMBER)
+                            .description("지금까지 저장한 뉴스 갯수"),
+                        PayloadDocumentation.fieldWithPath("result.savedNewsCountByKeyword").type(JsonFieldType.NUMBER)
+                            .description("뉴스 카드에서 저장한 뉴스 갯수"),
+                        PayloadDocumentation.fieldWithPath("result.savedNewsCountByNewsCard").type(JsonFieldType.NUMBER)
+                            .description("핫 키워드에서 저장한 뉴스 갯수")
                     )
                 )
             )

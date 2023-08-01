@@ -28,8 +28,8 @@ class MemberBadgeRetrieveApi(
                 tenDaysContinuousAttendance = result.threeDaysContinuousAttendance,
                 explorer = result.explorer,
                 kingOfSharing = result.kingOfSharing,
-                firstAllReadShorts = result.firstAllReadShorts,
-                firstOldShortsSaving = result.firstOldShortsSaving,
+                firstAllReadShorts = result.firstClearNews,
+                firstOldShortsSaving = result.firstNewsSaving,
                 changeMode = result.changeMode
             )
         )

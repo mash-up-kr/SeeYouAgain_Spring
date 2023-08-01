@@ -1,23 +1,23 @@
 package com.mashup.shorts.domain.my.membernews
 
-import java.time.LocalDate
+import com.mashup.shorts.common.aop.Auth
+import com.mashup.shorts.common.aop.AuthContext
+import com.mashup.shorts.common.response.ApiResponse
+import com.mashup.shorts.common.response.ApiResponse.Companion.success
+import com.mashup.shorts.domain.membernews.MemberNewsRetrieve
+import com.mashup.shorts.domain.membernews.SavedFlag
+import com.mashup.shorts.domain.my.membernews.dto.MemberNewsResponse.Companion.makeMemberNewsResponse
+import com.mashup.shorts.domain.my.membernews.dto.MemberNewsRetrieveByCompanyResponse
+import com.mashup.shorts.domain.my.membernews.dto.MemberNewsRetrieveResponse
+import com.mashup.shorts.domain.newscard.Pivots
+import jakarta.validation.constraints.Max
+import jakarta.validation.constraints.Min
 import org.springframework.http.HttpStatus.OK
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import com.mashup.shorts.common.aop.Auth
-import com.mashup.shorts.common.aop.AuthContext
-import com.mashup.shorts.common.response.ApiResponse
-import com.mashup.shorts.common.response.ApiResponse.Companion.success
-import com.mashup.shorts.domain.membernews.MemberNewsRetrieve
-import com.mashup.shorts.domain.my.membernews.dto.MemberNewsResponse.Companion.persistenceToResponseForm
-import com.mashup.shorts.domain.my.membernews.dto.MemberNewsRetrieveByCompanyResponse
-import com.mashup.shorts.domain.my.membernews.dto.MemberNewsRetrieveResponse
-import com.mashup.shorts.domain.newscard.Pivots
-import jakarta.validation.constraints.Max
-import jakarta.validation.constraints.Min
 
 @Validated
 @RestController
@@ -27,32 +27,57 @@ class MemberNewsRetrieveApi(
 ) {
 
     /**
-    오래 간직할 뉴스 조회 API
-    @Param : targetDate, cursorWrittenDateTime, size, pivot
+    키워드로 저장한 뉴스 조회
+    @Param : cursorWrittenDateTime, size, pivot
      */
     @Auth
-    @GetMapping
-    fun retrieveNewsByMember(
-        @RequestParam targetDate: LocalDate,
+    @GetMapping("/keyword")
+    fun retrieveMemberNewsBySavingKeyword(
         @RequestParam cursorWrittenDateTime: String,
         @RequestParam(required = true) @Min(1) @Max(20) size: Int,
-        @RequestParam pivot: Pivots,
+        @RequestParam(required = true) pivot: Pivots,
     ): ApiResponse<MemberNewsRetrieveResponse> {
         val member = AuthContext.getMember()
         return success(
             OK,
             MemberNewsRetrieveResponse(
-                savedNewsCount = memberNewsRetrieve.retrieveMemberNewsCountByTargetDateTime(
-                    member,
-                    targetDate
-                ),
-                memberNewsResponse = persistenceToResponseForm(
-                    memberNewsRetrieve.retrieveMemberNews(
-                        targetDate = targetDate,
+                savedNewsCount = memberNewsRetrieve.retrieveMemberNewsCount(member),
+                memberNewsResponse = makeMemberNewsResponse(
+                    newsBundle = memberNewsRetrieve.retrieveMemberNewsBySorting(
                         member = member,
                         cursorWrittenDateTime = cursorWrittenDateTime,
                         size = size,
-                        pivot = pivot
+                        pivot = pivot,
+                        savedFlag = SavedFlag.KEYWORD
+                    )
+                )
+            )
+        )
+    }
+
+    /**
+    뉴스 카드에서 저장한 뉴스 조회
+    @Param : targetDate, cursorWrittenDateTime, size, pivot
+     */
+    @Auth
+    @GetMapping("/newscard")
+    fun retrieveMemberNewsBySavingNewsCard(
+        @RequestParam cursorWrittenDateTime: String,
+        @RequestParam(required = true) @Min(1) @Max(20) size: Int,
+        @RequestParam(required = true) pivot: Pivots,
+    ): ApiResponse<MemberNewsRetrieveResponse> {
+        val member = AuthContext.getMember()
+        return success(
+            OK,
+            MemberNewsRetrieveResponse(
+                savedNewsCount = memberNewsRetrieve.retrieveMemberNewsCount(member),
+                memberNewsResponse = makeMemberNewsResponse(
+                    newsBundle = memberNewsRetrieve.retrieveMemberNewsBySorting(
+                        member = member,
+                        cursorWrittenDateTime = cursorWrittenDateTime,
+                        size = size,
+                        pivot = pivot,
+                        savedFlag = SavedFlag.NEWS_CARD
                     )
                 )
             )
@@ -65,7 +90,7 @@ class MemberNewsRetrieveApi(
      */
     @Auth
     @GetMapping("/company")
-    fun retrieveNewsByMember(
+    fun retrieveMemberNewsBySavingKeyword(
         @RequestParam(defaultValue = "0", required = false) @Min(0) @Max(Long.MAX_VALUE)
         cursorId: Long,
         @RequestParam(required = true) @Min(1) @Max(20) size: Int,
@@ -74,7 +99,7 @@ class MemberNewsRetrieveApi(
         return success(
             OK,
             MemberNewsRetrieveByCompanyResponse(
-                persistenceToResponseForm(
+                makeMemberNewsResponse(
                     memberNewsRetrieve.retrieveNewsByMemberCompany(
                         member = member,
                         cursorId = cursorId,

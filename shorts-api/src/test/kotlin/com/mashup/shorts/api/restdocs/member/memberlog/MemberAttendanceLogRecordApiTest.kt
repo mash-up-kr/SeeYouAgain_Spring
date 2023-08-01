@@ -4,8 +4,8 @@ import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet.Companion.pageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
-import com.mashup.shorts.domain.memberlog.MemberAttendance
-import com.mashup.shorts.domain.memberlog.MemberSharing
+import com.mashup.shorts.domain.memberlog.MemberAttendanceLogRecord
+import com.mashup.shorts.domain.memberlog.MemberSharingLogRecord
 import com.mashup.shorts.domain.my.memberlog.MemberLogApi
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.justRun
@@ -20,27 +20,27 @@ import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @WebMvcTest(MemberLogApi::class)
-class MemberSharingCompleteApiTest : ApiDocsTestBase() {
+class MemberAttendanceLogRecordApiTest : ApiDocsTestBase() {
 
     @MockkBean
-    private lateinit var memberAttendance: MemberAttendance
+    private lateinit var memberAttendanceLogRecord: MemberAttendanceLogRecord
 
     @MockkBean
-    private lateinit var memberSharing: MemberSharing
+    private lateinit var memberSharingLogRecord: MemberSharingLogRecord
 
     @Test
-    fun `유저 공유 완료 로깅`() {
-        justRun { memberSharing.execute(any()) }
+    fun `유저 출석`() {
+        justRun { memberAttendanceLogRecord.execute(any()) }
 
         mockMvc.perform(
-            RestDocumentationRequestBuilders.post("/v1/member/log/sharing")
+            RestDocumentationRequestBuilders.post("/v1/member/log/attendance")
                 .header("Authorization", "Bearer test-user")
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
                 MockMvcRestDocumentation.document(
-                    "유저 공유 완료 로깅",
+                    "유저 출석",
                     getDocumentRequest(),
                     getDocumentResponse(),
                     pageHeaderSnippet(),

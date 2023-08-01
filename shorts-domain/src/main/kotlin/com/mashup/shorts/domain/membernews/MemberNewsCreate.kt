@@ -18,7 +18,18 @@ class MemberNewsCreate(
 ) {
 
     @Transactional
-    fun createMemberNews(member: Member, newsId: Long) {
+    fun createMemberNewsByNewsCard(member: Member, newsId: Long) {
+        saveMemberNews(member, newsId, SavedFlag.NEWS_CARD)
+        memberLogBadgeFacadeService.saveNewsLogByNewsCard(member = member)
+    }
+
+    @Transactional
+    fun createMemberNewsByKeyword(member: Member, newsId: Long) {
+        saveMemberNews(member, newsId, SavedFlag.KEYWORD)
+        memberLogBadgeFacadeService.saveNewsLogByKeyword(member = member)
+    }
+
+    private fun saveMemberNews(member: Member, newsId: Long, savedFlag: SavedFlag) {
         val news = newsRepository.findByIdOrNull(newsId) ?: throw ShortsBaseException.from(
             shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
             resultErrorMessage = "${newsId}에 해당하는 뉴스가 존재하지 않습니다."
@@ -30,7 +41,6 @@ class MemberNewsCreate(
                 resultErrorMessage = "뉴스는 중복해서 저장할 수 없습니다."
             )
         }
-        memberNewsRepository.save(MemberNews(member = member, news = news))
-        memberLogBadgeFacadeService.oldShortsLog(member = member)
+        memberNewsRepository.save(MemberNews(member = member, news = news, savedFlag = savedFlag))
     }
 }

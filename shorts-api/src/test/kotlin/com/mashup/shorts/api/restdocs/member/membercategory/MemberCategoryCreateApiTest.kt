@@ -1,4 +1,4 @@
-package com.mashup.shorts.api.restdocs.memberCategory
+package com.mashup.shorts.api.restdocs.member.membercategory
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -15,8 +15,8 @@ import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
 import com.mashup.shorts.domain.category.CategoryName
-import com.mashup.shorts.domain.home.memberCategory.MemberCategoryCreateApi
-import com.mashup.shorts.domain.home.memberCategory.dto.CategoryCreateBulkRequest
+import com.mashup.shorts.domain.home.membercategory.MemberCategoryCreateApi
+import com.mashup.shorts.domain.home.membercategory.dto.CategoryCreateBulkRequest
 import com.mashup.shorts.domain.membercategory.MemberCategoryCreate
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every

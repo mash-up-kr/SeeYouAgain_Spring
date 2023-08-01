@@ -7,11 +7,11 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
-class MemberAttendance(
+class MemberSharingLogRecord(
     private val memberLogBadgeFacadeService: MemberLogBadgeFacadeService
 ) {
 
     fun execute(member: Member) {
-        memberLogBadgeFacadeService.memberAttendanceLog(member)
+        memberLogBadgeFacadeService.memberSharingLog(member)
     }
 }

@@ -56,31 +56,29 @@ create table member_shorts_count
 
 create table member_log
 (
-    id                          bigint auto_increment primary key,
-    member_id                   bigint,
+    id                            bigint auto_increment primary key,
+    member_id                     bigint,
+
+    -- 최근 접속 일자
+    last_attendance_date_time     datetime(6),
 
     -- 연속 접속일 수
-    continuous_attendance_count int    not null default 0,
-
-    last_attendance_date_time   datetime(6),
-
-    -- 1주일 동안 숏스를 읽은 갯수 이 컬럼은 매주 월요일 00시마다 0으로 초기화 되어야한다.
-    continuous_week_read_count  int    not null default 0,
-
-    -- 숏스 다 읽었어요 누적 갯수
-    read_complete_count         int    not null default 0,
+    continuous_attendance_count   int    not null default 0,
 
     -- 공유 횟수
-    shared_count                int    not null default 0,
+    shared_count                  int    not null default 0,
 
-    -- 저장한 오늘의 숏스의 모든 갯수
-    saved_today_shorts_count    bigint not null default 0,
+    -- 키워드에 담긴 뉴스를 저장한 횟수
+    saved_news_count_by_keyword   bigint not null default 0,
 
-    -- 저장한 오래 간직할 숏스의 모든 갯수
-    saved_old_shorts_count      bigint not null default 0,
+    -- 뉴스 카드에 담긴 뉴스를 저장한 횟수
+    saved_news_count_by_news_card bigint not null default 0,
 
-    created_at                  datetime(6),
-    modified_at                 datetime(6)
+    -- 저장한 뉴스를 읽은 횟수
+    clearing_news_count           bigint not null default 0,
+
+    created_at                    datetime(6),
+    modified_at                   datetime(6)
 );
 
 create table member_badge
@@ -88,32 +86,28 @@ create table member_badge
     id                                          bigint auto_increment primary key,
     member_id                                   bigint,
 
-    -- 작심삼일 뱃지
+    -- 작심삼일 - 3일 연속 접속
     three_days_continuous_attendance            boolean not null default false,
     three_days_continuous_attendance_created_at datetime(6),
 
-    -- 단골손님 뱃지
+    -- 단골손님 - 10일 연속 접속
     ten_days_continuous_attendance              boolean not null default false,
     ten_days_continuous_attendance_created_at   datetime(6),
 
-    -- 세상 탐험가 뱃지
+    -- 세상 탐험가 뱃지 - 1주일 간 뉴스를 20개 저장
     explorer                                    boolean not null default false,
     explorer_created_at                         datetime(6),
 
-    -- 뿌듯한 첫 공유 뱃지
+    -- 뿌듯한 첫 공유 - 첫 공유 시도
     king_of_sharing                             boolean not null default false,
     king_of_sharing_created_at                  datetime(6),
 
-    -- 설레는 첫 저장 뱃지
-    first_today_shorts_saving                   boolean not null default false,
-    first_today_shorts_saving_created_at        datetime(6),
+    -- 설레는 첫 저장 뱃지 - 첫 뉴스 저장
+    first_news_saving                           boolean not null default false,
+    first_news_saving_created_at                datetime(6),
 
-    -- 시작이 반 뱃지
-    first_all_read_shorts                       boolean not null default false,
-    first_all_read_shorts_created_at            datetime(6),
-
-    -- 오래 간직될 지식 뱃지
-    first_old_shorts_saving                     boolean not null default false,
+    -- 시작이 반 - 처음으로 뉴스를 다 읽음
+    first_clear_news                            boolean not null default false,
     first_old_shorts_saving_created_at          datetime(6),
 
     -- 취향 존중 뱃지
