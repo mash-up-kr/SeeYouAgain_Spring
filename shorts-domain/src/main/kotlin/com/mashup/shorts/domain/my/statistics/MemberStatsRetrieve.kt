@@ -1,13 +1,13 @@
 package com.mashup.shorts.domain.my.statistics
 
-import java.time.DayOfWeek
-import java.time.LocalDate
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.util.ShortsCalender
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membershortscount.MemberShortsCount
 import com.mashup.shorts.domain.membershortscount.MemberShortsCountRepository
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.time.DayOfWeek
+import java.time.LocalDate
 
 @Service
 @Transactional(readOnly = true)
@@ -15,11 +15,14 @@ class MemberStatsRetrieve(
     private val memberShortsCountRepository: MemberShortsCountRepository
 ) {
 
-    fun retrieveMemberWeeklyStats(member: Member, now: LocalDate, weeks: Int): MemberWeeklyStats {
+    fun retrieveMemberWeeklyStats(
+        member: Member,
+        now: LocalDate,
+    ): MemberWeeklyStats {
         val weeklyShortsCnt = LinkedHashMap<String, Int>()
         val dateOfShortsRead = LinkedHashMap<String, List<String>>()
 
-        for (week in (weeks - 1) downTo 0) { // 이번주 포함 총 {weeks}주차 조회
+        for (week in (RESPONSE_WEEKS - 1) downTo 0) { // 이번주 포함 총 {weeks}주차 조회
             val targetDate = now.minusDays((week * 7).toLong())
             val memberShortsCounts = getMemberShortsCountsForWeekByDate(member, targetDate)
             // 주차별 숏스 읽은 개수 설정
@@ -52,7 +55,11 @@ class MemberStatsRetrieve(
         val daysAfterMonday = now.dayOfWeek.value - DayOfWeek.MONDAY.value
         val dateOfMonday = now.minusDays(daysAfterMonday.toLong())
         // 해당 주차(월-일)의 MemberShortsCount 조회
-        return memberShortsCountRepository.findAllByMemberAndTargetDateBetween(member, dateOfMonday, dateOfMonday.plusDays(6))
+        return memberShortsCountRepository.findAllByMemberAndTargetDateBetween(
+            member,
+            dateOfMonday,
+            dateOfMonday.plusDays(6)
+        )
     }
 
     private fun getTotalShortsCnt(memberShortsCounts: List<MemberShortsCount>): Int {
@@ -61,5 +68,9 @@ class MemberStatsRetrieve(
             total += memberShortsCount.count
         }
         return total
+    }
+
+    companion object {
+        const val RESPONSE_WEEKS = 4
     }
 }
