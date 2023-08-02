@@ -83,18 +83,16 @@ class MemberLogBadgeFacadeService(
 
     fun memberClearingNewsLog(member: Member, news: News) {
         val memberLog = memberLogRepository.findByMember(member)
-        memberLog.increaseClearingNewsCount()
-
-        if (memberLog.clearingNewsCount == 1) {
-            val memberBadge = memberBadgeRepository.findByMember(member)
-            memberBadge.achieveFirstClearNews()
-        }
-    }
-
-    fun memberNumberOfReadsPerWeekLog(member: Member, count: Int) {
         val memberBadge = memberBadgeRepository.findByMember(member)
 
-        if (count == CONTINUOUS_READ_SHORTS_TWENTY) {
+        memberLog.increaseClearingNewsCount()
+        memberLog.weeklyReadCount++
+
+        if (memberLog.clearingNewsCount == 1) {
+            memberBadge.achieveFirstClearNews()
+        }
+
+        if (memberLog.weeklyReadCount == CONTINUOUS_READ_SHORTS_TWENTY && !memberBadge.explorer) {
             memberBadge.achieveExplorer()
         }
     }

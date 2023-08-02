@@ -21,6 +21,9 @@ class MemberLog(
     @Column(nullable = false)
     var continuousAttendanceCount: Int = 1,
 
+    @Column(nullable = false)
+    var weeklyReadCount: Int = 0,
+
     // 공유 횟수
     @Column(nullable = false)
     var sharedCount: Int = 0,
