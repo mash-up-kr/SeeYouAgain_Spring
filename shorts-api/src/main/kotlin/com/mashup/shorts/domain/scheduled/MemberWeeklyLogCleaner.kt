@@ -12,7 +12,7 @@ class MemberWeeklyLogCleaner(
 ) {
 
     // 매주 월요일 00시에 동작한다.
-    @Scheduled(cron = "0 0 * * 1")
+    @Scheduled(cron = "0 0 0 * * 1")
     fun eraseMemberWeeklyReadCount() {
         memberLogRepository.findAll().map { it.weeklyReadCount = 0 }
     }
