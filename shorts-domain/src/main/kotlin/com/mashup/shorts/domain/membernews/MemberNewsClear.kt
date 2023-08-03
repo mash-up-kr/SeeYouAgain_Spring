@@ -7,8 +7,10 @@ import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.news.NewsRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional
 class MemberNewsClear(
     private val newsRepository: NewsRepository,
     private val memberNewsRepository: MemberNewsRepository,
@@ -23,7 +25,7 @@ class MemberNewsClear(
 
         memberNewsRepository.findByMemberAndNews(member, news) ?: throw ShortsBaseException.from(
             shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
-            resultErrorMessage = "저장하지 않은 뉴스를 삭제할 수 없습니다."
+            resultErrorMessage = "저장하지 않은 뉴스를 읽음 처리 할 수 없습니다."
         )
         memberLogBadgeFacadeService.memberClearingNewsLog(member, news)
     }
