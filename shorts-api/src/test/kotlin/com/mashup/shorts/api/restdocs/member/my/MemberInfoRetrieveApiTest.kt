@@ -30,9 +30,9 @@ class MemberInfoRetrieveApiTest : ApiDocsTestBase() {
         every { memberInfoRetrieve.retrieveMemberInfo(any(), any()) } returns MemberInfo(
             nickname = "똑똑한여행가",
             joinPeriod = 114,
-            totalSavedShortCount = 56,
-            savedNewsCountByKeyword = 5,
-            savedNewsCountByNewsCard = 56
+            totalSavedNewsCount = 56,
+            savedNewsCount = 5,
+            savedNewsCardCount = 56
         )
 
         mockMvc.perform(
@@ -57,12 +57,12 @@ class MemberInfoRetrieveApiTest : ApiDocsTestBase() {
                             .description("사용자 닉네임"),
                         PayloadDocumentation.fieldWithPath("result.joinPeriod").type(JsonFieldType.NUMBER)
                             .description("가입 기간"),
-                        PayloadDocumentation.fieldWithPath("result.totalSavedShortCount").type(JsonFieldType.NUMBER)
-                            .description("지금까지 저장한 뉴스 갯수"),
-                        PayloadDocumentation.fieldWithPath("result.savedNewsCountByKeyword").type(JsonFieldType.NUMBER)
-                            .description("뉴스 카드에서 저장한 뉴스 갯수"),
-                        PayloadDocumentation.fieldWithPath("result.savedNewsCountByNewsCard").type(JsonFieldType.NUMBER)
-                            .description("핫 키워드에서 저장한 뉴스 갯수")
+                        PayloadDocumentation.fieldWithPath("result.totalSavedNewsCount").type(JsonFieldType.NUMBER)
+                            .description("저장한 뉴스 총 갯수"),
+                        PayloadDocumentation.fieldWithPath("result.savedNewsCardCount").type(JsonFieldType.NUMBER)
+                            .description("저장한 뉴스 카드 갯수"),
+                        PayloadDocumentation.fieldWithPath("result.savedNewsCount").type(JsonFieldType.NUMBER)
+                            .description("저장한 뉴스 갯수")
                     )
                 )
             )

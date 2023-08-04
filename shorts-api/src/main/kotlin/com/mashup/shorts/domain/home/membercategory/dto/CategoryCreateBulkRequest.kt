@@ -4,7 +4,7 @@ import com.mashup.shorts.domain.category.CategoryName
 
 data class CategoryCreateBulkRequest(
     val categoryNames: List<CategoryName>,
-    val fcmTokenPayload: String,
+    val fcmTokenPayload: String = "",
 )
 
 data class CategoryUpdateBulkRequest(

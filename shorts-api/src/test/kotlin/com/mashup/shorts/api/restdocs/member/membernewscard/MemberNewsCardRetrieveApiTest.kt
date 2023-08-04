@@ -53,7 +53,7 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
 
         val response = mockMvc.perform(
             RestDocumentationRequestBuilders
-                .get("/v1/member-news-card")
+                .get("/v1/member/news-card")
                 .header(headerName, uniqueKey)
                 .param("targetDateTime", targetDateTime.toString())
                 .contentType(MediaType.APPLICATION_JSON)

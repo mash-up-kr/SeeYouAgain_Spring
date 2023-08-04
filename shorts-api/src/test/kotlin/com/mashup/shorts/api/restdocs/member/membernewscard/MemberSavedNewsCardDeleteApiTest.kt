@@ -1,11 +1,11 @@
-package com.mashup.shorts.api.restdocs.member.membernews
+package com.mashup.shorts.api.restdocs.member.membernewscard
 
 import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils
-import com.mashup.shorts.domain.membernews.MemberNewsClear
-import com.mashup.shorts.domain.my.membernews.MemberNewsClearApi
-import com.mashup.shorts.domain.my.membernews.dto.MemberNewsClearRequest
+import com.mashup.shorts.domain.membernewscard.MemberNewsCardDelete
+import com.mashup.shorts.domain.my.membernewscard.MemberSavedNewsCardDeleteApi
+import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardBulkDeleteRequest
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.junit.jupiter.api.Test
@@ -19,20 +19,20 @@ import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
-@WebMvcTest(MemberNewsClearApi::class)
-class MemberNewsClearApiTest : ApiDocsTestBase() {
+@WebMvcTest(MemberSavedNewsCardDeleteApi::class)
+class MemberSavedNewsCardDeleteApiTest : ApiDocsTestBase() {
 
     @MockkBean
-    private lateinit var memberNewsClear: MemberNewsClear
+    private lateinit var memberNewsCardDelete: MemberNewsCardDelete
 
     @Test
-    fun `뉴스 다 읽었어요`() {
-        every { memberNewsClear.clearNews(any(), any()) } returns (Unit)
+    fun `저장한 뉴스카드 삭제`() {
+        every { memberNewsCardDelete.bulkDeleteMemberNewsCard(any(), any()) } returns (Unit)
 
-        val requestBody = MemberNewsClearRequest(newsId = 1L)
+        val requestBody = MemberNewsCardBulkDeleteRequest(listOf(1L, 2L, 3L))
 
         mockMvc.perform(
-            RestDocumentationRequestBuilders.post("/v1/member/news/clear")
+            RestDocumentationRequestBuilders.post("/v1/member/news-card/bulk-delete")
                 .header("Authorization", "test-user")
                 .content(objectMapper.writeValueAsString(requestBody))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -40,7 +40,7 @@ class MemberNewsClearApiTest : ApiDocsTestBase() {
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
                 MockMvcRestDocumentation.document(
-                    "뉴스 다 읽었어요",
+                    "저장한 뉴스카드 삭제",
                     RestDocsUtils.getDocumentRequest(),
                     RestDocsUtils.getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
@@ -48,7 +48,8 @@ class MemberNewsClearApiTest : ApiDocsTestBase() {
                         HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
                     ),
                     PayloadDocumentation.requestFields(
-                        PayloadDocumentation.fieldWithPath("newsId").type(JsonFieldType.NUMBER).description("뉴스 id")
+                        PayloadDocumentation.fieldWithPath("newsCardIds").type(JsonFieldType.ARRAY)
+                            .description("삭제할 뉴스카드 id 리스트")
                     ),
                     PayloadDocumentation.responseFields(
                         PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)

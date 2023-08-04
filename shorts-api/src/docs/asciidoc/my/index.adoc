@@ -33,51 +33,87 @@ include::../../../../../shorts-api/{snippets}/내 정보 조회/http-response.ad
 
 ---
 
-=== 키워드로 조회하여 저장한 모든 뉴스 조회
+=== 저장한 뉴스카드 조회
 
 ==== [Request URI]
 
-include::../../../../../shorts-api/{snippets}/키워드로 조회하여 저장한 모든 뉴스 조회/page-header.adoc[]
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 조회/page-header.adoc[]
 
 ==== [HTTP Request]
 
-include::../../../../../shorts-api/{snippets}/키워드로 조회하여 저장한 모든 뉴스 조회/http-request.adoc[]
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 조회/http-request.adoc[]
 
 ==== [Request Header]
 
-include::../../../../../shorts-api/{snippets}/키워드로 조회하여 저장한 모든 뉴스 조회/request-headers.adoc[]
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 조회/request-headers.adoc[]
+
+==== [Query Parameters]
+
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 조회/query-parameters.adoc[]
 
 ==== [Response Field]
 
-include::../../../../../shorts-api/{snippets}/키워드로 조회하여 저장한 모든 뉴스 조회/response-fields.adoc[]
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 조회/response-fields.adoc[]
 
 ==== [Response HTTP Example]
 
-include::../../../../../shorts-api/{snippets}/키워드로 조회하여 저장한 모든 뉴스 조회/http-response.adoc[]
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 조회/http-response.adoc[]
 
 ---
 
-=== 뉴스 카드에서 저장한 모든 뉴스 조회
+=== 저장한 뉴스카드 삭제
 
 ==== [Request URI]
 
-include::../../../../../shorts-api/{snippets}/뉴스 카드에서 저장한 모든 뉴스 조회/page-header.adoc[]
-
-==== [HTTP Request]
-
-include::../../../../../shorts-api/{snippets}/뉴스 카드에서 저장한 모든 뉴스 조회/http-request.adoc[]
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 삭제/page-header.adoc[]
 
 ==== [Request Header]
 
-include::../../../../../shorts-api/{snippets}/뉴스 카드에서 저장한 모든 뉴스 조회/request-headers.adoc[]
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 삭제/request-headers.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 삭제/http-request.adoc[]
+
+==== [Request Field]
+
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 삭제/request-fields.adoc[]
 
 ==== [Response Field]
 
-include::../../../../../shorts-api/{snippets}/뉴스 카드에서 저장한 모든 뉴스 조회/response-fields.adoc[]
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 삭제/response-fields.adoc[]
 
 ==== [Response HTTP Example]
 
-include::../../../../../shorts-api/{snippets}/뉴스 카드에서 저장한 모든 뉴스 조회/http-response.adoc[]
+include::../../../../../shorts-api/{snippets}/저장한 뉴스카드 삭제/http-response.adoc[]
+
+---
+
+=== 저장한 뉴스 조회
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/저장한 뉴스 조회/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/저장한 뉴스 조회/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/저장한 뉴스 조회/request-headers.adoc[]
+
+==== [Query Parameters]
+
+include::../../../../../shorts-api/{snippets}/저장한 뉴스 조회/query-parameters.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/저장한 뉴스 조회/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/저장한 뉴스 조회/http-response.adoc[]
 
 ---
 
@@ -106,6 +142,34 @@ include::../../../../../shorts-api/{snippets}/저장한 뉴스 삭제/response-f
 ==== [Response HTTP Example]
 
 include::../../../../../shorts-api/{snippets}/저장한 뉴스 삭제/http-response.adoc[]
+
+---
+
+=== 뉴스 읽음 처리
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/뉴스 읽음 처리/page-header.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/뉴스 읽음 처리/request-headers.adoc[]
+
+==== [Request Field]
+
+include::../../../../../shorts-api/{snippets}/뉴스 읽음 처리/request-fields.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/뉴스 읽음 처리/http-request.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/뉴스 읽음 처리/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/뉴스 읽음 처리/http-response.adoc[]
 
 ---
 

@@ -27,7 +27,7 @@ import com.mashup.shorts.domain.member.Member
 @Transactional
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class MemberNewsCardRetrieveApiTestIntegrationTest(
+class MemberSavedNewsCardRetrieveApiTestIntegrationTest(
     @Autowired
     protected val mockMvc: MockMvc,
     @Autowired

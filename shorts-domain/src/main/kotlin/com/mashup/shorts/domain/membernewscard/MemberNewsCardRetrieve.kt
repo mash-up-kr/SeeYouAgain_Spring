@@ -7,6 +7,7 @@ import com.mashup.shorts.domain.membercategory.MemberCategoryRepository
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
+import com.mashup.shorts.domain.newscard.Pivots
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -17,6 +18,7 @@ class MemberNewsCardRetrieve(
     private val newsCardRepository: NewsCardRepository,
     private val memberCategoryRepository: MemberCategoryRepository,
     private val memberNewsRepository: MemberNewsRepository,
+    private val memberNewsCardRepository: MemberNewsCardRepository,
 ) {
 
     fun retrieveNewsCardByMember(
@@ -40,9 +42,28 @@ class MemberNewsCardRetrieve(
         }.shuffled()
     }
 
+    fun retrieveSavedNewsCardByMember(
+        member: Member,
+        cursorId: Long,
+        size: Int,
+        pivot: Pivots
+    ): List<NewsCard> {
+
+        var memberShorts = newsCardRepository.findSavedNewsCardsByNewsCardIds(
+            newsCardIds = memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id },
+            cursorId = cursorId,
+            size = size,
+        )
+        when (pivot) {
+            Pivots.ASC -> memberShorts = memberShorts.sortedBy { it.createdAt }
+            Pivots.DESC -> memberShorts = memberShorts.sortedByDescending { it.createdAt }
+        }
+        return memberShorts
+    }
+
 
     private fun filterAlreadySavedNewsCards(member: Member): List<Long> {
-        return memberNewsRepository.findAllByMember(member).map { it.id }
+        return memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id }
     }
 
     private fun filterAlreadySavedNews(member: Member): List<Long> {

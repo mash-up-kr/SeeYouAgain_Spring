@@ -30,15 +30,15 @@ class MemberLog(
 
     // 키워드를 통해 조회한 뉴스를 저장한 갯수
     @Column(nullable = false)
-    var savedNewsCountByKeyword: Int = 0,
+    var savedNewsCount: Int = 0,
 
     // 뉴스 카드에 담긴 뉴스를 저장한 갯수
     @Column(nullable = false)
-    var savedNewsCountByNewsCard: Int = 0,
+    var savedNewsCardCount: Int = 0,
 
     // 저장한 뉴스를 읽은 횟수
     @Column(nullable = false)
-    var clearingNewsCount: Int = 0,
+    var readNewsCount: Int = 0,
 ) : BaseEntity() {
 
     fun isContinuousAttendance() {
@@ -56,16 +56,16 @@ class MemberLog(
         this.sharedCount += 1
     }
 
-    fun increaseSavedNewsCountByKeyword() {
-        this.savedNewsCountByKeyword += 1
+    fun increaseSavedNewsCount() {
+        this.savedNewsCount += 1
     }
 
-    fun increaseSavedNewsCountByNewsCard() {
-        this.savedNewsCountByNewsCard += 1
+    fun increaseSavedNewsCardCount() {
+        this.savedNewsCardCount += 1
     }
 
-    fun increaseClearingNewsCount() {
-        this.clearingNewsCount += 1
+    fun increaseReadNewsCount() {
+        this.readNewsCount += 1
     }
 
 }

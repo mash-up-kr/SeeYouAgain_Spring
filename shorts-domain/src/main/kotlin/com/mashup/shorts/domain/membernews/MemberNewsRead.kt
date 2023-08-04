@@ -11,22 +11,22 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
-class MemberNewsClear(
+class MemberNewsRead(
     private val newsRepository: NewsRepository,
     private val memberNewsRepository: MemberNewsRepository,
     private val memberLogBadgeFacadeService: MemberLogBadgeFacadeService
 ) {
 
-    fun clearNews(member: Member, newsId: Long) {
+    fun clearNewsCard(member: Member, newsId: Long) {
         val news = newsRepository.findByIdOrNull(newsId) ?: throw ShortsBaseException.from(
             shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
-            resultErrorMessage = "뉴스를 다 읽음 처리하는 중 ${newsId}를 찾을 수 없습니다."
+            resultErrorMessage = "뉴스를 읽음 처리하는 중 ${newsId}를 찾을 수 없습니다."
         )
 
         memberNewsRepository.findByMemberAndNews(member, news) ?: throw ShortsBaseException.from(
             shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
             resultErrorMessage = "저장하지 않은 뉴스를 읽음 처리 할 수 없습니다."
         )
-        memberLogBadgeFacadeService.memberClearingNewsLog(member, news)
+        memberLogBadgeFacadeService.memberReadNewsLog(member)
     }
 }

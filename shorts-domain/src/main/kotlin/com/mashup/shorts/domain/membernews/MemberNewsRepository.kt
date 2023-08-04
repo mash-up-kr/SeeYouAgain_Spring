@@ -13,7 +13,7 @@ interface MemberNewsRepository : JpaRepository<MemberNews, Long> {
     fun existsByMemberAndNews(member: Member, news: News): Boolean
     fun findByNewsIn(news: List<News>): List<MemberNews>
 
-    fun countAllByMemberAndSavedFlag(member: Member, savedFlag: SavedFlag): Int
+    fun countAllByMember(member: Member): Int
 
     fun findAllByMember(member: Member): List<MemberNews>
 

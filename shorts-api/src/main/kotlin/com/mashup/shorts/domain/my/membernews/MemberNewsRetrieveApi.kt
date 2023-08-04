@@ -5,7 +5,6 @@ import com.mashup.shorts.common.aop.AuthContext
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
 import com.mashup.shorts.domain.membernews.MemberNewsRetrieve
-import com.mashup.shorts.domain.membernews.SavedFlag
 import com.mashup.shorts.domain.my.membernews.dto.MemberNewsResponse.Companion.makeMemberNewsResponse
 import com.mashup.shorts.domain.my.membernews.dto.MemberNewsRetrieveByCompanyResponse
 import com.mashup.shorts.domain.my.membernews.dto.MemberNewsRetrieveResponse
@@ -21,17 +20,17 @@ import org.springframework.web.bind.annotation.RestController
 
 @Validated
 @RestController
-@RequestMapping("/v1/member-news")
+@RequestMapping("/v1/member/news")
 class MemberNewsRetrieveApi(
     private val memberNewsRetrieve: MemberNewsRetrieve,
 ) {
 
     /**
-    키워드로 저장한 뉴스 조회
+    저장한 뉴스 조회
     @Param : cursorWrittenDateTime, size, pivot
      */
     @Auth
-    @GetMapping("/keyword")
+    @GetMapping
     fun retrieveMemberNewsBySavingKeyword(
         @RequestParam cursorWrittenDateTime: String,
         @RequestParam(required = true) @Min(1) @Max(20) size: Int,
@@ -48,36 +47,6 @@ class MemberNewsRetrieveApi(
                         cursorWrittenDateTime = cursorWrittenDateTime,
                         size = size,
                         pivot = pivot,
-                        savedFlag = SavedFlag.KEYWORD
-                    )
-                )
-            )
-        )
-    }
-
-    /**
-    뉴스 카드에서 저장한 뉴스 조회
-    @Param : targetDate, cursorWrittenDateTime, size, pivot
-     */
-    @Auth
-    @GetMapping("/newscard")
-    fun retrieveMemberNewsBySavingNewsCard(
-        @RequestParam cursorWrittenDateTime: String,
-        @RequestParam(required = true) @Min(1) @Max(20) size: Int,
-        @RequestParam(required = true) pivot: Pivots,
-    ): ApiResponse<MemberNewsRetrieveResponse> {
-        val member = AuthContext.getMember()
-        return success(
-            OK,
-            MemberNewsRetrieveResponse(
-                savedNewsCount = memberNewsRetrieve.retrieveMemberNewsCount(member),
-                memberNewsResponse = makeMemberNewsResponse(
-                    newsBundle = memberNewsRetrieve.retrieveMemberNewsBySorting(
-                        member = member,
-                        cursorWrittenDateTime = cursorWrittenDateTime,
-                        size = size,
-                        pivot = pivot,
-                        savedFlag = SavedFlag.NEWS_CARD
                     )
                 )
             )

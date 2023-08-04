@@ -18,30 +18,16 @@ class MemberNewsCreateApi(
 ) {
 
     /**
-    키워드로 조회한 뉴스 저장 API
+    뉴스 저장 API
     @Body : {newsId: Long}
      */
     @Auth
-    @PostMapping("/keyword")
+    @PostMapping
     fun createMemberNewsByKeyword(
         @RequestBody memberNewsCreateRequest: MemberNewsCreateRequest,
     ): ApiResponse<Void> {
         val member = AuthContext.getMember()
-        memberNewsCreate.createMemberNewsByKeyword(member, memberNewsCreateRequest.newsId)
-        return ApiResponse.success(HttpStatus.CREATED)
-    }
-
-    /**
-    뉴스카드에서 조회한 뉴스 저장 API
-    @Body : {newsId: Long}
-     */
-    @Auth
-    @PostMapping("/newscard")
-    fun createMemberNewsByNewsCard(
-        @RequestBody memberNewsCreateRequest: MemberNewsCreateRequest,
-    ): ApiResponse<Void> {
-        val member = AuthContext.getMember()
-        memberNewsCreate.createMemberNewsByNewsCard(member, memberNewsCreateRequest.newsId)
+        memberNewsCreate.createMemberNews(member, memberNewsCreateRequest.newsId)
         return ApiResponse.success(HttpStatus.CREATED)
     }
 }

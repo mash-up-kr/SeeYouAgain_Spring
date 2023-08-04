@@ -27,11 +27,8 @@ class MemberNewsRetrieve(
         cursorWrittenDateTime: String,
         size: Int,
         pivot: Pivots,
-        savedFlag: SavedFlag
     ): List<News> {
-        val memberNewsList = memberNewsRepository.findAllByMember(member).filter {
-            it.savedFlag == savedFlag
-        }
+        val memberNewsList = memberNewsRepository.findAllByMember(member)
 
         if (cursorWrittenDateTime.isEmpty()) {
             return when (pivot) {

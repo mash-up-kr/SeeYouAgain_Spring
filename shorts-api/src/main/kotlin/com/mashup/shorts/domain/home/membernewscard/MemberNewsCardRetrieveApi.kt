@@ -5,9 +5,9 @@ import com.mashup.shorts.common.aop.AuthContext
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
 import com.mashup.shorts.domain.home.membernewscard.dto.RetrieveHomeNewsCardResponse
-import com.mashup.shorts.domain.home.membernewscard.dto.RetrieveHomeNewsCardResponse.Companion.domainResponseFormToApiResponseForm
+import com.mashup.shorts.domain.home.membernewscard.dto.RetrieveHomeNewsCardResponse.Companion.newsCardToHomeResponseForm
 import com.mashup.shorts.domain.membernewscard.MemberNewsCardRetrieve
-import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.OK
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 
 @Validated
 @RestController
-@RequestMapping("/v1/member-news-card")
+@RequestMapping("/v1/member/news-card")
 class MemberNewsCardRetrieveApi(
     private val memberNewsCardRetrieve: MemberNewsCardRetrieve,
 ) {
@@ -32,8 +32,8 @@ class MemberNewsCardRetrieveApi(
         @RequestParam targetDateTime: LocalDateTime,
     ): ApiResponse<List<RetrieveHomeNewsCardResponse>> {
         return success(
-            HttpStatus.OK,
-            domainResponseFormToApiResponseForm(
+            OK,
+            newsCardToHomeResponseForm(
                 memberNewsCardRetrieve.retrieveNewsCardByMember(
                     member = AuthContext.getMember(),
                     targetDateTime = targetDateTime,

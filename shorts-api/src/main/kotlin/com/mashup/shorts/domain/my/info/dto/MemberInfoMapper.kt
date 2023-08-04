@@ -10,9 +10,9 @@ class MemberInfoMapper {
             return MemberInfoRetrieveResponse(
                 nickname = memberInfo.nickname,
                 joinPeriod = memberInfo.joinPeriod,
-                totalSavedShortCount = memberInfo.totalSavedShortCount,
-                savedNewsCountByKeyword = memberInfo.savedNewsCountByKeyword,
-                savedNewsCountByNewsCard = memberInfo.savedNewsCountByNewsCard
+                totalSavedNewsCount = memberInfo.totalSavedNewsCount,
+                savedNewsCardCount = memberInfo.savedNewsCount,
+                savedNewsCount = memberInfo.savedNewsCardCount
             )
         }
     }

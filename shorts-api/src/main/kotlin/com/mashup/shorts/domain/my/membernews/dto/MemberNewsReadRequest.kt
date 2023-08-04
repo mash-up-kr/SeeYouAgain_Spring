@@ -1,5 +1,5 @@
 package com.mashup.shorts.domain.my.membernews.dto
 
-data class MemberNewsCreateRequest(
+data class MemberNewsReadRequest(
     val newsId: Long
 )

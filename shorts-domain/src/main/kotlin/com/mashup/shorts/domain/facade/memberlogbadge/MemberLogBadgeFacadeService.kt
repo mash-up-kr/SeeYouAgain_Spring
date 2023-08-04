@@ -6,7 +6,6 @@ import com.mashup.shorts.domain.memberbadge.MemberBadge
 import com.mashup.shorts.domain.memberbadge.MemberBadgeRepository
 import com.mashup.shorts.domain.memberlog.MemberLog
 import com.mashup.shorts.domain.memberlog.MemberLogRepository
-import com.mashup.shorts.domain.news.News
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -31,21 +30,21 @@ class MemberLogBadgeFacadeService(
         )
     }
 
-    fun saveNewsLogByNewsCard(member: Member) {
+    fun saveNewsCardLog(member: Member) {
         val memberLog = memberLogRepository.findByMember(member)
-        memberLog.increaseSavedNewsCountByNewsCard()
+        memberLog.increaseSavedNewsCardCount()
 
-        if (memberLog.savedNewsCountByNewsCard == 1) {
+        if (memberLog.savedNewsCardCount == FIRST_PROCEED) {
             val memberBadge = memberBadgeRepository.findByMember(member)
             memberBadge.achieveFirstNewsSaving()
         }
     }
 
-    fun saveNewsLogByKeyword(member: Member) {
+    fun saveNewsLog(member: Member) {
         val memberLog = memberLogRepository.findByMember(member)
-        memberLog.increaseSavedNewsCountByKeyword()
+        memberLog.increaseSavedNewsCount()
 
-        if (memberLog.savedNewsCountByKeyword == 1) {
+        if (memberLog.savedNewsCount == FIRST_PROCEED) {
             val memberBadge = memberBadgeRepository.findByMember(member)
             memberBadge.achieveFirstNewsSaving()
         }
@@ -55,7 +54,7 @@ class MemberLogBadgeFacadeService(
         val memberLog = memberLogRepository.findByMember(member)
         memberLog.increaseSharedCount()
 
-        if (memberLog.sharedCount == 1) {
+        if (memberLog.sharedCount == FIRST_PROCEED) {
             val memberBadge = memberBadgeRepository.findByMember(member)
             memberBadge.achieveKingOfSharing()
         }
@@ -81,14 +80,14 @@ class MemberLogBadgeFacadeService(
         }
     }
 
-    fun memberClearingNewsLog(member: Member, news: News) {
+    fun memberReadNewsLog(member: Member) {
         val memberLog = memberLogRepository.findByMember(member)
         val memberBadge = memberBadgeRepository.findByMember(member)
 
-        memberLog.increaseClearingNewsCount()
+        memberLog.increaseReadNewsCount()
         memberLog.weeklyReadCount++
 
-        if (memberLog.clearingNewsCount == 1) {
+        if (memberLog.readNewsCount == FIRST_PROCEED) {
             memberBadge.achieveFirstClearNews()
         }
 
@@ -98,6 +97,7 @@ class MemberLogBadgeFacadeService(
     }
 
     companion object {
+        const val FIRST_PROCEED = 1
         const val CONTINUOUS_LOGIN_THREE_TIMES = 3
         const val CONTINUOUS_LOGIN_TEN_TIME = 10
         const val CONTINUOUS_READ_SHORTS_TWENTY = 20

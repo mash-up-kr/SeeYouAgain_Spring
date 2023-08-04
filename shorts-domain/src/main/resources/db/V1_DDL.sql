@@ -56,29 +56,32 @@ create table member_shorts_count
 
 create table member_log
 (
-    id                            bigint auto_increment primary key,
-    member_id                     bigint,
+    id                          bigint auto_increment primary key,
+    member_id                   bigint,
 
     -- 최근 접속 일자
-    last_attendance_date_time     datetime(6),
+    last_attendance_date_time   datetime(6),
 
     -- 연속 접속일 수
-    continuous_attendance_count   int    not null default 0,
+    continuous_attendance_count int not null default 0,
+
+    -- 주간 뉴스 읽은 횟수
+    weeklyReadCount             int not null default 0,
 
     -- 공유 횟수
-    shared_count                  int    not null default 0,
+    shared_count                int not null default 0,
 
-    -- 키워드에 담긴 뉴스를 저장한 횟수
-    saved_news_count_by_keyword   bigint not null default 0,
+    -- 뉴스를 저장한 갯수
+    saved_news_count            int not null default 0,
 
-    -- 뉴스 카드에 담긴 뉴스를 저장한 횟수
-    saved_news_count_by_news_card bigint not null default 0,
+    -- 뉴스 카드를 저장한 갯수
+    saved_news_card_count       int not null default 0,
 
     -- 저장한 뉴스를 읽은 횟수
-    clearing_news_count           bigint not null default 0,
+    read_news_count             int not null default 0,
 
-    created_at                    datetime(6),
-    modified_at                   datetime(6)
+    created_at                  datetime(6),
+    modified_at                 datetime(6)
 );
 
 create table member_badge
@@ -108,7 +111,7 @@ create table member_badge
 
     -- 시작이 반 - 처음으로 뉴스를 다 읽음
     first_clear_news                            boolean not null default false,
-    first_clear_news_created_at                      datetime(6),
+    first_clear_news_created_at                 datetime(6),
 
     -- 취향 존중 뱃지
     change_mode                                 boolean not null default false,

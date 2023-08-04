@@ -2,11 +2,10 @@ package com.mashup.shorts.api.restdocs.member.membernews
 
 import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
-import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
-import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
-import com.mashup.shorts.domain.membernews.MemberNewsCreate
-import com.mashup.shorts.domain.my.membernews.MemberNewsCreateApi
-import com.mashup.shorts.domain.my.membernews.dto.MemberNewsCreateRequest
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils
+import com.mashup.shorts.domain.membernews.MemberNewsRead
+import com.mashup.shorts.domain.my.membernews.MemberNewsClearApi
+import com.mashup.shorts.domain.my.membernews.dto.MemberNewsReadRequest
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.junit.jupiter.api.Test
@@ -20,20 +19,20 @@ import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
-@WebMvcTest(MemberNewsCreateApi::class)
-class MemberNewsCreateApiTest : ApiDocsTestBase() {
+@WebMvcTest(MemberNewsClearApi::class)
+class MemberNewsReadApiTest : ApiDocsTestBase() {
 
     @MockkBean
-    private lateinit var memberNewsCreate: MemberNewsCreate
+    private lateinit var memberNewsRead: MemberNewsRead
 
     @Test
-    fun `뉴스 저장`() {
-        every { memberNewsCreate.createMemberNews(any(), any()) } returns (Unit)
+    fun `뉴스 읽음 처리`() {
+        every { memberNewsRead.clearNewsCard(any(), any()) } returns (Unit)
 
-        val requestBody = MemberNewsCreateRequest(newsId = 1L)
+        val requestBody = MemberNewsReadRequest(newsId = 1L)
 
         mockMvc.perform(
-            RestDocumentationRequestBuilders.post("/v1/member/news")
+            RestDocumentationRequestBuilders.post("/v1/member/news/read")
                 .header("Authorization", "test-user")
                 .content(objectMapper.writeValueAsString(requestBody))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -41,9 +40,9 @@ class MemberNewsCreateApiTest : ApiDocsTestBase() {
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
                 MockMvcRestDocumentation.document(
-                    "뉴스 저장",
-                    getDocumentRequest(),
-                    getDocumentResponse(),
+                    "뉴스 읽음 처리",
+                    RestDocsUtils.getDocumentRequest(),
+                    RestDocsUtils.getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
                     HeaderDocumentation.requestHeaders(
                         HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")

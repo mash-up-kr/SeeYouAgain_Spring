@@ -171,26 +171,26 @@ include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/http-response
 
 ---
 
-=== 뉴스 다 읽었어요
+=== 뉴스카드 저장
 
 ==== [Request URI]
 
-include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/page-header.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스카드 저장/page-header.adoc[]
 
 ==== [Request Header]
 
-include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/request-headers.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스카드 저장/request-headers.adoc[]
 
 ==== [HTTP Request]
 
-include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/http-request.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스카드 저장/http-request.adoc[]
 
 ==== [Response Field]
 
-include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/response-fields.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스카드 저장/response-fields.adoc[]
 
 ==== [Response HTTP Example]
 
-include::../../../../../shorts-api/{snippets}/뉴스 상세 조회/http-response.adoc[]
+include::../../../../../shorts-api/{snippets}/뉴스카드 저장/http-response.adoc[]
 
 ---

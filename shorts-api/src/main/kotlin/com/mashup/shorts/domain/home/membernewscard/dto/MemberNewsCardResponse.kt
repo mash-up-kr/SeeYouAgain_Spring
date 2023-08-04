@@ -11,7 +11,7 @@ data class RetrieveHomeNewsCardResponse(
     var crawledDateTime: LocalDateTime,
 ) {
     companion object {
-        fun domainResponseFormToApiResponseForm(
+        fun newsCardToHomeResponseForm(
             newsCards: List<NewsCard>,
         ): List<RetrieveHomeNewsCardResponse> {
             return newsCards.map {

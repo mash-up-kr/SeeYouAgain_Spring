@@ -1,18 +1,18 @@
-package com.mashup.shorts.domain.membernews
+package com.mashup.shorts.domain.membernewscard
 
 import com.mashup.shorts.domain.BaseEntity
 import com.mashup.shorts.domain.member.Member
-import com.mashup.shorts.domain.news.News
+import com.mashup.shorts.domain.newscard.NewsCard
 import jakarta.persistence.*
 
 @Table(name = "member_news")
 @Entity
-class MemberNews(
+class MemberNewsCard(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     val member: Member,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "news_id")
-    val news: News,
+    @JoinColumn(name = "news_card_id")
+    val newsCard: NewsCard,
 ) : BaseEntity()
