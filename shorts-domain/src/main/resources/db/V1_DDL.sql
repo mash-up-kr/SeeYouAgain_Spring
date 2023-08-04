@@ -108,7 +108,7 @@ create table member_badge
 
     -- 시작이 반 - 처음으로 뉴스를 다 읽음
     first_clear_news                            boolean not null default false,
-    first_old_shorts_saving_created_at          datetime(6),
+    first_clear_news_created_at                      datetime(6),
 
     -- 취향 존중 뱃지
     change_mode                                 boolean not null default false,
