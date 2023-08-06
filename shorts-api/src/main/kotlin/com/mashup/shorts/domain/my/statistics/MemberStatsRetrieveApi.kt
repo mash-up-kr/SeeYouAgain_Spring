@@ -29,6 +29,7 @@ class MemberStatsRetrieveApi(
             OK,
             MemberWeeklyStatsRetrieveResponse(
                 weeklyShortsCnt = memberWeeklyStats.weeklyShortsCnt,
+                categoryOfInterest = memberWeeklyStats.categoryOfInterest,
                 dateOfShortsRead = memberWeeklyStats.dateOfShortsRead
             )
         )
