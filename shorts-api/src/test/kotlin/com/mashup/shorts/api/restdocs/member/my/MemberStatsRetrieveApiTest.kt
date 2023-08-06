@@ -1,13 +1,5 @@
 package com.mashup.shorts.api.restdocs.member.my
 
-import com.mashup.shorts.api.ApiDocsTestBase
-import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
-import com.mashup.shorts.api.restdocs.util.RestDocsUtils
-import com.mashup.shorts.domain.my.statistics.MemberStatsRetrieve
-import com.mashup.shorts.domain.my.statistics.MemberStatsRetrieveApi
-import com.mashup.shorts.domain.my.statistics.MemberWeeklyStats
-import com.ninjasquad.springmockk.MockkBean
-import io.mockk.every
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
@@ -17,6 +9,14 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import com.mashup.shorts.api.ApiDocsTestBase
+import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet
+import com.mashup.shorts.api.restdocs.util.RestDocsUtils
+import com.mashup.shorts.domain.my.statistics.MemberStatsRetrieve
+import com.mashup.shorts.domain.my.statistics.MemberStatsRetrieveApi
+import com.mashup.shorts.domain.my.statistics.MemberWeeklyStats
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
 
 @WebMvcTest(MemberStatsRetrieveApi::class)
 class MemberStatsRetrieveApiTest : ApiDocsTestBase() {
@@ -28,10 +28,16 @@ class MemberStatsRetrieveApiTest : ApiDocsTestBase() {
     fun `주간 숏스 통계`() {
         every { memberStatsRetrieve.retrieveMemberWeeklyStats(any(), any()) } returns MemberWeeklyStats(
             weeklyShortsCnt = mapOf(
-                Pair("7월 1주차", 1),
-                Pair("7월 2주차", 2),
-                Pair("7월 3주차", 3),
-                Pair("7월 4주차", 4)
+                Pair("2023년 7월 1주차", 1),
+                Pair("2023년 7월 2주차", 2),
+                Pair("2023년 7월 3주차", 3),
+                Pair("2023년 7월 4주차", 10)
+            ),
+            categoryOfInterest = mapOf(
+                Pair("total", 10),
+                Pair("POLITICS", 4),
+                Pair("ECONOMIC", 2),
+                Pair("CULTURE", 1)
             ),
             dateOfShortsRead = mapOf(
                 Pair("lastWeek", listOf("2023-07-17")),
@@ -58,14 +64,24 @@ class MemberStatsRetrieveApiTest : ApiDocsTestBase() {
                             .description("API HTTP Status 값"),
                         PayloadDocumentation.fieldWithPath("result.weeklyShortsCnt").type(JsonFieldType.OBJECT)
                             .description("주차별 숏스 읽은 개수"),
-                        PayloadDocumentation.fieldWithPath("result.weeklyShortsCnt.7월 1주차").type(JsonFieldType.NUMBER)
+                        PayloadDocumentation.fieldWithPath("result.weeklyShortsCnt.2023년 7월 1주차").type(JsonFieldType.NUMBER)
                             .description("월 단위 주차"),
-                        PayloadDocumentation.fieldWithPath("result.weeklyShortsCnt.7월 2주차").type(JsonFieldType.NUMBER)
+                        PayloadDocumentation.fieldWithPath("result.weeklyShortsCnt.2023년 7월 2주차").type(JsonFieldType.NUMBER)
                             .description("월 단위 주차"),
-                        PayloadDocumentation.fieldWithPath("result.weeklyShortsCnt.7월 3주차").type(JsonFieldType.NUMBER)
+                        PayloadDocumentation.fieldWithPath("result.weeklyShortsCnt.2023년 7월 3주차").type(JsonFieldType.NUMBER)
                             .description("월 단위 주차"),
-                        PayloadDocumentation.fieldWithPath("result.weeklyShortsCnt.7월 4주차").type(JsonFieldType.NUMBER)
+                        PayloadDocumentation.fieldWithPath("result.weeklyShortsCnt.2023년 7월 4주차").type(JsonFieldType.NUMBER)
                             .description("월 단위 주차 (이번주)"),
+                        PayloadDocumentation.fieldWithPath("result.categoryOfInterest").type(JsonFieldType.OBJECT)
+                            .description("이번주 관심 카테고리 (내림차순)"),
+                        PayloadDocumentation.fieldWithPath("result.categoryOfInterest.total").type(JsonFieldType.NUMBER)
+                            .description("이번주 숏스 읽은 개수"),
+                        PayloadDocumentation.fieldWithPath("result.categoryOfInterest.POLITICS").type(JsonFieldType.NUMBER)
+                            .description("카테고리 종류"),
+                        PayloadDocumentation.fieldWithPath("result.categoryOfInterest.ECONOMIC").type(JsonFieldType.NUMBER)
+                            .description("카테고리 종류"),
+                        PayloadDocumentation.fieldWithPath("result.categoryOfInterest.CULTURE").type(JsonFieldType.NUMBER)
+                            .description("카테고리 종류"),
                         PayloadDocumentation.fieldWithPath("result.dateOfShortsRead").type(JsonFieldType.OBJECT)
                             .description("숏스 읽은 날짜 목록"),
                         PayloadDocumentation.fieldWithPath("result.dateOfShortsRead.lastWeek").type(JsonFieldType.ARRAY)
