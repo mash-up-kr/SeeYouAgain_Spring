@@ -1,5 +1,6 @@
 package com.mashup.shorts.domain.my.membernews
 
+import java.time.LocalDateTime
 import com.mashup.shorts.common.aop.Auth
 import com.mashup.shorts.common.aop.AuthContext
 import com.mashup.shorts.common.response.ApiResponse
@@ -24,7 +25,8 @@ class MemberNewsClearApi(
     ): ApiResponse<HttpStatus> {
         memberNewsRead.clearNewsCard(
             member = AuthContext.getMember(),
-            newsId = memberNewsReadRequest.newsId
+            newsId = memberNewsReadRequest.newsId,
+            now = LocalDateTime.now()
         )
 
         return ApiResponse.success(HttpStatus.OK)

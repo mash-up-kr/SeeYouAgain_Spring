@@ -27,7 +27,7 @@ class MemberNewsReadApiTest : ApiDocsTestBase() {
 
     @Test
     fun `뉴스 읽음 처리`() {
-        every { memberNewsRead.clearNewsCard(any(), any()) } returns (Unit)
+        every { memberNewsRead.clearNewsCard(any(), any(), any()) } returns (Unit)
 
         val requestBody = MemberNewsReadRequest(newsId = 1L)
 
