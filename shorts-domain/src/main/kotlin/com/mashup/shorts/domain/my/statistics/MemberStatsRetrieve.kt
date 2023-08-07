@@ -4,7 +4,7 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.util.ShortsCalender
+import com.mashup.shorts.common.util.CalendarUtil
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
 
@@ -38,7 +38,8 @@ class MemberStatsRetrieve(
     private fun setCategoryOfInterest(now: LocalDate, shortsCntByCategoryList: List<ShortsCntByCategory>,
                                       weeklyShortsCnt: LinkedHashMap<String, Int>,
                                       categoryOfInterest: LinkedHashMap<String, Int>) {
-        categoryOfInterest["total"] = weeklyShortsCnt.getOrDefault(getWeekOfMonth(now), 0)
+        categoryOfInterest["total"] = weeklyShortsCnt.getOrDefault(
+            CalendarUtil.getCurrentWeekOfMonth(now.year, now.month.value, now.dayOfMonth), 0)
         for (shortsCntByCategory in shortsCntByCategoryList) {
             categoryOfInterest[shortsCntByCategory.category] = shortsCntByCategory.shortsCnt
         }
@@ -83,7 +84,8 @@ class MemberStatsRetrieve(
                 total += shortsCntByDateList[idx].shortsCnt
             }
             // 해당 주차의 숏스 읽은 개수 업데이트
-            weeklyShortsCnt[getWeekOfMonth(targetDateOfWeek)] = total
+            weeklyShortsCnt[CalendarUtil.getCurrentWeekOfMonth(
+                targetDateOfWeek.year, targetDateOfWeek.monthValue, targetDateOfWeek.dayOfMonth)] = total
         }
     }
 
@@ -95,14 +97,6 @@ class MemberStatsRetrieve(
         val startDate = targetDate.minusDays(daysAfterMonday.toLong())
         return memberNewsRepository.getShortsCntByDate(member.id, startDate.atStartOfDay()).stream()
             .map { vo -> ShortsCntByDate(date = vo.getDate(), shortsCnt = vo.getShortsCnt()) }.toList()
-    }
-
-    // TODO : 0주차로 나오는 이슈 확인하기
-    // 해당 날짜가 속한 주차가 월의 몇주차인지 반환
-    private fun getWeekOfMonth(targetDate: LocalDate): String {
-        val weekOfMonth = ShortsCalender.getWeekOfMonth(targetDate)
-        return StringBuilder().append(targetDate.year).append("년 ")
-            .append(targetDate.month.value).append("월 ").append(weekOfMonth).append("주차").toString()
     }
 
     companion object {
