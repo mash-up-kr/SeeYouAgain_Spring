@@ -1,8 +1,24 @@
 package com.mashup.shorts.domain.home.membernewscard.dto
 
 import com.mashup.shorts.common.util.convert
+import com.mashup.shorts.domain.home.membernewscard.HomeTitleGenerator
+import com.mashup.shorts.domain.member.ShowMode
 import com.mashup.shorts.domain.newscard.NewsCard
 import java.time.LocalDateTime
+
+data class HomeResponse(
+    var homeTitle: String,
+    var newsCards: List<RetrieveHomeNewsCardResponse>
+) {
+    companion object {
+        fun makeHomeResponse(showMode: ShowMode, newsCards: List<NewsCard>): HomeResponse {
+            return HomeResponse(
+                homeTitle = HomeTitleGenerator.generateRandomHomeTitle(showMode),
+                newsCards = RetrieveHomeNewsCardResponse.newsCardToHomeResponseForm(newsCards)
+            )
+        }
+    }
+}
 
 data class RetrieveHomeNewsCardResponse(
     var id: Long,
@@ -10,16 +26,18 @@ data class RetrieveHomeNewsCardResponse(
     var category: String,
     var crawledDateTime: LocalDateTime,
 ) {
+
+
     companion object {
         fun newsCardToHomeResponseForm(
-            newsCards: List<NewsCard>,
+            newsCards: List<NewsCard>
         ): List<RetrieveHomeNewsCardResponse> {
             return newsCards.map {
                 RetrieveHomeNewsCardResponse(
                     id = it.id,
                     keywords = it.keywords,
                     category = it.category.name.name,
-                    crawledDateTime = convert(it.createdAt),
+                    crawledDateTime = convert(it.createdAt)
                 )
             }
         }

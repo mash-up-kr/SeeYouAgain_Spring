@@ -77,13 +77,17 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
                     responseFields(
                         fieldWithPath("status").type(JsonFieldType.NUMBER)
                             .description("API 성공 여부"),
-                        fieldWithPath("result[].id").type(JsonFieldType.NUMBER)
+                        fieldWithPath("result.homeTitle").type(JsonFieldType.STRING)
+                            .description("홈 타이틀"),
+                        fieldWithPath("result.newsCards[]").type(JsonFieldType.ARRAY)
+                            .description("뉴스 카드"),
+                        fieldWithPath("result.newsCards[].id").type(JsonFieldType.NUMBER)
                             .description("숏스 id"),
-                        fieldWithPath("result[].keywords").type(JsonFieldType.STRING)
+                        fieldWithPath("result.newsCards[].keywords").type(JsonFieldType.STRING)
                             .description("키워드"),
-                        fieldWithPath("result[].category").type(JsonFieldType.STRING)
+                        fieldWithPath("result.newsCards[].category").type(JsonFieldType.STRING)
                             .description("카테고리"),
-                        fieldWithPath("result[].crawledDateTime").type(JsonFieldType.STRING)
+                        fieldWithPath("result.newsCards[].crawledDateTime").type(JsonFieldType.STRING)
                             .description("크롤링 된 시각 ex) 2023-06-30T21:30:42"),
 
                         )

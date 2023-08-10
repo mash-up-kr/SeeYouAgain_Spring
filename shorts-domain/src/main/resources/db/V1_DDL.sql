@@ -44,26 +44,16 @@ create table member_company
     modified_at datetime default CURRENT_TIMESTAMP null
 );
 
-create table member_shorts_count
-(
-    id          bigint auto_increment primary key,
-    member_id   bigint not null,
-    count       int    not null,
-    target_date date   not null,
-    created_at  datetime(6) not null,
-    modified_at datetime(6) not null
-);
-
 create table member_log
 (
     id                          bigint auto_increment primary key,
     member_id                   bigint,
 
     -- 최근 접속 일자
-    last_attendance_date_time   datetime(6),
+    last_attendance_date_time   datetime(6) not null default CURRENT_TIMESTAMP,
 
     -- 연속 접속일 수
-    continuous_attendance_count int not null default 0,
+    continuous_attendance_count int not null default 1,
 
     -- 주간 뉴스 읽은 횟수
     weeklyReadCount             int not null default 0,
@@ -80,8 +70,8 @@ create table member_log
     -- 저장한 뉴스를 읽은 횟수
     read_news_count             int not null default 0,
 
-    created_at                  datetime(6),
-    modified_at                 datetime(6)
+    created_at                  datetime(6) not null default CURRENT_TIMESTAMP,
+    modified_at                 datetime(6) not null default CURRENT_TIMESTAMP
 );
 
 create table member_badge
@@ -91,34 +81,34 @@ create table member_badge
 
     -- 작심삼일 - 3일 연속 접속
     three_days_continuous_attendance            boolean not null default false,
-    three_days_continuous_attendance_created_at datetime(6),
+    three_days_continuous_attendance_created_at datetime(6) not null default CURRENT_TIMESTAMP,
 
     -- 단골손님 - 10일 연속 접속
     ten_days_continuous_attendance              boolean not null default false,
-    ten_days_continuous_attendance_created_at   datetime(6),
+    ten_days_continuous_attendance_created_at   datetime(6) not null default CURRENT_TIMESTAMP,
 
     -- 세상 탐험가 뱃지 - 1주일 간 뉴스를 20개 저장
     explorer                                    boolean not null default false,
-    explorer_created_at                         datetime(6),
+    explorer_created_at                         datetime(6) not null default CURRENT_TIMESTAMP,
 
     -- 뿌듯한 첫 공유 - 첫 공유 시도
     king_of_sharing                             boolean not null default false,
-    king_of_sharing_created_at                  datetime(6),
+    king_of_sharing_created_at                  datetime(6) not null default CURRENT_TIMESTAMP,
 
     -- 설레는 첫 저장 뱃지 - 첫 뉴스 저장
     first_news_saving                           boolean not null default false,
-    first_news_saving_created_at                datetime(6),
+    first_news_saving_created_at                datetime(6) not null default CURRENT_TIMESTAMP,
 
     -- 시작이 반 - 처음으로 뉴스를 다 읽음
     first_clear_news                            boolean not null default false,
-    first_clear_news_created_at                 datetime(6),
+    first_clear_news_created_at                 datetime(6) not null default CURRENT_TIMESTAMP,
 
     -- 취향 존중 뱃지
     change_mode                                 boolean not null default false,
-    change_mode_created_at                      datetime(6),
+    change_mode_created_at                      datetime(6) not null default CURRENT_TIMESTAMP,
 
-    created_at                                  datetime(6),
-    modified_at                                 datetime(6)
+    created_at                                  datetime(6) not null default CURRENT_TIMESTAMP,
+    modified_at                                 datetime(6) not null default CURRENT_TIMESTAMP
 );
 
 create table news
