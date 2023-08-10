@@ -13,5 +13,6 @@ class MemberCompany(
     var member: Member,
 
     @Column(name = "company", nullable = true, length = 255)
+    @Enumerated(EnumType.STRING)
     var company: Company,
 ) : BaseEntity()

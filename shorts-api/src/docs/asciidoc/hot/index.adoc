@@ -52,23 +52,3 @@ include::../../../../../shorts-api/{snippets}/핫 키워드로 뉴스 조회/res
 include::../../../../../shorts-api/{snippets}/핫 키워드로 뉴스 조회/http-response.adoc[]
 
 ---
-
-=== 키워드를 통해 조회한 뉴스 저장
-
-==== [Request URI]
-
-include::../../../../../shorts-api/{snippets}/키워드를 통해 조회한 뉴스 저장/page-header.adoc[]
-
-==== [HTTP Request]
-
-include::../../../../../shorts-api/{snippets}/키워드를 통해 조회한 뉴스 저장/http-request.adoc[]
-
-==== [Response Field]
-
-include::../../../../../shorts-api/{snippets}/키워드를 통해 조회한 뉴스 저장/response-fields.adoc[]
-
-==== [Response HTTP Example]
-
-include::../../../../../shorts-api/{snippets}/키워드를 통해 조회한 뉴스 저장/http-response.adoc[]
-
----

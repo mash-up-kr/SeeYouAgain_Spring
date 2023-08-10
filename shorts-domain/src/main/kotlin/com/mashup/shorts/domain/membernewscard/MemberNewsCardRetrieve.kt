@@ -61,9 +61,7 @@ class MemberNewsCardRetrieve(
         }
 
         val filteredNewsIds = filterAlreadySavedNews(member)
-
         val filteredNewsCardIds = filterAlreadySavedNewsCards(member)
-
         val memberCompanies = memberCompanyRepository.findAllByMember(member)
 
         return newsCards.filter { newsCard ->
@@ -82,12 +80,12 @@ class MemberNewsCardRetrieve(
         size: Int,
         pivot: Pivots
     ): List<NewsCard> {
-
         var memberShorts = newsCardRepository.findSavedNewsCardsByNewsCardIds(
             newsCardIds = memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id },
             cursorId = cursorId,
             size = size,
         )
+
         when (pivot) {
             Pivots.ASC -> memberShorts = memberShorts.sortedBy { it.createdAt }
             Pivots.DESC -> memberShorts = memberShorts.sortedByDescending { it.createdAt }

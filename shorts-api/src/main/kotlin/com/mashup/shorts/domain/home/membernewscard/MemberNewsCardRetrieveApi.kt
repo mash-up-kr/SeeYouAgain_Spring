@@ -4,8 +4,8 @@ import com.mashup.shorts.common.aop.Auth
 import com.mashup.shorts.common.aop.AuthContext
 import com.mashup.shorts.common.response.ApiResponse
 import com.mashup.shorts.common.response.ApiResponse.Companion.success
-import com.mashup.shorts.domain.home.membernewscard.dto.RetrieveHomeNewsCardResponse
-import com.mashup.shorts.domain.home.membernewscard.dto.RetrieveHomeNewsCardResponse.Companion.newsCardToHomeResponseForm
+import com.mashup.shorts.domain.home.membernewscard.dto.HomeResponse
+import com.mashup.shorts.domain.home.membernewscard.dto.HomeResponse.Companion.makeHomeResponse
 import com.mashup.shorts.domain.membernewscard.MemberNewsCardRetrieve
 import org.springframework.http.HttpStatus.OK
 import org.springframework.validation.annotation.Validated
@@ -30,11 +30,12 @@ class MemberNewsCardRetrieveApi(
     @GetMapping
     fun retrieveNewsCardByMember(
         @RequestParam targetDateTime: LocalDateTime,
-    ): ApiResponse<List<RetrieveHomeNewsCardResponse>> {
+    ): ApiResponse<HomeResponse> {
         return success(
             OK,
-            newsCardToHomeResponseForm(
-                memberNewsCardRetrieve.retrieveHome(
+            makeHomeResponse(
+                showMode = AuthContext.getMember().showMode,
+                newsCards = memberNewsCardRetrieve.retrieveHome(
                     member = AuthContext.getMember(),
                     targetDateTime = targetDateTime,
                 )
@@ -42,4 +43,3 @@ class MemberNewsCardRetrieveApi(
         )
     }
 }
-
