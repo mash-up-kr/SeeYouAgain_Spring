@@ -5,7 +5,7 @@ import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.newscard.NewsCard
 import jakarta.persistence.*
 
-@Table(name = "member_news")
+@Table(name = "member_news_card")
 @Entity
 class MemberNewsCard(
     @ManyToOne(fetch = FetchType.LAZY)

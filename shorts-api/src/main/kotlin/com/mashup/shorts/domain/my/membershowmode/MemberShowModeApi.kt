@@ -7,7 +7,6 @@ import com.mashup.shorts.domain.membershowmode.MemberShowModeUpdate
 import com.mashup.shorts.domain.my.info.dto.MemberChangeShowModeRequest
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -25,7 +24,7 @@ class MemberShowModeApi(
     ): ApiResponse<HttpStatus> {
         memberShowModeUpdate.updateMemberShowMode(
             member = AuthContext.getMember(),
-            showMode = memberChangeShowModeRequest.showMode
+            showModes = memberChangeShowModeRequest.showMode
         )
 
         return ApiResponse.success(HttpStatus.OK)

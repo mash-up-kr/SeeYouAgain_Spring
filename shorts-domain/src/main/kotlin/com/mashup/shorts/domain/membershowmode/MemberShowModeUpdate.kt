@@ -12,7 +12,9 @@ class MemberShowModeUpdate(
     private val memberLogBadgeFacadeService: MemberLogBadgeFacadeService
 ) {
 
-    fun updateMemberShowMode(member: Member, showMode: ShowMode) {
-        memberLogBadgeFacadeService.updateMemberShowModeLog(member, showMode)
+    fun updateMemberShowMode(member: Member, showModes: List<ShowMode>) {
+        showModes.map {
+            memberLogBadgeFacadeService.updateMemberShowModeLog(member, it)
+        }
     }
 }

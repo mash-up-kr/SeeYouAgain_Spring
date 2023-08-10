@@ -4,13 +4,7 @@ import java.time.LocalDateTime
 
 interface NewsCardQueryDSLRepository {
 
-    fun findNewsCardsByMemberFilteredNewsIds(
-        startDateTime: LocalDateTime,
-        endDateTime: LocalDateTime,
-        categories: List<Long>,
-    ): List<NewsCard>
-
-    fun findNewsCardsByMemberFilteredNewsIdsAndCursorId(
+    fun findNewsCardsByMemberCategory(
         startDateTime: LocalDateTime,
         endDateTime: LocalDateTime,
         categories: List<Long>,

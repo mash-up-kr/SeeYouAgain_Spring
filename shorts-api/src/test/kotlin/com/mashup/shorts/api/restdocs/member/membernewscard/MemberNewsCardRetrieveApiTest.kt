@@ -39,7 +39,7 @@ class MemberNewsCardRetrieveApiTest : ApiDocsTestBase() {
         val uniqueKey = "uniqueKey"
         val headerName = "Authorization"
 
-        every { memberNewsCardRetrieve.retrieveNewsCardByMember(any(), any()) } returns (
+        every { memberNewsCardRetrieve.retrieveHome(any(), any()) } returns (
                 listOf(
                     NewsCard(
                         category = Category(CategoryName.POLITICS),

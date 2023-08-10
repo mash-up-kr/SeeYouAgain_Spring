@@ -24,7 +24,7 @@ class MemberNewsCardRetrieveApi(
 
     /**
     홈 조회 API
-    @Param : targetDateTime, cursorId, size
+    @Param : targetDateTime
      */
     @Auth
     @GetMapping
@@ -34,7 +34,7 @@ class MemberNewsCardRetrieveApi(
         return success(
             OK,
             newsCardToHomeResponseForm(
-                memberNewsCardRetrieve.retrieveNewsCardByMember(
+                memberNewsCardRetrieve.retrieveHome(
                     member = AuthContext.getMember(),
                     targetDateTime = targetDateTime,
                 )
