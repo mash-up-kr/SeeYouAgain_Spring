@@ -14,7 +14,7 @@ class Member(
     val uniqueId: String,
 
     @Column(name = "nickname", nullable = false, length = 20)
-    val nickname: String,
+    var nickname: String,
 
     @Column(name = "fcm_token_payload", nullable = false, length = 200)
     var fcmTokenPayload: String,
@@ -35,5 +35,9 @@ class Member(
 
     fun changeShowMode(showMode: ShowMode) {
         this.showMode = showMode
+    }
+
+    fun modifyNickname(nickname: String) {
+        this.nickname = nickname
     }
 }
