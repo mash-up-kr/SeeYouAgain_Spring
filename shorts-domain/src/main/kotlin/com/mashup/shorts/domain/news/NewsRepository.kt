@@ -15,4 +15,6 @@ interface NewsRepository : JpaRepository<News, Long>, NewsQueryDSLRepository {
         startDateTime: LocalDateTime,
         endDateTime: LocalDateTime,
     ): List<News>
+
+    fun findAllByIdIn(newsIds: List<Long>): List<News>
 }

@@ -1,5 +1,5 @@
 package com.mashup.shorts.domain.member
 
 enum class ShowMode {
-    NORMAL, RECRUIT, INVESTMENT, SWITCH_JOB
+    NORMAL, RECRUIT_SWITCH_JOB, INVESTMENT, MY_COMPANY
 }

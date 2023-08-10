@@ -324,3 +324,31 @@ include::../../../../../shorts-api/{snippets}/유저 조회 모드 변경/respon
 include::../../../../../shorts-api/{snippets}/유저 조회 모드 변경/http-response.adoc[]
 
 ---
+
+=== 관심 회사 추가
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/관심 회사 추가/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/관심 회사 추가/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/관심 회사 추가/request-headers.adoc[]
+
+==== [Request Fields]
+
+include::../../../../../shorts-api/{snippets}/관심 회사 추가/request-fields.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/관심 회사 추가/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/관심 회사 추가/http-response.adoc[]
+
+---

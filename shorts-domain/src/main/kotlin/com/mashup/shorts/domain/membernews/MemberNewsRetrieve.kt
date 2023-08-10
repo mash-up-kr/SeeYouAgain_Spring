@@ -1,10 +1,8 @@
 package com.mashup.shorts.domain.membernews
 
 import com.mashup.shorts.domain.member.Member
-import com.mashup.shorts.domain.membercompany.MemberCompanyRepository
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.news.NewsRepository
-import com.mashup.shorts.domain.news.NewsRetrieve
 import com.mashup.shorts.domain.newscard.Pivots
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional
 class MemberNewsRetrieve(
     private val memberNewsRepository: MemberNewsRepository,
     private val newsRepository: NewsRepository,
-    private val newsRetrieve: NewsRetrieve,
-    private val memberCompanyRepository: MemberCompanyRepository,
 ) {
 
     fun retrieveMemberNewsCount(member: Member): Int {
@@ -41,18 +37,6 @@ class MemberNewsRetrieve(
             Pivots.ASC -> ascNewsList(memberNewsList, cursorWrittenDateTime, size)
             Pivots.DESC -> descNewsList(memberNewsList, cursorWrittenDateTime, size)
         }
-    }
-
-    fun retrieveNewsByMemberCompany(
-        member: Member,
-        cursorId: Long,
-        size: Int,
-    ): List<News> {
-        return newsRetrieve.retrieveByCompany(
-            companies = memberCompanyRepository.findAllByMember(member).map { it.company },
-            cursorId = cursorId,
-            size = size
-        )
     }
 
     private fun ascNewsListNoCursor(

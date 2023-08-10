@@ -12,7 +12,7 @@ class NewsCardQueryDSLRepositoryImpl(
     private val queryFactory: JPAQueryFactory,
 ) : NewsCardQueryDSLRepository {
 
-    override fun findNewsCardsByMemberFilteredNewsIds(
+    override fun findNewsCardsByMemberCategory(
         startDateTime: LocalDateTime,
         endDateTime: LocalDateTime,
         categories: List<Long>,
@@ -26,22 +26,6 @@ class NewsCardQueryDSLRepositoryImpl(
             .orderBy(newsCard.id.asc())
             .fetch()
     }
-
-    override fun findNewsCardsByMemberFilteredNewsIdsAndCursorId(
-        startDateTime: LocalDateTime,
-        endDateTime: LocalDateTime,
-        categories: List<Long>,
-    ): List<NewsCard> {
-        return queryFactory
-            .selectFrom(newsCard)
-            .join(newsCard.category, category)
-            .fetchJoin()
-            .where(categoryCondition(categories))
-            .where(newsCard.createdAt.between(startDateTime, endDateTime))
-            .orderBy(newsCard.id.asc())
-            .fetch()
-    }
-
     override fun findSavedNewsCardsByNewsCardIds(
         newsCardIds: List<Long>,
         cursorId: Long,

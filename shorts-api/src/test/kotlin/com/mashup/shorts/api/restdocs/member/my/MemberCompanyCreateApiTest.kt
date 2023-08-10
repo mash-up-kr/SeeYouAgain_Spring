@@ -19,7 +19,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @WebMvcTest(MemberNicknameUpdateApi::class)
-class MemberNicknameUpdateApiTest : ApiDocsTestBase() {
+class MemberCompanyCreateApiTest : ApiDocsTestBase() {
 
     @MockkBean
     private lateinit var memberNicknameModifier: MemberNicknameModifier

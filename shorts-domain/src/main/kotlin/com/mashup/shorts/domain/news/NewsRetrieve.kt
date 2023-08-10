@@ -1,16 +1,14 @@
 package com.mashup.shorts.domain.news
 
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
 import com.mashup.shorts.common.util.StartEndDateTimeExtractor.extractStarDateTimeAndEndDateTime
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
 @Transactional(readOnly = true)
@@ -60,29 +58,6 @@ class NewsRetrieve(
             )
         }
         return newsBundle
-    }
-
-    fun retrieveByCompany(
-        companies: List<String>,
-        cursorId: Long,
-        size: Int,
-    ): List<News> {
-        val startDateTime = LocalDateTime.of(
-            LocalDate.now(),
-            LocalTime.of(LocalTime.now().hour, LocalTime.now().minute, 0, 0)
-        ).minusDays(7)
-        val endDateTime = LocalDateTime.of(
-            LocalDate.now(),
-            LocalTime.of(LocalTime.now().hour, LocalTime.now().minute, 59, 999999999)
-        )
-
-        return newsRepository.loadNewsBundleByCursorAndCompany(
-            companies = companies,
-            startDateTime = startDateTime,
-            endDateTime = endDateTime,
-            cursorId = cursorId,
-            size = size
-        )
     }
 
 }

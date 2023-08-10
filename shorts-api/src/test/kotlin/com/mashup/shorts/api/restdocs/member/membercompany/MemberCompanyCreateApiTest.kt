@@ -1,13 +1,13 @@
-package com.mashup.shorts.api.restdocs.member.membershowmode
+package com.mashup.shorts.api.restdocs.member.membercompany
 
 import com.mashup.shorts.api.ApiDocsTestBase
 import com.mashup.shorts.api.restdocs.util.PageHeaderSnippet.Companion.pageHeaderSnippet
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentRequest
 import com.mashup.shorts.api.restdocs.util.RestDocsUtils.getDocumentResponse
-import com.mashup.shorts.domain.member.ShowMode
-import com.mashup.shorts.domain.membershowmode.MemberShowModeUpdate
-import com.mashup.shorts.domain.my.info.dto.MemberChangeShowModeRequest
-import com.mashup.shorts.domain.my.membershowmode.MemberShowModeApi
+import com.mashup.shorts.domain.member.Company
+import com.mashup.shorts.domain.membercompany.MemberCompanyCreate
+import com.mashup.shorts.domain.my.member.dto.MemberCompanyCreateRequest
+import com.mashup.shorts.domain.my.membercompany.MemberCompanyCreateApi
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.justRun
 import org.junit.jupiter.api.Test
@@ -20,22 +20,22 @@ import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
-@WebMvcTest(MemberShowModeApi::class)
-class MemberShowModeApiTest : ApiDocsTestBase() {
+@WebMvcTest(MemberCompanyCreateApi::class)
+class MemberCompanyCreateApiTest : ApiDocsTestBase() {
 
     @MockkBean
-    private lateinit var memberShowModeUpdate: MemberShowModeUpdate
+    private lateinit var memberCompanyCreate: MemberCompanyCreate
 
     @Test
-    fun `유저 조회 모드 변경`() {
-        justRun { memberShowModeUpdate.updateMemberShowMode(any(), any()) }
+    fun `관심 회사 추가`() {
+        justRun { memberCompanyCreate.createMemberCompany(any(), any()) }
 
-        val body = MemberChangeShowModeRequest(
-            showMode = listOf(ShowMode.RECRUIT_SWITCH_JOB, ShowMode.INVESTMENT)
+        val body = MemberCompanyCreateRequest(
+            companies = listOf(Company.NAVER, Company.COUPANG)
         )
 
         mockMvc.perform(
-            RestDocumentationRequestBuilders.patch("/v1/member/show-mode")
+            RestDocumentationRequestBuilders.post("/v1/member/company")
                 .header("Authorization", "Bearer test-user")
                 .content(objectMapper.writeValueAsString(body))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -43,7 +43,7 @@ class MemberShowModeApiTest : ApiDocsTestBase() {
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
                 MockMvcRestDocumentation.document(
-                    "유저 조회 모드 변경",
+                    "관심 회사 추가",
                     getDocumentRequest(),
                     getDocumentResponse(),
                     pageHeaderSnippet(),
@@ -51,12 +51,12 @@ class MemberShowModeApiTest : ApiDocsTestBase() {
                         HeaderDocumentation.headerWithName("Authorization").description("사용자 식별자 id")
                     ),
                     PayloadDocumentation.requestFields(
-                        PayloadDocumentation.fieldWithPath("showMode")
+                        PayloadDocumentation.fieldWithPath("companies")
                             .type(JsonFieldType.ARRAY)
-                            .description(""),
-                        PayloadDocumentation.fieldWithPath("showMode[]")
+                            .description("관심 회사 추가"),
+                        PayloadDocumentation.fieldWithPath("companies[]")
                             .type(JsonFieldType.ARRAY)
-                            .description("조회 모드를 넣어주세요 [NORMAL, RECRUIT_SWITCH_JOB, INVESTMENT, MY_COMPANY]"),
+                            .description("관심 회사 추가 [NAVER, KAKAO, LINE, COUPANG, WOOAH, CARROT, TOSS, SAMSUNG, HYUNDAI, CJ, KOREA_ELEC, LG_ELEC, KOREA_GAS, SK_HYNICS]"),
                     ),
                     PayloadDocumentation.responseFields(
                         PayloadDocumentation.fieldWithPath("status").type(JsonFieldType.NUMBER)
