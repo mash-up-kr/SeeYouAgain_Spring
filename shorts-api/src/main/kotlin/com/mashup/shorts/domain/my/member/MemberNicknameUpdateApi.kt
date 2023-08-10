@@ -22,13 +22,11 @@ class MemberNicknameUpdateApi(
     @PatchMapping("/nickname")
     fun modifyNickname(
         @RequestBody memberNicknameUpdateRequest: MemberNicknameUpdateRequest
-    ): ApiResponse<Unit> {
-        return ApiResponse.success(
-            HttpStatus.OK,
-            memberNicknameModifier.modifyMemberNickname(
-                member = AuthContext.getMember(),
-                nickname = memberNicknameUpdateRequest.nickname
-            )
+    ): ApiResponse<HttpStatus> {
+        memberNicknameModifier.modifyMemberNickname(
+            member = AuthContext.getMember(),
+            nickname = memberNicknameUpdateRequest.nickname
         )
+        return ApiResponse.success(HttpStatus.OK)
     }
 }

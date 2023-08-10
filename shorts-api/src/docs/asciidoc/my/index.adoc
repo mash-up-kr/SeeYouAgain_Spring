@@ -33,6 +33,34 @@ include::../../../../../shorts-api/{snippets}/내 정보 조회/http-response.ad
 
 ---
 
+=== 닉네임 변경
+
+==== [Request URI]
+
+include::../../../../../shorts-api/{snippets}/닉네임 변경/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../shorts-api/{snippets}/닉네임 변경/http-request.adoc[]
+
+==== [Request Header]
+
+include::../../../../../shorts-api/{snippets}/닉네임 변경/request-headers.adoc[]
+
+==== [Request Fields]
+
+include::../../../../../shorts-api/{snippets}/닉네임 변경/request-fields.adoc[]
+
+==== [Response Field]
+
+include::../../../../../shorts-api/{snippets}/닉네임 변경/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../shorts-api/{snippets}/닉네임 변경/http-response.adoc[]
+
+---
+
 === 저장한 뉴스카드 조회
 
 ==== [Request URI]
