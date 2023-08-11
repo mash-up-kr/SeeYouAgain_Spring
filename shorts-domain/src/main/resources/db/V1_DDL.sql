@@ -19,7 +19,7 @@ create table member
     id                bigint auto_increment primary key,
     unique_id         varchar(100) not null,
     nickname          varchar(20)  not null,
-    fcm_token_payload varchar(200) not null,
+    fcm_token_payload varchar(200) not null default '',
     is_allowed_alarm  boolean      not null default true,
     show_mode         varchar(30),
     created_at        datetime(6) not null,
@@ -132,6 +132,7 @@ create table member_news
     id          bigint auto_increment primary key,
     member_id   bigint not null,
     news_id     bigint not null,
+    read_at     datetime(6) not null default CURRENT_TIMESTAMP,
     created_at  datetime(6) not null,
     modified_at datetime(6) not null
 );
