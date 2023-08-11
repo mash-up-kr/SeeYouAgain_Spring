@@ -16,12 +16,14 @@ class MemberNewsCardDelete(
 
     fun bulkDeleteMemberNewsCard(member: Member, newsCardIds: List<Long>) {
         val newsCards = newsCardRepository.findAllById(newsCardIds)
+        val memberNewsCardList = memberNewsCardRepository.findByNewsCardIn(newsCards)
         if (memberNewsCardRepository.findByNewsCardIn(newsCards).isEmpty()) {
             throw ShortsBaseException.from(
                 shortsErrorCode = ShortsErrorCode.E404_NOT_FOUND,
                 resultErrorMessage = "저장되지 않은 뉴스카드를 삭제할 수 없습니다."
             )
         }
+        memberNewsCardList.map { it.softDelete() }
         memberNewsCardRepository.deleteAllByMemberAndNewsCardIn(member, newsCards)
     }
 }

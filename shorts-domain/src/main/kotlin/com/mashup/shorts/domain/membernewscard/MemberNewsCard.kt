@@ -15,4 +15,12 @@ class MemberNewsCard(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "news_card_id")
     val newsCard: NewsCard,
-) : BaseEntity()
+
+    @Column(name = "deleted", nullable = false)
+    var deleted: Boolean = false
+) : BaseEntity() {
+
+    fun softDelete() {
+        this.deleted = true
+    }
+}

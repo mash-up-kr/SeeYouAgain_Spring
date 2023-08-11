@@ -130,9 +130,10 @@ create table news
 create table member_news
 (
     id          bigint auto_increment primary key,
-    member_id   bigint not null,
-    news_id     bigint not null,
+    member_id   bigint  not null,
+    news_id     bigint  not null,
     read_at     datetime(6) not null default CURRENT_TIMESTAMP,
+    deleted     boolean not null default false,
     created_at  datetime(6) not null,
     modified_at datetime(6) not null
 );
@@ -150,8 +151,9 @@ create table news_card
 create table member_news_card
 (
     id           bigint auto_increment primary key,
-    member_id    bigint not null,
-    news_card_id bigint not null,
+    member_id    bigint  not null,
+    news_card_id bigint  not null,
+    deleted      boolean not null default false,
     created_at   datetime(6) not null,
     modified_at  datetime(6) not null
 );

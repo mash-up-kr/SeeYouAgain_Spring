@@ -15,7 +15,7 @@ class MemberNewsRetrieve(
 ) {
 
     fun retrieveMemberNewsCount(member: Member): Int {
-        return memberNewsRepository.findAllByMember(member).count()
+        return memberNewsRepository.findAllByMember(member).count { !it.deleted }
     }
 
     fun retrieveMemberNewsBySorting(
@@ -24,7 +24,7 @@ class MemberNewsRetrieve(
         size: Int,
         pivot: Pivots,
     ): List<News> {
-        val memberNewsList = memberNewsRepository.findAllByMember(member)
+        val memberNewsList = memberNewsRepository.findAllByMember(member).filter { !it.deleted }
 
         if (cursorWrittenDateTime.isEmpty()) {
             return when (pivot) {
@@ -44,6 +44,7 @@ class MemberNewsRetrieve(
         size: Int
     ): List<News> {
         val newsList = memberNewsList
+            .filter { !it.deleted }
             .map { it.news }
             .sortedBy { it.writtenDateTime }
 
@@ -57,6 +58,7 @@ class MemberNewsRetrieve(
         size: Int
     ): List<News> {
         val newsList = memberNewsList
+            .filter { !it.deleted }
             .map { it.news }
             .sortedByDescending { it.writtenDateTime }
 
@@ -71,6 +73,7 @@ class MemberNewsRetrieve(
         size: Int
     ): List<News> {
         val newsList = memberNewsList
+            .filter { !it.deleted }
             .map { it.news }
             .sortedBy { it.writtenDateTime }
             .filter { it.writtenDateTime > cursorWrittenDateTime }
@@ -86,6 +89,7 @@ class MemberNewsRetrieve(
         size: Int
     ): List<News> {
         val newsList = memberNewsList
+            .filter { !it.deleted }
             .map { it.news }
             .sortedByDescending { it.writtenDateTime }
             .filter { it.writtenDateTime < cursorWrittenDateTime }

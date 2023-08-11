@@ -81,7 +81,9 @@ class MemberNewsCardRetrieve(
         pivot: Pivots
     ): List<NewsCard> {
         var memberShorts = newsCardRepository.findSavedNewsCardsByNewsCardIds(
-            newsCardIds = memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id },
+            newsCardIds = memberNewsCardRepository.findAllByMember(member)
+                .filter { !it.deleted }
+                .map { it.newsCard.id },
             cursorId = cursorId,
             size = size,
         )
@@ -95,11 +97,15 @@ class MemberNewsCardRetrieve(
 
 
     private fun filterAlreadySavedNewsCards(member: Member): List<Long> {
-        return memberNewsCardRepository.findAllByMember(member).map { it.newsCard.id }
+        return memberNewsCardRepository.findAllByMember(member)
+            .filter { !it.deleted }
+            .map { it.newsCard.id }
     }
 
     private fun filterAlreadySavedNews(member: Member): List<Long> {
-        return memberNewsRepository.findAllByMember(member).map { it.news.id }
+        return memberNewsRepository.findAllByMember(member)
+            .filter { !it.deleted }
+            .map { it.news.id }
     }
 
     private fun extractAllNewsCardsByCategory(

@@ -16,8 +16,8 @@ class MemberInfoRetrieve(
 ) {
 
     fun retrieveMemberInfo(member: Member, now: LocalDate): MemberInfo {
-        val countMemberNews = memberNewsRepository.findAllByMember(member).count()
-        val countMemberNewsCard = memberNewsCardRepository.findAllByMember(member).count()
+        val countMemberNews = memberNewsRepository.findAllByMember(member).count { !it.deleted }
+        val countMemberNewsCard = memberNewsCardRepository.findAllByMember(member).count { !it.deleted }
 
         return MemberInfo(
             nickname = member.nickname,
