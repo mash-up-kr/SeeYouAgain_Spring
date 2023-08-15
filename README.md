@@ -10,4 +10,4 @@
 
 ## Infra
 
-<img width="970" alt="Untitled" src="https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/60564431/f9d8eb7b-cac9-4b1f-902f-e30848f5cf05">
+![스크린샷 2023-08-12 02 56 36](https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/60564431/8241aa92-b2d4-4ae9-9f3f-65ab5c538aab)
