@@ -79,7 +79,9 @@ class MemberNewsCardRetrieve(
         cursorId: Long,
         size: Int,
         pivot: Pivots
-    ): List<NewsCard> {
+    ): Pair<List<NewsCard>, Int> {
+        val memberShortsCount = memberNewsCardRepository.findAllByMember(member).count()
+
         var memberShorts = newsCardRepository.findSavedNewsCardsByNewsCardIds(
             newsCardIds = memberNewsCardRepository.findAllByMember(member)
                 .filter { !it.deleted }
@@ -92,7 +94,7 @@ class MemberNewsCardRetrieve(
             Pivots.ASC -> memberShorts = memberShorts.sortedBy { it.createdAt }
             Pivots.DESC -> memberShorts = memberShorts.sortedByDescending { it.createdAt }
         }
-        return memberShorts
+        return Pair(memberShorts, memberShortsCount)
     }
 
 

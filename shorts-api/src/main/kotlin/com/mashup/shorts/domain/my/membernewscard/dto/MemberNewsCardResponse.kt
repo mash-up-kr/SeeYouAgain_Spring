@@ -11,9 +11,10 @@ data class MemberNewsCardRetrieveResponse(
     companion object {
         fun newsCardsToResponseForm(
             newsCard: List<NewsCard>,
+            allMemberNewsCardCount: Int,
         ): MemberNewsCardRetrieveResponse {
             return MemberNewsCardRetrieveResponse(
-                numberOfNewsCard = newsCard.count(),
+                numberOfNewsCard = allMemberNewsCardCount,
                 memberShorts = newsCard.map {
                     Shorts(
                         id = it.id,

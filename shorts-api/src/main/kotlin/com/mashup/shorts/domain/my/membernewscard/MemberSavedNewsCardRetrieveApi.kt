@@ -35,15 +35,18 @@ class MemberSavedNewsCardRetrieveApi(
         @RequestParam(required = true) @Min(1) @Max(20) size: Int,
         @RequestParam(required = true) pivot: Pivots,
     ): ApiResponse<MemberNewsCardRetrieveResponse> {
+        val newsCardByMember = memberNewsCardRetrieve.retrieveSavedNewsCardByMember(
+            member = AuthContext.getMember(),
+            cursorId = cursorId,
+            size,
+            pivot
+        )
+
         return success(
             OK,
             newsCardsToResponseForm(
-                memberNewsCardRetrieve.retrieveSavedNewsCardByMember(
-                    member = AuthContext.getMember(),
-                    cursorId = cursorId,
-                    size,
-                    pivot
-                )
+                newsCard = newsCardByMember.first,
+                allMemberNewsCardCount = newsCardByMember.second
             )
         )
     }
