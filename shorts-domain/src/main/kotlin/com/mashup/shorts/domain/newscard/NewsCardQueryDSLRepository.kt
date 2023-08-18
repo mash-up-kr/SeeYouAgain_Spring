@@ -13,6 +13,7 @@ interface NewsCardQueryDSLRepository {
     fun findSavedNewsCardsByNewsCardIds(
         newsCardIds: List<Long>,
         cursorId: Long,
+        pivots: Pivots,
         size: Int,
     ): List<NewsCard>
 }

@@ -26,7 +26,7 @@ class MemberSavedNewsCardRetrieveApi(
 
     /**
     저장한 뉴스카드 조회
-    @Param : targetDate, cursorWrittenDateTime, size, pivot
+    @Param : targetDate, size, pivot
      */
     @Auth
     @GetMapping("/saved")

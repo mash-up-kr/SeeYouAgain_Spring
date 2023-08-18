@@ -1,11 +1,13 @@
 package com.mashup.shorts.domain.newscard
 
-import java.time.LocalDateTime
-import org.springframework.stereotype.Repository
 import com.mashup.shorts.domain.category.QCategory.category
 import com.mashup.shorts.domain.newscard.QNewsCard.newsCard
+import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.Predicate
 import com.querydsl.jpa.impl.JPAQueryFactory
+import org.springframework.stereotype.Repository
+import java.io.Serializable
+import java.time.LocalDateTime
 
 @Repository
 class NewsCardQueryDSLRepositoryImpl(
@@ -26,16 +28,18 @@ class NewsCardQueryDSLRepositoryImpl(
             .orderBy(newsCard.id.asc())
             .fetch()
     }
+
     override fun findSavedNewsCardsByNewsCardIds(
         newsCardIds: List<Long>,
         cursorId: Long,
-        size: Int,
+        pivots: Pivots,
+        size: Int
     ): List<NewsCard> {
         return queryFactory
             .selectFrom(newsCard)
-            .where(cursorCondition(cursorId))
+            .where(cursorCondition(pivots, cursorId))
             .where(newsCard.id.`in`(newsCardIds))
-            .orderBy(newsCard.id.asc())
+            .orderBy(orderCondition(pivots))
             .limit(size.toLong())
             .fetch()
     }
@@ -48,11 +52,25 @@ class NewsCardQueryDSLRepositoryImpl(
         }
     }
 
-    private fun cursorCondition(cursorId: Long): Predicate? {
-        return if (cursorId != 0.toLong()) {
-            newsCard.id.gt(cursorId)
-        } else {
-            null
+    private fun cursorCondition(pivots: Pivots, cursorId: Long): Predicate? {
+        if (pivots == Pivots.ASC) {
+            return if (cursorId != 0.toLong()) {
+                newsCard.id.gt(cursorId)
+            } else {
+                return null
+            }
         }
+        return if (cursorId != 0.toLong()) {
+            newsCard.id.lt(cursorId)
+        } else {
+            return null
+        }
+    }
+
+    private fun orderCondition(pivots: Pivots): OrderSpecifier<*>? {
+        if (pivots == Pivots.ASC) {
+            return newsCard.id.asc()
+        }
+        return newsCard.id.desc()
     }
 }

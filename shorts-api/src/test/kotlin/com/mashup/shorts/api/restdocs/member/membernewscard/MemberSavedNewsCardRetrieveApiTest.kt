@@ -42,22 +42,26 @@ class MemberSavedNewsCardRetrieveApiTest : ApiDocsTestBase() {
                 any(),
                 any()
             )
-        } returns (listOf(
-            NewsCard(
-                category = Category(CategoryName.SCIENCE),
-                multipleNews = "1, 2, 3, 4, 5, 6",
-                keywords = "TEST",
-                createdAt = LocalDateTime.now(),
-                modifiedAt = LocalDateTime.now()
-            ),
-            NewsCard(
-                category = Category(CategoryName.POLITICS),
-                multipleNews = "11, 22, 33, 44, 55, 66",
-                keywords = "TEST Keyword",
-                createdAt = LocalDateTime.now(),
-                modifiedAt = LocalDateTime.now()
-            ),
-        ))
+        } returns (
+                Pair(
+                    listOf(
+                        NewsCard(
+                            category = Category(CategoryName.SCIENCE),
+                            multipleNews = "1, 2, 3, 4, 5, 6",
+                            keywords = "TEST",
+                            createdAt = LocalDateTime.now(),
+                            modifiedAt = LocalDateTime.now()
+                        ),
+                        NewsCard(
+                            category = Category(CategoryName.POLITICS),
+                            multipleNews = "11, 22, 33, 44, 55, 66",
+                            keywords = "TEST Keyword",
+                            createdAt = LocalDateTime.now(),
+                            modifiedAt = LocalDateTime.now()
+                        ),
+                    ),
+                    2
+                ))
         mockMvc.perform(
             RestDocumentationRequestBuilders.get("/v1/member/news-card/saved")
                 .header("Authorization", "test-user")
