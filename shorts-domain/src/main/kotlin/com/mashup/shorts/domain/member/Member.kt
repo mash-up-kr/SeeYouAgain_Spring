@@ -2,9 +2,7 @@ package com.mashup.shorts.domain.member
 
 import com.mashup.shorts.common.util.RandomWordsNickname
 import com.mashup.shorts.domain.BaseEntity
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import kotlin.random.Random
 
 @Table(name = "member")
@@ -22,7 +20,7 @@ class Member(
     @Column(name = "is_allowed_alarm", nullable = false)
     var isAllowedAlarm: Boolean = true,
 
-    @Column
+    @Enumerated(value = EnumType.STRING)
     var showMode: ShowMode = ShowMode.NORMAL,
 ) : BaseEntity() {
     companion object {
