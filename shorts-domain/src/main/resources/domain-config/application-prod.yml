@@ -9,7 +9,7 @@ spring:
       ddl-auto: none
   datasource:
     hikari:
-      jdbc-url: ENC(DSh/FwfYf8tod70N/yaB6hpYEBo//JydonNXf/hT/h7A6Gkh3lxVIn2YWSYtLIm+oMWKPzLb/33sgtMGZDBlEBaHGk2jrPnRrTB/nLhpzk07T+43KPCG8sKrnkEB4CI0725OjtaUj0y6dPztbeJhWleOLCq5/bU4Gk/OfqpOSSDZKGmobKhJvKIh8VBkO6c5dJZW64aPNZa4pz5EgLfp/yNwjDbMZTdLcpaOOCX4q7s5JONwbo8IYTcDZI1zh2qs1PKFQz3xCN5WFsUqtSwuBohjdsZQecJ4kHRYE7iCiXc=)
+      jdbc-url: ENC(m/cWWqilVqoIWWZKyTOxLLsTKnV35HECpNON0Hkw0X4k8S/VPOYbRlchcchUBnwkU54flUpjJFJo29Zj+2rsVXbPDP3RxooQAcptBDZJXDz5TT4eX0N2W3NPg/L9fqVgDR76wNMvxNNBDh2xUVmeumlj63Ej/zEHG3qrms2BtCo=)
       username: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
       password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
       driver-class-name: com.mysql.cj.jdbc.Driver

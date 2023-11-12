@@ -17,13 +17,6 @@ spring:
   config:
     activate:
       on-profile: test
-  flyway:
-    enabled: true
-    baseline-on-migrate: false
-    baseline-version: 1
-    url: ENC(gOSmjy4D0MtTLAcsIderdoZbNHUFZ0GMtn4ZosM7L0DvegvAN/1cUOVLFQBd8BRCzH0q0OE5GciNQAtArDhVIfCUcGByZQL19z6839JnF5ywrKG3+xLHEMgp9b0krfsMF9cEnLkrJHRHnlf6OBGfIlLziWAYIV6NaaKo3gi4rSqqR2JYNkZ5llTcZRP0Pl3Z1cOCxlHXu3qH6Lr5DVj
-    user: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
-    password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
   jpa:
     open-in-view: false
     database: mysql
@@ -38,7 +31,7 @@ spring:
         use-new-id-generator-mappings: false
   datasource:
     hikari:
-      jdbc-url: ENC(gOSmjy4D0MtTLAcsIderdoZbNHUFZ0GMtn4ZosM7L0DvegvAN/1cUOVLFQBd8BRCzH0q0OE5GciNQAtArDhVIfCUcGByZQL19z6839JnF5ywrKG3+xLHEMgp9b0krfsMF9cEnLkrJHRHnlf6OBGfIlLziWAYIV6NaaKo3gi4rSqqR2JYNkZ5llTcZRP0Pl3Z1cOCxlHXu3qH6Lr5DVj/cM9sdUNYfH9U/HmxuRFwpxeR+NlQejNHy7FELGbpxIZ/5rfuRWBdpu1y10yCOP8YPg6mhdgq1460NkWDfg2ewnc=)
+      jdbc-url: ENC(m/cWWqilVqoIWWZKyTOxLLsTKnV35HECpNON0Hkw0X4k8S/VPOYbRlchcchUBnwkU54flUpjJFJo29Zj+2rsVXbPDP3RxooQAcptBDZJXDz5TT4eX0N2W3NPg/L9fqVgDR76wNMvxNNBDh2xUVmeumlj63Ej/zEHG3qrms2BtCo=)
       username: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
       password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
       driver-class-name: com.mysql.cj.jdbc.Driver
