@@ -163,7 +163,8 @@ class CrawlerCore(
         val sortedKeywords = keywordsCountingPair.toList().sortedByDescending { it.second }
         val keywordRanking = StringBuilder()
 
-        for (rank: Int in 0..9) {
+        val rankingSize = if (sortedKeywords.size < 10) sortedKeywords.size else 10
+        for (rank: Int in 0 until rankingSize) {
             keywordRanking.append(sortedKeywords[rank]).append(", ")
         }
 
