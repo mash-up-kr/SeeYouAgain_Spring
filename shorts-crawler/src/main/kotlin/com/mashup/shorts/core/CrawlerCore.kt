@@ -2,6 +2,7 @@ package com.mashup.shorts.core
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.retry.annotation.Recover
 import org.springframework.retry.annotation.Retryable
 import org.springframework.scheduling.annotation.Scheduled
@@ -34,7 +35,7 @@ class CrawlerCore(
     private val newsRepository: NewsRepository,
     private val newsBulkInsertRepository: NewsBulkInsertRepository,
     private val newsCardBulkInsertRepository: NewsCardBulkInsertRepository,
-    private val keywordExtractor: KeywordExtractor,
+    @Qualifier("KomoranKeywordExtractor") private val keywordExtractor: KeywordExtractor,
     private val hotKeywordRepository: HotKeywordRepository,
 ) {
 
