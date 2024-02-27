@@ -112,7 +112,7 @@ class CrawlerCore(
                     crawledDateTime = crawledDateTime
                 )
 
-                val extractedKeywords = keywordExtractor.extractKeywordV2(
+                val extractedKeywords = keywordExtractor.extractKeyword(
                     newsRepository.findById(newNewsLastIndex!!.toLong()).get().content
                 )
                 log.info { "$extractedKeywords - keyword is extracted" }
