@@ -147,9 +147,8 @@ class CrawlerCore(
     @Recover
     fun recover(exception: Exception) {
         log.error { "크롤링 중 예외가 발생하여 총 3회를 시도했으나 작업이 실패했습니다." }
-        log.error { "ExceptionMessage : ${exception.message}" }
+        log.error { "ExceptionStackTrace : ${exception.localizedMessage}" }
         log.error { "ExceptionCause : ${exception.cause}" }
-        log.error { "ExceptionStackTrace : ${exception.stackTrace}" }
         throw ShortsBaseException.from(
             shortsErrorCode = ShortsErrorCode.E500_INTERNAL_SERVER_ERROR,
             resultErrorMessage = "크롤링 중 예외가 발생하여 총 3회를 시도했으나 작업이 실패했습니다."
