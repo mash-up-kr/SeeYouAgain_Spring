@@ -128,11 +128,18 @@ class CrawlerCore(
                 )
                 persistenceTargetNewsCards.add(persistenceNewsCard)
                 keywordsCountingPair += countKeyword(keywordsCountingPair, extractedKeywords)
+                if (persistenceTargetNewsCards.size >= 100) {
+                    newsCardBulkInsertRepository.bulkInsert(persistenceTargetNewsCards, crawledDateTime)
+                    persistenceTargetNewsCards.clear()
+                }
             }
             log.info("$categoryName - crawled complete!!")
             Thread.sleep(1000)
         }
-        newsCardBulkInsertRepository.bulkInsert(persistenceTargetNewsCards, crawledDateTime)
+        if (persistenceTargetNewsCards.isNotEmpty()) {
+            newsCardBulkInsertRepository.bulkInsert(persistenceTargetNewsCards, crawledDateTime)
+            persistenceTargetNewsCards.clear()
+        }
         saveKeywordRanking(keywordsCountingPair)
         log.info("$crawledDateTime - all crawling done")
     }
