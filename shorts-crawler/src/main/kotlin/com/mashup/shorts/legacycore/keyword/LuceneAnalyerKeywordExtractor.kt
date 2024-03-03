@@ -1,4 +1,4 @@
-package com.mashup.shorts.core.keyword
+package com.mashup.shorts.legacycore.keyword
 
 import java.io.StringReader
 import org.apache.lucene.analysis.ko.KoreanAnalyzer

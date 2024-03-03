@@ -1,4 +1,4 @@
-package com.mashup.shorts.core
+package com.mashup.shorts.legacycore
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
-import com.mashup.shorts.core.consts.categoryToUrl
+import com.mashup.shorts.legacycore.consts.categoryToUrl
 import com.mashup.shorts.core.keyword.KeywordExtractor
 import com.mashup.shorts.domain.category.CategoryName.CULTURE
 import com.mashup.shorts.domain.category.CategoryName.ECONOMIC
@@ -35,8 +35,7 @@ class CrawlerCore(
     private val newsRepository: NewsRepository,
     private val newsBulkInsertRepository: NewsBulkInsertRepository,
     private val newsCardBulkInsertRepository: NewsCardBulkInsertRepository,
-    @Qualifier("KomoranKeywordExtractor")
-    private val keywordExtractor: KeywordExtractor,
+    @Qualifier("KomoranKeywordExtractor") private val keywordExtractor: KeywordExtractor,
     private val hotKeywordRepository: HotKeywordRepository,
 ) {
 
@@ -74,6 +73,7 @@ class CrawlerCore(
                 category = category,
             )
             log.info { "crawledNewsCards size = ${crawledNewsCards.size}" }
+
 
             val persistenceNewsBundle = newsRepository.findAllByCategoryAndCreatedAtBetween(
                 category = category,

@@ -1,18 +1,18 @@
-package com.mashup.shorts.core
+package com.mashup.shorts.legacycore
 
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import org.springframework.stereotype.Component
-import com.mashup.shorts.core.consts.CONTENT_CLASS_NAME
-import com.mashup.shorts.core.consts.HEADLINE
-import com.mashup.shorts.core.consts.IMAGE_ID_NAME
-import com.mashup.shorts.core.consts.NORMAL
-import com.mashup.shorts.core.consts.PRESS_CLASS_NAME
-import com.mashup.shorts.core.consts.SYMBOLIC_LINK_BASE_URL
-import com.mashup.shorts.core.consts.TITLE_CLASS_NAME
-import com.mashup.shorts.core.consts.WRITTEN_DATETIME_CLASS_NAME
-import com.mashup.shorts.core.consts.detailDocClassNames
-import com.mashup.shorts.core.consts.moreHeadLineLinksElements
+import com.mashup.shorts.legacycore.consts.CONTENT_CLASS_NAME
+import com.mashup.shorts.legacycore.consts.HEADLINE
+import com.mashup.shorts.legacycore.consts.IMAGE_ID_NAME
+import com.mashup.shorts.legacycore.consts.NORMAL
+import com.mashup.shorts.legacycore.consts.PRESS_CLASS_NAME
+import com.mashup.shorts.legacycore.consts.SYMBOLIC_LINK_BASE_URL
+import com.mashup.shorts.legacycore.consts.TITLE_CLASS_NAME
+import com.mashup.shorts.legacycore.consts.WRITTEN_DATETIME_CLASS_NAME
+import com.mashup.shorts.legacycore.consts.detailDocClassNames
+import com.mashup.shorts.legacycore.consts.moreHeadLineLinksElements
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.news.News
@@ -20,10 +20,7 @@ import com.mashup.shorts.domain.news.News
 @Component
 class CrawlerBase {
 
-    internal fun extractMoreHeadLineLinks(
-        url: String,
-        categoryName: CategoryName,
-    ): Elements {
+    internal fun extractMoreHeadLineLinks(url: String, categoryName: CategoryName): Elements {
         return Jsoup.connect(url).get()
             .getElementsByClass(moreHeadLineLinksElements[categoryName]!!)
             .tagName("a")
