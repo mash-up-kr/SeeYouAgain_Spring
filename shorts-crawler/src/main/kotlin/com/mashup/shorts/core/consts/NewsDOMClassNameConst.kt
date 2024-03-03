@@ -1,14 +1,13 @@
-package com.mashup.shorts.core.const
+package com.mashup.shorts.core.consts
 
 import com.mashup.shorts.domain.category.CategoryName
 
-
-internal const val DETAIL_POLITICS_DOC_CLASS_NAME = "nclicks(cls_pol.clsart1)"
-internal const val DETAIL_ECONOMIC_DOC_CLASS_NAME = "nclicks(cls_eco.clsart1)"
-internal const val DETAIL_SOCIETY_DOC_CLASS_NAME = "nclicks(cls_nav.clsart1)"
-internal const val DETAIL_LIFE_CULTURE_DOC_CLASS_NAME = "nclicks(cls_lif.clsart1)"
-internal const val DETAIL_WORLD_DOC_CLASS_NAME = "nclicks(cls_wor.clsart1)"
-internal const val DETAIL_IT_SCIENCE_DOC_CLASS_NAME = "nclicks(cls_sci.clsart1)"
+internal const val DETAIL_POLITICS_DOC_CLASS_NAME = "sa_text_title"
+internal const val DETAIL_ECONOMIC_DOC_CLASS_NAME = "sa_text_title"
+internal const val DETAIL_SOCIETY_DOC_CLASS_NAME = "sa_text_title"
+internal const val DETAIL_LIFE_CULTURE_DOC_CLASS_NAME = "sa_text_title"
+internal const val DETAIL_WORLD_DOC_CLASS_NAME = "sa_text_title"
+internal const val DETAIL_IT_SCIENCE_DOC_CLASS_NAME = "sa_text_title"
 
 internal val detailDocClassNames = mapOf(
     CategoryName.POLITICS to DETAIL_POLITICS_DOC_CLASS_NAME,

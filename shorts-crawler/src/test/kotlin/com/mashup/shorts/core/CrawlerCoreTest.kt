@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles
 import com.mashup.shorts.ShortsCrawlerApplication
 
 @Disabled
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 @SpringBootTest(classes = [ShortsCrawlerApplication::class])
 class CrawlerCoreTest @Autowired constructor(
     private val crawlerCore: CrawlerCore,

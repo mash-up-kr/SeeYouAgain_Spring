@@ -111,8 +111,8 @@ class NewsRetrieveApiTest : ApiDocsTestBase() {
             .andDo(
                 MockMvcRestDocumentation.document(
                     "핫 키워드로 뉴스 조회",
-                    RestDocsUtils.getDocumentRequest(),
-                    RestDocsUtils.getDocumentResponse(),
+                    getDocumentRequest(),
+                    getDocumentResponse(),
                     PageHeaderSnippet.pageHeaderSnippet(),
                     RequestDocumentation.queryParameters(
                         RequestDocumentation
