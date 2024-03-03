@@ -1,4 +1,4 @@
-package com.mashup.shorts.legacycore
+package com.mashup.shorts.leagcy
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
-import com.mashup.shorts.legacycore.consts.categoryToUrl
-import com.mashup.shorts.core.keyword.KeywordExtractor
 import com.mashup.shorts.domain.category.CategoryName.CULTURE
 import com.mashup.shorts.domain.category.CategoryName.ECONOMIC
 import com.mashup.shorts.domain.category.CategoryName.POLITICS
@@ -27,15 +25,18 @@ import com.mashup.shorts.domain.news.NewsBulkInsertRepository
 import com.mashup.shorts.domain.news.NewsRepository
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardBulkInsertRepository
+import com.mashup.shorts.core.keywordextractor.KeywordExtractor
+import com.mashup.shorts.leagcy.consts.categoryToUrl
 
-@Component
+@Deprecated("Deprecated By Changed DOM")
+@Component("DeprecatedCrawlerCore")
 class CrawlerCore(
     private val crawlerBase: CrawlerBase,
     private val categoryRepository: CategoryRepository,
     private val newsRepository: NewsRepository,
     private val newsBulkInsertRepository: NewsBulkInsertRepository,
     private val newsCardBulkInsertRepository: NewsCardBulkInsertRepository,
-    @Qualifier("KomoranKeywordExtractor") private val keywordExtractor: KeywordExtractor,
+    @Qualifier("LuceneAnalyerKeywordExtractor") private val keywordExtractor: KeywordExtractor,
     private val hotKeywordRepository: HotKeywordRepository,
 ) {
 

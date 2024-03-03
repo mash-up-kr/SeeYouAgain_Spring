@@ -1,23 +1,24 @@
-package com.mashup.shorts.legacycore
+package com.mashup.shorts.leagcy
 
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import org.springframework.stereotype.Component
-import com.mashup.shorts.legacycore.consts.CONTENT_CLASS_NAME
-import com.mashup.shorts.legacycore.consts.HEADLINE
-import com.mashup.shorts.legacycore.consts.IMAGE_ID_NAME
-import com.mashup.shorts.legacycore.consts.NORMAL
-import com.mashup.shorts.legacycore.consts.PRESS_CLASS_NAME
-import com.mashup.shorts.legacycore.consts.SYMBOLIC_LINK_BASE_URL
-import com.mashup.shorts.legacycore.consts.TITLE_CLASS_NAME
-import com.mashup.shorts.legacycore.consts.WRITTEN_DATETIME_CLASS_NAME
-import com.mashup.shorts.legacycore.consts.detailDocClassNames
-import com.mashup.shorts.legacycore.consts.moreHeadLineLinksElements
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.news.News
+import com.mashup.shorts.leagcy.consts.CONTENT_CLASS_NAME
+import com.mashup.shorts.leagcy.consts.HEADLINE
+import com.mashup.shorts.leagcy.consts.IMAGE_ID_NAME
+import com.mashup.shorts.leagcy.consts.NORMAL
+import com.mashup.shorts.leagcy.consts.PRESS_CLASS_NAME
+import com.mashup.shorts.leagcy.consts.SYMBOLIC_LINK_BASE_URL
+import com.mashup.shorts.leagcy.consts.TITLE_CLASS_NAME
+import com.mashup.shorts.leagcy.consts.WRITTEN_DATETIME_CLASS_NAME
+import com.mashup.shorts.leagcy.consts.detailDocClassNames
+import com.mashup.shorts.leagcy.consts.moreHeadLineLinksElements
 
-@Component
+@Deprecated("Deprecated By Changed DOM")
+@Component("DeprecatedCrawlerBase")
 class CrawlerBase {
 
     internal fun extractMoreHeadLineLinks(url: String, categoryName: CategoryName): Elements {

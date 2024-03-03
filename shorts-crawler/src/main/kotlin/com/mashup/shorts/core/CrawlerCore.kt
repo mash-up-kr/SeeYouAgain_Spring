@@ -3,6 +3,7 @@ package com.mashup.shorts.core
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.context.annotation.Primary
 import org.springframework.retry.annotation.Recover
 import org.springframework.retry.annotation.Retryable
 import org.springframework.scheduling.annotation.Scheduled
@@ -12,7 +13,8 @@ import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.core.consts.categoryToUrl
-import com.mashup.shorts.core.keyword.KeywordExtractor
+import com.mashup.shorts.core.keywordextractor.KeywordExtractor
+import com.mashup.shorts.core.rank.RankingGenerator
 import com.mashup.shorts.domain.category.CategoryName.CULTURE
 import com.mashup.shorts.domain.category.CategoryName.ECONOMIC
 import com.mashup.shorts.domain.category.CategoryName.POLITICS
@@ -20,14 +22,13 @@ import com.mashup.shorts.domain.category.CategoryName.SCIENCE
 import com.mashup.shorts.domain.category.CategoryName.SOCIETY
 import com.mashup.shorts.domain.category.CategoryName.WORLD
 import com.mashup.shorts.domain.category.CategoryRepository
-import com.mashup.shorts.domain.keyword.HotKeyword
-import com.mashup.shorts.domain.keyword.HotKeywordRepository
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.news.NewsBulkInsertRepository
 import com.mashup.shorts.domain.news.NewsRepository
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardBulkInsertRepository
 
+@Primary
 @Component
 class CrawlerCore(
     private val crawlerBase: CrawlerBase,
@@ -35,9 +36,8 @@ class CrawlerCore(
     private val newsRepository: NewsRepository,
     private val newsBulkInsertRepository: NewsBulkInsertRepository,
     private val newsCardBulkInsertRepository: NewsCardBulkInsertRepository,
-    @Qualifier("KomoranKeywordExtractor")
-    private val keywordExtractor: KeywordExtractor,
-    private val hotKeywordRepository: HotKeywordRepository,
+    @Qualifier("KomoranKeywordExtractor") private val keywordExtractor: KeywordExtractor,
+    private val rankingGenerator: RankingGenerator,
 ) {
 
     @Retryable(value = [Exception::class], maxAttempts = 3)
@@ -141,7 +141,7 @@ class CrawlerCore(
             newsCardBulkInsertRepository.bulkInsert(persistenceTargetNewsCards, crawledDateTime)
             persistenceTargetNewsCards.clear()
         }
-        saveKeywordRanking(keywordsCountingPair)
+        rankingGenerator.saveKeywordRanking(keywordsCountingPair)
         log.info("$crawledDateTime - all crawling done")
     }
 
@@ -156,22 +156,6 @@ class CrawlerCore(
         )
     }
 
-
-    //TODO: 테스트 코드 작성
-    private fun saveKeywordRanking(keywordsCountingPair: Map<String, Int>) {
-        //1위 ~ 10위까지 키워드 랭킹 산정 및 저장, value 기준 내림차순
-        val sortedKeywords = keywordsCountingPair.toList().sortedByDescending { it.second }
-        val keywordRanking = StringBuilder()
-
-        val rankingSize = if (sortedKeywords.size < 10) sortedKeywords.size else 10
-        for (rank: Int in 0 until rankingSize) {
-            keywordRanking.append(sortedKeywords[rank]).append(", ")
-        }
-
-        hotKeywordRepository.save(HotKeyword(keywordRanking = keywordRanking.toString()))
-    }
-
-    //TODO: 테스트 코드 작성
     private fun countKeyword(
         keywordsCountingPair: MutableMap<String, Int>,
         extractedKeyword: String,

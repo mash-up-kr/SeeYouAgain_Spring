@@ -2,21 +2,23 @@ package com.mashup.shorts.core
 
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
+import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
-import com.mashup.shorts.core.consts.CONTENT_CLASS_NAME
-import com.mashup.shorts.core.consts.HEADLINE
-import com.mashup.shorts.core.consts.IMAGE_ID_NAME
-import com.mashup.shorts.core.consts.NORMAL
-import com.mashup.shorts.core.consts.PRESS_CLASS_NAME
+import com.mashup.shorts.core.consts.NewsDOMClassNameConst.CONTENT_CLASS_NAME
+import com.mashup.shorts.core.consts.NewsDOMClassNameConst.HEADLINE
+import com.mashup.shorts.core.consts.NewsDOMClassNameConst.IMAGE_ID_NAME
+import com.mashup.shorts.core.consts.NewsDOMClassNameConst.NORMAL
+import com.mashup.shorts.core.consts.NewsDOMClassNameConst.PRESS_CLASS_NAME
+import com.mashup.shorts.core.consts.NewsDOMClassNameConst.TITLE_CLASS_NAME
+import com.mashup.shorts.core.consts.NewsDOMClassNameConst.WRITTEN_DATETIME_CLASS_NAME
+import com.mashup.shorts.core.consts.NewsDOMClassNameConst.detailDocClassNames
+import com.mashup.shorts.core.consts.NewsLinkElementConst.moreHeadLineLinksElements
 import com.mashup.shorts.core.consts.SYMBOLIC_LINK_BASE_URL
-import com.mashup.shorts.core.consts.TITLE_CLASS_NAME
-import com.mashup.shorts.core.consts.WRITTEN_DATETIME_CLASS_NAME
-import com.mashup.shorts.core.consts.detailDocClassNames
-import com.mashup.shorts.core.consts.moreHeadLineLinksElements
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.news.News
 
+@Primary
 @Component
 class CrawlerBase {
 
@@ -89,8 +91,7 @@ class CrawlerBase {
                     .text()
                 val imageLink = detailDoc.getElementById(IMAGE_ID_NAME).toString()
                 val press = detailDoc.getElementsByClass(PRESS_CLASS_NAME).text()
-                val writtenDateTime =
-                    detailDoc.getElementsByClass(WRITTEN_DATETIME_CLASS_NAME).text()
+                val writtenDateTime = detailDoc.getElementsByClass(WRITTEN_DATETIME_CLASS_NAME).text()
 
                 cardNews.add(
                     News(
