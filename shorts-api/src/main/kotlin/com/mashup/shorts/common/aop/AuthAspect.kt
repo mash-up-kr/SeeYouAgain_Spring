@@ -10,13 +10,6 @@ import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.domain.member.MemberRepository
 import jakarta.servlet.http.HttpServletRequest
 
-/**
- * AuthAspect
- *
- * @author JungGyun.Choi
- * @version 1.0.0
- * @since 2023. 06. 12.
- */
 @Aspect
 @Component
 class AuthAspect(
