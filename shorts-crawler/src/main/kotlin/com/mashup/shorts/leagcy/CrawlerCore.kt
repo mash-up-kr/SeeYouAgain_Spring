@@ -5,12 +5,12 @@ import java.time.format.DateTimeFormatter.ofPattern
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.retry.annotation.Recover
 import org.springframework.retry.annotation.Retryable
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
+import com.mashup.shorts.core.keywordextractor.KeywordExtractor
 import com.mashup.shorts.domain.category.CategoryName.CULTURE
 import com.mashup.shorts.domain.category.CategoryName.ECONOMIC
 import com.mashup.shorts.domain.category.CategoryName.POLITICS
@@ -25,7 +25,6 @@ import com.mashup.shorts.domain.news.NewsBulkInsertRepository
 import com.mashup.shorts.domain.news.NewsRepository
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardBulkInsertRepository
-import com.mashup.shorts.core.keywordextractor.KeywordExtractor
 import com.mashup.shorts.leagcy.consts.categoryToUrl
 
 @Deprecated("Deprecated By Changed DOM")
@@ -42,7 +41,6 @@ class CrawlerCore(
 
     @Retryable(value = [Exception::class], maxAttempts = 3)
     @Transactional(rollbackFor = [Exception::class])
-    @Scheduled(cron = "0 0 * * * *")
     internal fun executeCrawling() {
         val crawledDateTime = LocalDateTime.now()
         val keywordsCountingPair = mutableMapOf<String, Int>()
