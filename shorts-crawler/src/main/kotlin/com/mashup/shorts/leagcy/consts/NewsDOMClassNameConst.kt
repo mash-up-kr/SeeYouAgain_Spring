@@ -1,7 +1,6 @@
-package com.mashup.shorts.legacycore.consts
+package com.mashup.shorts.leagcy.consts
 
 import com.mashup.shorts.domain.category.CategoryName
-
 
 internal const val DETAIL_POLITICS_DOC_CLASS_NAME = "nclicks(cls_pol.clsart1)"
 internal const val DETAIL_ECONOMIC_DOC_CLASS_NAME = "nclicks(cls_eco.clsart1)"

@@ -11,13 +11,6 @@ import org.springframework.core.env.ConfigurableEnvironment
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import com.ulisesbocchio.jasyptspringboot.encryptor.DefaultLazyEncryptor
 
-/**
- * JasyptConfig
- *
- * @author JungGyun.Choi
- * @version 1.0.0
- * @since 2023. 05. 14.
- */
 @Disabled
 @ExtendWith(SpringExtension::class)
 @SpringBootTest

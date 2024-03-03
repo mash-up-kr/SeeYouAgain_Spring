@@ -1,12 +1,15 @@
-package com.mashup.shorts.legacycore.keyword
+package com.mashup.shorts.leagcy.keywordextractor
 
 import java.io.StringReader
 import org.apache.lucene.analysis.ko.KoreanAnalyzer
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
+import com.mashup.shorts.core.keywordextractor.KeywordExtractor
 
 @Component
 @Deprecated("Replaces morphological analysis with Komoran Library.")
+@Qualifier("LuceneAnalyerKeywordExtractor")
 class LuceneAnalyerKeywordExtractor : KeywordExtractor {
 
     override fun extractKeyword(content: String): String {
