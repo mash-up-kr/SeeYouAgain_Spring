@@ -1,5 +1,8 @@
 package com.mashup.shorts.domain.membernewscard
 
+import java.time.LocalDateTime
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.util.StartEndDateTimeExtractor.extractStarDateTimeAndEndDateTime
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.member.ShowMode
@@ -10,9 +13,6 @@ import com.mashup.shorts.domain.membernews.MemberNewsRepository
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 import com.mashup.shorts.domain.newscard.Pivots
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
 
 @Service
 @Transactional(readOnly = true)
