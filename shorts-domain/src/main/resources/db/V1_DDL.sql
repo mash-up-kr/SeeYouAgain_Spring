@@ -50,7 +50,7 @@ create table member_log
     member_id                   bigint,
 
     -- 최근 접속 일자
-    last_attendance_date_time   datetime(6) not null default CURRENT_TIMESTAMP,
+    last_attendance_date_time datetime(6) not null default CURRENT_TIMESTAMP (6),
 
     -- 연속 접속일 수
     continuous_attendance_count int not null default 1,
@@ -70,8 +70,8 @@ create table member_log
     -- 저장한 뉴스를 읽은 횟수
     read_news_count             int not null default 0,
 
-    created_at                  datetime(6) not null default CURRENT_TIMESTAMP,
-    modified_at                 datetime(6) not null default CURRENT_TIMESTAMP
+    created_at                datetime(6) not null default CURRENT_TIMESTAMP (6),
+    modified_at               datetime(6) not null default CURRENT_TIMESTAMP (6)
 );
 
 create table member_badge
@@ -81,34 +81,34 @@ create table member_badge
 
     -- 작심삼일 - 3일 연속 접속
     three_days_continuous_attendance            boolean not null default false,
-    three_days_continuous_attendance_created_at datetime(6) not null default CURRENT_TIMESTAMP,
+    three_days_continuous_attendance_created_at datetime(6) not null default CURRENT_TIMESTAMP (6),
 
     -- 단골손님 - 10일 연속 접속
     ten_days_continuous_attendance              boolean not null default false,
-    ten_days_continuous_attendance_created_at   datetime(6) not null default CURRENT_TIMESTAMP,
+    ten_days_continuous_attendance_created_at   datetime(6) not null default CURRENT_TIMESTAMP (6),
 
     -- 세상 탐험가 뱃지 - 1주일 간 뉴스를 20개 저장
     explorer                                    boolean not null default false,
-    explorer_created_at                         datetime(6) not null default CURRENT_TIMESTAMP,
+    explorer_created_at                         datetime(6) not null default CURRENT_TIMESTAMP (6),
 
     -- 뿌듯한 첫 공유 - 첫 공유 시도
     king_of_sharing                             boolean not null default false,
-    king_of_sharing_created_at                  datetime(6) not null default CURRENT_TIMESTAMP,
+    king_of_sharing_created_at                  datetime(6) not null default CURRENT_TIMESTAMP (6),
 
     -- 설레는 첫 저장 뱃지 - 첫 뉴스 저장
     first_news_saving                           boolean not null default false,
-    first_news_saving_created_at                datetime(6) not null default CURRENT_TIMESTAMP,
+    first_news_saving_created_at                datetime(6) not null default CURRENT_TIMESTAMP (6),
 
     -- 시작이 반 - 처음으로 뉴스를 다 읽음
     first_clear_news                            boolean not null default false,
-    first_clear_news_created_at                 datetime(6) not null default CURRENT_TIMESTAMP,
+    first_clear_news_created_at                 datetime(6) not null default CURRENT_TIMESTAMP (6),
 
     -- 취향 존중 뱃지
     change_mode                                 boolean not null default false,
-    change_mode_created_at                      datetime(6) not null default CURRENT_TIMESTAMP,
+    change_mode_created_at                      datetime(6) not null default CURRENT_TIMESTAMP (6),
 
-    created_at                                  datetime(6) not null default CURRENT_TIMESTAMP,
-    modified_at                                 datetime(6) not null default CURRENT_TIMESTAMP
+    created_at                                  datetime(6) not null default CURRENT_TIMESTAMP (6),
+    modified_at                                 datetime(6) not null default CURRENT_TIMESTAMP (6)
 );
 
 create table news
@@ -132,7 +132,7 @@ create table member_news
     id          bigint auto_increment primary key,
     member_id   bigint  not null,
     news_id     bigint  not null,
-    read_at     datetime(6) not null default CURRENT_TIMESTAMP,
+    read_at     datetime(6) not null default CURRENT_TIMESTAMP (6),
     deleted     boolean not null default false,
     created_at  datetime(6) not null,
     modified_at datetime(6) not null
@@ -159,22 +159,22 @@ create table member_news_card
 );
 
 insert into category(name, created_at, modified_at)
-values ("POLITICS", now(), now());
+values ('POLITICS', now(), now());
 
 insert into category(name, created_at, modified_at)
-values ("ECONOMIC", now(), now());
+values ('ECONOMIC', now(), now());
 
 insert into category(name, created_at, modified_at)
-values ("SOCIETY", now(), now());
+values ('SOCIETY', now(), now());
 
 insert into category(name, created_at, modified_at)
-values ("CULTURE", now(), now());
+values ('CULTURE', now(), now());
 
 insert into category(name, created_at, modified_at)
-values ("WORLD", now(), now());
+values ('WORLD', now(), now());
 
 insert into category(name, created_at, modified_at)
-values ("SCIENCE", now(), now());
+values ('SCIENCE', now(), now());
 
 CREATE INDEX news_index ON news (created_at);
 ANALYZE
