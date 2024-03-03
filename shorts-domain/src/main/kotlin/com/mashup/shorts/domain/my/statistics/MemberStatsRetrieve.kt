@@ -2,6 +2,9 @@ package com.mashup.shorts.domain.my.statistics
 
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.temporal.TemporalAdjusters
+import java.time.temporal.WeekFields
+import java.util.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.util.CalendarUtil
@@ -52,40 +55,48 @@ class MemberStatsRetrieve(
             .map { vo -> ShortsCntByCategory(category = vo.getCategory(), shortsCnt = vo.getShortsCnt()) }.toList()
     }
 
-    private fun setWeeklyShorts(now: LocalDate, shortsCntByDateList: List<ShortsCntByDate>,
-                                weeklyShortsCnt: LinkedHashMap<String, Int>,
-                                dateOfShortsRead: LinkedHashMap<String, MutableList<String>>) {
+    private fun setWeeklyShorts(
+        now: LocalDate,
+        shortsCntByDateList: List<ShortsCntByDate>,
+        weeklyShortsCnt: LinkedHashMap<String, Int>,
+        dateOfShortsRead: LinkedHashMap<String, MutableList<String>>,
+    ) {
         dateOfShortsRead["lastWeek"] = mutableListOf()
         dateOfShortsRead["thisWeek"] = mutableListOf()
 
         var startIdx = 0
+
+        val weekField = WeekFields.of(Locale.getDefault())
+
         for (week in (RESPONSE_WEEKS - 1) downTo 0) {
-            // 해당 주차의 타깃 날짜
             val targetDateOfWeek = now.minusDays((week * 7).toLong())
-            // 차주의 시작(월요일) 날짜 계산
             val targetDateOfNextWeek = targetDateOfWeek.plusDays(7)
             val daysAfterMonday = targetDateOfNextWeek.dayOfWeek.value - DayOfWeek.MONDAY.value
             val startDateOfNextWeek = targetDateOfNextWeek.minusDays(daysAfterMonday.toLong())
 
-            var total = 0 // 해당 주차의 숏스 읽은 개수
+            var total = 0
             for (idx in startIdx until shortsCntByDateList.size) {
                 if (shortsCntByDateList[idx].date >= startDateOfNextWeek) {
                     startIdx = idx
                     break
                 }
+
                 if (idx == shortsCntByDateList.size - 1) {
                     startIdx = idx + 1
                 }
-                // 이번주 & 지난주 숏스 읽은 날짜 추가
+
                 if (week == 0 || week == 1) {
                     val weekName = if (week == 0) "thisWeek" else "lastWeek"
                     dateOfShortsRead[weekName]?.add(shortsCntByDateList[idx].date.toString())
                 }
+
                 total += shortsCntByDateList[idx].shortsCnt
             }
-            // 해당 주차의 숏스 읽은 개수 업데이트
-            weeklyShortsCnt[CalendarUtil.getCurrentWeekOfMonth(
-                targetDateOfWeek.year, targetDateOfWeek.monthValue, targetDateOfWeek.dayOfMonth)] = total
+
+            val firstDayOfMonth = targetDateOfWeek.with(TemporalAdjusters.firstDayOfMonth())
+            val firstWeekOfMonth = firstDayOfMonth.get(weekField.weekOfYear())
+            val weekOfMonth = targetDateOfWeek.get(weekField.weekOfYear()) - firstWeekOfMonth
+            weeklyShortsCnt["${targetDateOfWeek.year}년 ${targetDateOfWeek.monthValue}월 ${weekOfMonth}주차"] = total
         }
     }
 
