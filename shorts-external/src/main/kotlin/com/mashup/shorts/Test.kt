@@ -7,5 +7,4 @@ package com.mashup.shorts
  * @version 1.0.0
  * @since 2023. 05. 01.
  */
-class Test {
-}
+class Test
