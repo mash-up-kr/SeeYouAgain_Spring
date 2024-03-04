@@ -35,7 +35,7 @@ class CrawlerCore(
     private val newsRepository: NewsRepository,
     private val newsBulkInsertRepository: NewsBulkInsertRepository,
     private val newsCardBulkInsertRepository: NewsCardBulkInsertRepository,
-    @Qualifier("LuceneAnalyerKeywordExtractor") private val keywordExtractor: KeywordExtractor,
+    @Qualifier("KomoranKeywordExtractor") private val keywordExtractor: KeywordExtractor,
     private val hotKeywordRepository: HotKeywordRepository,
 ) {
 
@@ -112,8 +112,11 @@ class CrawlerCore(
                     crawledDateTime = crawledDateTime
                 )
 
+                val extractKeywordTargetNews = newsRepository.findById(newNewsLastIndex!!.toLong()).get()
+
                 val extractedKeywords = keywordExtractor.extractKeyword(
-                    newsRepository.findById(newNewsLastIndex!!.toLong()).get().content
+                    title = extractKeywordTargetNews.title,
+                    content = extractKeywordTargetNews.content
                 )
                 log.info { "$extractedKeywords - keyword is extracted" }
 

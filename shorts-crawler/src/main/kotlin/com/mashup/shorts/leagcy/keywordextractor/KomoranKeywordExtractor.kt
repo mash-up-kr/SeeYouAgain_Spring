@@ -1,16 +1,18 @@
-package com.mashup.shorts.core.keywordextractor
+package com.mashup.shorts.leagcy.keywordextractor
 
 import java.util.*
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
+import com.mashup.shorts.core.keywordextractor.KeywordExtractor
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL
 import kr.co.shineware.nlp.komoran.core.Komoran
 
 @Component
+@Deprecated("Replaces morphological analysis with Komoran Library.")
 @Qualifier("KomoranKeywordExtractor")
 class KomoranKeywordExtractor : KeywordExtractor {
 
-    override fun extractKeyword(content: String): String {
+    override fun extractKeyword(title: String, content: String): String {
         val keywordCount = 5
         val komoran = Komoran(DEFAULT_MODEL.FULL)
         val nouns = komoran.analyze(content).nouns
