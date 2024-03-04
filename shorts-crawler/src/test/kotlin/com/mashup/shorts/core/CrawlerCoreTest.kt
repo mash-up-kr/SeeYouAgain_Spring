@@ -11,8 +11,8 @@ import com.mashup.shorts.ShortsCrawlerApplication
 @Disabled
 @ActiveProfiles("test")
 @SpringBootTest(classes = [ShortsCrawlerApplication::class])
-class CrawlerCoreTest @Autowired constructor(
-    private val crawlerCore: CrawlerCore,
+class CrawlerCoreTest (
+    @Autowired private val crawlerCore: CrawlerCore,
 ) {
 
     @Test

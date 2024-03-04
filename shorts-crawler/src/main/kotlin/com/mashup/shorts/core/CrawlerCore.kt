@@ -12,9 +12,12 @@ import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
+import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_ONE
+import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_ONE_QUARTER
 import com.mashup.shorts.core.consts.categoryToUrl
 import com.mashup.shorts.core.keywordextractor.KeywordExtractor
 import com.mashup.shorts.core.rank.RankingGenerator
+import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName.CULTURE
 import com.mashup.shorts.domain.category.CategoryName.ECONOMIC
 import com.mashup.shorts.domain.category.CategoryName.POLITICS
@@ -45,7 +48,7 @@ class CrawlerCore(
     @Scheduled(cron = "0 0 * * * *")
     internal fun executeCrawling() {
         val crawledDateTime = LocalDateTime.now()
-        val keywordsCountingPair = mutableMapOf<String, Int>()
+        val keywordsCountingPair = mutableMapOf<String, Double>()
         val persistenceTargetNewsCards = mutableListOf<NewsCard>()
         for (categoryPair in categoryToUrl) {
             val categoryName = categoryPair.key
@@ -53,7 +56,7 @@ class CrawlerCore(
 
             log.info { "$categoryName - ${crawledDateTime.format(ofPattern("yyyy-MM-dd HH:mm:ss"))} - crawling start" }
 
-            val category = when (categoryName) {
+            val currentCategory = when (categoryName) {
                 POLITICS -> categoryRepository.findByName(POLITICS)
                 ECONOMIC -> categoryRepository.findByName(ECONOMIC)
                 SOCIETY -> categoryRepository.findByName(SOCIETY)
@@ -61,7 +64,6 @@ class CrawlerCore(
                 WORLD -> categoryRepository.findByName(WORLD)
                 SCIENCE -> categoryRepository.findByName(SCIENCE)
             }
-            log.info { "${category.name.name} is loaded" }
 
             val headLineLinks = crawlerBase.extractMoreHeadLineLinks(
                 url = categoryURL,
@@ -71,16 +73,15 @@ class CrawlerCore(
             val crawledNewsCards = crawlerBase.extractNewsCardBundle(
                 allHeadLineNewsLinks = crawlerBase.extractAllHeadLineNewsLinks(headLineLinks),
                 categoryName = categoryName,
-                category = category,
+                category = currentCategory,
             )
             log.info { "crawledNewsCards size = ${crawledNewsCards.size}" }
 
             val persistenceNewsBundle = newsRepository.findAllByCategoryAndCreatedAtBetween(
-                category = category,
+                category = currentCategory,
                 startDateTime = crawledDateTime.minusDays(1),
                 endDateTime = crawledDateTime
             )
-            log.info { "persistenceNewsBundle size = ${persistenceNewsBundle.size}" }
 
             crawledNewsCards.map { crawledNewsCard ->
                 val persistenceTargetNewsBundle = mutableListOf<News>()
@@ -99,8 +100,6 @@ class CrawlerCore(
 
                 // 현재 DB에 존재하는 가장 마지막 뉴스
                 val lastNews = newsRepository.findTopByOrderByIdDesc()
-                log.info { "$lastNews is loaded" }
-
 
                 // 만약 DB에 뉴스가 존재한다면 해당 뉴스의 id + 1를 다음에 삽입될 인덱스로 지정
                 if (lastNews != null) {
@@ -122,7 +121,7 @@ class CrawlerCore(
                 log.info { "$extractedKeywords - keyword is extracted" }
 
                 val persistenceNewsCard = NewsCard(
-                    category = category,
+                    category = currentCategory,
                     multipleNews = filterSquareBracket(
                         (currentLastNewsIndex..newNewsLastIndex).joinToString(", ")
                     ),
@@ -131,7 +130,7 @@ class CrawlerCore(
                     modifiedAt = crawledDateTime,
                 )
                 persistenceTargetNewsCards.add(persistenceNewsCard)
-                keywordsCountingPair += countKeyword(keywordsCountingPair, extractedKeywords)
+                keywordsCountingPair += countKeyword(keywordsCountingPair, extractedKeywords, currentCategory)
                 if (persistenceTargetNewsCards.size >= 100) {
                     newsCardBulkInsertRepository.bulkInsert(persistenceTargetNewsCards, crawledDateTime)
                     persistenceTargetNewsCards.clear()
@@ -144,7 +143,9 @@ class CrawlerCore(
             newsCardBulkInsertRepository.bulkInsert(persistenceTargetNewsCards, crawledDateTime)
             persistenceTargetNewsCards.clear()
         }
-        rankingGenerator.saveKeywordRanking(keywordsCountingPair)
+
+        rankingGenerator.saveKeywordRanking(keywordsCountingPair.mapValues { it.value.toInt() })
+
         log.info("$crawledDateTime - all crawling done")
     }
 
@@ -160,14 +161,19 @@ class CrawlerCore(
     }
 
     private fun countKeyword(
-        keywordsCountingPair: MutableMap<String, Int>,
+        keywordsCountingPair: MutableMap<String, Double>,
         extractedKeyword: String,
-    ): MutableMap<String, Int> {
+        category: Category,
+    ): MutableMap<String, Double> {
         val keywords = extractedKeyword.split(", ")
 
-        for (keyword in keywords) {
-            val count = keywordsCountingPair.getOrDefault(keyword, 0)
-            keywordsCountingPair[keyword] = count + 1
+        val weight = when (category.name) {
+            POLITICS, ECONOMIC, SOCIETY -> CATEGORY_WEIGHT_ONE
+            WORLD, CULTURE, SCIENCE -> CATEGORY_WEIGHT_ONE_QUARTER
+        }
+
+        keywords.map { keyword ->
+            keywordsCountingPair[keyword] = keywordsCountingPair.getOrDefault(keyword, 0.0) + weight
         }
 
         return keywordsCountingPair

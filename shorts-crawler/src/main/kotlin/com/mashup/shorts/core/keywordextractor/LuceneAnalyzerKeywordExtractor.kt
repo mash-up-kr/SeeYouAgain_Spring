@@ -8,38 +8,68 @@ import org.apache.lucene.analysis.ko.KoreanTokenizer.DecompoundMode
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
+import com.mashup.shorts.core.consts.CONTENT_WEIGHT
+import com.mashup.shorts.core.consts.TITLE_WEIGHT
 
 @Component
 @Qualifier("LuceneAnalyzerKeywordExtractor")
 class LuceneAnalyzerKeywordExtractor : KeywordExtractor {
 
     override fun extractKeyword(title: String, content: String): String {
-        val titleFrequencies = calculateWordFrequencies(title, TITLE_WEIGHT)
-        val contentFrequencies = calculateWordFrequencies(content, CONTENT_WEIGHT)
+        val wordFrequencies = calculateWordFrequencies(title, content)
+        return formatResult(wordFrequencies)
+    }
+
+    private fun calculateWordFrequencies(title: String, content: String): MutableMap<String, Int> {
+        val titleFrequencies = calculateFrequency(title, TITLE_WEIGHT)
+        val contentFrequencies = calculateFrequency(content, CONTENT_WEIGHT)
+
+        return mergeFrequencies(titleFrequencies, contentFrequencies)
+    }
+
+    private fun mergeFrequencies(
+        titleFrequencies: Map<String, Int>,
+        contentFrequencies: Map<String, Int>,
+    ): MutableMap<String, Int> {
         val wordFrequencies = titleFrequencies.toMutableMap()
 
         contentFrequencies.forEach { (key, value) ->
             wordFrequencies[key] = wordFrequencies.getOrDefault(key, DEFAULT_FREQUENCY) + value
         }
 
-        return formatResult(wordFrequencies)
+        return wordFrequencies
     }
 
-    private fun calculateWordFrequencies(text: String, weight: Double): Map<String, Int> {
+    private fun calculateFrequency(text: String, weight: Double): Map<String, Int> {
         val wordFrequencies = mutableMapOf<String, Int>()
-        val tokenStream = createTokenStream(text)
-        tokenStream.use { token ->
-            token.reset()
-            while (token.incrementToken()) {
-                val term = token.getAttribute(CharTermAttribute::class.java).toString()
-                if (term !in stopWords && term.length > 1) {
-                    val frequency = wordFrequencies.getOrDefault(term, DEFAULT_FREQUENCY)
-                    wordFrequencies[term] = frequency + weight.toInt()
+        val tokens = text.split(" ")
+
+        tokens.forEach { token ->
+            val term = createTokenStream(token).use { stream ->
+                stream.reset()
+                val termAttribute = stream.getAttribute(CharTermAttribute::class.java)
+                val result = mutableListOf<String>()
+                while (stream.incrementToken()) {
+                    val term = termAttribute.toString()
+                    if (isValidTerm(term)) {
+                        result.add(term)
+                    }
                 }
+                stream.end()
+                result.joinToString(" ")
             }
-            token.end()
+
+            if (term.isNotBlank()) {
+                val frequency = wordFrequencies.getOrDefault(term, DEFAULT_FREQUENCY)
+                wordFrequencies[term] = frequency + weight.toInt()
+            }
         }
+
         return wordFrequencies
+    }
+
+    private fun isValidTerm(term: String): Boolean {
+        return term !in stopWords && term.length > 1
     }
 
     private fun createTokenStream(text: String): TokenStream {
@@ -55,8 +85,6 @@ class LuceneAnalyzerKeywordExtractor : KeywordExtractor {
 
     companion object {
         private const val KEYWORD_COUNT = 5
-        private const val TITLE_WEIGHT = 1.5
-        private const val CONTENT_WEIGHT = 1.0
         private const val DEFAULT_FREQUENCY = 0
         private const val TOKEN_STREAM_FIELD_NAME_TYPE = "text"
 
