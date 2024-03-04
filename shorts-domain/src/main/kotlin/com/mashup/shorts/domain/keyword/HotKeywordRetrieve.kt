@@ -19,7 +19,6 @@ class HotKeywordRetrieve(
                 resultErrorMessage = "해당 시간대의 핫 키워드가 존재하지 않습니다. (time: ${targetTime}}"
             )
 
-        // TODO: 임시 코드 => 리팩터링 해야 함
         val regex = "\\((.*?), (\\d+)\\)".toRegex()
         val matches = regex.findAll(hotKeyword.keywordRanking)
         val result = mutableListOf<String>()
