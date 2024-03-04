@@ -16,7 +16,12 @@ class LuceneAnalyzerKeywordExtractor : KeywordExtractor {
     override fun extractKeyword(title: String, content: String): String {
         val titleFrequencies = calculateWordFrequencies(title, TITLE_WEIGHT)
         val contentFrequencies = calculateWordFrequencies(content, CONTENT_WEIGHT)
-        val wordFrequencies = titleFrequencies + contentFrequencies
+        val wordFrequencies = titleFrequencies.toMutableMap()
+
+        contentFrequencies.forEach { (key, value) ->
+            wordFrequencies[key] = wordFrequencies.getOrDefault(key, DEFAULT_FREQUENCY) + value
+        }
+
         return formatResult(wordFrequencies)
     }
 
@@ -50,7 +55,7 @@ class LuceneAnalyzerKeywordExtractor : KeywordExtractor {
 
     companion object {
         private const val KEYWORD_COUNT = 5
-        private const val TITLE_WEIGHT = 2.0
+        private const val TITLE_WEIGHT = 1.5
         private const val CONTENT_WEIGHT = 1.0
         private const val DEFAULT_FREQUENCY = 0
         private const val TOKEN_STREAM_FIELD_NAME_TYPE = "text"
