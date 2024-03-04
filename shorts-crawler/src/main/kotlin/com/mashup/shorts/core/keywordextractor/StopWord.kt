@@ -1,5 +1,8 @@
 package com.mashup.shorts.core.keywordextractor
 
+/**
+불용어 목록 출처 : https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002390885
+ */
 val stopWords = setOf(
     "그래", "아니", "아", "뭐", "응", "네", "예", "자", "야", "글쎄", "참", "어디", "그럼",
     "아아", "얘", "임마", "아이고", "여보", "어", "저", "원", "아이구", "음", "글쎄요",
