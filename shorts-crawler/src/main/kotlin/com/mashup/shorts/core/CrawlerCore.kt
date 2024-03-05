@@ -13,7 +13,7 @@ import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_ONE
-import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_ONE_QUARTER
+import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_ONE_HALF
 import com.mashup.shorts.core.consts.categoryToUrl
 import com.mashup.shorts.core.keywordextractor.KeywordExtractor
 import com.mashup.shorts.core.rank.RankingGenerator
@@ -169,7 +169,7 @@ class CrawlerCore(
 
         val weight = when (category.name) {
             POLITICS, ECONOMIC, SOCIETY -> CATEGORY_WEIGHT_ONE
-            WORLD, CULTURE, SCIENCE -> CATEGORY_WEIGHT_ONE_QUARTER
+            WORLD, CULTURE, SCIENCE -> CATEGORY_WEIGHT_ONE_HALF
         }
 
         keywords.map { keyword ->
