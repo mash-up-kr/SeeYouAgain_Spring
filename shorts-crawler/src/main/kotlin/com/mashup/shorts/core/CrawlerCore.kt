@@ -2,6 +2,7 @@ package com.mashup.shorts.core
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
+import org.jsoup.select.Elements
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Primary
 import org.springframework.retry.annotation.Recover
@@ -14,10 +15,13 @@ import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
 import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_ONE
 import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_ONE_HALF
+import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_ONE_QUARTER
+import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_TWO_HALF_QUARTER
 import com.mashup.shorts.core.consts.categoryToUrl
 import com.mashup.shorts.core.keywordextractor.KeywordExtractor
 import com.mashup.shorts.core.rank.RankingGenerator
 import com.mashup.shorts.domain.category.Category
+import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.category.CategoryName.CULTURE
 import com.mashup.shorts.domain.category.CategoryName.ECONOMIC
 import com.mashup.shorts.domain.category.CategoryName.POLITICS
@@ -50,38 +54,19 @@ class CrawlerCore(
         val crawledDateTime = LocalDateTime.now()
         val keywordsCountingPair = mutableMapOf<String, Double>()
         val persistenceTargetNewsCards = mutableListOf<NewsCard>()
+
         for (categoryPair in categoryToUrl) {
             val categoryName = categoryPair.key
             val categoryURL = categoryPair.value
 
             log.info { "$categoryName - ${crawledDateTime.format(ofPattern("yyyy-MM-dd HH:mm:ss"))} - crawling start" }
 
-            val currentCategory = when (categoryName) {
-                POLITICS -> categoryRepository.findByName(POLITICS)
-                ECONOMIC -> categoryRepository.findByName(ECONOMIC)
-                SOCIETY -> categoryRepository.findByName(SOCIETY)
-                CULTURE -> categoryRepository.findByName(CULTURE)
-                WORLD -> categoryRepository.findByName(WORLD)
-                SCIENCE -> categoryRepository.findByName(SCIENCE)
-            }
+            val currentCategory = getPersistenceCategory(categoryName)
+            val headLineLinks = getHeadLineLinks(categoryURL, categoryName)
+            val crawledNewsCards = getCrawledNewsCards(headLineLinks, categoryName, currentCategory)
+            val persistenceNewsBundle = getRecentPersistenceNewsBundle(currentCategory, crawledDateTime)
 
-            val headLineLinks = crawlerBase.extractMoreHeadLineLinks(
-                url = categoryURL,
-                categoryName = categoryName
-            )
-
-            val crawledNewsCards = crawlerBase.extractNewsCardBundle(
-                allHeadLineNewsLinks = crawlerBase.extractAllHeadLineNewsLinks(headLineLinks),
-                categoryName = categoryName,
-                category = currentCategory,
-            )
             log.info { "crawledNewsCards size = ${crawledNewsCards.size}" }
-
-            val persistenceNewsBundle = newsRepository.findAllByCategoryAndCreatedAtBetween(
-                category = currentCategory,
-                startDateTime = crawledDateTime.minusDays(1),
-                endDateTime = crawledDateTime
-            )
 
             crawledNewsCards.map { crawledNewsCard ->
                 val persistenceTargetNewsBundle = mutableListOf<News>()
@@ -107,17 +92,10 @@ class CrawlerCore(
                 }
 
                 // 크롤러한 뉴스 삽입 후 마지막 News의 Index
-                val newNewsLastIndex = newsBulkInsertRepository.bulkInsert(
-                    newsBundle = persistenceTargetNewsBundle,
-                    crawledDateTime = crawledDateTime
-                )
-
+                val newNewsLastIndex = bulkInsertNews(persistenceTargetNewsBundle, crawledDateTime)
                 val extractKeywordTargetNews = newsRepository.findById(newNewsLastIndex!!.toLong()).get()
+                val extractedKeywords = getKeywords(extractKeywordTargetNews)
 
-                val extractedKeywords = keywordExtractor.extractKeyword(
-                    title = extractKeywordTargetNews.title,
-                    content = extractKeywordTargetNews.content
-                )
                 log.info { "$extractedKeywords - keyword is extracted" }
 
                 val persistenceNewsCard = NewsCard(
@@ -130,24 +108,30 @@ class CrawlerCore(
                     modifiedAt = crawledDateTime,
                 )
                 persistenceTargetNewsCards.add(persistenceNewsCard)
-                keywordsCountingPair += countKeyword(keywordsCountingPair, extractedKeywords, currentCategory)
-                if (persistenceTargetNewsCards.size >= 100) {
-                    newsCardBulkInsertRepository.bulkInsert(persistenceTargetNewsCards, crawledDateTime)
+                keywordsCountingPair += countKeyword(
+                    keywordsCountingPair,
+                    extractedKeywords,
+                    currentCategory
+                )
+                if (isBulkInserTiming(persistenceTargetNewsCards)) {
+                    bulkInsertNewsCard(persistenceTargetNewsCards, crawledDateTime)
                     persistenceTargetNewsCards.clear()
                 }
             }
             log.info("$categoryName - crawled complete!!")
             Thread.sleep(1000)
         }
-        if (persistenceTargetNewsCards.isNotEmpty()) {
-            newsCardBulkInsertRepository.bulkInsert(persistenceTargetNewsCards, crawledDateTime)
-            persistenceTargetNewsCards.clear()
+        if (isRemainedNewsCard(persistenceTargetNewsCards)) {
+            bulkInsertNewsCard(persistenceTargetNewsCards, crawledDateTime)
         }
 
         rankingGenerator.saveKeywordRanking(keywordsCountingPair.mapValues { it.value.toInt() })
 
         log.info("$crawledDateTime - all crawling done")
     }
+
+    private fun isBulkInserTiming(persistenceTargetNewsCards: MutableList<NewsCard>) =
+        persistenceTargetNewsCards.size >= 100
 
     @Recover
     fun recover(exception: Exception) {
@@ -160,6 +144,65 @@ class CrawlerCore(
         )
     }
 
+    private fun bulkInsertNewsCard(
+        persistenceTargetNewsCards: MutableList<NewsCard>,
+        crawledDateTime: LocalDateTime,
+    ) {
+        newsCardBulkInsertRepository.bulkInsert(persistenceTargetNewsCards, crawledDateTime)
+    }
+
+    private fun bulkInsertNews(
+        persistenceTargetNewsBundle: MutableList<News>,
+        crawledDateTime: LocalDateTime,
+    ) = newsBulkInsertRepository.bulkInsert(
+        newsBundle = persistenceTargetNewsBundle,
+        crawledDateTime = crawledDateTime
+    )
+
+    private fun getKeywords(extractKeywordTargetNews: News) = keywordExtractor.extractKeyword(
+        title = extractKeywordTargetNews.title,
+        content = extractKeywordTargetNews.content
+    )
+
+    private fun isRemainedNewsCard(persistenceTargetNewsCards: MutableList<NewsCard>) =
+        persistenceTargetNewsCards.isNotEmpty()
+
+    private fun getRecentPersistenceNewsBundle(
+        currentCategory: Category,
+        crawledDateTime: LocalDateTime,
+    ) = newsRepository.findAllByCategoryAndCreatedAtBetween(
+        category = currentCategory,
+        startDateTime = crawledDateTime.minusDays(1),
+        endDateTime = crawledDateTime
+    )
+
+    private fun getPersistenceCategory(categoryName: CategoryName) = when (categoryName) {
+        POLITICS -> categoryRepository.findByName(POLITICS)
+        ECONOMIC -> categoryRepository.findByName(ECONOMIC)
+        SOCIETY -> categoryRepository.findByName(SOCIETY)
+        CULTURE -> categoryRepository.findByName(CULTURE)
+        WORLD -> categoryRepository.findByName(WORLD)
+        SCIENCE -> categoryRepository.findByName(SCIENCE)
+    }
+
+    private fun getCrawledNewsCards(
+        headLineLinks: Elements,
+        categoryName: CategoryName,
+        currentCategory: Category,
+    ) = crawlerBase.extractNewsCardBundle(
+        allHeadLineNewsLinks = crawlerBase.extractAllHeadLineNewsLinks(headLineLinks),
+        categoryName = categoryName,
+        category = currentCategory,
+    )
+
+    private fun getHeadLineLinks(
+        categoryURL: String,
+        categoryName: CategoryName,
+    ) = crawlerBase.extractMoreHeadLineLinks(
+        url = categoryURL,
+        categoryName = categoryName
+    )
+
     private fun countKeyword(
         keywordsCountingPair: MutableMap<String, Double>,
         extractedKeyword: String,
@@ -168,8 +211,10 @@ class CrawlerCore(
         val keywords = extractedKeyword.split(", ")
 
         val weight = when (category.name) {
-            POLITICS, ECONOMIC, SOCIETY -> CATEGORY_WEIGHT_ONE
-            WORLD, CULTURE, SCIENCE -> CATEGORY_WEIGHT_ONE_HALF
+            POLITICS, SOCIETY -> CATEGORY_WEIGHT_ONE
+            ECONOMIC -> CATEGORY_WEIGHT_ONE_QUARTER
+            WORLD -> CATEGORY_WEIGHT_ONE_HALF
+            CULTURE, SCIENCE -> CATEGORY_WEIGHT_TWO_HALF_QUARTER
         }
 
         keywords.map { keyword ->
