@@ -17,6 +17,9 @@ dependencies {
 
     // Spring Retry
     implementation("org.springframework.retry:spring-retry")
+
+    // okhttp
+    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.9")
 }
 
 application {
