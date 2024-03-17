@@ -1,31 +1,27 @@
-package com.mashup.shorts.core
+package com.mashup.shorts.core.leagcy
 
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
-import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
-import com.mashup.shorts.core.consts.NewsDOMClassNameConst.CONTENT_CLASS_NAME
-import com.mashup.shorts.core.consts.NewsDOMClassNameConst.HEADLINE
-import com.mashup.shorts.core.consts.NewsDOMClassNameConst.IMAGE_ID_NAME
-import com.mashup.shorts.core.consts.NewsDOMClassNameConst.NORMAL
-import com.mashup.shorts.core.consts.NewsDOMClassNameConst.PRESS_CLASS_NAME
-import com.mashup.shorts.core.consts.NewsDOMClassNameConst.TITLE_CLASS_NAME
-import com.mashup.shorts.core.consts.NewsDOMClassNameConst.WRITTEN_DATETIME_CLASS_NAME
-import com.mashup.shorts.core.consts.NewsDOMClassNameConst.detailDocClassNames
-import com.mashup.shorts.core.consts.NewsLinkElementConst.moreHeadLineLinksElements
-import com.mashup.shorts.core.consts.SYMBOLIC_LINK_BASE_URL
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.news.News
+import com.mashup.shorts.core.leagcy.consts.CONTENT_CLASS_NAME
+import com.mashup.shorts.core.leagcy.consts.HEADLINE
+import com.mashup.shorts.core.leagcy.consts.IMAGE_ID_NAME
+import com.mashup.shorts.core.leagcy.consts.NORMAL
+import com.mashup.shorts.core.leagcy.consts.PRESS_CLASS_NAME
+import com.mashup.shorts.core.leagcy.consts.SYMBOLIC_LINK_BASE_URL
+import com.mashup.shorts.core.leagcy.consts.TITLE_CLASS_NAME
+import com.mashup.shorts.core.leagcy.consts.WRITTEN_DATETIME_CLASS_NAME
+import com.mashup.shorts.core.leagcy.consts.detailDocClassNames
+import com.mashup.shorts.core.leagcy.consts.moreHeadLineLinksElements
 
-@Primary
-@Component
+@Deprecated("Deprecated By Changed DOM")
+@Component("DeprecatedCrawlerBase")
 class CrawlerBase {
 
-    internal fun extractMoreHeadLineLinks(
-        url: String,
-        categoryName: CategoryName,
-    ): Elements {
+    internal fun extractMoreHeadLineLinks(url: String, categoryName: CategoryName): Elements {
         return Jsoup.connect(url).get()
             .getElementsByClass(moreHeadLineLinksElements[categoryName]!!)
             .tagName("a")
@@ -91,7 +87,8 @@ class CrawlerBase {
                     .text()
                 val imageLink = detailDoc.getElementById(IMAGE_ID_NAME).toString()
                 val press = detailDoc.getElementsByClass(PRESS_CLASS_NAME).text()
-                val writtenDateTime = detailDoc.getElementsByClass(WRITTEN_DATETIME_CLASS_NAME).text()
+                val writtenDateTime =
+                    detailDoc.getElementsByClass(WRITTEN_DATETIME_CLASS_NAME).text()
 
                 cardNews.add(
                     News(

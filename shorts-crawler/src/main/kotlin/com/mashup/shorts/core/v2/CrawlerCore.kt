@@ -1,25 +1,19 @@
-package com.mashup.shorts.core
+package com.mashup.shorts.core.v2
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
 import org.jsoup.select.Elements
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Primary
-import org.springframework.retry.annotation.Recover
-import org.springframework.retry.annotation.Retryable
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
-import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
-import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_ONE
-import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_ONE_HALF
-import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_ONE_QUARTER
-import com.mashup.shorts.core.consts.CATEGORY_WEIGHT_TWO_HALF_QUARTER
-import com.mashup.shorts.core.consts.categoryToUrl
-import com.mashup.shorts.core.keywordextractor.KeywordExtractor
-import com.mashup.shorts.core.rank.RankingGenerator
+import com.mashup.shorts.core.v2.consts.CATEGORY_WEIGHT_ONE
+import com.mashup.shorts.core.v2.consts.CATEGORY_WEIGHT_ONE_HALF
+import com.mashup.shorts.core.v2.consts.CATEGORY_WEIGHT_ONE_QUARTER
+import com.mashup.shorts.core.v2.consts.CATEGORY_WEIGHT_TWO_HALF_QUARTER
+import com.mashup.shorts.core.v2.consts.categoryToUrl
+import com.mashup.shorts.core.v2.keywordextractor.KeywordExtractor
+import com.mashup.shorts.core.v2.rank.RankingGenerator
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
 import com.mashup.shorts.domain.category.CategoryName.CULTURE
@@ -47,10 +41,7 @@ class CrawlerCore(
     private val rankingGenerator: RankingGenerator,
 ) {
 
-    @Retryable(value = [Exception::class], maxAttempts = 3)
-    @Transactional(rollbackFor = [Exception::class])
-    @Scheduled(cron = "0 0 * * * *")
-    internal fun executeCrawling() {
+    internal fun executeCrawling(): LocalDateTime {
         val crawledDateTime = LocalDateTime.now()
         val keywordsCountingPair = mutableMapOf<String, Double>()
         val persistenceTargetNewsCards = mutableListOf<NewsCard>()
@@ -128,21 +119,12 @@ class CrawlerCore(
         rankingGenerator.saveKeywordRanking(keywordsCountingPair.mapValues { it.value.toInt() })
 
         log.info("$crawledDateTime - all crawling done")
+
+        return crawledDateTime
     }
 
     private fun isBulkInserTiming(persistenceTargetNewsCards: MutableList<NewsCard>) =
         persistenceTargetNewsCards.size >= 100
-
-    @Recover
-    fun recover(exception: Exception) {
-        log.error { "크롤링 중 예외가 발생하여 총 3회를 시도했으나 작업이 실패했습니다." }
-        log.error { "ExceptionStackTrace : ${exception.localizedMessage}" }
-        log.error { "ExceptionCause : ${exception.cause}" }
-        throw ShortsBaseException.from(
-            shortsErrorCode = ShortsErrorCode.E500_INTERNAL_SERVER_ERROR,
-            resultErrorMessage = "크롤링 중 예외가 발생하여 총 3회를 시도했으나 작업이 실패했습니다."
-        )
-    }
 
     private fun bulkInsertNewsCard(
         persistenceTargetNewsCards: MutableList<NewsCard>,

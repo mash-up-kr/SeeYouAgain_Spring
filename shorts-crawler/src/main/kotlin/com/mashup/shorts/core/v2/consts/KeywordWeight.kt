@@ -1,4 +1,4 @@
-package com.mashup.shorts.core.consts
+package com.mashup.shorts.core.v2.consts
 
 internal const val CATEGORY_WEIGHT_ONE = 1.0
 internal const val CATEGORY_WEIGHT_ONE_QUARTER = 1.25

@@ -1,4 +1,4 @@
-package com.mashup.shorts.core.keywordextractor
+package com.mashup.shorts.core.v2.keywordextractor
 
 /**
 불용어 목록 출처 : https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002390885

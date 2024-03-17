@@ -1,4 +1,4 @@
-package com.mashup.shorts.leagcy.consts
+package com.mashup.shorts.core.leagcy.consts
 
 import com.mashup.shorts.domain.category.CategoryName
 

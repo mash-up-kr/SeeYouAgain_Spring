@@ -1,9 +1,9 @@
-package com.mashup.shorts.leagcy.keywordextractor
+package com.mashup.shorts.core.leagcy.keywordextractor
 
 import java.util.*
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
-import com.mashup.shorts.core.keywordextractor.KeywordExtractor
+import com.mashup.shorts.core.v2.keywordextractor.KeywordExtractor
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL
 import kr.co.shineware.nlp.komoran.core.Komoran
 

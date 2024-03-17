@@ -1,4 +1,4 @@
-package com.mashup.shorts.core.keywordextractor
+package com.mashup.shorts.core.v2.keywordextractor
 
 import java.io.StringReader
 import org.apache.lucene.analysis.Analyzer
@@ -8,8 +8,8 @@ import org.apache.lucene.analysis.ko.KoreanTokenizer.DecompoundMode
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
-import com.mashup.shorts.core.consts.CONTENT_WEIGHT
-import com.mashup.shorts.core.consts.TITLE_WEIGHT
+import com.mashup.shorts.core.v2.consts.CONTENT_WEIGHT
+import com.mashup.shorts.core.v2.consts.TITLE_WEIGHT
 
 @Component
 @Qualifier("LuceneAnalyzerKeywordExtractor")

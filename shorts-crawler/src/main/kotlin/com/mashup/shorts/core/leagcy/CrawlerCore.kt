@@ -1,4 +1,4 @@
-package com.mashup.shorts.leagcy
+package com.mashup.shorts.core.leagcy
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 import com.mashup.shorts.common.exception.ShortsBaseException
 import com.mashup.shorts.common.exception.ShortsErrorCode
 import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
-import com.mashup.shorts.core.keywordextractor.KeywordExtractor
+import com.mashup.shorts.core.v2.keywordextractor.KeywordExtractor
 import com.mashup.shorts.domain.category.CategoryName.CULTURE
 import com.mashup.shorts.domain.category.CategoryName.ECONOMIC
 import com.mashup.shorts.domain.category.CategoryName.POLITICS
@@ -25,7 +25,7 @@ import com.mashup.shorts.domain.news.NewsBulkInsertRepository
 import com.mashup.shorts.domain.news.NewsRepository
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardBulkInsertRepository
-import com.mashup.shorts.leagcy.consts.categoryToUrl
+import com.mashup.shorts.core.leagcy.consts.categoryToUrl
 
 @Deprecated("Deprecated By Changed DOM")
 @Component("DeprecatedCrawlerCore")

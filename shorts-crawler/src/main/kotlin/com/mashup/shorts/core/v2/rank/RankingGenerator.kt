@@ -1,4 +1,4 @@
-package com.mashup.shorts.core.rank
+package com.mashup.shorts.core.v2.rank
 
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

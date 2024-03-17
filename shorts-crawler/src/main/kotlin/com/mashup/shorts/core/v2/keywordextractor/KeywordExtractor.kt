@@ -1,4 +1,4 @@
-package com.mashup.shorts.core.keywordextractor
+package com.mashup.shorts.core.v2.keywordextractor
 
 import org.springframework.stereotype.Component
 
