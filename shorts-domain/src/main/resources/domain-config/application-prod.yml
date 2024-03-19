@@ -7,8 +7,26 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 101
+          order_inserts: true
+          order_updates: true
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region.factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+
   datasource:
     url: ENC(m/cWWqilVqoIWWZKyTOxLLsTKnV35HECpNON0Hkw0X4k8S/VPOYbRlchcchUBnwkU54flUpjJFJo29Zj+2rsVXbPDP3RxooQAcptBDZJXDz5TT4eX0N2W3NPg/L9fqVgDR76wNMvxNNBDh2xUVmeumlj63Ej/zEHG3qrms2BtCo=)
     username: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
     password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 10000
+      pool-name: SpringHikariCP
+      max-lifetime: 2000000
+      connection-timeout: 30000
