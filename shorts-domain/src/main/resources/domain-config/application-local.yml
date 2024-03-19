@@ -13,20 +13,17 @@ spring:
     user: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
     password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
   jpa:
-    open-in-view: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     properties:
       hibernate:
         show_sql: true
         format_sql: true
         use_sql_comments: true
-        use-new-id-generator-mappings: false
   datasource:
-    hikari:
-      jdbc-url: ENC(m/cWWqilVqoIWWZKyTOxLLsTKnV35HECpNON0Hkw0X4k8S/VPOYbRlchcchUBnwkU54flUpjJFJo29Zj+2rsVXbPDP3RxooQAcptBDZJXDz5TT4eX0N2W3NPg/L9fqVgDR76wNMvxNNBDh2xUVmeumlj63Ej/zEHG3qrms2BtCo=)
-      username: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
-      password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
-      driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(m/cWWqilVqoIWWZKyTOxLLsTKnV35HECpNON0Hkw0X4k8S/VPOYbRlchcchUBnwkU54flUpjJFJo29Zj+2rsVXbPDP3RxooQAcptBDZJXDz5TT4eX0N2W3NPg/L9fqVgDR76wNMvxNNBDh2xUVmeumlj63Ej/zEHG3qrms2BtCo=)
+    username: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
+    password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
+    driver-class-name: com.mysql.cj.jdbc.Driver

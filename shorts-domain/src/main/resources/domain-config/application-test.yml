@@ -1,37 +1,19 @@
-# baseline-on-migrate option :
-# flyway_schema_history가 생성되어 있는 경우 false로 변경,
-# true로 설정하면 히스토리 테이블이 없을 경우에 생성, 기본값 true
-
-#spring:
-#  config:
-#    activate:
-#      on-profile: test
-#  datasource:
-#    url: jdbc:h2:mem:shorts
-#    username: sa
-#    password:
-#  h2:
-#    console:
-#      enabled: true
 spring:
   config:
     activate:
       on-profile: test
   jpa:
-    open-in-view: false
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     properties:
       hibernate:
         show_sql: true
         format_sql: true
         use_sql_comments: true
-        use-new-id-generator-mappings: false
   datasource:
-    hikari:
-      jdbc-url: ENC(m/cWWqilVqoIWWZKyTOxLLsTKnV35HECpNON0Hkw0X4k8S/VPOYbRlchcchUBnwkU54flUpjJFJo29Zj+2rsVXbPDP3RxooQAcptBDZJXDz5TT4eX0N2W3NPg/L9fqVgDR76wNMvxNNBDh2xUVmeumlj63Ej/zEHG3qrms2BtCo=)
-      username: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
-      password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
-      driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(m/cWWqilVqoIWWZKyTOxLLsTKnV35HECpNON0Hkw0X4k8S/VPOYbRlchcchUBnwkU54flUpjJFJo29Zj+2rsVXbPDP3RxooQAcptBDZJXDz5TT4eX0N2W3NPg/L9fqVgDR76wNMvxNNBDh2xUVmeumlj63Ej/zEHG3qrms2BtCo=)
+    username: ENC(VWvxuZYAz4whqGlh7q636WiTgrkjfRG2LWNmIBu3chYPC1M/S9hBESk+44smnAyY)
+    password: ENC(XyE1+hgtbCB30SYGXjjc2nAitbDxk88KGPpdNx3dUWwiB5rxI4Lv0NLMUCKWO83f)
+    driver-class-name: com.mysql.cj.jdbc.Driver
