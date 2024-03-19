@@ -1,6 +1,5 @@
 package com.mashup.shorts.core
 
-import com.mashup.shorts.core.modern.LuceneAnalyzerKeywordExtractor
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
