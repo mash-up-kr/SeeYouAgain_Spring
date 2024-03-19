@@ -4,4 +4,4 @@ spring:
       on-profile: prod
 
 server:
-  port: 8083
+  port: 8080
