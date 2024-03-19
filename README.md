@@ -1,7 +1,3 @@
-## ERD
-
-![SHORT-ERD](docs/erd/ERD.png)
-
 ## Module Architecture
 
 ![SHORTS-Module-Architecture](docs/module/ModuleArchitecture.png)
@@ -9,6 +5,10 @@
 ## Infrastructure
 
 ![SHORTS-Infrastructure-Architecture](docs/infra/InfrastructureArchitecture.png)
+
+## ERD
+
+![SHORT-ERD](docs/erd/ERD.png)
 
 ---
 
