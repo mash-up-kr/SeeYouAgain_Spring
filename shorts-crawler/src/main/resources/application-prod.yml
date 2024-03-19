@@ -2,3 +2,8 @@ spring:
   config:
     activate:
       on-profile: prod
+
+discord:
+  url:
+    success: ENC(vNme4VoNC6Zm53u6yV6kuYYl+YZLJITHFBkkFDwOXwttZTMOsalgC7SJrDboTV337uBUoH9AFPJD9NG+cVPUzu8iKacPuYCCUampWtu6g/6p3JCsUIm5p1wqxcmNJfgvlC9ARz+sFo7owKB3l6nNQ6MLYw9ls/trRCD47Zf15akSYeZ9F/b6XCNsTRXbMMcLK/YlGOmOpv5RY4rzPj//TA==)
+    fail: ENC(iotSK1j3FIcBk1NkPkhepcXg3WanEkt7EHJ7n5F/FhDYHwTJgCQRSoEwqtv1rEd81V4Gj7DN+PqIi6O0CU5MvpVWeJBdnjDwbr07v41W3o1NWYWrX0U4pbhIhjA3tWJv9QXp5I1wBDHI8DJvluuboWZ6iNkpyO5NTe1eY+PIy5K7UBV/ilJFOj7/rETiEG85XQKz+r6RoHi6P2ZvQ7/iaw==)
