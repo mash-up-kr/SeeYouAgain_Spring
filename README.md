@@ -34,9 +34,9 @@
             <br> 크롤러, 키워드 추출, 뉴스/뉴스카드 조회, 사용자 업적/뱃지 기능 개발
         </td>
         <td>
-            <img src="https://github.com/sw-develop.png" style="max-width: 10px">
+            <img src="https://github.com/wonlog-g.png" style="max-width: 10px">
             <br>
-            <a href="https://github.com/sw-develop"><I>sw-develop</I></a>
+            <a href="https://github.com/wonlog-g"><I>sw-develop</I></a>
             <br> 핫 키워드 랭킹 기능 개발
         </td>
     </tr>
