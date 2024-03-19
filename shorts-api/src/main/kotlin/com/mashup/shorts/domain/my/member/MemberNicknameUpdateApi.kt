@@ -1,8 +1,8 @@
 package com.mashup.shorts.domain.my.member
 
-import com.mashup.shorts.common.aop.Auth
-import com.mashup.shorts.common.aop.AuthContext
-import com.mashup.shorts.common.response.ApiResponse
+import com.mashup.shorts.annotation.Auth
+import com.mashup.shorts.aspect.AuthContext
+import com.mashup.shorts.response.ApiResponse
 import com.mashup.shorts.domain.member.MemberNicknameModifier
 import com.mashup.shorts.domain.my.member.dto.MemberNicknameUpdateRequest
 import org.springframework.http.HttpStatus

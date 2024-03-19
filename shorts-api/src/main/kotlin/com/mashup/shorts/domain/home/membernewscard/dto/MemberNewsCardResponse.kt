@@ -1,6 +1,6 @@
 package com.mashup.shorts.domain.home.membernewscard.dto
 
-import com.mashup.shorts.common.util.convert
+import com.mashup.shorts.util.convert
 import com.mashup.shorts.domain.home.membernewscard.HomeTitleGenerator
 import com.mashup.shorts.domain.member.ShowMode
 import com.mashup.shorts.domain.newscard.NewsCard

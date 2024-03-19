@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import com.mashup.shorts.ShortsCrawlerApplication
-import com.mashup.shorts.core.v2.CrawlerCore
+import com.mashup.shorts.core.modern.CrawlerCore
 
 @Disabled
 @ActiveProfiles("test")

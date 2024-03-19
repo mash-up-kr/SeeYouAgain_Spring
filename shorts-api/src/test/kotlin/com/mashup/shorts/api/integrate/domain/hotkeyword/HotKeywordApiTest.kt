@@ -35,7 +35,7 @@ class HotKeywordApiTestIntegrationTest(
         val keyword = "감사"
 
         // execute
-        val result = mockMvc.perform(
+        mockMvc.perform(
             MockMvcRequestBuilders.get(url, keyword)
                 .param("cursorId", "0")
                 .param("size", "10")

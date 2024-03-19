@@ -7,7 +7,7 @@ import java.time.temporal.WeekFields
 import java.util.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.util.CalendarUtil
+import com.mashup.shorts.util.CalendarUtil
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.membernews.MemberNewsRepository
 

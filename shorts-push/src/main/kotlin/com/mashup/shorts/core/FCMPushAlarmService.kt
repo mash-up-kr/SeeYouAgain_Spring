@@ -4,8 +4,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingException
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.Notification
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode
+import com.mashup.shorts.exception.ShortsBaseException
+import com.mashup.shorts.exception.ShortsErrorCode
 import com.mashup.shorts.config.FcmConfig
 import org.springframework.stereotype.Service
 

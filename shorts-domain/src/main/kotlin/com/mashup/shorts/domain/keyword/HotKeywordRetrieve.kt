@@ -3,8 +3,8 @@ package com.mashup.shorts.domain.keyword
 import java.time.LocalDateTime
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode
+import com.mashup.shorts.exception.ShortsBaseException
+import com.mashup.shorts.exception.ShortsErrorCode
 
 @Service
 @Transactional(readOnly = true)

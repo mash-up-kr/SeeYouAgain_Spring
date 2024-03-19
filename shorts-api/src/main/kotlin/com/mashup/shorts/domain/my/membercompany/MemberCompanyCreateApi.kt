@@ -1,8 +1,8 @@
 package com.mashup.shorts.domain.my.membercompany
 
-import com.mashup.shorts.common.aop.Auth
-import com.mashup.shorts.common.aop.AuthContext
-import com.mashup.shorts.common.response.ApiResponse
+import com.mashup.shorts.annotation.Auth
+import com.mashup.shorts.aspect.AuthContext
+import com.mashup.shorts.response.ApiResponse
 import com.mashup.shorts.domain.membercompany.MemberCompanyCreate
 import com.mashup.shorts.domain.my.member.dto.MemberCompanyCreateRequest
 import org.springframework.http.HttpStatus

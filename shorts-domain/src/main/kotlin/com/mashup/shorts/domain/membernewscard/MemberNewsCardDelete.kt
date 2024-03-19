@@ -1,7 +1,7 @@
 package com.mashup.shorts.domain.membernewscard
 
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode
+import com.mashup.shorts.exception.ShortsBaseException
+import com.mashup.shorts.exception.ShortsErrorCode
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.newscard.NewsCardRepository
 import org.springframework.stereotype.Service

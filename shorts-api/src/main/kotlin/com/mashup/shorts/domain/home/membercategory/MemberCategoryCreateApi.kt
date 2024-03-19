@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import com.mashup.shorts.common.aop.Auth
-import com.mashup.shorts.common.aop.AuthContext
-import com.mashup.shorts.common.response.ApiResponse
+import com.mashup.shorts.annotation.Auth
+import com.mashup.shorts.aspect.AuthContext
+import com.mashup.shorts.response.ApiResponse
 import com.mashup.shorts.domain.home.membercategory.dto.CategoryCreateBulkRequest
 import com.mashup.shorts.domain.home.membercategory.dto.CategoryUpdateBulkRequest
 import com.mashup.shorts.domain.membercategory.MemberCategoryCreate

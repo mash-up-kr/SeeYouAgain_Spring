@@ -3,7 +3,7 @@ package com.mashup.shorts.domain.membernewscard
 import java.time.LocalDateTime
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.util.StartEndDateTimeExtractor.extractStarDateTimeAndEndDateTime
+import com.mashup.shorts.util.StartEndDateTimeExtractor.extractStarDateTimeAndEndDateTime
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.member.ShowMode
 import com.mashup.shorts.domain.membercategory.MemberCategory

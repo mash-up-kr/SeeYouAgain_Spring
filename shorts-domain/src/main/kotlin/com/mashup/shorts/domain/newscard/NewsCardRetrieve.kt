@@ -3,8 +3,8 @@ package com.mashup.shorts.domain.newscard
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode.E404_NOT_FOUND
+import com.mashup.shorts.exception.ShortsBaseException
+import com.mashup.shorts.exception.ShortsErrorCode.E404_NOT_FOUND
 import com.mashup.shorts.domain.news.News
 import com.mashup.shorts.domain.news.NewsRepository
 

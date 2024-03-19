@@ -1,19 +1,11 @@
-repositories {
-    maven("https://jitpack.io")
-}
-
 dependencies {
     api(project(":shorts-domain"))
+    api(project(":shorts-common"))
+    api(project(":shorts-keyword-extractor"))
+    api(project(":shorts-rank-processor"))
 
     // JSoup Dependency
     implementation("org.jsoup:jsoup:1.15.4")
-
-    // Lucene Dependency
-    implementation("org.apache.lucene:lucene-core:8.4.1")
-    implementation("org.apache.lucene:lucene-analyzers-nori:8.4.1")
-
-    // Komoran Dependency
-    implementation("com.github.shin285:KOMORAN:3.3.9")
 
     // Spring Retry
     implementation("org.springframework.retry:spring-retry")

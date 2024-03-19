@@ -1,17 +1,17 @@
 package com.mashup.shorts.domain.memberlog
 
-import com.mashup.shorts.domain.facade.memberlogbadge.MemberLogBadgeFacadeService
-import com.mashup.shorts.domain.member.Member
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import com.mashup.shorts.domain.member.Member
+import com.mashup.shorts.domain.memberlogbadge.MemberLogBadgeService
 
 @Service
 @Transactional
 class MemberSharingLogRecord(
-    private val memberLogBadgeFacadeService: MemberLogBadgeFacadeService
+    private val memberLogBadgeService: MemberLogBadgeService,
 ) {
 
     fun execute(member: Member) {
-        memberLogBadgeFacadeService.memberSharingLog(member)
+        memberLogBadgeService.memberSharingLog(member)
     }
 }

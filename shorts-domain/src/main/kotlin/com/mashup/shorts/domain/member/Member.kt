@@ -1,6 +1,6 @@
 package com.mashup.shorts.domain.member
 
-import com.mashup.shorts.common.util.RandomWordsNickname
+import com.mashup.shorts.util.RandomWordsNickname
 import com.mashup.shorts.domain.BaseEntity
 import jakarta.persistence.*
 import kotlin.random.Random

@@ -1,9 +1,9 @@
 package com.mashup.shorts.domain.my.statistics
 
-import com.mashup.shorts.common.aop.Auth
-import com.mashup.shorts.common.aop.AuthContext
-import com.mashup.shorts.common.response.ApiResponse
-import com.mashup.shorts.common.response.ApiResponse.Companion.success
+import com.mashup.shorts.annotation.Auth
+import com.mashup.shorts.aspect.AuthContext
+import com.mashup.shorts.response.ApiResponse
+import com.mashup.shorts.response.ApiResponse.Companion.success
 import com.mashup.shorts.domain.my.statistics.dto.MemberWeeklyStatsRetrieveResponse
 import org.springframework.http.HttpStatus.OK
 import org.springframework.web.bind.annotation.GetMapping

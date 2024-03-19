@@ -11,7 +11,6 @@ repositories {
 
 dependencies {
     api(project(":shorts-domain"))
-    api(project(":shorts-external"))
 
     implementation("com.google.firebase:firebase-admin:9.2.0")
 

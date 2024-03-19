@@ -1,6 +1,6 @@
 package com.mashup.shorts.domain.my.membernewscard.dto
 
-import com.mashup.shorts.common.util.convert
+import com.mashup.shorts.util.convert
 import com.mashup.shorts.domain.newscard.NewsCard
 import java.time.LocalDateTime
 

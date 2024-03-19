@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.transaction.annotation.Transactional
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.shorts.api.ApiTestBase
-import com.mashup.shorts.common.aop.AuthContext
+import com.mashup.shorts.aspect.AuthContext
 import com.mashup.shorts.domain.member.Member
 import com.mashup.shorts.domain.newscard.Pivots
 
@@ -49,7 +49,7 @@ class MemberNewsIntegrationApiTest(
             ))
 
         // execute
-        val result = mockMvc.perform(
+        mockMvc.perform(
             MockMvcRequestBuilders.get(url)
                 .header("Authorization", auth)
                 .param("cursorWrittenDateTime", LocalDateTime.now().minusDays(1).minusHours(0).toString())

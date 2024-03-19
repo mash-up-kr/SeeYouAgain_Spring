@@ -29,6 +29,7 @@ tasks.bootJar { // 5
 
 dependencies {
     api(project(":shorts-domain"))
+    api(project(":shorts-common"))
 
     // Validation Annotation
     implementation("org.springframework.boot:spring-boot-starter-validation")

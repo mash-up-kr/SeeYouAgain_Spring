@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import com.mashup.shorts.common.response.ApiResponse
-import com.mashup.shorts.common.response.ApiResponse.Companion.success
+import com.mashup.shorts.response.ApiResponse
+import com.mashup.shorts.response.ApiResponse.Companion.success
 import com.mashup.shorts.domain.home.newscard.dto.RetrieveNewsBundleInNewsCardResponse
 import com.mashup.shorts.domain.home.newscard.dto.RetrieveNewsBundleInNewsCardResponse.Companion.persistenceToResponseForm
 import com.mashup.shorts.domain.newscard.NewsCardRetrieve

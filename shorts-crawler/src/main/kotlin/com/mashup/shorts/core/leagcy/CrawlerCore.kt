@@ -7,10 +7,8 @@ import org.springframework.retry.annotation.Recover
 import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode
-import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
-import com.mashup.shorts.core.v2.keywordextractor.KeywordExtractor
+import com.mashup.shorts.KeywordExtractor
+import com.mashup.shorts.core.leagcy.consts.categoryToUrl
 import com.mashup.shorts.domain.category.CategoryName.CULTURE
 import com.mashup.shorts.domain.category.CategoryName.ECONOMIC
 import com.mashup.shorts.domain.category.CategoryName.POLITICS
@@ -25,7 +23,9 @@ import com.mashup.shorts.domain.news.NewsBulkInsertRepository
 import com.mashup.shorts.domain.news.NewsRepository
 import com.mashup.shorts.domain.newscard.NewsCard
 import com.mashup.shorts.domain.newscard.NewsCardBulkInsertRepository
-import com.mashup.shorts.core.leagcy.consts.categoryToUrl
+import com.mashup.shorts.exception.ShortsBaseException
+import com.mashup.shorts.exception.ShortsErrorCode
+import com.mashup.shorts.util.Slf4j2KotlinLogging.log
 
 @Deprecated("Deprecated By Changed DOM")
 @Component("DeprecatedCrawlerCore")

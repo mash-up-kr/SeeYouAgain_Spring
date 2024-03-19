@@ -6,10 +6,10 @@ import org.springframework.retry.annotation.Retryable
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.common.exception.ShortsBaseException
-import com.mashup.shorts.common.exception.ShortsErrorCode
-import com.mashup.shorts.common.util.Slf4j2KotlinLogging.log
-import com.mashup.shorts.core.v2.CrawlerCore
+import com.mashup.shorts.exception.ShortsBaseException
+import com.mashup.shorts.exception.ShortsErrorCode
+import com.mashup.shorts.util.Slf4j2KotlinLogging.log
+import com.mashup.shorts.core.modern.CrawlerCore
 import com.mashup.shorts.logger.LogType
 import com.mashup.shorts.logger.ThirdPartyLogger
 

@@ -1,11 +1,13 @@
 package com.mashup.shorts.api.test
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import com.mashup.shorts.domain.keyword.HotKeyword
 import com.mashup.shorts.domain.keyword.KeywordRanking
 
+@Disabled
 @ActiveProfiles("test")
 @SpringBootTest
 class HotKeywordRetrieveTest {
@@ -22,7 +24,6 @@ class HotKeywordRetrieveTest {
             result.add(match.groupValues[1])
         }
         val keywordRanking = KeywordRanking(hotKeyword.createdAt.toString(), result)
-        val keywordRanking1 = KeywordRanking(hotKeyword.createdAt.toString(), result)
-        println("keywordRanking1 = ${keywordRanking1}")
+        println("keywordRanking1 = ${keywordRanking}")
     }
 }

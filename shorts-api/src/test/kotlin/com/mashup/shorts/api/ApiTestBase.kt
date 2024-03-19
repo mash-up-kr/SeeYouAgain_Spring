@@ -1,6 +1,6 @@
 package com.mashup.shorts.api
 
-import com.mashup.shorts.common.aop.AuthContext
+import com.mashup.shorts.aspect.AuthContext
 import com.mashup.shorts.domain.member.Member
 import jakarta.annotation.PostConstruct
 import org.springframework.test.context.ActiveProfiles

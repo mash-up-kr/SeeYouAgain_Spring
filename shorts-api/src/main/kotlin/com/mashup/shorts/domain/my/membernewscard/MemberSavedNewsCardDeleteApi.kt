@@ -1,9 +1,9 @@
 package com.mashup.shorts.domain.my.membernewscard
 
-import com.mashup.shorts.common.aop.Auth
-import com.mashup.shorts.common.aop.AuthContext
-import com.mashup.shorts.common.response.ApiResponse
-import com.mashup.shorts.common.response.ApiResponse.Companion.success
+import com.mashup.shorts.annotation.Auth
+import com.mashup.shorts.aspect.AuthContext
+import com.mashup.shorts.response.ApiResponse
+import com.mashup.shorts.response.ApiResponse.Companion.success
 import com.mashup.shorts.domain.membernewscard.MemberNewsCardDelete
 import com.mashup.shorts.domain.my.membernewscard.dto.MemberNewsCardBulkDeleteRequest
 import org.springframework.http.HttpStatus.OK
