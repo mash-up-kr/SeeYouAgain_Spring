@@ -1,3 +1,17 @@
+## ERD
+
+![SHORT-ERD](docs/erd/ERD.png)
+
+## Module Architecture
+
+![SHORTS-Module-Architecture](docs/module/ModuleArchitecture.png)
+
+## Infrastructure
+
+![SHORTS-Infrastructure-Architecture](docs/infra/InfrastructureArchitecture.png)
+
+---
+
 ## 역할
 
 <table>
@@ -27,18 +41,3 @@
         </td>
     </tr>
 </table>
-
-
-## ERD
-
-![SHORT-ERD](https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/60564431/c5250a92-4615-413e-9885-c30db26e4e68)
-
-
-## Module Architecutre
-
-<img width="574" alt="Shorts - Infra" src="https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/60564431/76158d81-4e04-405a-bc0c-6e3c580ae9fa">
-
-
-## Infra
-
-![image](https://github.com/mash-up-kr/SeeYouAgain_Spring/assets/60564431/9039ce5a-b81b-412f-b585-b9673cbb8a34)
