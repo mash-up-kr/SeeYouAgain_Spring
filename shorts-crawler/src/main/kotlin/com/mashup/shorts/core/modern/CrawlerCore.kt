@@ -37,7 +37,7 @@ class CrawlerCore(
     private val newsRepository: NewsRepository,
     private val newsBulkInsertRepository: NewsBulkInsertRepository,
     private val newsCardBulkInsertRepository: NewsCardBulkInsertRepository,
-    @Qualifier("LuceneAnalyzerKeywordExtractor") private val keywordExtractor: KeywordExtractor,
+    @Qualifier("LuceneAnalyzerKeywordExtractorV2") private val keywordExtractor: KeywordExtractor,
     private val rankingGenerator: RankingGenerator,
 ) {
 

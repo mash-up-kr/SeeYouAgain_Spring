@@ -1,4 +1,4 @@
-package com.mashup.shorts.core
+package com.mashup.shorts.core.legacy
 
 import java.io.StringReader
 import org.apache.lucene.analysis.Analyzer
