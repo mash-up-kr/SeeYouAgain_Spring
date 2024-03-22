@@ -6,15 +6,14 @@ import org.apache.lucene.analysis.TokenStream
 import org.apache.lucene.analysis.ko.KoreanTokenizer
 import org.apache.lucene.analysis.ko.KoreanTokenizer.DecompoundMode
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import com.mashup.shorts.KeywordExtractor
-import com.mashup.shorts.consts.stopWords
 import com.mashup.shorts.consts.CONTENT_WEIGHT
 import com.mashup.shorts.consts.TITLE_WEIGHT
+import com.mashup.shorts.consts.stopWords
 
 @Component
-@Qualifier("LuceneAnalyzerKeywordExtractor")
+@Deprecated("Deprecated By BM25 KeywordExtractor")
 class LuceneAnalyzerKeywordExtractor : KeywordExtractor {
 
     override fun extractKeyword(title: String, content: String): String {

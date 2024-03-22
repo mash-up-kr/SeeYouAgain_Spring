@@ -3,7 +3,6 @@ package com.mashup.shorts.core.modern
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
 import org.jsoup.select.Elements
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
 import com.mashup.shorts.KeywordExtractor
@@ -37,7 +36,7 @@ class CrawlerCore(
     private val newsRepository: NewsRepository,
     private val newsBulkInsertRepository: NewsBulkInsertRepository,
     private val newsCardBulkInsertRepository: NewsCardBulkInsertRepository,
-    @Qualifier("LuceneAnalyzerKeywordExtractorV2") private val keywordExtractor: KeywordExtractor,
+    private val keywordExtractor: KeywordExtractor,
     private val rankingGenerator: RankingGenerator,
 ) {
 

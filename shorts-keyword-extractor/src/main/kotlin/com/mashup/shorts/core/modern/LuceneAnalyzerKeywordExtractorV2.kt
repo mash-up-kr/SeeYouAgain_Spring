@@ -7,13 +7,13 @@ import org.apache.lucene.analysis.TokenStream
 import org.apache.lucene.analysis.ko.KoreanTokenizer
 import org.apache.lucene.analysis.ko.KoreanTokenizer.DecompoundMode
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute
-import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
 import com.mashup.shorts.KeywordExtractor
 import com.mashup.shorts.consts.stopWords
 
+@Primary
 @Component
-@Qualifier("LuceneAnalyzerKeywordExtractorV2")
 class LuceneAnalyzerKeywordExtractorV2 : KeywordExtractor {
 
     /* 변수 `k1`에 대한 부연 설명 By K-Diger
