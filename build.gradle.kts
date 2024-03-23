@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.0"
 	id("org.asciidoctor.jvm.convert") version "3.3.2"
 	id("application")
+    id("com.google.cloud.tools.jib") version "3.2.1"
 	kotlin("jvm") version "1.7.22"
 	kotlin("plugin.spring") version "1.7.22"
 	kotlin("plugin.jpa") version "1.7.22"
@@ -35,6 +36,7 @@ subprojects {
 	apply(plugin = "kotlin-jpa")
 	apply(plugin = "io.spring.dependency-management")
 	apply(plugin = "org.asciidoctor.jvm.convert")
+    apply(plugin = "com.google.cloud.tools.jib")
 	apply(plugin = "kotlin-kapt")
 	apply(plugin = "application")
 
@@ -60,5 +62,4 @@ subprojects {
 	tasks.withType<Test> {
 		useJUnitPlatform()
 	}
-
 }

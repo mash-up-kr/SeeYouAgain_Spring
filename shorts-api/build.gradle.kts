@@ -45,3 +45,21 @@ dependencies {
 application {
     mainClass.set("com.mashup.shorts.ShortsApiApplicationKt")
 }
+
+jib {
+    from {
+        image = "eclipse-temurin:17-jre-alpine"
+    }
+
+    to {
+        image = System.getProperty("image", "wjdrbs96/shorts")
+        tags = setOf(System.getProperty("tag", "latest"))
+    }
+
+    container {
+        jvmFlags = listOf(
+            "-Duser.timezone=Asia/Seoul"
+        )
+        ports = listOf("8080")
+    }
+}
