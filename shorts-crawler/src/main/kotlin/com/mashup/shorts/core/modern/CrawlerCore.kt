@@ -9,8 +9,9 @@ import com.mashup.shorts.KeywordExtractor
 import com.mashup.shorts.RankingGenerator
 import com.mashup.shorts.consts.CATEGORY_WEIGHT_ONE
 import com.mashup.shorts.consts.CATEGORY_WEIGHT_ONE_HALF
+import com.mashup.shorts.consts.CATEGORY_WEIGHT_ONE_HALF_QUARTER
 import com.mashup.shorts.consts.CATEGORY_WEIGHT_ONE_QUARTER
-import com.mashup.shorts.consts.CATEGORY_WEIGHT_TWO_HALF_QUARTER
+import com.mashup.shorts.consts.CATEGORY_WEIGHT_TWO_HALF
 import com.mashup.shorts.core.modern.consts.categoryToUrl
 import com.mashup.shorts.domain.category.Category
 import com.mashup.shorts.domain.category.CategoryName
@@ -195,7 +196,8 @@ class CrawlerCore(
             POLITICS, SOCIETY -> CATEGORY_WEIGHT_ONE
             ECONOMIC -> CATEGORY_WEIGHT_ONE_QUARTER
             WORLD -> CATEGORY_WEIGHT_ONE_HALF
-            CULTURE, SCIENCE -> CATEGORY_WEIGHT_TWO_HALF_QUARTER
+            CULTURE -> CATEGORY_WEIGHT_ONE_HALF_QUARTER
+            SCIENCE -> CATEGORY_WEIGHT_TWO_HALF
         }
 
         keywords.map { keyword ->
