@@ -4,7 +4,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
 import org.jsoup.select.Elements
 import org.springframework.context.annotation.Primary
-import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Component
 import com.mashup.shorts.KeywordExtractor
 import com.mashup.shorts.RankingGenerator
@@ -42,7 +41,6 @@ class CrawlerCore(
     private val rankingGenerator: RankingGenerator,
 ) {
 
-    @Retryable(value = [Exception::class], maxAttempts = 3)
     internal fun execute(): LocalDateTime {
         val crawledDateTime = LocalDateTime.now()
         val keywordsCountingPair = mutableMapOf<String, Double>()
