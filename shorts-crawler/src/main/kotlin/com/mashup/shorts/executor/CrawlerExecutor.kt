@@ -6,7 +6,6 @@ import org.springframework.retry.annotation.Retryable
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import com.mashup.shorts.annotation.LogCrawling
 import com.mashup.shorts.core.modern.CrawlerCore
 import com.mashup.shorts.exception.ShortsBaseException
 import com.mashup.shorts.exception.ShortsErrorCode
@@ -16,7 +15,6 @@ class CrawlerExecutor(
     private val crawlerCore: CrawlerCore,
 ) {
 
-    @LogCrawling
     @Retryable(
         value = [Exception::class],
         maxAttempts = 3,

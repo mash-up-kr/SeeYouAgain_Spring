@@ -15,7 +15,7 @@ class CrawlerLoggingAspect(
     private val thirdPartyLogger: ThirdPartyLogger,
 ) {
 
-    @AfterReturning(pointcut = "execution(* com.mashup.shorts.executor.CrawlerExecutor.execute())")
+    @AfterReturning(pointcut = "execution($TARGET_METHOD_PATH)")
     fun logAfterReturning(joinPoint: JoinPoint) {
         thirdPartyLogger.log(
             msg = "${LocalDateTime.now()} - 크롤링이 정상적으로 수행되었습니다.",
@@ -24,7 +24,7 @@ class CrawlerLoggingAspect(
     }
 
     @AfterThrowing(
-        pointcut = "execution(* com.mashup.shorts.executor.CrawlerExecutor.execute())",
+        pointcut = "execution($TARGET_METHOD_PATH)",
         throwing = "exception"
     )
     fun logAfterThrowing(joinPoint: JoinPoint, exception: Exception) {
@@ -33,5 +33,9 @@ class CrawlerLoggingAspect(
                 "${exception.localizedMessage}}",
             logType = LogType.FAIL
         )
+    }
+
+    companion object {
+        private const val TARGET_METHOD_PATH = "* com.mashup.shorts.executor.CrawlerExecutor.execute()"
     }
 }
