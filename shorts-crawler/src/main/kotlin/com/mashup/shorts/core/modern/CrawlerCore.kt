@@ -43,7 +43,7 @@ class CrawlerCore(
 ) {
 
     @Retryable(value = [Exception::class], maxAttempts = 3)
-    internal fun executeCrawling(): LocalDateTime {
+    internal fun execute(): LocalDateTime {
         val crawledDateTime = LocalDateTime.now()
         val keywordsCountingPair = mutableMapOf<String, Double>()
         val persistenceTargetNewsCards = mutableListOf<NewsCard>()

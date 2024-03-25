@@ -18,7 +18,7 @@ class CrawlerCoreTest (
 
     @Test
     @DisplayName("모든 카테고리 한 번에 크롤링 해오기")
-    fun executeCrawling() {
-        crawlerCore.executeCrawling()
+    fun execute() {
+        crawlerCore.execute()
     }
 }
